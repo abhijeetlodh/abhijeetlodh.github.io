@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abhijeet Lodh | AI/ML Engineer & Data Scientist</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0a0a0f;
-            --bg-card: #12121a;
-            --accent-1: #6366f1;
-            --accent-2: #8b5cf6;
-            --accent-3: #06b6d4;
-            --accent-4: #10b981;
+            --bg-main: #050510;
+            --bg-card: #0a0a1a;
+            --accent-1: #00f5d4;
+            --accent-2: #7b2cbf;
+            --accent-3: #f72585;
+            --accent-4: #4361ee;
+            --accent-5: #4cc9f0;
             --text-light: #f1f5f9;
             --text-muted: #94a3b8;
         }
@@ -27,202 +28,382 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
         body {
             background: var(--bg-main);
             color: var(--text-light);
             overflow-x: hidden;
         }
 
-        /* Gradient Mesh Background */
-        .mesh-gradient {
+        /* Animated Gradient Background */
+        .gradient-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(123, 44, 191, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(247, 37, 133, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: gradientShift 15s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Cyber Grid */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Neumorphism Dark */
+        /* Neumorphism Cards */
         .neu-card {
-            background: linear-gradient(145deg, #151520, #0e0e14);
+            background: linear-gradient(145deg, #0c0c1d, #080816);
             box-shadow: 
-                8px 8px 20px #070709,
-                -8px -8px 20px #1a1a24,
-                inset 0 0 0 1px rgba(255,255,255,0.03);
+                10px 10px 30px #030308,
+                -10px -10px 30px #0d0d1f,
+                inset 0 0 0 1px rgba(0, 245, 212, 0.05);
             border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .neu-card:hover {
             box-shadow: 
-                12px 12px 30px #070709,
-                -12px -12px 30px #1a1a24,
-                inset 0 0 0 1px rgba(99, 102, 241, 0.2);
+                15px 15px 40px #030308,
+                -15px -15px 40px #0d0d1f,
+                inset 0 0 0 1px rgba(0, 245, 212, 0.15),
+                0 0 30px rgba(0, 245, 212, 0.1);
             transform: translateY(-5px);
         }
 
-        .neu-card-static {
-            background: linear-gradient(145deg, #151520, #0e0e14);
-            box-shadow: 
-                8px 8px 20px #070709,
-                -8px -8px 20px #1a1a24,
-                inset 0 0 0 1px rgba(255,255,255,0.03);
-            border-radius: 24px;
-        }
-
         .neu-button {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            box-shadow: 
-                5px 5px 15px #070709,
-                -5px -5px 15px #1a1a24,
-                0 0 20px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.3);
             border-radius: 50px;
             transition: all 0.3s ease;
         }
 
         .neu-button:hover {
             transform: scale(1.05);
-            box-shadow: 
-                5px 5px 15px #070709,
-                -5px -5px 15px #1a1a24,
-                0 0 30px rgba(99, 102, 241, 0.5);
-        }
-
-        .neu-inset {
-            background: linear-gradient(145deg, #0e0e14, #151520);
-            box-shadow: 
-                inset 5px 5px 15px #070709,
-                inset -5px -5px 15px #1a1a24;
-            border-radius: 16px;
+            box-shadow: 0 0 50px rgba(0, 245, 212, 0.5);
         }
 
         .neu-circle {
-            background: linear-gradient(145deg, #151520, #0e0e14);
+            background: linear-gradient(145deg, #0c0c1d, #080816);
             box-shadow: 
-                6px 6px 15px #070709,
-                -6px -6px 15px #1a1a24;
+                6px 6px 15px #030308,
+                -6px -6px 15px #0d0d1f;
             border-radius: 50%;
             transition: all 0.3s ease;
         }
 
         .neu-circle:hover {
             box-shadow: 
-                6px 6px 15px #070709,
-                -6px -6px 15px #1a1a24,
-                0 0 20px rgba(99, 102, 241, 0.4);
+                6px 6px 15px #030308,
+                -6px -6px 15px #0d0d1f,
+                0 0 25px rgba(0, 245, 212, 0.4);
         }
 
-        /* Glowing Effects */
+        /* Glowing Text */
         .glow-text {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0, 245, 212, 0.3));
+        }
+
+        .glow-text-pink {
+            background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .glow-border {
-            position: relative;
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
         }
 
-        .glow-border::before {
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        /* ============================================ */
+        /* SKILLS SECTION - THE MAGIC HAPPENS HERE!   */
+        /* ============================================ */
+
+        /* Skill Orbit Animation */
+        .orbit-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px dashed rgba(0, 245, 212, 0.2);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .orbit-ring:nth-child(1) { width: 100%; height: 100%; animation-duration: 25s; }
+        .orbit-ring:nth-child(2) { width: 75%; height: 75%; top: 12.5%; left: 12.5%; animation-duration: 20s; animation-direction: reverse; }
+        .orbit-ring:nth-child(3) { width: 50%; height: 50%; top: 25%; left: 25%; animation-duration: 15s; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .orbit-skill {
+            position: absolute;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(123, 44, 191, 0.1));
+            border: 1px solid rgba(0, 245, 212, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            animation: counterRotate 20s linear infinite;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.2);
+        }
+
+        @keyframes counterRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+
+        /* Terminal Style */
+        .terminal {
+            background: #0a0a0f;
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: linear-gradient(90deg, rgba(0, 245, 212, 0.1), rgba(123, 44, 191, 0.1));
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            opacity: 0;
+            animation: typeIn 0.5s ease forwards;
+        }
+
+        @keyframes typeIn {
+            to { opacity: 1; }
+        }
+
+        .terminal-prompt { color: var(--accent-1); }
+        .terminal-command { color: var(--accent-3); }
+        .terminal-output { color: var(--accent-5); }
+
+        /* Hexagon Skills Grid */
+        .hex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            padding: 20px;
+        }
+
+        .hex-skill {
+            position: relative;
+            width: 100px;
+            height: 58px;
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(123, 44, 191, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 11px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .hex-skill::before {
             content: '';
             position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
-            border-radius: 26px;
+            inset: 2px;
+            background: var(--bg-main);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             z-index: -1;
+        }
+
+        .hex-skill:hover {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.5);
+            z-index: 10;
+        }
+
+        .hex-skill:hover::before {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.2), rgba(123, 44, 191, 0.2));
+        }
+
+        /* Skill Category Card */
+        .skill-category {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--accent-1), transparent 30%);
+            animation: borderRotate 4s linear infinite;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .glow-border:hover::before {
+        .skill-category:hover::before {
             opacity: 1;
         }
 
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+        .skill-category::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--bg-card);
+            border-radius: 22px;
+            z-index: 0;
         }
 
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        .skill-category > * {
+            position: relative;
+            z-index: 1;
         }
 
-        /* Certification Card */
-        .cert-card {
-            background: linear-gradient(145deg, #151520, #0e0e14);
-            box-shadow: 
-                8px 8px 20px #070709,
-                -8px -8px 20px #1a1a24;
+        @keyframes borderRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Skill Pills with Glow */
+        .skill-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            margin: 4px;
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.05), rgba(123, 44, 191, 0.05));
+            border: 1px solid rgba(0, 245, 212, 0.2);
             border-radius: 20px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-pill:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.2), rgba(123, 44, 191, 0.2));
+            border-color: var(--accent-1);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .skill-pill.python { border-color: #3776ab; }
+        .skill-pill.python:hover { box-shadow: 0 0 20px rgba(55, 118, 171, 0.5); }
+        .skill-pill.ai { border-color: #f72585; }
+        .skill-pill.ai:hover { box-shadow: 0 0 20px rgba(247, 37, 133, 0.5); }
+        .skill-pill.cloud { border-color: #ff9500; }
+        .skill-pill.cloud:hover { box-shadow: 0 0 20px rgba(255, 149, 0, 0.5); }
+        .skill-pill.db { border-color: #00d4aa; }
+        .skill-pill.db:hover { box-shadow: 0 0 20px rgba(0, 212, 170, 0.5); }
+
+        /* DNA Helix for Skills */
+        .dna-container {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 100%;
+            animation: dnaScroll 20s linear infinite;
+        }
+
+        @keyframes dnaScroll {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
+        }
+
+        /* Certificates */
+        .cert-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            box-shadow: 8px 8px 20px #030308, -8px -8px 20px #0d0d1f;
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(0, 245, 212, 0.05);
         }
 
         .cert-card:hover {
             transform: scale(1.03) translateY(-5px);
             box-shadow: 
-                12px 12px 30px #070709,
-                -12px -12px 30px #1a1a24,
-                0 0 30px rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
+                12px 12px 30px #030308,
+                -12px -12px 30px #0d0d1f,
+                0 0 40px rgba(0, 245, 212, 0.15);
+            border-color: rgba(0, 245, 212, 0.3);
         }
 
-        /* Timeline */
-        .timeline-line {
-            position: absolute;
-            left: 24px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-1), var(--accent-2), var(--accent-3));
+        .cert-card img {
+            transition: transform 0.5s ease;
         }
 
-        .timeline-dot {
-            position: absolute;
-            left: 16px;
-            width: 18px;
-            height: 18px;
-            background: var(--accent-1);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        .cert-card:hover img {
+            transform: scale(1.05);
         }
 
-        /* Skill Tags */
-        .skill-tag {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
-        }
+        /* Category Colors */
+        .cat-genai { background: rgba(247, 37, 133, 0.15); color: #f72585; border-color: rgba(247, 37, 133, 0.3); }
+        .cat-ml { background: rgba(0, 245, 212, 0.15); color: #00f5d4; border-color: rgba(0, 245, 212, 0.3); }
+        .cat-cloud { background: rgba(255, 149, 0, 0.15); color: #ff9500; border-color: rgba(255, 149, 0, 0.3); }
+        .cat-finance { background: rgba(76, 201, 240, 0.15); color: #4cc9f0; border-color: rgba(76, 201, 240, 0.3); }
+        .cat-data { background: rgba(123, 44, 191, 0.15); color: #a855f7; border-color: rgba(123, 44, 191, 0.3); }
+        .cat-dev { background: rgba(67, 97, 238, 0.15); color: #4361ee; border-color: rgba(67, 97, 238, 0.3); }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-main);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); border-radius: 4px; }
 
         /* Nav */
         .nav-link {
@@ -245,13 +426,24 @@
             width: 100%;
         }
 
-        /* Stats Card */
+        /* Stats */
         .stat-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.05), rgba(123, 44, 191, 0.05));
+            border: 1px solid rgba(0, 245, 212, 0.1);
         }
 
-        /* Particle */
+        /* Experience Badge */
+        .exp-badge {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 212, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 245, 212, 0.6); }
+        }
+
+        /* Particles */
         #particles {
             position: fixed;
             top: 0;
@@ -268,26 +460,25 @@
             height: 3px;
             background: var(--accent-1);
             border-radius: 50%;
-            opacity: 0.4;
+            opacity: 0.5;
             animation: particleFloat 20s infinite;
         }
 
         @keyframes particleFloat {
             0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.4; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* Experience Badge */
-        .exp-badge {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            animation: pulse-glow 2s ease-in-out infinite;
+        /* Filter Buttons */
+        .filter-btn {
+            transition: all 0.3s ease;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-4)) !important;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
         }
 
         /* Modal */
@@ -295,56 +486,46 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Category Colors */
-        .cat-genai { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border-color: rgba(139, 92, 246, 0.3); }
-        .cat-ml { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border-color: rgba(6, 182, 212, 0.3); }
-        .cat-python { background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
-        .cat-cloud { background: rgba(251, 146, 60, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
-        .cat-finance { background: rgba(236, 72, 153, 0.2); color: #f472b6; border-color: rgba(236, 72, 153, 0.3); }
-        .cat-other { background: rgba(99, 102, 241, 0.2); color: #818cf8; border-color: rgba(99, 102, 241, 0.3); }
-
         @media (max-width: 768px) {
-            .neu-card, .cert-card {
-                box-shadow: 4px 4px 10px #070709, -4px -4px 10px #1a1a24;
-            }
+            .hex-skill { width: 80px; height: 46px; font-size: 9px; }
+            .orbit-container { width: 250px; height: 250px; }
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Background -->
-    <div class="mesh-gradient"></div>
+    <!-- Background Effects -->
+    <div class="gradient-bg"></div>
+    <div class="cyber-grid"></div>
     <div id="particles"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-4 md:px-8">
-        <div class="neu-card-static max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl md:text-2xl font-bold">
+        <div class="neu-card max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl md:text-2xl font-bold orbitron">
                 <span class="glow-text">&lt;AL/&gt;</span>
             </a>
             
             <button id="menuBtn" class="md:hidden neu-circle w-10 h-10 flex items-center justify-center">
-                <i class="fas fa-bars text-[#6366f1]"></i>
+                <i class="fas fa-bars text-[#00f5d4]"></i>
             </button>
 
             <div class="hidden md:flex gap-8">
-                <a href="#home" class="nav-link hover:text-[#6366f1] transition">Home</a>
-                <a href="#about" class="nav-link hover:text-[#6366f1] transition">About</a>
-                <a href="#experience" class="nav-link hover:text-[#6366f1] transition">Experience</a>
-                <a href="#skills" class="nav-link hover:text-[#6366f1] transition">Skills</a>
-                <a href="#certifications" class="nav-link hover:text-[#6366f1] transition">Certifications</a>
-                <a href="#achievements" class="nav-link hover:text-[#6366f1] transition">Achievements</a>
+                <a href="#home" class="nav-link hover:text-[#00f5d4] transition">Home</a>
+                <a href="#about" class="nav-link hover:text-[#00f5d4] transition">About</a>
+                <a href="#experience" class="nav-link hover:text-[#00f5d4] transition">Experience</a>
+                <a href="#skills" class="nav-link hover:text-[#00f5d4] transition">Skills</a>
+                <a href="#certifications" class="nav-link hover:text-[#00f5d4] transition">Certifications</a>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden mt-4 neu-card-static max-w-7xl mx-auto p-6">
+        <div id="mobileMenu" class="hidden md:hidden mt-4 neu-card max-w-7xl mx-auto p-6">
             <div class="flex flex-col gap-4">
-                <a href="#home" class="hover:text-[#6366f1] transition">Home</a>
-                <a href="#about" class="hover:text-[#6366f1] transition">About</a>
-                <a href="#experience" class="hover:text-[#6366f1] transition">Experience</a>
-                <a href="#skills" class="hover:text-[#6366f1] transition">Skills</a>
-                <a href="#certifications" class="hover:text-[#6366f1] transition">Certifications</a>
-                <a href="#achievements" class="hover:text-[#6366f1] transition">Achievements</a>
+                <a href="#home" class="hover:text-[#00f5d4] transition">Home</a>
+                <a href="#about" class="hover:text-[#00f5d4] transition">About</a>
+                <a href="#experience" class="hover:text-[#00f5d4] transition">Experience</a>
+                <a href="#skills" class="hover:text-[#00f5d4] transition">Skills</a>
+                <a href="#certifications" class="hover:text-[#00f5d4] transition">Certifications</a>
             </div>
         </div>
     </nav>
@@ -353,58 +534,58 @@
     <section id="home" class="min-h-screen flex items-center justify-center px-4 md:px-8 pt-24 relative z-10">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             <div class="order-2 lg:order-1">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="exp-badge px-4 py-1 rounded-full text-sm font-medium text-white">4+ Years Experience</span>
-                    <span class="px-3 py-1 rounded-full text-xs border border-green-500/30 text-green-400 bg-green-500/10">🟢 Open to Opportunities</span>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="exp-badge px-4 py-1 rounded-full text-sm font-medium text-black">4+ Years Experience</span>
+                    <span class="px-3 py-1 rounded-full text-xs border border-green-500/30 text-green-400 bg-green-500/10">🟢 Open to Work</span>
                 </div>
                 
-                <p class="text-[#6366f1] text-lg mb-2 font-medium mono">Hello World, I'm</p>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                <p class="text-[#00f5d4] text-lg mb-2 font-medium mono">Hello World, I'm</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 orbitron">
                     <span class="glow-text">Abhijeet Lodh</span>
                 </h1>
                 <h2 class="text-xl md:text-2xl text-[#94a3b8] mb-6">
-                    <span id="typewriter"></span><span class="animate-pulse text-[#6366f1]">|</span>
+                    <span id="typewriter"></span><span class="animate-pulse text-[#00f5d4]">|</span>
                 </h2>
                 <p class="text-[#94a3b8] mb-6 leading-relaxed text-lg">
                     <span class="text-white font-medium">AI/ML Engineer & Data Scientist</span> specializing in 
-                    <span class="text-[#8b5cf6]">Generative AI</span>, 
-                    <span class="text-[#06b6d4]">LLMs</span>, and 
-                    <span class="text-[#10b981]">Agentic AI</span>. 
+                    <span class="text-[#f72585]">Generative AI</span>, 
+                    <span class="text-[#00f5d4]">LLMs</span>, and 
+                    <span class="text-[#4cc9f0]">Agentic AI</span>. 
                     Building intelligent solutions across BFSI, Retail & Pharma domains.
                 </p>
 
                 <!-- Quick Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div class="stat-card rounded-xl p-4 text-center">
-                        <p class="text-2xl font-bold glow-text">4+</p>
+                        <p class="text-2xl font-bold glow-text orbitron">4+</p>
                         <p class="text-xs text-[#94a3b8]">Years Exp</p>
                     </div>
                     <div class="stat-card rounded-xl p-4 text-center">
-                        <p class="text-2xl font-bold glow-text">2.5+</p>
+                        <p class="text-2xl font-bold glow-text orbitron">2.5+</p>
                         <p class="text-xs text-[#94a3b8]">Years GenAI</p>
                     </div>
                     <div class="stat-card rounded-xl p-4 text-center">
-                        <p class="text-2xl font-bold glow-text">1100+</p>
+                        <p class="text-2xl font-bold glow-text orbitron">1100+</p>
                         <p class="text-xs text-[#94a3b8]">DSA Problems</p>
                     </div>
                     <div class="stat-card rounded-xl p-4 text-center">
-                        <p class="text-2xl font-bold glow-text">30+</p>
+                        <p class="text-2xl font-bold glow-text orbitron">60+</p>
                         <p class="text-xs text-[#94a3b8]">Certifications</p>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap gap-4 mb-8">
-                    <a href="#experience" class="neu-button px-8 py-3 text-white font-medium">
+                    <a href="#experience" class="neu-button px-8 py-3 text-black font-medium">
                         <i class="fas fa-briefcase mr-2"></i>View Experience
                     </a>
-                    <a href="https://bento.me/abhijeetlodh" target="_blank" class="neu-card px-8 py-3 font-medium hover:text-[#6366f1] transition glow-border">
+                    <a href="https://bento.me/abhijeetlodh" target="_blank" class="neu-card px-8 py-3 font-medium hover:text-[#00f5d4] transition">
                         <i class="fas fa-external-link-alt mr-2"></i>Portfolio
                     </a>
                 </div>
 
                 <!-- Social Links -->
                 <div class="flex gap-4">
-                    <a href="https://github.com/abhijeetlodh" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#6366f1] transition" title="GitHub">
+                    <a href="https://github.com/abhijeetlodh" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#00f5d4] transition" title="GitHub">
                         <i class="fab fa-github text-xl"></i>
                     </a>
                     <a href="https://www.linkedin.com/in/abhijeet-lodh-sde/" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#0077b5] transition" title="LinkedIn">
@@ -416,7 +597,7 @@
                     <a href="https://www.kaggle.com/abhijeetlodh" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#20beff] transition" title="Kaggle">
                         <i class="fab fa-kaggle text-xl"></i>
                     </a>
-                    <a href="mailto:abhijeetlodh@gmail.com" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#ea4335] transition" title="Email">
+                    <a href="mailto:abhijeetlodh@gmail.com" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#f72585] transition" title="Email">
                         <i class="fas fa-envelope text-xl"></i>
                     </a>
                 </div>
@@ -424,22 +605,32 @@
 
             <div class="order-1 lg:order-2 flex justify-center">
                 <div class="relative">
-                    <div class="neu-circle w-64 h-64 md:w-80 md:h-80 flex items-center justify-center floating">
-                        <div class="neu-inset w-56 h-56 md:w-72 md:h-72 flex items-center justify-center p-4">
-                            <div class="text-center">
-                                <i class="fas fa-brain text-5xl md:text-7xl text-[#6366f1] mb-2"></i>
-                                <p class="text-xs text-[#94a3b8] mono">AI/ML • GenAI • LLMs</p>
+                    <!-- Orbit Animation -->
+                    <div class="orbit-container floating">
+                        <div class="orbit-ring"></div>
+                        <div class="orbit-ring"></div>
+                        <div class="orbit-ring"></div>
+                        
+                        <!-- Center Icon -->
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <div class="neu-circle w-24 h-24 flex items-center justify-center">
+                                <i class="fas fa-brain text-4xl text-[#00f5d4]"></i>
                             </div>
                         </div>
+
+                        <!-- Orbiting Skills -->
+                        <div class="orbit-skill" style="top: 0; left: 50%; animation-delay: 0s;">Python</div>
+                        <div class="orbit-skill" style="top: 50%; right: 0; animation-delay: -5s;">LangChain</div>
+                        <div class="orbit-skill" style="bottom: 0; left: 50%; animation-delay: -10s;">RAG</div>
+                        <div class="orbit-skill" style="top: 50%; left: 0; animation-delay: -15s;">LLMs</div>
                     </div>
-                    <div class="absolute -top-4 -right-4 neu-circle w-16 h-16 flex items-center justify-center">
-                        <i class="fab fa-python text-2xl text-[#10b981]"></i>
+
+                    <!-- Floating Icons -->
+                    <div class="absolute -top-4 -right-8 neu-circle w-14 h-14 flex items-center justify-center animate-bounce">
+                        <i class="fab fa-python text-2xl text-[#3776ab]"></i>
                     </div>
-                    <div class="absolute -bottom-6 -left-6 neu-circle w-14 h-14 flex items-center justify-center">
-                        <i class="fas fa-robot text-xl text-[#8b5cf6]"></i>
-                    </div>
-                    <div class="absolute top-1/2 -right-10 neu-circle w-12 h-12 flex items-center justify-center">
-                        <i class="fas fa-database text-lg text-[#06b6d4]"></i>
+                    <div class="absolute -bottom-6 -left-6 neu-circle w-12 h-12 flex items-center justify-center" style="animation: float 4s ease-in-out infinite;">
+                        <i class="fas fa-robot text-lg text-[#f72585]"></i>
                     </div>
                 </div>
             </div>
@@ -449,27 +640,27 @@
     <!-- About Section -->
     <section id="about" class="py-24 px-4 md:px-8 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 orbitron">
                 About <span class="glow-text">Me</span>
             </h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#00f5d4] to-[#f72585] mx-auto mb-12 rounded-full"></div>
 
             <div class="grid lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 neu-card p-8">
                     <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <i class="fas fa-user-astronaut text-[#6366f1]"></i>
+                        <i class="fas fa-user-astronaut text-[#00f5d4]"></i>
                         Professional Summary
                     </h3>
                     <p class="text-[#94a3b8] leading-relaxed mb-4">
                         <span class="text-white font-medium">4 years of experience as a REMOTE Data Scientist</span> across various domains including 
-                        <span class="text-[#06b6d4]">Banking (BFSI)</span>, 
-                        <span class="text-[#10b981]">Retail</span>, and 
-                        <span class="text-[#8b5cf6]">Pharmaceutical</span> industries.
+                        <span class="text-[#4cc9f0]">Banking (BFSI)</span>, 
+                        <span class="text-[#00f5d4]">Retail</span>, and 
+                        <span class="text-[#f72585]">Pharmaceutical</span> industries.
                     </p>
                     <p class="text-[#94a3b8] leading-relaxed mb-4">
                         Specialized in <span class="text-white">Heavy Analytics</span>, <span class="text-white">Natural Language Processing</span>, and 
-                        <span class="text-white">Generative AI (LLMs)</span>. With <span class="text-[#6366f1] font-medium">2.5+ years in Gen-AI</span>, 
-                        I'm now building cutting-edge <span class="text-[#8b5cf6] font-medium">Agentic AI Products</span>.
+                        <span class="text-white">Generative AI (LLMs)</span>. With <span class="text-[#00f5d4] font-medium">2.5+ years in Gen-AI</span>, 
+                        I'm now building cutting-edge <span class="text-[#f72585] font-medium">Agentic AI Products</span>.
                     </p>
                     <p class="text-[#94a3b8] leading-relaxed">
                         I've solved <span class="text-[#ffa116] font-medium">1100+ Data Structures and Algorithms</span> coding questions, 
@@ -477,10 +668,10 @@
                     </p>
 
                     <div class="mt-6 flex flex-wrap gap-3">
-                        <span class="px-3 py-1 rounded-full text-sm bg-[#6366f1]/10 text-[#818cf8] border border-[#6366f1]/20">
+                        <span class="px-3 py-1 rounded-full text-sm bg-[#00f5d4]/10 text-[#00f5d4] border border-[#00f5d4]/20">
                             <i class="fas fa-map-marker-alt mr-1"></i>Amravati • Pune • Mumbai
                         </span>
-                        <span class="px-3 py-1 rounded-full text-sm bg-[#10b981]/10 text-[#34d399] border border-[#10b981]/20">
+                        <span class="px-3 py-1 rounded-full text-sm bg-[#f72585]/10 text-[#f472b6] border border-[#f72585]/20">
                             <i class="fas fa-laptop-house mr-1"></i>Remote Preferred
                         </span>
                     </div>
@@ -488,19 +679,19 @@
 
                 <div class="neu-card p-8">
                     <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <i class="fas fa-graduation-cap text-[#6366f1]"></i>
+                        <i class="fas fa-graduation-cap text-[#00f5d4]"></i>
                         Education
                     </h3>
-                    <div class="neu-inset p-5 rounded-xl">
+                    <div class="bg-gradient-to-br from-[#00f5d4]/5 to-[#f72585]/5 p-5 rounded-xl border border-[#00f5d4]/10">
                         <div class="flex items-start gap-4">
                             <div class="neu-circle w-12 h-12 flex items-center justify-center shrink-0">
-                                <i class="fas fa-university text-[#6366f1]"></i>
+                                <i class="fas fa-university text-[#00f5d4]"></i>
                             </div>
                             <div>
                                 <p class="font-semibold text-white">B.E. Computer Science</p>
                                 <p class="text-sm text-[#94a3b8]">Sant Gadge Baba Amravati University</p>
                                 <p class="text-xs text-[#94a3b8] mt-1">2017 - 2021</p>
-                                <div class="mt-3 inline-block px-3 py-1 rounded-full bg-[#10b981]/20 text-[#34d399] text-sm font-medium">
+                                <div class="mt-3 inline-block px-3 py-1 rounded-full bg-[#00f5d4]/20 text-[#00f5d4] text-sm font-medium">
                                     CGPA: 9.93/10 (GPA 3.97/4.0)
                                 </div>
                                 <p class="text-xs text-[#94a3b8] mt-3">
@@ -518,24 +709,24 @@
     <!-- Experience Section -->
     <section id="experience" class="py-24 px-4 md:px-8 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 orbitron">
                 Professional <span class="glow-text">Experience</span>
             </h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#00f5d4] to-[#f72585] mx-auto mb-12 rounded-full"></div>
 
             <div class="space-y-8">
                 <!-- InfoGain -->
                 <div class="neu-card p-8 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#6366f1]/10 to-transparent rounded-bl-full"></div>
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#00f5d4]/10 to-transparent rounded-bl-full"></div>
                     
                     <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
                         <div>
                             <div class="flex items-center gap-3 mb-2">
-                                <span class="px-3 py-1 rounded-full text-xs bg-[#10b981]/20 text-[#34d399] border border-[#10b981]/30">CURRENT</span>
-                                <span class="px-3 py-1 rounded-full text-xs bg-[#6366f1]/20 text-[#818cf8]">REMOTE</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#00f5d4]/20 text-[#00f5d4] border border-[#00f5d4]/30">CURRENT</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#f72585]/20 text-[#f472b6]">REMOTE</span>
                             </div>
                             <h3 class="text-2xl font-bold text-white">Consultant - Analytics</h3>
-                            <p class="text-[#6366f1] font-medium text-lg">InfoGain, Pune</p>
+                            <p class="text-[#00f5d4] font-medium text-lg">InfoGain, Pune</p>
                         </div>
                         <div class="text-right">
                             <p class="text-[#94a3b8] mono">April 2025 - Present</p>
@@ -546,50 +737,44 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-robot text-[#8b5cf6]"></i>Key Projects
+                                <i class="fas fa-robot text-[#f72585]"></i>Key Projects
                             </h4>
                             <ul class="space-y-2 text-[#94a3b8] text-sm">
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>RAG Solution with FAISS, AzureOpenAI & NVIDIA NeMo Guardrails</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>FastAPI ML Application for NLP serving 100K+ active users</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
-                                    <span>IGNIS Chatbot with Agentic Platform Excellence</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>Azure Databricks Code Remediation Agent (SAS Parser, Transpilation, Self-Healing)</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>Autonomous Data Engineering with AutoGen, CrewAI & LangGraph</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>MCP Server Online Encyclopedia Research Assistant</span>
                                 </li>
                             </ul>
                         </div>
                         <div>
                             <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-tools text-[#06b6d4]"></i>Tech Stack
+                                <i class="fas fa-tools text-[#4cc9f0]"></i>Tech Stack
                             </h4>
                             <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure Databricks</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangChain</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangGraph</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangSmith</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AzureOpenAI</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">CrewAI</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AutoGen</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">MCP</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">FastAPI</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Pydantic</span>
+                                <span class="skill-pill ai">Azure Databricks</span>
+                                <span class="skill-pill ai">LangChain</span>
+                                <span class="skill-pill ai">LangGraph</span>
+                                <span class="skill-pill ai">AzureOpenAI</span>
+                                <span class="skill-pill ai">CrewAI</span>
+                                <span class="skill-pill ai">AutoGen</span>
+                                <span class="skill-pill ai">MCP</span>
+                                <span class="skill-pill python">FastAPI</span>
                             </div>
                         </div>
                     </div>
@@ -597,13 +782,13 @@
 
                 <!-- Accenture -->
                 <div class="neu-card p-8 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#8b5cf6]/10 to-transparent rounded-bl-full"></div>
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#f72585]/10 to-transparent rounded-bl-full"></div>
                     
                     <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
                         <div>
                             <span class="px-3 py-1 rounded-full text-xs bg-[#94a3b8]/20 text-[#94a3b8] border border-[#94a3b8]/30 mb-2 inline-block">PREVIOUS</span>
-                            <h3 class="text-2xl font-bold text-white">AI/ML COMPUTATIONAL SCIENCE ASSOCIATE</h3>
-                            <p class="text-[#8b5cf6] font-medium text-lg">Accenture, Mumbai</p>
+                            <h3 class="text-2xl font-bold text-white">Application Development Associate</h3>
+                            <p class="text-[#f72585] font-medium text-lg">Accenture, Mumbai</p>
                         </div>
                         <div class="text-right">
                             <p class="text-[#94a3b8] mono">Nov 2021 - April 2025</p>
@@ -614,58 +799,46 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-project-diagram text-[#8b5cf6]"></i>Key Projects
+                                <i class="fas fa-project-diagram text-[#f72585]"></i>Key Projects
                             </h4>
                             <ul class="space-y-2 text-[#94a3b8] text-sm">
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>Credit Card Fraud Detection with AWS MLOps</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>Credit Risk Modeling (PD, LGD, EAD)</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
-                                    <span>Customer Churn Prediction & BFSI Analytics</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>Time-Series Sales Forecasting with LSTM</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>GenAI Bot on Databricks with LLAMA-3.3 70B</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <i class="fas fa-check text-[#00f5d4] mt-1"></i>
                                     <span>IDP with Azure AI Vision & OCR</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
-                                    <span>RAG-based Form Filling AI Agent</span>
                                 </li>
                             </ul>
                         </div>
                         <div>
                             <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-industry text-[#06b6d4]"></i>Domains
+                                <i class="fas fa-industry text-[#4cc9f0]"></i>Domains & Platforms
                             </h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-xs bg-[#6366f1]/20 text-[#818cf8]">BFSI</span>
-                                <span class="px-3 py-1 rounded-full text-xs bg-[#10b981]/20 text-[#34d399]">Retail</span>
-                                <span class="px-3 py-1 rounded-full text-xs bg-[#8b5cf6]/20 text-[#a78bfa]">Pharma</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#4361ee]/20 text-[#818cf8]">BFSI</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#00f5d4]/20 text-[#00f5d4]">Retail</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#f72585]/20 text-[#f472b6]">Pharma</span>
                             </div>
-                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
-                                <i class="fas fa-cloud text-[#06b6d4]"></i>Platforms
-                            </h4>
                             <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS SageMaker</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">GCP Vertex AI</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure ML</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Databricks</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">MLflow</span>
-                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Airflow</span>
+                                <span class="skill-pill cloud">AWS SageMaker</span>
+                                <span class="skill-pill cloud">GCP Vertex AI</span>
+                                <span class="skill-pill cloud">Azure ML</span>
+                                <span class="skill-pill cloud">Databricks</span>
+                                <span class="skill-pill cloud">MLflow</span>
                             </div>
                         </div>
                     </div>
@@ -674,129 +847,199 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills Section - THE CREATIVE PART! -->
     <section id="skills" class="py-24 px-4 md:px-8 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                Tech <span class="glow-text">Stack</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 orbitron">
+                Tech <span class="glow-text">Arsenal</span>
             </h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#00f5d4] to-[#f72585] mx-auto mb-4 rounded-full"></div>
+            <p class="text-center text-[#94a3b8] mb-12">Hover over skills to see the magic ✨</p>
 
+            <!-- Terminal Style Skills Display -->
+            <div class="terminal mb-12 max-w-4xl mx-auto">
+                <div class="terminal-header">
+                    <div class="terminal-dot bg-[#ff5f56]"></div>
+                    <div class="terminal-dot bg-[#ffbd2e]"></div>
+                    <div class="terminal-dot bg-[#27c93f]"></div>
+                    <span class="ml-4 text-xs text-[#94a3b8]">abhijeet@ai-engineer ~ skills</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="terminal-line" style="animation-delay: 0.1s;">
+                        <span class="terminal-prompt">$</span> <span class="terminal-command">pip install</span> <span class="text-white">abhijeet-skills</span>
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 0.5s;">
+                        <span class="terminal-output">📦 Installing Python, NumPy, Pandas, TensorFlow, PyTorch...</span>
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 1s;">
+                        <span class="terminal-output">🤖 Installing LangChain, LLM, RAG, CrewAI, LangGraph...</span>
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 1.5s;">
+                        <span class="terminal-output">☁️ Installing AWS, Azure, GCP, Databricks, MLflow...</span>
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 2s;">
+                        <span class="terminal-output">🗄️ Installing SQL, Pinecone, ChromaDB, MongoDB...</span>
+                    </div>
+                    <div class="terminal-line" style="animation-delay: 2.5s;">
+                        <span class="terminal-prompt">$</span> <span class="text-[#27c93f]">✓ All 50+ skills installed successfully!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hexagonal Skills Grid -->
+            <div class="mb-16">
+                <h3 class="text-xl font-semibold text-center mb-8 flex items-center justify-center gap-2">
+                    <i class="fas fa-hexagon text-[#00f5d4]"></i>
+                    <span class="glow-text-pink">Core Technologies</span>
+                </h3>
+                <div class="hex-grid">
+                    <div class="hex-skill">Python</div>
+                    <div class="hex-skill">NumPy</div>
+                    <div class="hex-skill">Pandas</div>
+                    <div class="hex-skill">TensorFlow</div>
+                    <div class="hex-skill">PyTorch</div>
+                    <div class="hex-skill">PySpark</div>
+                    <div class="hex-skill">LangChain</div>
+                    <div class="hex-skill">LangGraph</div>
+                    <div class="hex-skill">LLMs</div>
+                    <div class="hex-skill">RAG</div>
+                    <div class="hex-skill">CrewAI</div>
+                    <div class="hex-skill">AutoGen</div>
+                    <div class="hex-skill">MCP</div>
+                    <div class="hex-skill">FastAPI</div>
+                    <div class="hex-skill">BERT</div>
+                    <div class="hex-skill">GPT</div>
+                    <div class="hex-skill">LLAMA</div>
+                    <div class="hex-skill">AWS</div>
+                    <div class="hex-skill">Azure</div>
+                    <div class="hex-skill">GCP</div>
+                    <div class="hex-skill">SQL</div>
+                    <div class="hex-skill">Pinecone</div>
+                    <div class="hex-skill">ChromaDB</div>
+                    <div class="hex-skill">MLflow</div>
+                </div>
+            </div>
+
+            <!-- Skill Categories with Animated Border -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Python & Core -->
-                <div class="neu-card p-6">
+                <div class="skill-category neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fab fa-python text-xl text-[#10b981]"></i>
+                            <i class="fab fa-python text-xl text-[#3776ab]"></i>
                         </div>
                         <h3 class="font-semibold text-lg">Python & Core</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Python</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">NumPy</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Pandas</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Matplotlib</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">TensorFlow</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">PyTorch</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">PySpark</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">DSA</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">OOP</span>
-                    </div>
-                </div>
-
-                <!-- Data Science -->
-                <div class="neu-card p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fas fa-chart-line text-xl text-[#06b6d4]"></i>
-                        </div>
-                        <h3 class="font-semibold text-lg">Data Science</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Feature Engineering</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Model Training</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Hyperparameter Tuning</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Cross-Validation</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Statistical Modeling</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MLOps</span>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill python">Python</span>
+                        <span class="skill-pill python">NumPy</span>
+                        <span class="skill-pill python">Pandas</span>
+                        <span class="skill-pill python">Matplotlib</span>
+                        <span class="skill-pill python">TensorFlow</span>
+                        <span class="skill-pill python">PyTorch</span>
+                        <span class="skill-pill python">PySpark</span>
+                        <span class="skill-pill python">DSA</span>
+                        <span class="skill-pill python">OOP</span>
                     </div>
                 </div>
 
                 <!-- Generative AI -->
-                <div class="neu-card p-6">
+                <div class="skill-category neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fas fa-robot text-xl text-[#8b5cf6]"></i>
+                            <i class="fas fa-robot text-xl text-[#f72585]"></i>
                         </div>
                         <h3 class="font-semibold text-lg">Generative AI</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LangChain</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LangGraph</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">RAG</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Advanced RAG</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Prompt Engineering</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LoRA/PEFT</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">CrewAI</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MCP</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Transformers</span>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill ai">LangChain</span>
+                        <span class="skill-pill ai">LangGraph</span>
+                        <span class="skill-pill ai">RAG</span>
+                        <span class="skill-pill ai">Advanced RAG</span>
+                        <span class="skill-pill ai">Prompt Engineering</span>
+                        <span class="skill-pill ai">LoRA/PEFT</span>
+                        <span class="skill-pill ai">CrewAI</span>
+                        <span class="skill-pill ai">AutoGen</span>
+                        <span class="skill-pill ai">MCP</span>
+                        <span class="skill-pill ai">LLMOps</span>
+                        <span class="skill-pill ai">CoT/ToT</span>
+                        <span class="skill-pill ai">Transformers</span>
+                    </div>
+                </div>
+
+                <!-- Data Science -->
+                <div class="skill-category neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-xl text-[#4cc9f0]"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg">Data Science</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill">Feature Engineering</span>
+                        <span class="skill-pill">Model Training</span>
+                        <span class="skill-pill">Hyperparameter Tuning</span>
+                        <span class="skill-pill">Cross-Validation</span>
+                        <span class="skill-pill">Statistical Modeling</span>
+                        <span class="skill-pill">MLOps</span>
+                        <span class="skill-pill">Model Deployment</span>
                     </div>
                 </div>
 
                 <!-- Databases -->
-                <div class="neu-card p-6">
+                <div class="skill-category neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fas fa-database text-xl text-[#f472b6]"></i>
+                            <i class="fas fa-database text-xl text-[#00d4aa]"></i>
                         </div>
                         <h3 class="font-semibold text-lg">Databases</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">SQL</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Pinecone</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">ChromaDB</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Elasticsearch</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MongoDB Atlas</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">FAISS</span>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill db">SQL</span>
+                        <span class="skill-pill db">Pinecone</span>
+                        <span class="skill-pill db">ChromaDB</span>
+                        <span class="skill-pill db">FAISS</span>
+                        <span class="skill-pill db">Elasticsearch</span>
+                        <span class="skill-pill db">MongoDB Atlas</span>
                     </div>
                 </div>
 
-                <!-- Cloud -->
-                <div class="neu-card p-6">
+                <!-- Cloud & MLOps -->
+                <div class="skill-category neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fas fa-cloud text-xl text-[#fb923c]"></i>
+                            <i class="fas fa-cloud text-xl text-[#ff9500]"></i>
                         </div>
                         <h3 class="font-semibold text-lg">Cloud & MLOps</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS SageMaker</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS Bedrock</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure ML</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">GCP Vertex AI</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Databricks</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MLflow</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Kubeflow</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">HuggingFace</span>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill cloud">AWS SageMaker</span>
+                        <span class="skill-pill cloud">AWS Bedrock</span>
+                        <span class="skill-pill cloud">Azure ML</span>
+                        <span class="skill-pill cloud">Azure Databricks</span>
+                        <span class="skill-pill cloud">GCP Vertex AI</span>
+                        <span class="skill-pill cloud">MLflow</span>
+                        <span class="skill-pill cloud">Kubeflow</span>
+                        <span class="skill-pill cloud">HuggingFace</span>
                     </div>
                 </div>
 
-                <!-- NLP -->
-                <div class="neu-card p-6">
+                <!-- NLP & LLMs -->
+                <div class="skill-category neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
-                            <i class="fas fa-language text-xl text-[#22d3ee]"></i>
+                            <i class="fas fa-language text-xl text-[#7b2cbf]"></i>
                         </div>
                         <h3 class="font-semibold text-lg">NLP & LLMs</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">BERT</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LLAMA</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">GPT</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Sentiment Analysis</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Text-to-SQL</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">OCR</span>
-                        <span class="skill-tag px-3 py-1 rounded-full text-xs">IDP</span>
+                    <div class="flex flex-wrap">
+                        <span class="skill-pill ai">BERT</span>
+                        <span class="skill-pill ai">LLAMA</span>
+                        <span class="skill-pill ai">GPT</span>
+                        <span class="skill-pill ai">Sentiment Analysis</span>
+                        <span class="skill-pill ai">Text-to-SQL</span>
+                        <span class="skill-pill ai">OCR</span>
+                        <span class="skill-pill ai">IDP</span>
                     </div>
                 </div>
             </div>
@@ -806,13 +1049,13 @@
     <!-- Achievements Section -->
     <section id="achievements" class="py-24 px-4 md:px-8 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 orbitron">
                 <span class="glow-text">Achievements</span>
             </h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#00f5d4] to-[#f72585] mx-auto mb-12 rounded-full"></div>
 
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <!-- LeetCode Card -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- LeetCode -->
                 <div class="neu-card p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="neu-circle w-12 h-12 flex items-center justify-center">
@@ -823,7 +1066,7 @@
                             <p class="text-sm text-[#94a3b8]">1100+ Problems • 1000+ Days Streak</p>
                         </div>
                     </div>
-                    <div class="neu-inset p-4 rounded-xl overflow-hidden">
+                    <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#00f5d4]/10 overflow-hidden">
                         <img src="https://leetcard.jacoblin.cool/abhijeetlodh?theme=dark&font=Prociono&ext=heatmap" 
                              alt="LeetCode Stats" class="w-full rounded-lg">
                     </div>
@@ -844,7 +1087,7 @@
                             <p class="text-sm text-[#94a3b8]">6 Star Problem Solving</p>
                         </div>
                     </div>
-                    <div class="neu-inset p-6 rounded-xl">
+                    <div class="bg-[#0a0a0f] p-6 rounded-xl border border-[#00f5d4]/10">
                         <div class="flex items-center justify-center gap-2 mb-4">
                             <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
                             <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
@@ -854,19 +1097,17 @@
                             <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
                         </div>
                         <p class="text-center text-[#94a3b8]">2200+ Score in Problem Solving</p>
-                        <p class="text-center text-[#94a3b8] text-sm mt-2">Data Structures & Algorithms</p>
                     </div>
-
                     <div class="grid grid-cols-2 gap-4 mt-4">
-                        <div class="neu-inset p-4 rounded-xl text-center">
+                        <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#00f5d4]/10 text-center">
                             <i class="fas fa-trophy text-[#fbbf24] text-2xl mb-2"></i>
                             <p class="text-sm font-medium">32+ Months</p>
                             <p class="text-xs text-[#94a3b8]">LeetCoding Challenges</p>
                         </div>
-                        <div class="neu-inset p-4 rounded-xl text-center">
-                            <i class="fas fa-check-circle text-[#10b981] text-2xl mb-2"></i>
-                            <p class="text-sm font-medium">Completed</p>
-                            <p class="text-xs text-[#94a3b8]">All Basic Challenges</p>
+                        <div class="bg-[#0a0a0f] p-4 rounded-xl border border-[#00f5d4]/10 text-center">
+                            <i class="fas fa-check-circle text-[#00f5d4] text-2xl mb-2"></i>
+                            <p class="text-sm font-medium">ALL Completed</p>
+                            <p class="text-xs text-[#94a3b8]">Monthly Challenges</p>
                         </div>
                     </div>
                 </div>
@@ -877,454 +1118,602 @@
     <!-- Certifications Section -->
     <section id="certifications" class="py-24 px-4 md:px-8 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 orbitron">
                 <span class="glow-text">Certifications</span>
             </h2>
-            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-4 rounded-full"></div>
-            <p class="text-center text-[#94a3b8] mb-8">Click on any certificate to view in full size</p>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#00f5d4] to-[#f72585] mx-auto mb-4 rounded-full"></div>
+            <p class="text-center text-[#94a3b8] mb-8">60+ Professional Certifications • Click to view full size</p>
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filterCerts('all')" class="filter-btn active neu-button px-5 py-2 text-sm text-white">All</button>
-                <button onclick="filterCerts('genai')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#a78bfa]">GenAI/LLM</button>
-                <button onclick="filterCerts('ml')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#22d3ee]">ML/DS</button>
-                <button onclick="filterCerts('python')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#34d399]">Python</button>
-                <button onclick="filterCerts('cloud')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#fb923c]">Cloud/AWS</button>
-                <button onclick="filterCerts('finance')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#f472b6]">Finance</button>
-                <button onclick="filterCerts('other')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#818cf8]">Other</button>
+                <button onclick="filterCerts('all')" class="filter-btn active px-5 py-2 rounded-full text-sm">All</button>
+                <button onclick="filterCerts('genai')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#f72585]">GenAI/LLM</button>
+                <button onclick="filterCerts('ml')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#00f5d4]">ML/DS</button>
+                <button onclick="filterCerts('cloud')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#ff9500]">Cloud/AWS</button>
+                <button onclick="filterCerts('finance')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#4cc9f0]">Finance</button>
+                <button onclick="filterCerts('data')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#a855f7]">Data/Kafka</button>
+                <button onclick="filterCerts('dev')" class="filter-btn neu-card px-5 py-2 rounded-full text-sm hover:text-[#4361ee]">Dev/Other</button>
             </div>
 
             <!-- Certifications Grid -->
             <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                
-                <!-- ============================================= -->
-                <!-- 🎯 HOW TO ADD YOUR CERTIFICATES:              -->
-                <!-- 1. Copy any cert-card div below               -->
-                <!-- 2. Change image src to: images/your-cert.jpg  -->
-                <!-- 3. Update title and category                  -->
-                <!-- 4. Categories: genai, ml, python, cloud, finance, other -->
-                <!-- ============================================= -->
 
                 <!-- GenAI Certificates -->
                 <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Grokking+GenAI+System+Design" 
-                             alt="Grokking Generative AI System Design" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Grokking the Generative AI System Design</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+Pinecone+OpenAI" 
-                             alt="LangChain, Pinecone & OpenAI" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Learn LangChain, Pinecone & OpenAI: Build Next-Gen LLM Apps</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Generative+AI+GANs+to+CLIP" 
-                             alt="Generative AI from GANs to CLIP" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Generative AI, from GANs to CLIP, with Python and Pytorch</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+MasterClass" 
-                             alt="LangChain MasterClass" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">LangChain MasterClass - OpenAI LLAMA 2 GPT LLM Apps</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LLM+Foundations+RAG" 
-                             alt="LLM Foundations RAG" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">LLM Foundations: Vector Databases for Caching and RAG</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Advanced+LLMOps" 
-                             alt="Advanced LLMOps" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Advanced LLMOps: Deploying and Managing LLMs in Production</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Diffusion+Models" 
-                             alt="Diffusion Models" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Hands-On Generative AI with Diffusion Models</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LLMs+Mastery+Transformers" 
-                             alt="LLMs Mastery" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-7087fad5-18fa-45d5-add6-5c701e9f3640.jpg" alt="LLMs Mastery" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">LLMs Mastery: Complete Guide to Transformers & Generative AI</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Working+with+LLMs" 
-                             alt="Working with LLMs" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-25cc7c51-716f-4b5f-a71e-4b3532c95927.jpg" alt="GANs to CLIP" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Generative AI, from GANs to CLIP, with Python and Pytorch</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-b9af16b7-62ec-47c9-ace0-db1a16b60193.jpg" alt="GenAI Google" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Generative AI with Google - Bard, PaLM API and Google Cloud</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-cc93b10a-4905-4642-91af-4e80d999d61e.jpg" alt="LangChain Pinecone" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Learn LangChain, Pinecone & OpenAI: Build Next-Gen LLM Apps</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-0cf86adc-8413-4a4d-b2b4-0ed49445ad78.jpg" alt="LangChain LLM" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain- Develop LLM powered applications with LangChain</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-098f707d-13ab-478e-94d4-2eee14e684d0.jpg" alt="LangChain MasterClass" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain MasterClass - OpenAI LLAMA 2 LLM Apps</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-a16ec43a-7ee0-4581-84a0-5c0d2d979996.jpg" alt="LangChain Bootcamp" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain with Python Bootcamp (LLM)</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-febe027f-407c-4d0c-808f-06098ec1c32b.jpg" alt="LangChain JS" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain: Develop AI web-apps with JavaScript and LangChain</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-529d55fe-c6e1-4ece-8470-e51642b4983b.jpg" alt="Working with LLMs" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Working with Large Language Models in Generative AI</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy • Aug 2023</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+Python+Bootcamp" 
-                             alt="LangChain Python Bootcamp" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-1d85ac72-189d-4db0-9387-0adf3557f7a8.jpg" alt="GenAI Security" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">LangChain with Python Bootcamp</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy • Aug 2023</p>
+                        <h3 class="font-semibold mb-1 text-sm">Generative AI - Risk and Cyber Security Masterclass 2023</h3>
                         <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
                     </div>
                 </div>
 
                 <!-- ML/DS Certificates -->
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=MLOps+AWS+Bootcamp" 
-                             alt="MLOps AWS Bootcamp" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-caa091ef-bc04-42ac-9376-b249ad46ae77.jpg" alt="MLOps AWS" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">MLOps with AWS - Bootcamp - Zero to Hero Series</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=NLP+TensorFlow" 
-                             alt="NLP TensorFlow" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-8c838cf4-77c9-4866-ade8-09db229efb58.jpg" alt="AI A-Z" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Natural Language Processing with TensorFlow</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <h3 class="font-semibold mb-1 text-sm">Artificial Intelligence A-Z 2024: Build 5 AI + LLM & ChatGPT</h3>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=ML+DS+GenAI+Python" 
-                             alt="ML DS GenAI Python" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Machine Learning, Data Science and Generative AI with Python</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Advanced+NLP+Python" 
-                             alt="Advanced NLP Python" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Advanced NLP with Python for Machine Learning</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AI+A-Z+2024" 
-                             alt="AI A-Z 2024" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Artificial Intelligence A-Z 2024: Build 7 AI + LLM & ChatGPT</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Reinforcement+Learning" 
-                             alt="Reinforcement Learning" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-9ac5ceed-4f8b-45ae-9241-a3cd4e77898f.jpg" alt="Reinforcement Learning" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Modern Reinforcement Learning: Deep Q Agents (PyTorch & TF2)</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Decision+Trees+SPSS" 
-                             alt="Decision Trees SPSS" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-139ce5cf-b629-4495-8b43-890849f5efe7.jpg" alt="ML DS GenAI" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Machine Learning and AI: Advanced Decision Trees with SPSS</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning, Data Science and Generative AI with Python</h3>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=DS+Real+World+Projects" 
-                             alt="DS Real World Projects" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-fbda8465-26bf-4550-b799-7614e7bd8325.jpg" alt="ML Deployment" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Data Science Real World Projects in Python</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy • Feb 2021</p>
+                        <h3 class="font-semibold mb-1 text-sm">Deployment of Machine Learning Models</h3>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=ML+Python+Training" 
-                             alt="ML Python Training" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-acf43c4c-eb6a-4a2d-9a87-e0448cbe6195.jpg" alt="ML Production" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Deployment of Machine Learning Models in Production | Python</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-2f1e7aa1-a649-4b80-87ee-75918baf3d7b.jpg" alt="ML Basic Advanced" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning From Basic to Advanced</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-586fa013-7e3a-4ade-9fe9-bb06100004db.jpg" alt="ML Python Training" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Machine Learning with Python Training (beginner to advanced)</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy • Dec 2020</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
-                <!-- Python Certificates -->
-                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Pandas+Bootcamp+2022" 
-                             alt="Pandas Bootcamp 2022" class="max-w-full max-h-full object-contain">
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-c620441c-db61-4780-94a0-af3dc9bbc426.jpg" alt="DS MicroDegree" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">The Complete Pandas Bootcamp 2022: Data Science with Python</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-python text-xs rounded-full border">Python</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Pandas+12+Projects" 
-                             alt="Pandas 12 Projects" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Python Data Science with Pandas: Master 12 Advanced Projects</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-python text-xs rounded-full border">Python</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=SQL+Bootcamp+2021" 
-                             alt="SQL Bootcamp 2021" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">The Complete SQL Bootcamp 2021: from Zero to Hero</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Microservices+Architecture" 
-                             alt="Microservices Architecture" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Design Microservices Architecture with Patterns & Principles</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Git+Practical+Guide" 
-                             alt="Git Practical Guide" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Git from Basics to Advanced: Practical Guide for Developers</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
+                        <h3 class="font-semibold mb-1 text-sm">The Data Science MicroDegree: Data Analysis & Visualization</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
                     </div>
                 </div>
 
                 <!-- Cloud/AWS Certificates -->
                 <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AWS+ML+Specialty+2023" 
-                             alt="AWS ML Specialty 2023" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-f44819b2-a11a-4e42-868b-279f5b56eddf.jpg" alt="AWS SageMaker" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Machine Learning Specialty 2023 - Hands On!</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud/AWS</span>
+                        <h3 class="font-semibold mb-1 text-sm">2023 Become AWS SageMaker ML Engineer in 30 Days + ChatGPT</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AWS+ML+Data+Engineering" 
-                             alt="AWS ML Data Engineering" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-97a1b7db-9d52-4291-a93d-70ba862296b3.jpg" alt="AWS ML Specialty" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Machine Learning - Specialty: Data Engineering</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud/AWS</span>
+                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Machine Learning Specialty 2023 - Hands On!</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-3599c7b0-43c9-4860-b5d9-a3bb4765407e.jpg" alt="AWS Data Analytics" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Data Analytics Specialty 2023 - Hands On!</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-b6e8ac29-a9fe-4fed-bc9c-6f8b808b9179.jpg" alt="GCP Vertex AI" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning on Google Cloud (Vertex AI) - Hands on!</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-3157ec36-52d4-47ac-8fbb-a711588185d9.jpg" alt="AWS ECS" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Deploy Spring Boot Microservices on AWS ECS with Fargate</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-4a2a52ee-0cec-4d69-878f-ce17a1a4332f.jpg" alt="Docker AWS" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Docker in AWS - Deploy Java Spring Boot to AWS Fargate & ECS</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-a4c8a723-93f9-4179-aded-3d8dd4cf1297.jpg" alt="Snowflake AWS" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Snowflake - Build & Architect Data pipelines using AWS</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud</span>
                     </div>
                 </div>
 
                 <!-- Finance Certificates -->
                 <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Algorithmic+Trading+A-Z" 
-                             alt="Algorithmic Trading A-Z" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Algorithmic Trading A-Z with Python, Machine Learning & AWS</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Finance+Data+Pandas" 
-                             alt="Finance Data Pandas" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Manage Finance Data with Python & Pandas: Unique Masterclass</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Technical+Analysis+Python" 
-                             alt="Technical Analysis Python" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Technical Analysis with Python for Algorithmic Trading</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Importing+Finance+Data" 
-                             alt="Importing Finance Data" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold mb-1 text-sm">Importing Finance Data from Free Web Sources</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
-                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
-                    </div>
-                </div>
-
-                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Quantitative+Analysis+Python" 
-                             alt="Quantitative Analysis Python" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-3825c722-ed11-4976-a1a8-0909e5bf4836.jpg" alt="Algo Trading" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Algorithmic Trading & Quantitative Analysis Using Python</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Financial+Derivatives" 
-                             alt="Financial Derivatives" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-562275d1-e311-41bf-bb0f-c6490bd71597.jpg" alt="Crypto Bot" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Statistical Arbitrage Bot Build in Crypto with Python (A-Z)</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-20d47faa-529e-40f3-8198-033d7c4f5a47.jpg" alt="Technical Analysis" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Technical Analysis with Python for Algorithmic Trading</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-60dc5e63-d86b-4b93-a3de-853422f662e6.jpg" alt="Finance Data" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Importing Finance Data with Python from Free Web Sources</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-e59f50bc-0c58-4bda-9151-4f021ea1374e.jpg" alt="Financial Derivatives" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Financial Derivatives: A Quantitative Finance View</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+ML+Financial+Analysis" 
-                             alt="Python ML Financial Analysis" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-c461cb8f-056a-4788-b608-8c8c89b817e2.jpg" alt="ML Financial Analysis" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Python & Machine Learning for Financial Analysis</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
                     </div>
                 </div>
 
                 <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+Finance+Investment" 
-                             alt="Python Finance Investment" class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-d27f6a58-a4e3-44bc-aa8f-638a4ff0a748.jpg" alt="Finance Investment" class="w-full h-full object-cover">
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold mb-1 text-sm">Python for Finance: Investment Fundamentals & Data Analytics</h3>
-                        <p class="text-xs text-[#94a3b8]">Udemy</p>
                         <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
                     </div>
                 </div>
 
-                <!-- ============================================= -->
-                <!-- 📝 COPY ANY CARD ABOVE AND PASTE HERE TO ADD  -->
-                <!-- MORE CERTIFICATES. CHANGE:                    -->
-                <!-- 1. data-category: genai/ml/python/cloud/finance/other -->
-                <!-- 2. img src: images/your-cert.jpg              -->
-                <!-- 3. Title text                                 -->
-                <!-- ============================================= -->
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-816193c1-7fa7-4fd5-afb6-0931621030b0.jpg" alt="Quant Finance" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Quantitative Finance & Algorithmic Trading in Python</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-d9a915ba-6567-4904-9e97-09f7481a80ac.jpg" alt="Crypto Trading" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Cryptocurrency Algorithmic Trading with Python and Binance</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-f5309a6a-5aae-48e6-8219-3898526825f9.jpg" alt="QuantConnect" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python for Finance and Algorithmic Trading with QuantConnect</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-36a631a7-b16f-4831-b80c-4e2f694214b9.jpg" alt="Financial Algo Trading" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python for Financial Analysis and Algorithmic Trading</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <!-- Data/Kafka Certificates -->
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-21d5c263-d4b7-4efa-aa76-fae08d01b8c8.jpg" alt="Kafka Streams" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Apache Kafka Series - Kafka Streams for Data Processing</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-78ab22d1-f24f-46c8-af80-41f0c031a09a.jpg" alt="Kafka Connect" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Apache Kafka Series - Kafka Connect Hands-on Learning</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-be424101-c360-4003-8216-074829ee954d.jpg" alt="Kafka Guide" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">The Complete Apache Kafka Practical Guide</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-d1dabd38-bf74-41c5-beae-d1ce478f6195.jpg" alt="Kafka Beginners" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Apache Kafka Series - Learn Apache Kafka for Beginners v3</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-373533c0-acf4-47b3-855e-0a652d496833.jpg" alt="Pandas Projects" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python Data Science with Pandas: Master 12 Advanced Projects</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-269a79fa-a7e0-4866-a311-1b2b82fbd5d9.jpg" alt="Python A-Z" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python A-Z™: Python For Data Science With Real Exercises!</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-6748b9b2-0bc4-4974-a579-47f7acff8a4b.jpg" alt="Tableau" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Tableau 2020: A-Z Hands-on Tableau For Data Science</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="data" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-e7c7c698-e8e6-40fd-b6f0-54f7e5289872.jpg" alt="SQL Server" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Hands-On SQL Server, Management Studio, SQL Queries, Azure</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-data text-xs rounded-full border">Data</span>
+                    </div>
+                </div>
+
+                <!-- Dev/Other Certificates -->
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-8863ae91-0a91-4eff-be64-1ed943a0ea52.jpg" alt="gRPC Golang" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">gRPC [Golang] Master Class: Build Modern API & Microservices</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-7f75171f-a62a-49cc-b1ae-854efa71fbad.jpg" alt="gRPC Node" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">gRPC [Node.js] MasterClass: Build Modern API & Microservices</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-8af6405b-891a-4b40-aa5a-74e3544f67b0.jpg" alt="Go Bootcamp" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Go Bootcamp: Master Golang with 1000+ Exercises and Projects</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-d3a0cc09-6ce3-422a-91dc-e2e8ee6edad5.jpg" alt="NodeJs" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">NodeJs: Beginner Practical Guide - E-Commerce Web API</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-7481c2b4-4f8e-48c0-9429-fb4d5906fab4.jpg" alt="JavaScript" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Modern JavaScript (Complete guide, from Novice to Ninja)</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-230dd693-27a3-4e19-8f6e-c86d9c2d2190.jpg" alt="MEAN Stack" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Become a MEAN Stack Developer: MongoDB; Express; Angular; Node</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-b3fb118d-8854-43fc-a2ce-ce6161337baf.jpg" alt="Python OOP" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python Programming - Multithreading, OOP, NumPy and Pandas</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-e403919a-e05f-465a-adf1-32b6e651a833.jpg" alt="Game Theory" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Game Theory Algorithms in Competitive Programming (2022)</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://udemy-certificate.s3.amazonaws.com/image/UC-92bf1bd7-29a9-47f6-9c69-591f70655e8a.jpg" alt="C++" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">C++ in 1 hour</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <!-- Cutshort Certificates -->
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://cutshort.io/_next/image?url=https%3A%2F%2Fcdn.cutshort.io%2Fcertificates%2F66113.jpg&w=1920&q=75" alt="JavaScript Advanced" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Cutshort Certified Javascript - Advanced</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://cutshort.io/_next/image?url=https%3A%2F%2Fcdn.cutshort.io%2Fcertificates%2F66104.jpg&w=1920&q=75" alt="NodeJS Advanced" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Cutshort Certified NodeJS (Node.js) - Advanced</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="dev" onclick="openModal(this)">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://cutshort.io/_next/image?url=https%3A%2F%2Fcdn.cutshort.io%2Fcertificates%2F66107.jpg&w=1920&q=75" alt="Python Advanced" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Cutshort Certified Python - Advanced</h3>
+                        <span class="inline-block mt-2 px-3 py-1 cat-dev text-xs rounded-full border">Dev</span>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -1332,9 +1721,9 @@
 
     <!-- Footer -->
     <footer class="py-12 px-4 md:px-8 text-center relative z-10">
-        <div class="neu-card-static max-w-7xl mx-auto py-8 px-6">
+        <div class="neu-card max-w-7xl mx-auto py-8 px-6">
             <div class="flex flex-wrap justify-center gap-6 mb-6">
-                <a href="https://github.com/abhijeetlodh" target="_blank" class="hover:text-[#6366f1] transition">
+                <a href="https://github.com/abhijeetlodh" target="_blank" class="hover:text-[#00f5d4] transition">
                     <i class="fab fa-github text-2xl"></i>
                 </a>
                 <a href="https://www.linkedin.com/in/abhijeet-lodh-sde/" target="_blank" class="hover:text-[#0077b5] transition">
@@ -1346,12 +1735,12 @@
                 <a href="https://www.kaggle.com/abhijeetlodh" target="_blank" class="hover:text-[#20beff] transition">
                     <i class="fab fa-kaggle text-2xl"></i>
                 </a>
-                <a href="https://bento.me/abhijeetlodh" target="_blank" class="hover:text-[#768cff] transition">
+                <a href="https://bento.me/abhijeetlodh" target="_blank" class="hover:text-[#f72585] transition">
                     <i class="fas fa-link text-2xl"></i>
                 </a>
             </div>
             <p class="text-[#94a3b8]">
-                Made with <i class="fas fa-heart text-[#6366f1]"></i> by <span class="glow-text font-semibold">Abhijeet Lodh</span>
+                Made with <i class="fas fa-heart text-[#f72585]"></i> by <span class="glow-text font-semibold">Abhijeet Lodh</span>
             </p>
             <p class="text-sm text-[#94a3b8] mt-2">AI/ML Engineer • Data Scientist • GenAI Specialist</p>
         </div>
@@ -1359,79 +1748,16 @@
 
     <!-- Image Modal -->
     <div id="imageModal" class="modal fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
-        <div class="relative max-w-4xl w-full">
-            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-[#6366f1] transition">
+        <div class="relative max-w-5xl w-full">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-[#00f5d4] transition">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="neu-card-static p-4 bg-white rounded-2xl">
+            <div class="bg-white rounded-2xl p-2">
                 <img id="modalImage" src="" alt="Certificate" class="w-full rounded-lg">
             </div>
             <h3 id="modalTitle" class="text-center mt-4 text-xl font-semibold"></h3>
         </div>
     </div>
-
-    <!-- Help Modal -->
-    <div id="helpModal" class="modal fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="neu-card-static max-w-3xl w-full p-8 my-8 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold glow-text">🚀 GitHub Pages Setup Guide</h3>
-                <button onclick="closeHelpModal()" class="text-2xl hover:text-[#6366f1] transition">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-4 text-[#94a3b8]">
-                <div class="neu-inset p-4 rounded-xl">
-                    <h4 class="text-white font-semibold mb-2">Step 1: Create GitHub Account</h4>
-                    <p>Go to <span class="text-[#6366f1]">github.com</span> and sign up for free</p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl">
-                    <h4 class="text-white font-semibold mb-2">Step 2: Create New Repository</h4>
-                    <p>• Click the <span class="text-[#6366f1]">+</span> icon → "New repository"</p>
-                    <p>• Name it: <span class="text-[#6366f1]">abhijeetlodh.github.io</span></p>
-                    <p>• Make it <span class="text-[#10b981]">Public</span></p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl">
-                    <h4 class="text-white font-semibold mb-2">Step 3: Upload Files</h4>
-                    <p>• Click "Add file" → "Upload files"</p>
-                    <p>• Drag your <span class="text-[#6366f1]">index.html</span></p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl">
-                    <h4 class="text-white font-semibold mb-2">Step 4: Create Images Folder</h4>
-                    <p>• Click "Add file" → "Create new file"</p>
-                    <p>• Type: <span class="text-[#6366f1]">images/.gitkeep</span></p>
-                    <p>• This creates the folder!</p>
-                    <p>• Then upload your certificate images</p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl">
-                    <h4 class="text-white font-semibold mb-2">Step 5: Update Image Paths</h4>
-                    <p>Change each placeholder to: <span class="text-[#6366f1]">images/your-cert.jpg</span></p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl border border-[#6366f1]">
-                    <h4 class="text-white font-semibold mb-2">✨ Your site will be live at:</h4>
-                    <p class="text-[#6366f1] text-lg">https://abhijeetlodh.github.io</p>
-                </div>
-
-                <div class="neu-inset p-4 rounded-xl bg-[#6366f1]/10">
-                    <h4 class="text-white font-semibold mb-2">🔁 To Add More Certificates:</h4>
-                    <p>1. Find a cert-card in the code</p>
-                    <p>2. Copy the entire div block</p>
-                    <p>3. Paste where marked in comments</p>
-                    <p>4. Update image src and title</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Help Button -->
-    <button onclick="openHelpModal()" class="fixed bottom-6 right-6 neu-button w-14 h-14 rounded-full flex items-center justify-center z-40 text-white" title="Setup Guide">
-        <i class="fas fa-question text-xl"></i>
-    </button>
 
     <script>
         // Typewriter Effect
@@ -1474,12 +1800,13 @@
         // Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 20 + 's';
                 particle.style.animationDuration = (15 + Math.random() * 15) + 's';
+                particle.style.background = Math.random() > 0.5 ? '#00f5d4' : '#f72585';
                 container.appendChild(particle);
             }
         }
@@ -1491,11 +1818,9 @@
             const buttons = document.querySelectorAll('.filter-btn');
 
             buttons.forEach(btn => {
-                btn.classList.remove('neu-button', 'active', 'text-white');
-                btn.classList.add('neu-card');
+                btn.classList.remove('active');
             });
-            event.target.classList.remove('neu-card');
-            event.target.classList.add('neu-button', 'active', 'text-white');
+            event.target.classList.add('active');
 
             cards.forEach(card => {
                 if (category === 'all' || card.dataset.category === category) {
@@ -1507,7 +1832,7 @@
             });
         }
 
-        // Modal Functions
+        // Modal
         function openModal(card) {
             const modal = document.getElementById('imageModal');
             const img = card.querySelector('img');
@@ -1524,22 +1849,8 @@
             modal.classList.remove('flex');
         }
 
-        function openHelpModal() {
-            document.getElementById('helpModal').classList.remove('hidden');
-            document.getElementById('helpModal').classList.add('flex');
-        }
-
-        function closeHelpModal() {
-            document.getElementById('helpModal').classList.add('hidden');
-            document.getElementById('helpModal').classList.remove('flex');
-        }
-
-        // Close modals on outside click
         document.getElementById('imageModal').addEventListener('click', (e) => {
             if (e.target.id === 'imageModal') closeModal();
-        });
-        document.getElementById('helpModal').addEventListener('click', (e) => {
-            if (e.target.id === 'helpModal') closeHelpModal();
         });
 
         // Smooth scroll
@@ -1560,12 +1871,28 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.neu-card, .cert-card').forEach(el => {
+        document.querySelectorAll('.neu-card, .cert-card, .skill-category').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
         });
+
+        // Terminal animation restart on scroll
+        const terminalObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const lines = entry.target.querySelectorAll('.terminal-line');
+                    lines.forEach((line, i) => {
+                        line.style.animation = 'none';
+                        line.offsetHeight;
+                        line.style.animation = `typeIn 0.5s ease forwards ${i * 0.4}s`;
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        terminalObserver.observe(document.getElementById('terminalBody'));
     </script>
 </body>
 </html>
