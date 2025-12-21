@@ -3,165 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhijeet's Portfolio | ARTIFICIAL INTELLIGENCE, MACHINE LEARNING ENGINEER, DATA SCIENTIST & 4 years experienced Professional</title>
+    <title>Abhijeet Lodh | AI/ML Engineer & Data Scientist</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #1a1a2e;
-            --bg-card: #16213e;
-            --accent-1: #e94560;
-            --accent-2: #0f3460;
-            --accent-3: #533483;
-            --text-light: #eaeaea;
-            --text-muted: #a0a0a0;
+            --bg-main: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-1: #6366f1;
+            --accent-2: #8b5cf6;
+            --accent-3: #06b6d4;
+            --accent-4: #10b981;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
         }
+
         * {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
+
+        code, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         body {
-            background: linear-gradient(135deg, var(--bg-main) 0%, #0f0f1a 100%);
+            background: var(--bg-main);
             color: var(--text-light);
             overflow-x: hidden;
         }
-        /* Neumorphism Styles */
-        .neu-card {
-            background: linear-gradient(145deg, #1e2a4a, #141c32);
-            box-shadow: 
-                8px 8px 16px #0d1221,
-                -8px -8px 16px #1f2d4f,
-                inset 0 0 0 rgba(255,255,255,0);
-            border-radius: 20px;
-            transition: all 0.4s ease;
+
+        /* Gradient Mesh Background */
+        .mesh-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
         }
+
+        /* Neumorphism Dark */
+        .neu-card {
+            background: linear-gradient(145deg, #151520, #0e0e14);
+            box-shadow: 
+                8px 8px 20px #070709,
+                -8px -8px 20px #1a1a24,
+                inset 0 0 0 1px rgba(255,255,255,0.03);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
         .neu-card:hover {
             box-shadow: 
-                12px 12px 24px #0d1221,
-                -12px -12px 24px #1f2d4f,
-                inset 0 0 30px rgba(233, 69, 96, 0.1);
+                12px 12px 30px #070709,
+                -12px -12px 30px #1a1a24,
+                inset 0 0 0 1px rgba(99, 102, 241, 0.2);
             transform: translateY(-5px);
         }
-        .neu-button {
-            background: linear-gradient(145deg, #e94560, #c73a52);
+
+        .neu-card-static {
+            background: linear-gradient(145deg, #151520, #0e0e14);
             box-shadow: 
-                5px 5px 10px #0d1221,
-                -5px -5px 10px #1f2d4f;
+                8px 8px 20px #070709,
+                -8px -8px 20px #1a1a24,
+                inset 0 0 0 1px rgba(255,255,255,0.03);
+            border-radius: 24px;
+        }
+
+        .neu-button {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            box-shadow: 
+                5px 5px 15px #070709,
+                -5px -5px 15px #1a1a24,
+                0 0 20px rgba(99, 102, 241, 0.3);
             border-radius: 50px;
             transition: all 0.3s ease;
         }
+
         .neu-button:hover {
+            transform: scale(1.05);
             box-shadow: 
-                2px 2px 5px #0d1221,
-                -2px -2px 5px #1f2d4f;
-            transform: scale(0.98);
+                5px 5px 15px #070709,
+                -5px -5px 15px #1a1a24,
+                0 0 30px rgba(99, 102, 241, 0.5);
         }
+
         .neu-inset {
-            background: linear-gradient(145deg, #141c32, #1e2a4a);
+            background: linear-gradient(145deg, #0e0e14, #151520);
             box-shadow: 
-                inset 5px 5px 10px #0d1221,
-                inset -5px -5px 10px #1f2d4f;
-            border-radius: 15px;
+                inset 5px 5px 15px #070709,
+                inset -5px -5px 15px #1a1a24;
+            border-radius: 16px;
         }
+
         .neu-circle {
-            background: linear-gradient(145deg, #1e2a4a, #141c32);
+            background: linear-gradient(145deg, #151520, #0e0e14);
             box-shadow: 
-                8px 8px 16px #0d1221,
-                -8px -8px 16px #1f2d4f;
+                6px 6px 15px #070709,
+                -6px -6px 15px #1a1a24;
             border-radius: 50%;
+            transition: all 0.3s ease;
         }
+
+        .neu-circle:hover {
+            box-shadow: 
+                6px 6px 15px #070709,
+                -6px -6px 15px #1a1a24,
+                0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
         /* Glowing Effects */
         .glow-text {
-            text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
+
         .glow-border {
-            border: 2px solid transparent;
-            background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
-                        linear-gradient(135deg, var(--accent-1), var(--accent-3)) border-box;
+            position: relative;
         }
+
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glow-border:hover::before {
+            opacity: 1;
+        }
+
         /* Floating Animation */
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
         }
+
         .floating {
             animation: float 6s ease-in-out infinite;
         }
-        /* Certification Card Special */
+
+        /* Certification Card */
         .cert-card {
-            background: linear-gradient(145deg, #1e2a4a, #141c32);
+            background: linear-gradient(145deg, #151520, #0e0e14);
             box-shadow: 
-                10px 10px 20px #0d1221,
-                -10px -10px 20px #1f2d4f;
+                8px 8px 20px #070709,
+                -8px -8px 20px #1a1a24;
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.03);
         }
+
         .cert-card:hover {
-            transform: scale(1.05) rotate(1deg);
+            transform: scale(1.03) translateY(-5px);
             box-shadow: 
-                15px 15px 30px #0d1221,
-                -15px -15px 30px #1f2d4f,
-                0 0 30px rgba(233, 69, 96, 0.3);
+                12px 12px 30px #070709,
+                -12px -12px 30px #1a1a24,
+                0 0 30px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
         }
-        .cert-card img {
-            transition: all 0.4s ease;
-            filter: brightness(0.95);
+
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-1), var(--accent-2), var(--accent-3));
         }
-        .cert-card:hover img {
-            filter: brightness(1.05);
+
+        .timeline-dot {
+            position: absolute;
+            left: 16px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
         }
+
+        /* Skill Tags */
+        .skill-tag {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: var(--bg-main);
         }
+
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-1);
-            border-radius: 5px;
+            background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+            border-radius: 4px;
         }
-        /* Nav Active */
+
+        /* Nav */
         .nav-link {
             position: relative;
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
             bottom: -5px;
-            left: 50%;
+            left: 0;
             width: 0;
-            height: 3px;
-            background: var(--accent-1);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+            transition: width 0.3s ease;
             border-radius: 2px;
         }
+
         .nav-link:hover::after {
             width: 100%;
         }
-        /* Skill Bar */
-        .skill-bar {
-            background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
+
+        /* Stats Card */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
-        .skill-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 2s infinite;
-        }
-        @keyframes shine {
-            100% { left: 100%; }
-        }
-        /* Particle Background */
+
+        /* Particle */
         #particles {
             position: fixed;
             top: 0;
@@ -171,177 +261,252 @@
             pointer-events: none;
             z-index: 0;
         }
+
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: var(--accent-1);
             border-radius: 50%;
-            opacity: 0.3;
-            animation: particleFloat 15s infinite;
+            opacity: 0.4;
+            animation: particleFloat 20s infinite;
         }
+
         @keyframes particleFloat {
-            0%, 100% { 
-                transform: translateY(100vh) rotate(0deg); 
-                opacity: 0;
-            }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { 
-                transform: translateY(-100vh) rotate(720deg); 
-                opacity: 0;
-            }
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
+
+        /* Experience Badge */
+        .exp-badge {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        }
+
         /* Modal */
         .modal {
             backdrop-filter: blur(10px);
         }
-        /* Responsive */
+
+        /* Category Colors */
+        .cat-genai { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border-color: rgba(139, 92, 246, 0.3); }
+        .cat-ml { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border-color: rgba(6, 182, 212, 0.3); }
+        .cat-python { background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+        .cat-cloud { background: rgba(251, 146, 60, 0.2); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+        .cat-finance { background: rgba(236, 72, 153, 0.2); color: #f472b6; border-color: rgba(236, 72, 153, 0.3); }
+        .cat-other { background: rgba(99, 102, 241, 0.2); color: #818cf8; border-color: rgba(99, 102, 241, 0.3); }
+
         @media (max-width: 768px) {
             .neu-card, .cert-card {
-                box-shadow: 
-                    4px 4px 8px #0d1221,
-                    -4px -4px 8px #1f2d4f;
+                box-shadow: 4px 4px 10px #070709, -4px -4px 10px #1a1a24;
             }
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Particle Background -->
+    <!-- Background -->
+    <div class="mesh-gradient"></div>
     <div id="particles"></div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
-        <div class="neu-card max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold">
-                <span class="text-[#e94560]">&lt;</span>AI/ML<span class="text-[#e94560]">/&gt;</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-4 md:px-8">
+        <div class="neu-card-static max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl md:text-2xl font-bold">
+                <span class="glow-text">&lt;AL/&gt;</span>
             </a>
             
-            <!-- Mobile Menu Button -->
             <button id="menuBtn" class="md:hidden neu-circle w-10 h-10 flex items-center justify-center">
-                <i class="fas fa-bars text-[#e94560]"></i>
+                <i class="fas fa-bars text-[#6366f1]"></i>
             </button>
-            <!-- Desktop Nav -->
+
             <div class="hidden md:flex gap-8">
-                <a href="#home" class="nav-link hover:text-[#e94560] transition">Home</a>
-                <a href="#about" class="nav-link hover:text-[#e94560] transition">About</a>
-                <a href="#skills" class="nav-link hover:text-[#e94560] transition">Skills</a>
-                <a href="#certifications" class="nav-link hover:text-[#e94560] transition">Certifications</a>
-                <a href="#contact" class="nav-link hover:text-[#e94560] transition">Contact</a>
+                <a href="#home" class="nav-link hover:text-[#6366f1] transition">Home</a>
+                <a href="#about" class="nav-link hover:text-[#6366f1] transition">About</a>
+                <a href="#experience" class="nav-link hover:text-[#6366f1] transition">Experience</a>
+                <a href="#skills" class="nav-link hover:text-[#6366f1] transition">Skills</a>
+                <a href="#certifications" class="nav-link hover:text-[#6366f1] transition">Certifications</a>
+                <a href="#achievements" class="nav-link hover:text-[#6366f1] transition">Achievements</a>
             </div>
         </div>
+
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden mt-4 neu-card max-w-6xl mx-auto p-6">
+        <div id="mobileMenu" class="hidden md:hidden mt-4 neu-card-static max-w-7xl mx-auto p-6">
             <div class="flex flex-col gap-4">
-                <a href="#home" class="hover:text-[#e94560] transition">Home</a>
-                <a href="#about" class="hover:text-[#e94560] transition">About</a>
-                <a href="#skills" class="hover:text-[#e94560] transition">Skills</a>
-                <a href="#certifications" class="hover:text-[#e94560] transition">Certifications</a>
-                <a href="#contact" class="hover:text-[#e94560] transition">Contact</a>
+                <a href="#home" class="hover:text-[#6366f1] transition">Home</a>
+                <a href="#about" class="hover:text-[#6366f1] transition">About</a>
+                <a href="#experience" class="hover:text-[#6366f1] transition">Experience</a>
+                <a href="#skills" class="hover:text-[#6366f1] transition">Skills</a>
+                <a href="#certifications" class="hover:text-[#6366f1] transition">Certifications</a>
+                <a href="#achievements" class="hover:text-[#6366f1] transition">Achievements</a>
             </div>
         </div>
     </nav>
+
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24 relative z-10">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-                <p class="text-[#e94560] text-lg mb-2 font-medium">Hello, I'm</p>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 glow-text">
-                    ABHIJEET
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 md:px-8 pt-24 relative z-10">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="exp-badge px-4 py-1 rounded-full text-sm font-medium text-white">4+ Years Experience</span>
+                    <span class="px-3 py-1 rounded-full text-xs border border-green-500/30 text-green-400 bg-green-500/10">🟢 Open to Opportunities</span>
+                </div>
+                
+                <p class="text-[#6366f1] text-lg mb-2 font-medium mono">Hello World, I'm</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <span class="glow-text">Abhijeet Lodh</span>
                 </h1>
-                <h2 class="text-xl md:text-2xl text-[#a0a0a0] mb-6">
-                    <span id="typewriter"></span><span class="animate-pulse">|</span>
+                <h2 class="text-xl md:text-2xl text-[#94a3b8] mb-6">
+                    <span id="typewriter"></span><span class="animate-pulse text-[#6366f1]">|</span>
                 </h2>
-                <p class="text-[#a0a0a0] mb-8 leading-relaxed">
-                    A passionate DATA SCIENTIST with a hunger for learning. I've completed numerous certifications 
-                    and I'm ready to build amazing things!
+                <p class="text-[#94a3b8] mb-6 leading-relaxed text-lg">
+                    <span class="text-white font-medium">AI/ML Engineer & Data Scientist</span> specializing in 
+                    <span class="text-[#8b5cf6]">Generative AI</span>, 
+                    <span class="text-[#06b6d4]">LLMs</span>, and 
+                    <span class="text-[#10b981]">Agentic AI</span>. 
+                    Building intelligent solutions across BFSI, Retail & Pharma domains.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#certifications" class="neu-button px-8 py-3 text-white font-medium">
-                        <i class="fas fa-certificate mr-2"></i>View Certifications
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold glow-text">4+</p>
+                        <p class="text-xs text-[#94a3b8]">Years Exp</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold glow-text">2.5+</p>
+                        <p class="text-xs text-[#94a3b8]">Years GenAI</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold glow-text">1100+</p>
+                        <p class="text-xs text-[#94a3b8]">DSA Problems</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-4 text-center">
+                        <p class="text-2xl font-bold glow-text">30+</p>
+                        <p class="text-xs text-[#94a3b8]">Certifications</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <a href="#experience" class="neu-button px-8 py-3 text-white font-medium">
+                        <i class="fas fa-briefcase mr-2"></i>View Experience
                     </a>
-                    <a href="#contact" class="neu-card px-8 py-3 font-medium hover:text-[#e94560] transition glow-border">
-                        <i class="fas fa-envelope mr-2"></i>Contact Me
+                    <a href="https://bento.me/abhijeetlodh" target="_blank" class="neu-card px-8 py-3 font-medium hover:text-[#6366f1] transition glow-border">
+                        <i class="fas fa-external-link-alt mr-2"></i>Portfolio
                     </a>
                 </div>
+
                 <!-- Social Links -->
-                <div class="flex gap-4 mt-8">
-                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
+                <div class="flex gap-4">
+                    <a href="https://github.com/abhijeetlodh" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#6366f1] transition" title="GitHub">
                         <i class="fab fa-github text-xl"></i>
                     </a>
-                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
+                    <a href="https://www.linkedin.com/in/abhijeet-lodh-sde/" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#0077b5] transition" title="LinkedIn">
                         <i class="fab fa-linkedin text-xl"></i>
                     </a>
-                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
-                        <i class="fab fa-twitter text-xl"></i>
+                    <a href="https://leetcode.com/u/abhijeetlodh/" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#ffa116] transition" title="LeetCode">
+                        <i class="fas fa-code text-xl"></i>
+                    </a>
+                    <a href="https://www.kaggle.com/abhijeetlodh" target="_blank" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#20beff] transition" title="Kaggle">
+                        <i class="fab fa-kaggle text-xl"></i>
+                    </a>
+                    <a href="mailto:abhijeetlodh@gmail.com" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#ea4335] transition" title="Email">
+                        <i class="fas fa-envelope text-xl"></i>
                     </a>
                 </div>
             </div>
-            <div class="order-1 md:order-2 flex justify-center">
+
+            <div class="order-1 lg:order-2 flex justify-center">
                 <div class="relative">
                     <div class="neu-circle w-64 h-64 md:w-80 md:h-80 flex items-center justify-center floating">
-                        <div class="neu-inset w-56 h-56 md:w-72 md:h-72 flex items-center justify-center">
-                            <i class="fas fa-code text-6xl md:text-8xl text-[#e94560]"></i>
+                        <div class="neu-inset w-56 h-56 md:w-72 md:h-72 flex items-center justify-center p-4">
+                            <div class="text-center">
+                                <i class="fas fa-brain text-5xl md:text-7xl text-[#6366f1] mb-2"></i>
+                                <p class="text-xs text-[#94a3b8] mono">AI/ML • GenAI • LLMs</p>
+                            </div>
                         </div>
                     </div>
-                    <!-- Decorative Elements -->
-                    <div class="absolute -top-4 -right-4 neu-circle w-8 h-8 bg-[#e94560]"></div>
-                    <div class="absolute -bottom-6 -left-6 neu-circle w-12 h-12 bg-[#533483]"></div>
+                    <div class="absolute -top-4 -right-4 neu-circle w-16 h-16 flex items-center justify-center">
+                        <i class="fab fa-python text-2xl text-[#10b981]"></i>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 neu-circle w-14 h-14 flex items-center justify-center">
+                        <i class="fas fa-robot text-xl text-[#8b5cf6]"></i>
+                    </div>
+                    <div class="absolute top-1/2 -right-10 neu-circle w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-database text-lg text-[#06b6d4]"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- About Section -->
-    <section id="about" class="py-24 px-6 relative z-10">
-        <div class="max-w-6xl mx-auto">
+    <section id="about" class="py-24 px-4 md:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                About <span class="text-[#e94560]">Me</span>
+                About <span class="glow-text">Me</span>
             </h2>
-            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="neu-card p-8">
-                    <h3 class="text-xl font-semibold mb-4 text-[#e94560]">
-                        <i class="fas fa-user mr-2"></i>Who Am I?
+            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 neu-card p-8">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-user-astronaut text-[#6366f1]"></i>
+                        Professional Summary
                     </h3>
-                    <p class="text-[#a0a0a0] leading-relaxed mb-4">
-                        I'm a passionate beginner developer who believes in continuous learning. 
-                        I've invested my time in acquiring valuable skills through Udemy courses 
-                        and certifications.
+                    <p class="text-[#94a3b8] leading-relaxed mb-4">
+                        <span class="text-white font-medium">4 years of experience as a REMOTE Data Scientist</span> across various domains including 
+                        <span class="text-[#06b6d4]">Banking (BFSI)</span>, 
+                        <span class="text-[#10b981]">Retail</span>, and 
+                        <span class="text-[#8b5cf6]">Pharmaceutical</span> industries.
                     </p>
-                    <p class="text-[#a0a0a0] leading-relaxed">
-                        My goal is to become a full-stack developer and contribute to meaningful projects. 
-                        Every certification represents a step forward in my journey!
+                    <p class="text-[#94a3b8] leading-relaxed mb-4">
+                        Specialized in <span class="text-white">Heavy Analytics</span>, <span class="text-white">Natural Language Processing</span>, and 
+                        <span class="text-white">Generative AI (LLMs)</span>. With <span class="text-[#6366f1] font-medium">2.5+ years in Gen-AI</span>, 
+                        I'm now building cutting-edge <span class="text-[#8b5cf6] font-medium">Agentic AI Products</span>.
                     </p>
+                    <p class="text-[#94a3b8] leading-relaxed">
+                        I've solved <span class="text-[#ffa116] font-medium">1100+ Data Structures and Algorithms</span> coding questions, 
+                        demonstrating strong problem-solving capabilities alongside ML expertise.
+                    </p>
+
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <span class="px-3 py-1 rounded-full text-sm bg-[#6366f1]/10 text-[#818cf8] border border-[#6366f1]/20">
+                            <i class="fas fa-map-marker-alt mr-1"></i>Amravati • Pune • Mumbai
+                        </span>
+                        <span class="px-3 py-1 rounded-full text-sm bg-[#10b981]/10 text-[#34d399] border border-[#10b981]/20">
+                            <i class="fas fa-laptop-house mr-1"></i>Remote Preferred
+                        </span>
+                    </div>
                 </div>
+
                 <div class="neu-card p-8">
-                    <h3 class="text-xl font-semibold mb-4 text-[#e94560]">
-                        <i class="fas fa-rocket mr-2"></i>Quick Facts
+                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-[#6366f1]"></i>
+                        Education
                     </h3>
-                    <div class="space-y-4">
-                        <div class="neu-inset p-4 flex items-center gap-4">
-                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                <i class="fas fa-certificate"></i>
+                    <div class="neu-inset p-5 rounded-xl">
+                        <div class="flex items-start gap-4">
+                            <div class="neu-circle w-12 h-12 flex items-center justify-center shrink-0">
+                                <i class="fas fa-university text-[#6366f1]"></i>
                             </div>
                             <div>
-                                <p class="font-medium">10+ Certifications</p>
-                                <p class="text-sm text-[#a0a0a0]">From Udemy & more</p>
-                            </div>
-                        </div>
-                        <div class="neu-inset p-4 flex items-center gap-4">
-                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">100+ Hours</p>
-                                <p class="text-sm text-[#a0a0a0]">Of learning completed</p>
-                            </div>
-                        </div>
-                        <div class="neu-inset p-4 flex items-center gap-4">
-                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">Always Learning</p>
-                                <p class="text-sm text-[#a0a0a0]">New skills every week</p>
+                                <p class="font-semibold text-white">B.E. Computer Science</p>
+                                <p class="text-sm text-[#94a3b8]">Sant Gadge Baba Amravati University</p>
+                                <p class="text-xs text-[#94a3b8] mt-1">2017 - 2021</p>
+                                <div class="mt-3 inline-block px-3 py-1 rounded-full bg-[#10b981]/20 text-[#34d399] text-sm font-medium">
+                                    CGPA: 9.93/10 (GPA 3.97/4.0)
+                                </div>
+                                <p class="text-xs text-[#94a3b8] mt-3">
+                                    <i class="fas fa-project-diagram mr-1"></i>
+                                    Project: Twitter API Sentiment Analysis with NLP
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -349,338 +514,933 @@
             </div>
         </div>
     </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 px-4 md:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                Professional <span class="glow-text">Experience</span>
+            </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+
+            <div class="space-y-8">
+                <!-- InfoGain -->
+                <div class="neu-card p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#6366f1]/10 to-transparent rounded-bl-full"></div>
+                    
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#10b981]/20 text-[#34d399] border border-[#10b981]/30">CURRENT</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#6366f1]/20 text-[#818cf8]">REMOTE</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Consultant - Analytics</h3>
+                            <p class="text-[#6366f1] font-medium text-lg">InfoGain, Pune</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[#94a3b8] mono">April 2025 - Present</p>
+                            <p class="text-sm text-[#94a3b8]">AI Engineer • Agentic AI</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+                                <i class="fas fa-robot text-[#8b5cf6]"></i>Key Projects
+                            </h4>
+                            <ul class="space-y-2 text-[#94a3b8] text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>RAG Solution with FAISS, AzureOpenAI & NVIDIA NeMo Guardrails</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>FastAPI ML Application for NLP serving 100K+ active users</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>IGNIS Chatbot with Agentic Platform Excellence</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Azure Databricks Code Remediation Agent (SAS Parser, Transpilation, Self-Healing)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Autonomous Data Engineering with AutoGen, CrewAI & LangGraph</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>MCP Server Online Encyclopedia Research Assistant</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+                                <i class="fas fa-tools text-[#06b6d4]"></i>Tech Stack
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure Databricks</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangChain</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangGraph</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">LangSmith</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AzureOpenAI</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">CrewAI</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AutoGen</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">MCP</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">FastAPI</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Pydantic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accenture -->
+                <div class="neu-card p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#8b5cf6]/10 to-transparent rounded-bl-full"></div>
+                    
+                    <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                        <div>
+                            <span class="px-3 py-1 rounded-full text-xs bg-[#94a3b8]/20 text-[#94a3b8] border border-[#94a3b8]/30 mb-2 inline-block">PREVIOUS</span>
+                            <h3 class="text-2xl font-bold text-white">Application Development Associate</h3>
+                            <p class="text-[#8b5cf6] font-medium text-lg">Accenture, Mumbai</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[#94a3b8] mono">Nov 2021 - April 2025</p>
+                            <p class="text-sm text-[#94a3b8]">Data Scientist • 3.5 Years</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+                                <i class="fas fa-project-diagram text-[#8b5cf6]"></i>Key Projects
+                            </h4>
+                            <ul class="space-y-2 text-[#94a3b8] text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Credit Card Fraud Detection with AWS MLOps</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Credit Risk Modeling (PD, LGD, EAD)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Customer Churn Prediction & BFSI Analytics</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>Time-Series Sales Forecasting with LSTM</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>GenAI Bot on Databricks with LLAMA-3.3 70B</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>IDP with Azure AI Vision & OCR</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-[#10b981] mt-1"></i>
+                                    <span>RAG-based Form Filling AI Agent</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+                                <i class="fas fa-industry text-[#06b6d4]"></i>Domains
+                            </h4>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#6366f1]/20 text-[#818cf8]">BFSI</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#10b981]/20 text-[#34d399]">Retail</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-[#8b5cf6]/20 text-[#a78bfa]">Pharma</span>
+                            </div>
+                            <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+                                <i class="fas fa-cloud text-[#06b6d4]"></i>Platforms
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS SageMaker</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">GCP Vertex AI</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure ML</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Databricks</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">MLflow</span>
+                                <span class="skill-tag px-3 py-1 rounded-full text-xs">Airflow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
-    <section id="skills" class="py-24 px-6 relative z-10">
-        <div class="max-w-6xl mx-auto">
+    <section id="skills" class="py-24 px-4 md:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                My <span class="text-[#e94560]">Skills</span>
+                Tech <span class="glow-text">Stack</span>
             </h2>
-            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Skill Bars -->
-                <div class="neu-card p-8 space-y-6">
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">HTML & CSS</span>
-                            <span class="text-[#e94560]">85%</span>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Python & Core -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fab fa-python text-xl text-[#10b981]"></i>
                         </div>
-                        <div class="neu-inset h-4 p-1">
-                            <div class="skill-bar h-full" style="width: 85%"></div>
-                        </div>
+                        <h3 class="font-semibold text-lg">Python & Core</h3>
                     </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">JavaScript</span>
-                            <span class="text-[#e94560]">70%</span>
-                        </div>
-                        <div class="neu-inset h-4 p-1">
-                            <div class="skill-bar h-full" style="width: 70%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">Python</span>
-                            <span class="text-[#e94560]">75%</span>
-                        </div>
-                        <div class="neu-inset h-4 p-1">
-                            <div class="skill-bar h-full" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">React</span>
-                            <span class="text-[#e94560]">60%</span>
-                        </div>
-                        <div class="neu-inset h-4 p-1">
-                            <div class="skill-bar h-full" style="width: 60%"></div>
-                        </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Python</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">NumPy</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Pandas</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Matplotlib</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">TensorFlow</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">PyTorch</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">PySpark</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">DSA</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">OOP</span>
                     </div>
                 </div>
-                <!-- Skill Icons -->
-                <div class="neu-card p-8">
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-html5 text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">HTML5</p>
+
+                <!-- Data Science -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-xl text-[#06b6d4]"></i>
                         </div>
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-css3-alt text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">CSS3</p>
+                        <h3 class="font-semibold text-lg">Data Science</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Feature Engineering</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Model Training</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Hyperparameter Tuning</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Cross-Validation</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Statistical Modeling</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MLOps</span>
+                    </div>
+                </div>
+
+                <!-- Generative AI -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-robot text-xl text-[#8b5cf6]"></i>
                         </div>
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-js text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">JavaScript</p>
+                        <h3 class="font-semibold text-lg">Generative AI</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LangChain</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LangGraph</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">RAG</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Advanced RAG</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Prompt Engineering</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LoRA/PEFT</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">CrewAI</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MCP</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Transformers</span>
+                    </div>
+                </div>
+
+                <!-- Databases -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-database text-xl text-[#f472b6]"></i>
                         </div>
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-python text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">Python</p>
+                        <h3 class="font-semibold text-lg">Databases</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">SQL</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Pinecone</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">ChromaDB</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Elasticsearch</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MongoDB Atlas</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">FAISS</span>
+                    </div>
+                </div>
+
+                <!-- Cloud -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-cloud text-xl text-[#fb923c]"></i>
                         </div>
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-react text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">React</p>
+                        <h3 class="font-semibold text-lg">Cloud & MLOps</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS SageMaker</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">AWS Bedrock</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Azure ML</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">GCP Vertex AI</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Databricks</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">MLflow</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Kubeflow</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">HuggingFace</span>
+                    </div>
+                </div>
+
+                <!-- NLP -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-language text-xl text-[#22d3ee]"></i>
                         </div>
-                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
-                            <i class="fab fa-git-alt text-4xl text-[#e94560] mb-2"></i>
-                            <p class="text-sm">Git</p>
+                        <h3 class="font-semibold text-lg">NLP & LLMs</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">BERT</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">LLAMA</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">GPT</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Sentiment Analysis</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">Text-to-SQL</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">OCR</span>
+                        <span class="skill-tag px-3 py-1 rounded-full text-xs">IDP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-24 px-4 md:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                <span class="glow-text">Achievements</span>
+            </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-12 rounded-full"></div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- LeetCode Card -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fas fa-code text-xl text-[#ffa116]"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">LeetCode</h3>
+                            <p class="text-sm text-[#94a3b8]">1100+ Problems • 1000+ Days Streak</p>
+                        </div>
+                    </div>
+                    <div class="neu-inset p-4 rounded-xl overflow-hidden">
+                        <img src="https://leetcard.jacoblin.cool/abhijeetlodh?theme=dark&font=Prociono&ext=heatmap" 
+                             alt="LeetCode Stats" class="w-full rounded-lg">
+                    </div>
+                    <a href="https://leetcode.com/u/abhijeetlodh/" target="_blank" 
+                       class="inline-flex items-center gap-2 mt-4 text-[#ffa116] hover:underline">
+                        <i class="fas fa-external-link-alt"></i>View Profile
+                    </a>
+                </div>
+
+                <!-- HackerRank -->
+                <div class="neu-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="neu-circle w-12 h-12 flex items-center justify-center">
+                            <i class="fab fa-hackerrank text-xl text-[#00ea64]"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg">HackerRank</h3>
+                            <p class="text-sm text-[#94a3b8]">6 Star Problem Solving</p>
+                        </div>
+                    </div>
+                    <div class="neu-inset p-6 rounded-xl">
+                        <div class="flex items-center justify-center gap-2 mb-4">
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                            <i class="fas fa-star text-[#fbbf24] text-2xl"></i>
+                        </div>
+                        <p class="text-center text-[#94a3b8]">2200+ Score in Problem Solving</p>
+                        <p class="text-center text-[#94a3b8] text-sm mt-2">Data Structures & Algorithms</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <div class="neu-inset p-4 rounded-xl text-center">
+                            <i class="fas fa-trophy text-[#fbbf24] text-2xl mb-2"></i>
+                            <p class="text-sm font-medium">32+ Months</p>
+                            <p class="text-xs text-[#94a3b8]">LeetCoding Challenges</p>
+                        </div>
+                        <div class="neu-inset p-4 rounded-xl text-center">
+                            <i class="fas fa-check-circle text-[#10b981] text-2xl mb-2"></i>
+                            <p class="text-sm font-medium">Completed</p>
+                            <p class="text-xs text-[#94a3b8]">All Basic Challenges</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- Certifications Section -->
-    <section id="certifications" class="py-24 px-6 relative z-10">
-        <div class="max-w-6xl mx-auto">
+    <section id="certifications" class="py-24 px-4 md:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                My <span class="text-[#e94560]">Certifications</span>
+                <span class="glow-text">Certifications</span>
             </h2>
-            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-4 rounded-full"></div>
-            <p class="text-center text-[#a0a0a0] mb-12">Click on any certificate to view it in full size</p>
+            <div class="w-24 h-1 bg-gradient-to-r from-[#6366f1] to-[#06b6d4] mx-auto mb-4 rounded-full"></div>
+            <p class="text-center text-[#94a3b8] mb-8">Click on any certificate to view in full size</p>
+
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button onclick="filterCerts('all')" class="filter-btn active neu-button px-6 py-2 text-sm">All</button>
-                <button onclick="filterCerts('web')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Web Dev</button>
-                <button onclick="filterCerts('python')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Python</button>
-                <button onclick="filterCerts('other')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Other</button>
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterCerts('all')" class="filter-btn active neu-button px-5 py-2 text-sm text-white">All</button>
+                <button onclick="filterCerts('genai')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#a78bfa]">GenAI/LLM</button>
+                <button onclick="filterCerts('ml')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#22d3ee]">ML/DS</button>
+                <button onclick="filterCerts('python')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#34d399]">Python</button>
+                <button onclick="filterCerts('cloud')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#fb923c]">Cloud/AWS</button>
+                <button onclick="filterCerts('finance')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#f472b6]">Finance</button>
+                <button onclick="filterCerts('other')" class="filter-btn neu-card px-5 py-2 text-sm hover:text-[#818cf8]">Other</button>
             </div>
+
             <!-- Certifications Grid -->
-            <div id="certGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="certGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 
                 <!-- ============================================= -->
-                <!-- 🎯 HOW TO ADD MORE CERTIFICATES:               -->
-                <!-- 1. Copy the entire cert-card div below        -->
-                <!-- 2. Change the image src to your image path    -->
-                <!-- 3. Update the title and category              -->
-                <!-- 4. Categories: web, python, other             -->
+                <!-- 🎯 HOW TO ADD YOUR CERTIFICATES:              -->
+                <!-- 1. Copy any cert-card div below               -->
+                <!-- 2. Change image src to: images/your-cert.jpg  -->
+                <!-- 3. Update title and category                  -->
+                <!-- 4. Categories: genai, ml, python, cloud, finance, other -->
                 <!-- ============================================= -->
-                <!-- Certificate Card 1 - COPY THIS BLOCK TO ADD MORE -->
-                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <!-- Replace 'images/cert1.jpg' with your image path -->
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Web+Development+Certificate" 
-                             alt="Web Development Certificate" 
-                             class="max-w-full max-h-full object-contain">
+
+                <!-- GenAI Certificates -->
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Grokking+GenAI+System+Design" 
+                             alt="Grokking Generative AI System Design" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">Web Development Bootcamp</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                        <h3 class="font-semibold mb-1 text-sm">Grokking the Generative AI System Design</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
                     </div>
                 </div>
-                <!-- END Certificate Card 1 -->
-                <!-- Certificate Card 2 -->
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+Pinecone+OpenAI" 
+                             alt="LangChain, Pinecone & OpenAI" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Learn LangChain, Pinecone & OpenAI: Build Next-Gen LLM Apps</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Generative+AI+GANs+to+CLIP" 
+                             alt="Generative AI from GANs to CLIP" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Generative AI, from GANs to CLIP, with Python and Pytorch</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+MasterClass" 
+                             alt="LangChain MasterClass" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain MasterClass - OpenAI LLAMA 2 GPT LLM Apps</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LLM+Foundations+RAG" 
+                             alt="LLM Foundations RAG" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LLM Foundations: Vector Databases for Caching and RAG</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Advanced+LLMOps" 
+                             alt="Advanced LLMOps" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Advanced LLMOps: Deploying and Managing LLMs in Production</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Diffusion+Models" 
+                             alt="Diffusion Models" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Hands-On Generative AI with Diffusion Models</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LLMs+Mastery+Transformers" 
+                             alt="LLMs Mastery" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LLMs Mastery: Complete Guide to Transformers & Generative AI</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Working+with+LLMs" 
+                             alt="Working with LLMs" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Working with Large Language Models in Generative AI</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy • Aug 2023</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="genai" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=LangChain+Python+Bootcamp" 
+                             alt="LangChain Python Bootcamp" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">LangChain with Python Bootcamp</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy • Aug 2023</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-genai text-xs rounded-full border">GenAI</span>
+                    </div>
+                </div>
+
+                <!-- ML/DS Certificates -->
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=MLOps+AWS+Bootcamp" 
+                             alt="MLOps AWS Bootcamp" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">MLOps with AWS - Bootcamp - Zero to Hero Series</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=NLP+TensorFlow" 
+                             alt="NLP TensorFlow" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Natural Language Processing with TensorFlow</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=ML+DS+GenAI+Python" 
+                             alt="ML DS GenAI Python" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning, Data Science and Generative AI with Python</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Advanced+NLP+Python" 
+                             alt="Advanced NLP Python" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Advanced NLP with Python for Machine Learning</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AI+A-Z+2024" 
+                             alt="AI A-Z 2024" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Artificial Intelligence A-Z 2024: Build 7 AI + LLM & ChatGPT</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Reinforcement+Learning" 
+                             alt="Reinforcement Learning" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Modern Reinforcement Learning: Deep Q Agents (PyTorch & TF2)</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Decision+Trees+SPSS" 
+                             alt="Decision Trees SPSS" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning and AI: Advanced Decision Trees with SPSS</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=DS+Real+World+Projects" 
+                             alt="DS Real World Projects" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Data Science Real World Projects in Python</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy • Feb 2021</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="ml" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=ML+Python+Training" 
+                             alt="ML Python Training" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Machine Learning with Python Training (beginner to advanced)</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy • Dec 2020</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-ml text-xs rounded-full border">ML/DS</span>
+                    </div>
+                </div>
+
+                <!-- Python Certificates -->
                 <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+Masterclass" 
-                             alt="Python Masterclass" 
-                             class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Pandas+Bootcamp+2022" 
+                             alt="Pandas Bootcamp 2022" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">Python Masterclass</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#533483]/40 text-[#a78bfa] text-xs rounded-full">Python</span>
+                        <h3 class="font-semibold mb-1 text-sm">The Complete Pandas Bootcamp 2022: Data Science with Python</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-python text-xs rounded-full border">Python</span>
                     </div>
                 </div>
-                <!-- Certificate Card 3 -->
-                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=JavaScript+Course" 
-                             alt="JavaScript Course" 
-                             class="max-w-full max-h-full object-contain">
+
+                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Pandas+12+Projects" 
+                             alt="Pandas 12 Projects" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">JavaScript: The Complete Guide</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                        <h3 class="font-semibold mb-1 text-sm">Python Data Science with Pandas: Master 12 Advanced Projects</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-python text-xs rounded-full border">Python</span>
                     </div>
                 </div>
-                <!-- Certificate Card 4 -->
+
                 <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Git+%26+GitHub" 
-                             alt="Git & GitHub" 
-                             class="max-w-full max-h-full object-contain">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=SQL+Bootcamp+2021" 
+                             alt="SQL Bootcamp 2021" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">Git & GitHub Masterclass</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#0f3460]/60 text-[#60a5fa] text-xs rounded-full">Other</span>
+                        <h3 class="font-semibold mb-1 text-sm">The Complete SQL Bootcamp 2021: from Zero to Hero</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
                     </div>
                 </div>
-                <!-- Certificate Card 5 -->
-                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Data+Science" 
-                             alt="Data Science" 
-                             class="max-w-full max-h-full object-contain">
+
+                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Microservices+Architecture" 
+                             alt="Microservices Architecture" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">Data Science with Python</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#533483]/40 text-[#a78bfa] text-xs rounded-full">Python</span>
+                        <h3 class="font-semibold mb-1 text-sm">Design Microservices Architecture with Patterns & Principles</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
                     </div>
                 </div>
-                <!-- Certificate Card 6 -->
-                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
-                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
-                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=React+Course" 
-                             alt="React Course" 
-                             class="max-w-full max-h-full object-contain">
+
+                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Git+Practical+Guide" 
+                             alt="Git Practical Guide" class="max-w-full max-h-full object-contain">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold mb-1">React - The Complete Guide</h3>
-                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
-                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                        <h3 class="font-semibold mb-1 text-sm">Git from Basics to Advanced: Practical Guide for Developers</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-other text-xs rounded-full border">Other</span>
                     </div>
                 </div>
+
+                <!-- Cloud/AWS Certificates -->
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AWS+ML+Specialty+2023" 
+                             alt="AWS ML Specialty 2023" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Machine Learning Specialty 2023 - Hands On!</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud/AWS</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="cloud" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=AWS+ML+Data+Engineering" 
+                             alt="AWS ML Data Engineering" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">AWS Certified Machine Learning - Specialty: Data Engineering</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-cloud text-xs rounded-full border">Cloud/AWS</span>
+                    </div>
+                </div>
+
+                <!-- Finance Certificates -->
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Algorithmic+Trading+A-Z" 
+                             alt="Algorithmic Trading A-Z" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Algorithmic Trading A-Z with Python, Machine Learning & AWS</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Finance+Data+Pandas" 
+                             alt="Finance Data Pandas" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Manage Finance Data with Python & Pandas: Unique Masterclass</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Technical+Analysis+Python" 
+                             alt="Technical Analysis Python" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Technical Analysis with Python for Algorithmic Trading</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Importing+Finance+Data" 
+                             alt="Importing Finance Data" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Importing Finance Data from Free Web Sources</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Quantitative+Analysis+Python" 
+                             alt="Quantitative Analysis Python" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Algorithmic Trading & Quantitative Analysis Using Python</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Financial+Derivatives" 
+                             alt="Financial Derivatives" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Financial Derivatives: A Quantitative Finance View</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+ML+Financial+Analysis" 
+                             alt="Python ML Financial Analysis" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python & Machine Learning for Financial Analysis</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
+                <div class="cert-card cursor-pointer" data-category="finance" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-3 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+Finance+Investment" 
+                             alt="Python Finance Investment" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1 text-sm">Python for Finance: Investment Fundamentals & Data Analytics</h3>
+                        <p class="text-xs text-[#94a3b8]">Udemy</p>
+                        <span class="inline-block mt-2 px-3 py-1 cat-finance text-xs rounded-full border">Finance</span>
+                    </div>
+                </div>
+
                 <!-- ============================================= -->
-                <!-- 📝 PASTE MORE CERTIFICATE CARDS ABOVE HERE    -->
+                <!-- 📝 COPY ANY CARD ABOVE AND PASTE HERE TO ADD  -->
+                <!-- MORE CERTIFICATES. CHANGE:                    -->
+                <!-- 1. data-category: genai/ml/python/cloud/finance/other -->
+                <!-- 2. img src: images/your-cert.jpg              -->
+                <!-- 3. Title text                                 -->
                 <!-- ============================================= -->
+
             </div>
         </div>
     </section>
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 px-6 relative z-10">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
-                Get In <span class="text-[#e94560]">Touch</span>
-            </h2>
-            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
-            <div class="neu-card p-8 md:p-12">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-6 text-[#e94560]">Contact Info</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4">
-                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-[#a0a0a0]">Email</p>
-                                    <p>your.email@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-[#a0a0a0]">Location</p>
-                                    <p>Your City, Country</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
-                                    <i class="fab fa-github"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-[#a0a0a0]">GitHub</p>
-                                    <p>github.com/yourusername</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <form class="space-y-4">
-                        <div class="neu-inset p-4">
-                            <input type="text" placeholder="Your Name" 
-                                   class="w-full bg-transparent outline-none">
-                        </div>
-                        <div class="neu-inset p-4">
-                            <input type="email" placeholder="Your Email" 
-                                   class="w-full bg-transparent outline-none">
-                        </div>
-                        <div class="neu-inset p-4">
-                            <textarea placeholder="Your Message" rows="4" 
-                                      class="w-full bg-transparent outline-none resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="neu-button w-full py-4 text-white font-medium">
-                            <i class="fas fa-paper-plane mr-2"></i>Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+
     <!-- Footer -->
-    <footer class="py-8 px-6 text-center relative z-10">
-        <div class="neu-card max-w-6xl mx-auto py-8">
-            <p class="text-[#a0a0a0]">
-                Made with <i class="fas fa-heart text-[#e94560]"></i> by Your Name
+    <footer class="py-12 px-4 md:px-8 text-center relative z-10">
+        <div class="neu-card-static max-w-7xl mx-auto py-8 px-6">
+            <div class="flex flex-wrap justify-center gap-6 mb-6">
+                <a href="https://github.com/abhijeetlodh" target="_blank" class="hover:text-[#6366f1] transition">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/abhijeet-lodh-sde/" target="_blank" class="hover:text-[#0077b5] transition">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+                <a href="https://leetcode.com/u/abhijeetlodh/" target="_blank" class="hover:text-[#ffa116] transition">
+                    <i class="fas fa-code text-2xl"></i>
+                </a>
+                <a href="https://www.kaggle.com/abhijeetlodh" target="_blank" class="hover:text-[#20beff] transition">
+                    <i class="fab fa-kaggle text-2xl"></i>
+                </a>
+                <a href="https://bento.me/abhijeetlodh" target="_blank" class="hover:text-[#768cff] transition">
+                    <i class="fas fa-link text-2xl"></i>
+                </a>
+            </div>
+            <p class="text-[#94a3b8]">
+                Made with <i class="fas fa-heart text-[#6366f1]"></i> by <span class="glow-text font-semibold">Abhijeet Lodh</span>
             </p>
-            <p class="text-sm text-[#a0a0a0] mt-2">© 2024 All Rights Reserved</p>
+            <p class="text-sm text-[#94a3b8] mt-2">AI/ML Engineer • Data Scientist • GenAI Specialist</p>
         </div>
     </footer>
+
     <!-- Image Modal -->
-    <div id="imageModal" class="modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+    <div id="imageModal" class="modal fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
         <div class="relative max-w-4xl w-full">
-            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-[#e94560]">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-[#6366f1] transition">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="neu-card p-4 bg-white">
-                <img id="modalImage" src="" alt="Certificate" class="w-full">
+            <div class="neu-card-static p-4 bg-white rounded-2xl">
+                <img id="modalImage" src="" alt="Certificate" class="w-full rounded-lg">
             </div>
             <h3 id="modalTitle" class="text-center mt-4 text-xl font-semibold"></h3>
         </div>
     </div>
-    <!-- GitHub Setup Instructions Modal -->
-    <div id="helpModal" class="modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="neu-card max-w-3xl w-full p-8 my-8 max-h-[90vh] overflow-y-auto">
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="neu-card-static max-w-3xl w-full p-8 my-8 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-[#e94560]">🚀 GitHub Pages Setup Guide</h3>
-                <button onclick="closeHelpModal()" class="text-2xl hover:text-[#e94560]">
+                <h3 class="text-2xl font-bold glow-text">🚀 GitHub Pages Setup Guide</h3>
+                <button onclick="closeHelpModal()" class="text-2xl hover:text-[#6366f1] transition">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div class="space-y-6 text-[#a0a0a0]">
-                <div class="neu-inset p-4">
+            <div class="space-y-4 text-[#94a3b8]">
+                <div class="neu-inset p-4 rounded-xl">
                     <h4 class="text-white font-semibold mb-2">Step 1: Create GitHub Account</h4>
-                    <p>Go to <span class="text-[#e94560]">github.com</span> and sign up for free</p>
+                    <p>Go to <span class="text-[#6366f1]">github.com</span> and sign up for free</p>
                 </div>
-                <div class="neu-inset p-4">
+
+                <div class="neu-inset p-4 rounded-xl">
                     <h4 class="text-white font-semibold mb-2">Step 2: Create New Repository</h4>
-                    <p>• Click the <span class="text-[#e94560]">+</span> icon (top right) → "New repository"</p>
-                    <p>• Name it: <span class="text-[#e94560]">yourusername.github.io</span></p>
-                    <p>• Make it <span class="text-[#e94560]">Public</span></p>
-                    <p>• Check "Add a README file"</p>
-                    <p>• Click "Create repository"</p>
+                    <p>• Click the <span class="text-[#6366f1]">+</span> icon → "New repository"</p>
+                    <p>• Name it: <span class="text-[#6366f1]">abhijeetlodh.github.io</span></p>
+                    <p>• Make it <span class="text-[#10b981]">Public</span></p>
                 </div>
-                <div class="neu-inset p-4">
+
+                <div class="neu-inset p-4 rounded-xl">
                     <h4 class="text-white font-semibold mb-2">Step 3: Upload Files</h4>
                     <p>• Click "Add file" → "Upload files"</p>
-                    <p>• Drag your <span class="text-[#e94560]">index.html</span> file</p>
-                    <p>• Click "Commit changes"</p>
+                    <p>• Drag your <span class="text-[#6366f1]">index.html</span></p>
                 </div>
-                <div class="neu-inset p-4">
+
+                <div class="neu-inset p-4 rounded-xl">
                     <h4 class="text-white font-semibold mb-2">Step 4: Create Images Folder</h4>
                     <p>• Click "Add file" → "Create new file"</p>
-                    <p>• Type: <span class="text-[#e94560]">images/placeholder.txt</span></p>
-                    <p>• This creates the folder! Add any text and commit</p>
-                    <p>• Now upload your certificate images to this folder</p>
+                    <p>• Type: <span class="text-[#6366f1]">images/.gitkeep</span></p>
+                    <p>• This creates the folder!</p>
+                    <p>• Then upload your certificate images</p>
                 </div>
-                <div class="neu-inset p-4">
+
+                <div class="neu-inset p-4 rounded-xl">
                     <h4 class="text-white font-semibold mb-2">Step 5: Update Image Paths</h4>
-                    <p>• Edit index.html on GitHub</p>
-                    <p>• Change image src to: <span class="text-[#e94560]">images/your-cert-name.jpg</span></p>
+                    <p>Change each placeholder to: <span class="text-[#6366f1]">images/your-cert.jpg</span></p>
                 </div>
-                <div class="neu-inset p-4 border-2 border-[#e94560]">
+
+                <div class="neu-inset p-4 rounded-xl border border-[#6366f1]">
                     <h4 class="text-white font-semibold mb-2">✨ Your site will be live at:</h4>
-                    <p class="text-[#e94560] text-lg">https://yourusername.github.io</p>
+                    <p class="text-[#6366f1] text-lg">https://abhijeetlodh.github.io</p>
+                </div>
+
+                <div class="neu-inset p-4 rounded-xl bg-[#6366f1]/10">
+                    <h4 class="text-white font-semibold mb-2">🔁 To Add More Certificates:</h4>
+                    <p>1. Find a cert-card in the code</p>
+                    <p>2. Copy the entire div block</p>
+                    <p>3. Paste where marked in comments</p>
+                    <p>4. Update image src and title</p>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Help Button -->
-    <button onclick="openHelpModal()" class="fixed bottom-6 right-6 neu-button w-14 h-14 rounded-full flex items-center justify-center z-40 text-white">
+    <button onclick="openHelpModal()" class="fixed bottom-6 right-6 neu-button w-14 h-14 rounded-full flex items-center justify-center z-40 text-white" title="Setup Guide">
         <i class="fas fa-question text-xl"></i>
     </button>
+
     <script>
         // Typewriter Effect
-        const titles = ['ARTIFICIAL INTELLIGENCE', 'MACHINE LEARNING ENGINEER', 'DATA SCIENTIST', '4 years experienced Professional', 'Python Enthusiast', 'Lifelong Learner', 'Certified Professional'];
+        const titles = ['AI/ML Engineer', 'Data Scientist', 'GenAI Specialist', 'Agentic AI Builder', 'LLM Expert', 'NLP Enthusiast'];
         let titleIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
         const typewriter = document.getElementById('typewriter');
+
         function type() {
             const currentTitle = titles[titleIndex];
             
@@ -691,50 +1451,52 @@
                 typewriter.textContent = currentTitle.substring(0, charIndex + 1);
                 charIndex++;
             }
+
             if (!isDeleting && charIndex === currentTitle.length) {
                 setTimeout(() => isDeleting = true, 2000);
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 titleIndex = (titleIndex + 1) % titles.length;
             }
+
             setTimeout(type, isDeleting ? 50 : 100);
         }
         type();
-        // Mobile Menu Toggle
+
+        // Mobile Menu
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        // Close mobile menu on link click
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
-        // Particle Background
+
+        // Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 25; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 15) + 's';
                 container.appendChild(particle);
             }
         }
         createParticles();
+
         // Certificate Filter
         function filterCerts(category) {
             const cards = document.querySelectorAll('.cert-card');
             const buttons = document.querySelectorAll('.filter-btn');
+
             buttons.forEach(btn => {
-                btn.classList.remove('neu-button', 'active');
+                btn.classList.remove('neu-button', 'active', 'text-white');
                 btn.classList.add('neu-card');
             });
             event.target.classList.remove('neu-card');
-            event.target.classList.add('neu-button', 'active');
+            event.target.classList.add('neu-button', 'active', 'text-white');
+
             cards.forEach(card => {
                 if (category === 'all' || card.dataset.category === category) {
                     card.style.display = 'block';
@@ -744,50 +1506,51 @@
                 }
             });
         }
-        // Image Modal
+
+        // Modal Functions
         function openModal(card) {
             const modal = document.getElementById('imageModal');
             const img = card.querySelector('img');
             const title = card.querySelector('h3').textContent;
-            
             document.getElementById('modalImage').src = img.src;
             document.getElementById('modalTitle').textContent = title;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
+
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-        // Help Modal
+
         function openHelpModal() {
-            const modal = document.getElementById('helpModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('helpModal').classList.remove('hidden');
+            document.getElementById('helpModal').classList.add('flex');
         }
+
         function closeHelpModal() {
-            const modal = document.getElementById('helpModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('helpModal').classList.add('hidden');
+            document.getElementById('helpModal').classList.remove('flex');
         }
-        // Close modal on outside click
+
+        // Close modals on outside click
         document.getElementById('imageModal').addEventListener('click', (e) => {
             if (e.target.id === 'imageModal') closeModal();
         });
         document.getElementById('helpModal').addEventListener('click', (e) => {
             if (e.target.id === 'helpModal') closeHelpModal();
         });
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
-        // Animation on scroll
+
+        // Scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -796,6 +1559,7 @@
                 }
             });
         }, { threshold: 0.1 });
+
         document.querySelectorAll('.neu-card, .cert-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
