@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio | Developer & Certified Professional</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #1a1a2e;
+            --bg-card: #16213e;
+            --accent-1: #e94560;
+            --accent-2: #0f3460;
+            --accent-3: #533483;
+            --text-light: #eaeaea;
+            --text-muted: #a0a0a0;
+        }
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, var(--bg-main) 0%, #0f0f1a 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        /* Neumorphism Styles */
+        .neu-card {
+            background: linear-gradient(145deg, #1e2a4a, #141c32);
+            box-shadow: 
+                8px 8px 16px #0d1221,
+                -8px -8px 16px #1f2d4f,
+                inset 0 0 0 rgba(255,255,255,0);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+        .neu-card:hover {
+            box-shadow: 
+                12px 12px 24px #0d1221,
+                -12px -12px 24px #1f2d4f,
+                inset 0 0 30px rgba(233, 69, 96, 0.1);
+            transform: translateY(-5px);
+        }
+        .neu-button {
+            background: linear-gradient(145deg, #e94560, #c73a52);
+            box-shadow: 
+                5px 5px 10px #0d1221,
+                -5px -5px 10px #1f2d4f;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .neu-button:hover {
+            box-shadow: 
+                2px 2px 5px #0d1221,
+                -2px -2px 5px #1f2d4f;
+            transform: scale(0.98);
+        }
+        .neu-inset {
+            background: linear-gradient(145deg, #141c32, #1e2a4a);
+            box-shadow: 
+                inset 5px 5px 10px #0d1221,
+                inset -5px -5px 10px #1f2d4f;
+            border-radius: 15px;
+        }
+        .neu-circle {
+            background: linear-gradient(145deg, #1e2a4a, #141c32);
+            box-shadow: 
+                8px 8px 16px #0d1221,
+                -8px -8px 16px #1f2d4f;
+            border-radius: 50%;
+        }
+        /* Glowing Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+        }
+        .glow-border {
+            border: 2px solid transparent;
+            background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                        linear-gradient(135deg, var(--accent-1), var(--accent-3)) border-box;
+        }
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        /* Certification Card Special */
+        .cert-card {
+            background: linear-gradient(145deg, #1e2a4a, #141c32);
+            box-shadow: 
+                10px 10px 20px #0d1221,
+                -10px -10px 20px #1f2d4f;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cert-card:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 
+                15px 15px 30px #0d1221,
+                -15px -15px 30px #1f2d4f,
+                0 0 30px rgba(233, 69, 96, 0.3);
+        }
+        .cert-card img {
+            transition: all 0.4s ease;
+            filter: brightness(0.95);
+        }
+        .cert-card:hover img {
+            filter: brightness(1.05);
+        }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-1);
+            border-radius: 5px;
+        }
+        /* Nav Active */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--accent-1);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        /* Skill Bar */
+        .skill-bar {
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+        /* Particle Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particleFloat 15s infinite;
+        }
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0;
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { 
+                transform: translateY(-100vh) rotate(720deg); 
+                opacity: 0;
+            }
+        }
+        /* Modal */
+        .modal {
+            backdrop-filter: blur(10px);
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .neu-card, .cert-card {
+                box-shadow: 
+                    4px 4px 8px #0d1221,
+                    -4px -4px 8px #1f2d4f;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Particle Background -->
+    <div id="particles"></div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12">
+        <div class="neu-card max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">
+                <span class="text-[#e94560]">&lt;</span>Dev<span class="text-[#e94560]">/&gt;</span>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="menuBtn" class="md:hidden neu-circle w-10 h-10 flex items-center justify-center">
+                <i class="fas fa-bars text-[#e94560]"></i>
+            </button>
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex gap-8">
+                <a href="#home" class="nav-link hover:text-[#e94560] transition">Home</a>
+                <a href="#about" class="nav-link hover:text-[#e94560] transition">About</a>
+                <a href="#skills" class="nav-link hover:text-[#e94560] transition">Skills</a>
+                <a href="#certifications" class="nav-link hover:text-[#e94560] transition">Certifications</a>
+                <a href="#contact" class="nav-link hover:text-[#e94560] transition">Contact</a>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden mt-4 neu-card max-w-6xl mx-auto p-6">
+            <div class="flex flex-col gap-4">
+                <a href="#home" class="hover:text-[#e94560] transition">Home</a>
+                <a href="#about" class="hover:text-[#e94560] transition">About</a>
+                <a href="#skills" class="hover:text-[#e94560] transition">Skills</a>
+                <a href="#certifications" class="hover:text-[#e94560] transition">Certifications</a>
+                <a href="#contact" class="hover:text-[#e94560] transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-6 pt-24 relative z-10">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <p class="text-[#e94560] text-lg mb-2 font-medium">Hello, I'm</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 glow-text">
+                    Your Name
+                </h1>
+                <h2 class="text-xl md:text-2xl text-[#a0a0a0] mb-6">
+                    <span id="typewriter"></span><span class="animate-pulse">|</span>
+                </h2>
+                <p class="text-[#a0a0a0] mb-8 leading-relaxed">
+                    A passionate developer with a hunger for learning. I've completed numerous certifications 
+                    and I'm ready to build amazing things!
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#certifications" class="neu-button px-8 py-3 text-white font-medium">
+                        <i class="fas fa-certificate mr-2"></i>View Certifications
+                    </a>
+                    <a href="#contact" class="neu-card px-8 py-3 font-medium hover:text-[#e94560] transition glow-border">
+                        <i class="fas fa-envelope mr-2"></i>Contact Me
+                    </a>
+                </div>
+                <!-- Social Links -->
+                <div class="flex gap-4 mt-8">
+                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="neu-circle w-12 h-12 flex items-center justify-center hover:text-[#e94560] transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 flex justify-center">
+                <div class="relative">
+                    <div class="neu-circle w-64 h-64 md:w-80 md:h-80 flex items-center justify-center floating">
+                        <div class="neu-inset w-56 h-56 md:w-72 md:h-72 flex items-center justify-center">
+                            <i class="fas fa-code text-6xl md:text-8xl text-[#e94560]"></i>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 neu-circle w-8 h-8 bg-[#e94560]"></div>
+                    <div class="absolute -bottom-6 -left-6 neu-circle w-12 h-12 bg-[#533483]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                About <span class="text-[#e94560]">Me</span>
+            </h2>
+            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="neu-card p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-[#e94560]">
+                        <i class="fas fa-user mr-2"></i>Who Am I?
+                    </h3>
+                    <p class="text-[#a0a0a0] leading-relaxed mb-4">
+                        I'm a passionate beginner developer who believes in continuous learning. 
+                        I've invested my time in acquiring valuable skills through Udemy courses 
+                        and certifications.
+                    </p>
+                    <p class="text-[#a0a0a0] leading-relaxed">
+                        My goal is to become a full-stack developer and contribute to meaningful projects. 
+                        Every certification represents a step forward in my journey!
+                    </p>
+                </div>
+                <div class="neu-card p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-[#e94560]">
+                        <i class="fas fa-rocket mr-2"></i>Quick Facts
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="neu-inset p-4 flex items-center gap-4">
+                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">10+ Certifications</p>
+                                <p class="text-sm text-[#a0a0a0]">From Udemy & more</p>
+                            </div>
+                        </div>
+                        <div class="neu-inset p-4 flex items-center gap-4">
+                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">100+ Hours</p>
+                                <p class="text-sm text-[#a0a0a0]">Of learning completed</p>
+                            </div>
+                        </div>
+                        <div class="neu-inset p-4 flex items-center gap-4">
+                            <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Always Learning</p>
+                                <p class="text-sm text-[#a0a0a0]">New skills every week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                My <span class="text-[#e94560]">Skills</span>
+            </h2>
+            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Skill Bars -->
+                <div class="neu-card p-8 space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">HTML & CSS</span>
+                            <span class="text-[#e94560]">85%</span>
+                        </div>
+                        <div class="neu-inset h-4 p-1">
+                            <div class="skill-bar h-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">JavaScript</span>
+                            <span class="text-[#e94560]">70%</span>
+                        </div>
+                        <div class="neu-inset h-4 p-1">
+                            <div class="skill-bar h-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Python</span>
+                            <span class="text-[#e94560]">75%</span>
+                        </div>
+                        <div class="neu-inset h-4 p-1">
+                            <div class="skill-bar h-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">React</span>
+                            <span class="text-[#e94560]">60%</span>
+                        </div>
+                        <div class="neu-inset h-4 p-1">
+                            <div class="skill-bar h-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Skill Icons -->
+                <div class="neu-card p-8">
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-html5 text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">HTML5</p>
+                        </div>
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-css3-alt text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">CSS3</p>
+                        </div>
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-js text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">JavaScript</p>
+                        </div>
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-python text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">Python</p>
+                        </div>
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-react text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">React</p>
+                        </div>
+                        <div class="neu-inset p-6 text-center hover:scale-105 transition cursor-pointer">
+                            <i class="fab fa-git-alt text-4xl text-[#e94560] mb-2"></i>
+                            <p class="text-sm">Git</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-24 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                My <span class="text-[#e94560]">Certifications</span>
+            </h2>
+            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-4 rounded-full"></div>
+            <p class="text-center text-[#a0a0a0] mb-12">Click on any certificate to view it in full size</p>
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="filterCerts('all')" class="filter-btn active neu-button px-6 py-2 text-sm">All</button>
+                <button onclick="filterCerts('web')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Web Dev</button>
+                <button onclick="filterCerts('python')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Python</button>
+                <button onclick="filterCerts('other')" class="filter-btn neu-card px-6 py-2 text-sm hover:text-[#e94560]">Other</button>
+            </div>
+            <!-- Certifications Grid -->
+            <div id="certGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- ============================================= -->
+                <!-- 🎯 HOW TO ADD MORE CERTIFICATES:               -->
+                <!-- 1. Copy the entire cert-card div below        -->
+                <!-- 2. Change the image src to your image path    -->
+                <!-- 3. Update the title and category              -->
+                <!-- 4. Categories: web, python, other             -->
+                <!-- ============================================= -->
+                <!-- Certificate Card 1 - COPY THIS BLOCK TO ADD MORE -->
+                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <!-- Replace 'images/cert1.jpg' with your image path -->
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Web+Development+Certificate" 
+                             alt="Web Development Certificate" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">Web Development Bootcamp</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                    </div>
+                </div>
+                <!-- END Certificate Card 1 -->
+                <!-- Certificate Card 2 -->
+                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Python+Masterclass" 
+                             alt="Python Masterclass" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">Python Masterclass</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#533483]/40 text-[#a78bfa] text-xs rounded-full">Python</span>
+                    </div>
+                </div>
+                <!-- Certificate Card 3 -->
+                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=JavaScript+Course" 
+                             alt="JavaScript Course" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">JavaScript: The Complete Guide</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                    </div>
+                </div>
+                <!-- Certificate Card 4 -->
+                <div class="cert-card cursor-pointer" data-category="other" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Git+%26+GitHub" 
+                             alt="Git & GitHub" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">Git & GitHub Masterclass</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#0f3460]/60 text-[#60a5fa] text-xs rounded-full">Other</span>
+                    </div>
+                </div>
+                <!-- Certificate Card 5 -->
+                <div class="cert-card cursor-pointer" data-category="python" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=Data+Science" 
+                             alt="Data Science" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">Data Science with Python</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#533483]/40 text-[#a78bfa] text-xs rounded-full">Python</span>
+                    </div>
+                </div>
+                <!-- Certificate Card 6 -->
+                <div class="cert-card cursor-pointer" data-category="web" onclick="openModal(this)">
+                    <div class="aspect-[4/3] bg-white p-4 flex items-center justify-center">
+                        <img src="https://via.placeholder.com/400x300/ffffff/333333?text=React+Course" 
+                             alt="React Course" 
+                             class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-1">React - The Complete Guide</h3>
+                        <p class="text-sm text-[#a0a0a0]">Udemy • 2024</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-[#e94560]/20 text-[#e94560] text-xs rounded-full">Web Dev</span>
+                    </div>
+                </div>
+                <!-- ============================================= -->
+                <!-- 📝 PASTE MORE CERTIFICATE CARDS ABOVE HERE    -->
+                <!-- ============================================= -->
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+                Get In <span class="text-[#e94560]">Touch</span>
+            </h2>
+            <div class="w-24 h-1 bg-[#e94560] mx-auto mb-12 rounded-full"></div>
+            <div class="neu-card p-8 md:p-12">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-6 text-[#e94560]">Contact Info</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[#a0a0a0]">Email</p>
+                                    <p>your.email@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[#a0a0a0]">Location</p>
+                                    <p>Your City, Country</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="neu-circle w-12 h-12 flex items-center justify-center text-[#e94560]">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[#a0a0a0]">GitHub</p>
+                                    <p>github.com/yourusername</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="space-y-4">
+                        <div class="neu-inset p-4">
+                            <input type="text" placeholder="Your Name" 
+                                   class="w-full bg-transparent outline-none">
+                        </div>
+                        <div class="neu-inset p-4">
+                            <input type="email" placeholder="Your Email" 
+                                   class="w-full bg-transparent outline-none">
+                        </div>
+                        <div class="neu-inset p-4">
+                            <textarea placeholder="Your Message" rows="4" 
+                                      class="w-full bg-transparent outline-none resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="neu-button w-full py-4 text-white font-medium">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="py-8 px-6 text-center relative z-10">
+        <div class="neu-card max-w-6xl mx-auto py-8">
+            <p class="text-[#a0a0a0]">
+                Made with <i class="fas fa-heart text-[#e94560]"></i> by Your Name
+            </p>
+            <p class="text-sm text-[#a0a0a0] mt-2">© 2024 All Rights Reserved</p>
+        </div>
+    </footer>
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full">
+            <button onclick="closeModal()" class="absolute -top-12 right-0 text-white text-3xl hover:text-[#e94560]">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="neu-card p-4 bg-white">
+                <img id="modalImage" src="" alt="Certificate" class="w-full">
+            </div>
+            <h3 id="modalTitle" class="text-center mt-4 text-xl font-semibold"></h3>
+        </div>
+    </div>
+    <!-- GitHub Setup Instructions Modal -->
+    <div id="helpModal" class="modal fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="neu-card max-w-3xl w-full p-8 my-8 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-[#e94560]">🚀 GitHub Pages Setup Guide</h3>
+                <button onclick="closeHelpModal()" class="text-2xl hover:text-[#e94560]">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6 text-[#a0a0a0]">
+                <div class="neu-inset p-4">
+                    <h4 class="text-white font-semibold mb-2">Step 1: Create GitHub Account</h4>
+                    <p>Go to <span class="text-[#e94560]">github.com</span> and sign up for free</p>
+                </div>
+                <div class="neu-inset p-4">
+                    <h4 class="text-white font-semibold mb-2">Step 2: Create New Repository</h4>
+                    <p>• Click the <span class="text-[#e94560]">+</span> icon (top right) → "New repository"</p>
+                    <p>• Name it: <span class="text-[#e94560]">yourusername.github.io</span></p>
+                    <p>• Make it <span class="text-[#e94560]">Public</span></p>
+                    <p>• Check "Add a README file"</p>
+                    <p>• Click "Create repository"</p>
+                </div>
+                <div class="neu-inset p-4">
+                    <h4 class="text-white font-semibold mb-2">Step 3: Upload Files</h4>
+                    <p>• Click "Add file" → "Upload files"</p>
+                    <p>• Drag your <span class="text-[#e94560]">index.html</span> file</p>
+                    <p>• Click "Commit changes"</p>
+                </div>
+                <div class="neu-inset p-4">
+                    <h4 class="text-white font-semibold mb-2">Step 4: Create Images Folder</h4>
+                    <p>• Click "Add file" → "Create new file"</p>
+                    <p>• Type: <span class="text-[#e94560]">images/placeholder.txt</span></p>
+                    <p>• This creates the folder! Add any text and commit</p>
+                    <p>• Now upload your certificate images to this folder</p>
+                </div>
+                <div class="neu-inset p-4">
+                    <h4 class="text-white font-semibold mb-2">Step 5: Update Image Paths</h4>
+                    <p>• Edit index.html on GitHub</p>
+                    <p>• Change image src to: <span class="text-[#e94560]">images/your-cert-name.jpg</span></p>
+                </div>
+                <div class="neu-inset p-4 border-2 border-[#e94560]">
+                    <h4 class="text-white font-semibold mb-2">✨ Your site will be live at:</h4>
+                    <p class="text-[#e94560] text-lg">https://yourusername.github.io</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Help Button -->
+    <button onclick="openHelpModal()" class="fixed bottom-6 right-6 neu-button w-14 h-14 rounded-full flex items-center justify-center z-40 text-white">
+        <i class="fas fa-question text-xl"></i>
+    </button>
+    <script>
+        // Typewriter Effect
+        const titles = ['Web Developer', 'Python Enthusiast', 'Lifelong Learner', 'Certified Professional'];
+        let titleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriter = document.getElementById('typewriter');
+        function type() {
+            const currentTitle = titles[titleIndex];
+            
+            if (isDeleting) {
+                typewriter.textContent = currentTitle.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriter.textContent = currentTitle.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            if (!isDeleting && charIndex === currentTitle.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                titleIndex = (titleIndex + 1) % titles.length;
+            }
+            setTimeout(type, isDeleting ? 50 : 100);
+        }
+        type();
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        // Particle Background
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        // Certificate Filter
+        function filterCerts(category) {
+            const cards = document.querySelectorAll('.cert-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('neu-button', 'active');
+                btn.classList.add('neu-card');
+            });
+            event.target.classList.remove('neu-card');
+            event.target.classList.add('neu-button', 'active');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        // Image Modal
+        function openModal(card) {
+            const modal = document.getElementById('imageModal');
+            const img = card.querySelector('img');
+            const title = card.querySelector('h3').textContent;
+            
+            document.getElementById('modalImage').src = img.src;
+            document.getElementById('modalTitle').textContent = title;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        // Help Modal
+        function openHelpModal() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeHelpModal() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        // Close modal on outside click
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') closeModal();
+        });
+        document.getElementById('helpModal').addEventListener('click', (e) => {
+            if (e.target.id === 'helpModal') closeHelpModal();
+        });
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.neu-card, .cert-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
