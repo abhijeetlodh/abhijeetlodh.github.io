@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADHD Bionic Reader | Abhijeet Lodh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS RESET & VARIABLES ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #000000;
+            --text: #ff8c00;
+            --accent: #00f5d4;
+            --accent2: #f72585;
+            --accent3: #7b2cbf;
+            --card-bg: #0a0a1a;
+            --muted: #94a3b8;
+            --font-size: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050510; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), var(--accent3)); border-radius: 4px; }
+
+        /* ===== BACKGROUND EFFECTS ===== */
+        .gradient-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(0,245,212,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(123,44,191,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(247,37,133,0.04) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
+            animation: gradShift 15s ease-in-out infinite;
+        }
+        @keyframes gradShift { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+        .cyber-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0,245,212,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,245,212,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0;
+        }
+
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .particle {
+            position: absolute; width: 3px; height: 3px; border-radius: 50%; opacity: 0.4;
+            animation: pFloat 20s infinite linear;
+        }
+        @keyframes pFloat {
+            0%,100% { transform: translateY(100vh) rotate(0); opacity: 0; }
+            10% { opacity: 0.5; } 90% { opacity: 0.5; }
+            99% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== LAYOUT ===== */
+        .app-container { position: relative; z-index: 10; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* ===== HEADER ===== */
+        .header {
+            padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,245,212,0.05);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #4cc9f0);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            text-decoration: none;
+        }
+        .header-actions { display: flex; gap: 8px; align-items: center; }
+        .icon-btn {
+            width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            box-shadow: 4px 4px 10px #030308, -4px -4px 10px #0d0d1f;
+            color: var(--accent); font-size: 16px; transition: all 0.3s ease;
+        }
+        .icon-btn:hover { box-shadow: 4px 4px 10px #030308, -4px -4px 10px #0d0d1f, 0 0 20px rgba(0,245,212,0.4); transform: scale(1.1); }
+        .back-link {
+            color: var(--muted); text-decoration: none; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px; transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        /* ===== NEU CARD ===== */
+        .neu-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            box-shadow: 8px 8px 24px #030308, -8px -8px 24px #0d0d1f, inset 0 0 0 1px rgba(0,245,212,0.05);
+            border-radius: 20px; transition: all 0.3s ease;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content { flex: 1; padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        /* ===== TITLE ===== */
+        .page-title {
+            text-align: center; margin-bottom: 32px;
+        }
+        .page-title h1 {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #4cc9f0);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: 8px;
+        }
+        .page-title p { color: var(--muted); font-size: 0.95rem; }
+        .title-bar { width: 80px; height: 4px; border-radius: 4px; margin: 12px auto; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+        /* ===== SETUP PANEL ===== */
+        .setup-panel { display: grid; gap: 20px; margin-bottom: 24px; }
+
+        .textarea-wrap { position: relative; }
+        #textInput {
+            width: 100%; min-height: 160px; padding: 20px; border-radius: 16px; border: 2px solid rgba(0,245,212,0.1);
+            background: rgba(5,5,16,0.8); color: #e2e8f0; font-family: 'Space Grotesk', sans-serif; font-size: 15px;
+            resize: vertical; transition: border-color 0.3s; line-height: 1.7; outline: none;
+        }
+        #textInput:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,245,212,0.15); }
+        #textInput::placeholder { color: #475569; }
+        .text-stats {
+            display: flex; gap: 16px; padding: 10px 20px; font-size: 0.8rem; color: var(--muted); flex-wrap: wrap;
+        }
+        .text-stats span { display: flex; align-items: center; gap: 4px; }
+
+        /* ===== CONTROLS GRID ===== */
+        .controls-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
+        }
+        .control-group {
+            padding: 20px; border-radius: 16px;
+            background: rgba(10,10,26,0.6); border: 1px solid rgba(0,245,212,0.08);
+        }
+        .control-label {
+            font-size: 0.85rem; font-weight: 600; color: var(--accent);
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* ===== COLOR SWATCHES ===== */
+        .color-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+        .swatch {
+            width: 36px; height: 36px; border-radius: 50%; border: 3px solid transparent;
+            cursor: pointer; transition: all 0.3s ease; position: relative;
+        }
+        .swatch:hover { transform: scale(1.2); }
+        .swatch.active { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,245,212,0.5); transform: scale(1.15); }
+        .swatch::after {
+            content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; opacity: 0; transition: opacity 0.2s;
+        }
+        .swatch.active::after { opacity: 1; }
+        .swatch-dark::after { color: #fff; }
+        .swatch-light::after { color: #000; }
+
+        /* ===== SLIDER ===== */
+        .slider-wrap { display: flex; align-items: center; gap: 12px; }
+        .slider-wrap input[type="range"] {
+            flex: 1; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            outline: none; cursor: pointer;
+        }
+        .slider-wrap input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+            background: var(--accent); box-shadow: 0 0 10px rgba(0,245,212,0.5);
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .slider-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .slider-wrap input[type="range"]::-moz-range-thumb {
+            width: 22px; height: 22px; border-radius: 50%; border: none;
+            background: var(--accent); box-shadow: 0 0 10px rgba(0,245,212,0.5); cursor: pointer;
+        }
+        .slider-value {
+            min-width: 64px; text-align: center; padding: 4px 10px; border-radius: 8px;
+            background: rgba(0,245,212,0.1); color: var(--accent); font-weight: 600;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 24px 0; }
+        .btn {
+            padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #4361ee);
+            color: #000; box-shadow: 0 0 30px rgba(0,245,212,0.3);
+        }
+        .btn-primary:hover { box-shadow: 0 0 50px rgba(0,245,212,0.5); }
+        .btn-secondary {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            color: var(--accent); border: 1px solid rgba(0,245,212,0.2);
+            box-shadow: 4px 4px 10px #030308, -4px -4px 10px #0d0d1f;
+        }
+        .btn-secondary:hover { border-color: var(--accent); box-shadow: 0 0 20px rgba(0,245,212,0.2); }
+        .btn-danger {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+            color: #fff; box-shadow: 0 0 20px rgba(247,37,133,0.3);
+        }
+        .btn-danger:hover { box-shadow: 0 0 40px rgba(247,37,133,0.5); }
+        .btn-warning {
+            background: linear-gradient(135deg, #ff8c00, #ff6000);
+            color: #000; box-shadow: 0 0 20px rgba(255,140,0,0.3);
+        }
+        .btn-warning:hover { box-shadow: 0 0 40px rgba(255,140,0,0.5); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+        .btn-sm { padding: 10px 20px; font-size: 0.85rem; }
+
+        /* ===== READING DISPLAY ===== */
+        #readingScreen {
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 60vh; padding: 40px 20px; position: relative;
+        }
+        #readingScreen.active { display: flex; }
+
+        .reverse-banner {
+            position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff;
+            padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            display: none; align-items: center; gap: 8px; z-index: 200;
+            box-shadow: 0 0 30px rgba(220,38,38,0.5); animation: bannerPulse 1.5s ease-in-out infinite;
+            white-space: nowrap;
+        }
+        .reverse-banner.show { display: flex; }
+        @keyframes bannerPulse { 0%,100%{box-shadow:0 0 20px rgba(220,38,38,0.4)} 50%{box-shadow:0 0 40px rgba(220,38,38,0.7)} }
+
+        .word-display {
+            font-size: var(--font-size); font-weight: 400; text-align: center;
+            line-height: 1.3; letter-spacing: 2px; transition: font-size 0.3s ease;
+            max-width: 90vw; word-break: break-word; padding: 20px;
+        }
+        .word-bold { font-weight: 800; }
+        .word-light { opacity: 0.4; font-weight: 400; }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            width: 100%; max-width: 700px; margin: 24px auto 0;
+        }
+        .progress-bar-bg {
+            width: 100%; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%; border-radius: 4px; transition: width 0.2s ease;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+        .progress-info {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 8px; font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; gap: 8px;
+        }
+        .progress-info span { font-family: 'JetBrains Mono', monospace; }
+
+        /* ===== READING CONTROLS ===== */
+        .reading-controls {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            margin-top: 24px; padding: 16px; border-radius: 16px;
+            background: rgba(10,10,26,0.6); border: 1px solid rgba(0,245,212,0.08);
+        }
+
+        /* ===== ZOOM CONTROLS ===== */
+        .zoom-controls {
+            display: flex; align-items: center; gap: 8px; margin-top: 16px;
+            padding: 12px 16px; border-radius: 12px;
+            background: rgba(10,10,26,0.6); border: 1px solid rgba(0,245,212,0.08);
+        }
+        .zoom-controls label { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+        .zoom-controls input[type="range"] { width: 150px; }
+
+        /* ===== KEYBOARD HINTS ===== */
+        .keyboard-hints {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+            margin-top: 16px; padding: 12px;
+        }
+        .kbd {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 6px; font-size: 0.7rem;
+            background: rgba(0,245,212,0.08); border: 1px solid rgba(0,245,212,0.15);
+            color: var(--muted); font-family: 'JetBrains Mono', monospace;
+        }
+        .kbd code {
+            background: rgba(0,245,212,0.15); padding: 2px 6px; border-radius: 4px;
+            font-weight: 600; color: var(--accent);
+        }
+
+        /* ===== TOAST ===== */
+        .toast-container { position: fixed; top: 90px; right: 20px; z-index: 500; display: flex; flex-direction: column; gap: 8px; }
+        .toast {
+            padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 500;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+            display: flex; align-items: center; gap: 8px; max-width: 350px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .toast-success { background: linear-gradient(135deg, #059669, #047857); color: #fff; }
+        .toast-info { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; }
+        .toast-warning { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
+        .toast-error { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(100px); } }
+
+        /* ===== PREVIEW WORD ===== */
+        .preview-section {
+            text-align: center; margin: 16px 0; padding: 20px;
+            border-radius: 16px; background: rgba(10,10,26,0.4);
+            border: 1px dashed rgba(0,245,212,0.15);
+        }
+        .preview-section .preview-label {
+            font-size: 0.75rem; color: var(--muted); text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 8px;
+        }
+        .preview-word { font-size: 2rem; }
+
+        /* ===== SAMPLE TEXTS ===== */
+        .sample-texts { margin-top: 12px; }
+        .sample-texts summary {
+            cursor: pointer; color: var(--accent); font-size: 0.85rem;
+            font-weight: 500; padding: 8px 0; user-select: none;
+        }
+        .sample-texts summary:hover { text-decoration: underline; }
+        .sample-btn {
+            display: inline-block; margin: 4px; padding: 6px 14px; border-radius: 20px;
+            background: rgba(0,245,212,0.08); border: 1px solid rgba(0,245,212,0.15);
+            color: var(--muted); font-size: 0.8rem; cursor: pointer; transition: all 0.3s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .sample-btn:hover {
+            background: rgba(0,245,212,0.2); border-color: var(--accent);
+            color: var(--accent); transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center; padding: 20px; color: var(--muted); font-size: 0.8rem;
+            border-top: 1px solid rgba(0,245,212,0.05); margin-top: auto;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* ===== SETUP VISIBLE / READING VISIBLE ===== */
+        .setup-visible { display: block; }
+        .reading-visible { display: none; }
+        body.reading-mode .setup-visible { display: none; }
+        body.reading-mode .reading-visible { display: block; }
+        body.reading-mode #readingScreen { display: flex; }
+
+        /* ===== SPEED DISPLAY DURING READING ===== */
+        .live-speed-control {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
+            margin-top: 12px; padding: 12px 16px; border-radius: 12px;
+            background: rgba(10,10,26,0.6); border: 1px solid rgba(0,245,212,0.08);
+        }
+        .live-speed-control label { font-size: 0.8rem; color: var(--muted); }
+
+        /* ===== FULLSCREEN ADJUSTMENTS ===== */
+        .fullscreen-active .header { display: none; }
+        .fullscreen-active .footer { display: none; }
+        .fullscreen-active .main-content { padding: 0; max-width: 100%; }
+        .fullscreen-active #readingScreen { min-height: 100vh; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header { padding: 12px 16px; }
+            .main-content { padding: 16px; }
+            .controls-grid { grid-template-columns: 1fr; }
+            .word-display { font-size: clamp(32px, 10vw, var(--font-size)); }
+            .btn { padding: 12px 20px; font-size: 0.85rem; }
+            .keyboard-hints { display: none; }
+            .reading-controls { gap: 6px; }
+            .reading-controls .btn { padding: 10px 14px; font-size: 0.75rem; }
+            .swatch { width: 30px; height: 30px; }
+            .zoom-controls { flex-wrap: wrap; }
+        }
+
+        @media (max-width: 480px) {
+            .page-title h1 { font-size: 1.3rem; }
+            .controls-grid { gap: 12px; }
+            .control-group { padding: 14px; }
+            .action-buttons { flex-direction: column; align-items: stretch; }
+            .btn { justify-content: center; }
+            .progress-info { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="gradient-bg"></div>
+    <div class="cyber-grid"></div>
+    <div id="particles"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Reverse Banner -->
+    <div class="reverse-banner" id="reverseBanner">
+        <i class="fas fa-backward"></i> REVERSE MODE ACTIVE <i class="fas fa-backward"></i>
+    </div>
+
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="header">
+            <div style="display:flex; align-items:center; gap:16px;">
+                <a href="https://abhijeetlodh.github.io/" class="logo">&lt;AL/&gt;</a>
+                <a href="https://abhijeetlodh.github.io/" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="fullscreenBtn" title="Toggle Fullscreen (F)">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="icon-btn" id="resetBtn" title="Reset Everything">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Title -->
+            <div class="page-title setup-visible">
+                <h1><i class="fas fa-brain"></i> ADHD Bionic Reader</h1>
+                <div class="title-bar"></div>
+                <p>Paste your text, customize your view, and read with enhanced focus using bionic reading</p>
+            </div>
+
+            <!-- ==================== SETUP PANEL ==================== -->
+            <div class="setup-panel setup-visible">
+
+                <!-- Text Input -->
+                <div class="neu-card" style="padding: 24px;">
+                    <div class="control-label"><i class="fas fa-keyboard"></i> Paste Your Text</div>
+                    <div class="textarea-wrap">
+                        <textarea id="textInput" placeholder="Paste your text here... All asterisks (*) will be automatically removed.&#10;&#10;Try pasting any article, book passage, or study material!"></textarea>
+                    </div>
+                    <div class="text-stats" id="textStats">
+                        <span><i class="fas fa-font"></i> Words: <strong id="wordCount">0</strong></span>
+                        <span><i class="fas fa-text-width"></i> Characters: <strong id="charCount">0</strong></span>
+                        <span><i class="fas fa-clock"></i> Est. Reading Time: <strong id="estTime">0s</strong></span>
+                    </div>
+
+                    <!-- Sample Texts -->
+                    <details class="sample-texts">
+                        <summary><i class="fas fa-magic"></i> Load a sample text</summary>
+                        <div style="padding: 8px 0;">
+                            <button class="sample-btn" onclick="loadSample('science')">🔬 Science</button>
+                            <button class="sample-btn" onclick="loadSample('philosophy')">🧠 Philosophy</button>
+                            <button class="sample-btn" onclick="loadSample('tech')">💻 Technology</button>
+                            <button class="sample-btn" onclick="loadSample('history')">📜 History</button>
+                            <button class="sample-btn" onclick="loadSample('motivation')">🔥 Motivation</button>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Controls Grid -->
+                <div class="controls-grid">
+
+                    <!-- Background Color -->
+                    <div class="control-group">
+                        <div class="control-label"><i class="fas fa-fill-drip"></i> Background Color</div>
+                        <div class="color-swatches" id="bgSwatches"></div>
+                    </div>
+
+                    <!-- Text Color -->
+                    <div class="control-group">
+                        <div class="control-label"><i class="fas fa-palette"></i> Text Color</div>
+                        <div class="color-swatches" id="textSwatches"></div>
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="control-group">
+                        <div class="control-label"><i class="fas fa-tachometer-alt"></i> Reading Speed</div>
+                        <div class="slider-wrap">
+                            <span style="font-size:0.75rem;color:var(--muted)">50</span>
+                            <input type="range" id="speedSlider" min="50" max="1000" value="250" step="10">
+                            <span style="font-size:0.75rem;color:var(--muted)">1000</span>
+                        </div>
+                        <div style="text-align:center;margin-top:8px;">
+                            <span class="slider-value" id="speedValue">250 WPM</span>
+                        </div>
+                    </div>
+
+                    <!-- Zoom -->
+                    <div class="control-group">
+                        <div class="control-label"><i class="fas fa-search-plus"></i> Word Size</div>
+                        <div class="slider-wrap">
+                            <span style="font-size:0.75rem;color:var(--muted)">S</span>
+                            <input type="range" id="zoomSlider" min="24" max="160" value="64" step="4">
+                            <span style="font-size:0.75rem;color:var(--muted)">XL</span>
+                        </div>
+                        <div style="text-align:center;margin-top:8px;">
+                            <span class="slider-value" id="zoomValue">64px</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-section" id="previewSection">
+                    <div class="preview-label">Preview</div>
+                    <div class="preview-word" id="previewWord">
+                        <span class="word-bold" style="color:var(--text)">Bin</span><span class="word-light" style="color:var(--text)">onic</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="readBtn" onclick="startReading()">
+                        <i class="fas fa-play"></i> Read Now
+                    </button>
+                    <button class="btn btn-secondary" id="clearBtn" onclick="clearText()">
+                        <i class="fas fa-trash-alt"></i> Clear
+                    </button>
+                </div>
+
+                <!-- Keyboard Shortcuts -->
+                <div class="keyboard-hints">
+                    <div class="kbd"><code>Space</code> Pause</div>
+                    <div class="kbd"><code>←</code> Back 10</div>
+                    <div class="kbd"><code>→</code> Skip 10</div>
+                    <div class="kbd"><code>R</code> Reverse</div>
+                    <div class="kbd"><code>F</code> Fullscreen</div>
+                    <div class="kbd"><code>+</code> Zoom In</div>
+                    <div class="kbd"><code>-</code> Zoom Out</div>
+                    <div class="kbd"><code>↑</code> Speed Up</div>
+                    <div class="kbd"><code>↓</code> Slow Down</div>
+                    <div class="kbd"><code>Esc</code> Stop</div>
+                </div>
+            </div>
+
+            <!-- ==================== READING SCREEN ==================== -->
+            <div id="readingScreen">
+
+                <!-- Word Display -->
+                <div class="word-display" id="wordDisplay">
+                    <span class="word-bold">Re</span><span class="word-light">ady</span>
+                </div>
+
+                <!-- Progress -->
+                <div class="progress-section">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span id="progressText">0 / 0 words</span>
+                        <span id="progressPercent">0%</span>
+                        <span id="timeRemaining">--:--</span>
+                    </div>
+                </div>
+
+                <!-- Live Speed Control -->
+                <div class="live-speed-control">
+                    <label><i class="fas fa-tachometer-alt"></i> Speed:</label>
+                    <input type="range" id="liveSpeedSlider" min="50" max="1000" value="250" step="10" style="width:180px;">
+                    <span class="slider-value" id="liveSpeedValue">250 WPM</span>
+                </div>
+
+                <!-- Zoom Controls During Reading -->
+                <div class="zoom-controls">
+                    <button class="icon-btn" onclick="zoomOut()" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+                    <label>Zoom</label>
+                    <input type="range" id="liveZoomSlider" min="24" max="160" value="64" step="4" style="width:120px;">
+                    <span class="slider-value" id="liveZoomValue">64px</span>
+                    <button class="icon-btn" onclick="zoomIn()" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+                </div>
+
+                <!-- Reading Action Buttons -->
+                <div class="reading-controls">
+                    <button class="btn btn-secondary btn-sm" id="skipBackBtn" onclick="skipBack()">
+                        <i class="fas fa-backward"></i> -10
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="pauseBtn" onclick="togglePause()">
+                        <i class="fas fa-pause" id="pauseIcon"></i> <span id="pauseText">Pause</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="skipFwdBtn" onclick="skipForward()">
+                        +10 <i class="fas fa-forward"></i>
+                    </button>
+                    <button class="btn btn-warning btn-sm" id="reverseBtn" onclick="toggleReverse()">
+                        <i class="fas fa-exchange-alt"></i> <span id="reverseText">Reverse</span>
+                    </button>
+                    <button class="btn btn-danger btn-sm" id="stopBtn" onclick="stopReading()">
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                </div>
+
+                <!-- Keyboard Hints (Reading) -->
+                <div class="keyboard-hints">
+                    <div class="kbd"><code>Space</code> Pause</div>
+                    <div class="kbd"><code>←</code> -10</div>
+                    <div class="kbd"><code>→</code> +10</div>
+                    <div class="kbd"><code>R</code> Reverse</div>
+                    <div class="kbd"><code>F</code> Fullscreen</div>
+                    <div class="kbd"><code>↑/↓</code> Speed</div>
+                    <div class="kbd"><code>+/-</code> Zoom</div>
+                    <div class="kbd"><code>Esc</code> Stop</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with <i class="fas fa-heart" style="color:#f72585;"></i> by
+                <a href="https://abhijeetlodh.github.io/">Abhijeet Lodh</a>
+                &nbsp;|&nbsp; AI/ML Engineer &bull; GenAI Specialist
+            </p>
+        </footer>
+    </div>
+
+    <!-- Keep Vite entry for build to work -->
+    <div id="root" style="display:none;"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+        /* ================================================================
+           ADHD BIONIC READER — Pure Vanilla JavaScript
+           ================================================================ */
+
+        // ===== STATE =====
+        var state = {
+            words: [],
+            currentIndex: 0,
+            isPaused: false,
+            isReading: false,
+            isReverse: false,
+            timer: null,
+            wpm: 250,
+            fontSize: 64,
+            bgColor: '#000000',
+            textColor: '#ff8c00'
+        };
+
+        // ===== BACKGROUND COLORS =====
+        var bgColors = [
+            { color: '#000000', label: 'Black', dark: true },
+            { color: '#0a0a1a', label: 'Dark Navy', dark: true },
+            { color: '#1a0a2e', label: 'Deep Purple', dark: true },
+            { color: '#0a1a0a', label: 'Dark Green', dark: true },
+            { color: '#1a1a2e', label: 'Midnight', dark: true },
+            { color: '#16213e', label: 'Dark Blue', dark: true },
+            { color: '#2d2d2d', label: 'Charcoal', dark: true },
+            { color: '#fdf6e3', label: 'Cream', dark: false },
+            { color: '#ffffff', label: 'White', dark: false },
+            { color: '#f5f0e8', label: 'Beige', dark: false },
+            { color: '#e8e8e8', label: 'Light Gray', dark: false },
+            { color: '#1e3a5f', label: 'Navy', dark: true }
+        ];
+
+        // ===== TEXT COLORS =====
+        var textColors = [
+            { color: '#ff8c00', label: 'Orange' },
+            { color: '#ffffff', label: 'White' },
+            { color: '#00f5d4', label: 'Cyan' },
+            { color: '#f72585', label: 'Pink' },
+            { color: '#fbbf24', label: 'Yellow' },
+            { color: '#22c55e', label: 'Lime' },
+            { color: '#38bdf8', label: 'Sky Blue' },
+            { color: '#c084fc', label: 'Lavender' },
+            { color: '#ef4444', label: 'Red' },
+            { color: '#000000', label: 'Black' },
+            { color: '#e2e8f0', label: 'Silver' },
+            { color: '#fb923c', label: 'Tangerine' }
+        ];
+
+        // ===== SAMPLE TEXTS =====
+        var sampleTexts = {
+            science: "The human brain contains approximately 86 billion neurons, each connected to thousands of others through synapses. This creates a neural network of staggering complexity, capable of processing information at speeds that still outpace our most advanced computers in many tasks. Neuroplasticity, the brain's ability to reorganize itself by forming new neural connections throughout life, means that our brains are constantly adapting and changing in response to new experiences, learning, and even injury. This remarkable property is what makes recovery from brain damage possible and underlies our capacity for lifelong learning. Recent research in neuroscience has revealed that the gut-brain axis plays a crucial role in mental health, with the microbiome influencing everything from mood to cognitive function. Scientists are now exploring how targeted modifications to gut bacteria could potentially treat conditions ranging from depression to neurodegenerative diseases.",
+            philosophy: "The unexamined life is not worth living, Socrates declared at his trial, choosing death over a life without philosophical inquiry. This profound statement challenges us to question our assumptions, beliefs, and the very foundations of our existence. In the pursuit of wisdom, we must embrace uncertainty and recognize that true knowledge begins with acknowledging what we do not know. The Stoics taught us that we cannot control external events, but we can control our response to them. Marcus Aurelius wrote that the happiness of your life depends upon the quality of your thoughts. This ancient wisdom resonates powerfully in our modern world, where we are constantly bombarded with stimuli designed to provoke emotional reactions. By cultivating inner tranquility and focusing on what is within our control, we can navigate even the most turbulent circumstances with grace and purpose.",
+            tech: "Artificial intelligence is rapidly transforming every industry, from healthcare to finance, education to entertainment. Large Language Models like GPT and LLAMA represent a fundamental shift in how we interact with technology, enabling machines to understand and generate human language with unprecedented sophistication. The emergence of Agentic AI systems, capable of autonomous decision-making and task completion, promises to revolutionize workflow automation and problem-solving. Meanwhile, advances in computer vision, natural language processing, and reinforcement learning continue to push the boundaries of what machines can accomplish. The challenge now lies not just in building more powerful AI systems, but in ensuring they are developed responsibly, with robust safeguards against bias, misuse, and unintended consequences. As we stand at this technological inflection point, the decisions we make today will shape the trajectory of human civilization for generations to come.",
+            history: "The fall of the Roman Empire in 476 AD was not a single catastrophic event, but rather a gradual process of decline that unfolded over centuries. Economic instability, military overextension, political corruption, and the pressure of barbarian invasions all contributed to the disintegration of one of history's greatest civilizations. At its height, the Roman Empire stretched from Britain to Mesopotamia, encompassing diverse peoples, cultures, and traditions under a single administrative framework. The Romans gave the world concrete, aqueducts, roads, legal systems, and architectural innovations that continue to influence modern society. The lessons of Rome's decline remain remarkably relevant today, reminding us that even the most powerful institutions are not immune to the forces of internal decay and external pressure. The study of history is not merely an academic exercise; it is a vital tool for understanding the patterns that shape human societies.",
+            motivation: "Every expert was once a beginner. Every professional was once an amateur. Every master was once a disaster. The journey of a thousand miles begins with a single step, and it is the willingness to take that step, despite fear and uncertainty, that separates those who achieve their dreams from those who merely dream. Failure is not the opposite of success; it is a stepping stone to success. Thomas Edison failed thousands of times before inventing the light bulb. J.K. Rowling was rejected by twelve publishers before Harry Potter found a home. The greatest achievements in human history were accomplished by ordinary people who refused to give up in the face of extraordinary obstacles. Your potential is not defined by your circumstances, your background, or your past failures. It is defined by your willingness to persist, to adapt, to learn, and to grow. The only limit to your impact is your imagination and your commitment to making it a reality."
+        };
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            renderSwatches();
+            setupListeners();
+            updateTextStats();
+            updatePreview();
+        });
+
+        // ===== PARTICLES =====
+        function createParticles() {
+            var container = document.getElementById('particles');
+            for (var i = 0; i < 25; i++) {
+                var p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 20 + 's';
+                p.style.animationDuration = (15 + Math.random() * 15) + 's';
+                p.style.background = Math.random() > 0.5 ? '#00f5d4' : '#f72585';
+                container.appendChild(p);
+            }
+        }
+
+        // ===== RENDER COLOR SWATCHES =====
+        function renderSwatches() {
+            var bgContainer = document.getElementById('bgSwatches');
+            var txtContainer = document.getElementById('textSwatches');
+
+            bgColors.forEach(function(c) {
+                var btn = document.createElement('button');
+                btn.className = 'swatch' + (c.dark ? ' swatch-dark' : ' swatch-light') + (c.color === state.bgColor ? ' active' : '');
+                btn.style.background = c.color;
+                btn.style.border = c.color === '#000000' ? '3px solid #333' : '3px solid transparent';
+                if (c.color === state.bgColor) btn.style.borderColor = '#00f5d4';
+                btn.title = c.label;
+                btn.setAttribute('data-bg', c.color);
+                btn.onclick = function() { selectBg(this.getAttribute('data-bg')); };
+                bgContainer.appendChild(btn);
+            });
+
+            textColors.forEach(function(c) {
+                var btn = document.createElement('button');
+                var isDark = isColorDark(c.color);
+                btn.className = 'swatch' + (isDark ? ' swatch-dark' : ' swatch-light') + (c.color === state.textColor ? ' active' : '');
+                btn.style.background = c.color;
+                if (c.color === '#ffffff') btn.style.border = '3px solid #ccc';
+                btn.title = c.label;
+                btn.setAttribute('data-txt', c.color);
+                btn.onclick = function() { selectText(this.getAttribute('data-txt')); };
+                txtContainer.appendChild(btn);
+            });
+        }
+
+        function isColorDark(hex) {
+            var r = parseInt(hex.substr(1,2),16);
+            var g = parseInt(hex.substr(3,2),16);
+            var b = parseInt(hex.substr(5,2),16);
+            return (r*0.299 + g*0.587 + b*0.114) < 128;
+        }
+
+        // ===== SELECT COLORS =====
+        function selectBg(color) {
+            state.bgColor = color;
+            document.body.style.background = color;
+            document.querySelectorAll('#bgSwatches .swatch').forEach(function(s) {
+                s.classList.remove('active');
+                s.style.borderColor = 'transparent';
+                if (s.getAttribute('data-bg') === '#000000') s.style.borderColor = '#333';
+            });
+            var active = document.querySelector('#bgSwatches .swatch[data-bg="' + color + '"]');
+            if (active) { active.classList.add('active'); active.style.borderColor = '#00f5d4'; }
+            showToast('Background: ' + getBgLabel(color), 'info');
+        }
+
+        function selectText(color) {
+            state.textColor = color;
+            document.body.style.color = color;
+            document.querySelectorAll('#textSwatches .swatch').forEach(function(s) {
+                s.classList.remove('active');
+            });
+            var active = document.querySelector('#textSwatches .swatch[data-txt="' + color + '"]');
+            if (active) active.classList.add('active');
+            updatePreview();
+            if (state.isReading) renderCurrentWord();
+            showToast('Text Color: ' + getTextLabel(color), 'info');
+        }
+
+        function getBgLabel(c) { var f = bgColors.find(function(b){return b.color===c;}); return f ? f.label : c; }
+        function getTextLabel(c) { var f = textColors.find(function(t){return t.color===c;}); return f ? f.label : c; }
+
+        // ===== SETUP LISTENERS =====
+        function setupListeners() {
+            var textInput = document.getElementById('textInput');
+            var speedSlider = document.getElementById('speedSlider');
+            var zoomSlider = document.getElementById('zoomSlider');
+            var liveSpeedSlider = document.getElementById('liveSpeedSlider');
+            var liveZoomSlider = document.getElementById('liveZoomSlider');
+
+            // Auto-remove asterisks
+            textInput.addEventListener('input', function() {
+                var pos = this.selectionStart;
+                var before = this.value;
+                var cleaned = before.replace(/\*/g, '');
+                if (before !== cleaned) {
+                    var diff = before.length - cleaned.length;
+                    this.value = cleaned;
+                    var countBefore = (before.substring(0, pos).match(/\*/g) || []).length;
+                    this.setSelectionRange(pos - countBefore, pos - countBefore);
+                    showToast('Asterisks auto-removed', 'success');
+                }
+                updateTextStats();
+                updatePreview();
+            });
+
+            textInput.addEventListener('paste', function() {
+                var self = this;
+                setTimeout(function() {
+                    var before = self.value;
+                    self.value = before.replace(/\*/g, '');
+                    if (before !== self.value) {
+                        showToast('Asterisks auto-removed from pasted text', 'success');
+                    }
+                    updateTextStats();
+                    updatePreview();
+                }, 10);
+            });
+
+            // Speed slider
+            speedSlider.addEventListener('input', function() {
+                state.wpm = parseInt(this.value);
+                document.getElementById('speedValue').textContent = state.wpm + ' WPM';
+                liveSpeedSlider.value = state.value;
+                updateTextStats();
+            });
+
+            // Zoom slider
+            zoomSlider.addEventListener('input', function() {
+                state.fontSize = parseInt(this.value);
+                document.getElementById('zoomValue').textContent = state.fontSize + 'px';
+                document.documentElement.style.setProperty('--font-size', state.fontSize + 'px');
+                liveZoomSlider.value = this.value;
+                document.getElementById('liveZoomValue').textContent = state.fontSize + 'px';
+            });
+
+            // Live speed slider
+            liveSpeedSlider.addEventListener('input', function() {
+                state.wpm = parseInt(this.value);
+                document.getElementById('liveSpeedValue').textContent = state.wpm + ' WPM';
+                speedSlider.value = this.value;
+                document.getElementById('speedValue').textContent = state.wpm + ' WPM';
+                if (state.isReading && !state.isPaused) {
+                    clearInterval(state.timer);
+                    startTimer();
+                }
+            });
+
+            // Live zoom slider
+            liveZoomSlider.addEventListener('input', function() {
+                state.fontSize = parseInt(this.value);
+                document.getElementById('liveZoomValue').textContent = state.fontSize + 'px';
+                document.documentElement.style.setProperty('--font-size', state.fontSize + 'px');
+                zoomSlider.value = this.value;
+                document.getElementById('zoomValue').textContent = state.fontSize + 'px';
+            });
+
+            // Fullscreen
+            document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+
+            // Reset
+            document.getElementById('resetBtn').addEventListener('click', resetEverything);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboard);
+
+            // Fullscreen change
+            document.addEventListener('fullscreenchange', function() {
+                var icon = document.querySelector('#fullscreenBtn i');
+                if (document.fullscreenElement) {
+                    icon.className = 'fas fa-compress';
+                    document.getElementById('appContainer').classList.add('fullscreen-active');
+                } else {
+                    icon.className = 'fas fa-expand';
+                    document.getElementById('appContainer').classList.remove('fullscreen-active');
+                }
+            });
+        }
+
+        // ===== TEXT STATS =====
+        function updateTextStats() {
+            var text = document.getElementById('textInput').value.trim();
+            var words = text ? text.split(/\s+/).filter(function(w) { return w.length > 0; }) : [];
+            var wc = words.length;
+            var cc = text.length;
+            var seconds = wc > 0 ? Math.ceil((wc / state.wpm) * 60) : 0;
+
+            document.getElementById('wordCount').textContent = wc;
+            document.getElementById('charCount').textContent = cc;
+            document.getElementById('estTime').textContent = formatTime(seconds);
+
+            var readBtn = document.getElementById('readBtn');
+            readBtn.disabled = wc === 0;
+        }
+
+        function formatTime(totalSec) {
+            if (totalSec < 60) return totalSec + 's';
+            var m = Math.floor(totalSec / 60);
+            var s = totalSec % 60;
+            return m + 'm ' + s + 's';
+        }
+
+        // ===== PREVIEW =====
+        function updatePreview() {
+            var text = document.getElementById('textInput').value.trim();
+            var words = text ? text.split(/\s+/).filter(function(w) { return w.length > 0; }) : [];
+            var preview = document.getElementById('previewWord');
+            var word = words.length > 0 ? words[0] : 'Bionic';
+            preview.innerHTML = bionicHTML(word, state.textColor);
+        }
+
+        // ===== BIONIC HTML =====
+        function bionicHTML(word, color) {
+            if (!word) return '';
+            var boldLen = Math.max(1, Math.ceil(word.length * 0.66));
+            var boldPart = word.substring(0, boldLen);
+            var lightPart = word.substring(boldLen);
+            return '<span class="word-bold" style="color:' + color + '">' + escapeHtml(boldPart) + '</span>' +
+                   '<span class="word-light" style="color:' + color + '">' + escapeHtml(lightPart) + '</span>';
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
+        // ===== START READING =====
+        function startReading() {
+            var text = document.getElementById('textInput').value.trim();
+            state.words = text.split(/\s+/).filter(function(w) { return w.length > 0; });
+            if (state.words.length === 0) {
+                showToast('Please paste some text first!', 'error');
+                return;
+            }
+            state.currentIndex = 0;
+            state.isPaused = false;
+            state.isReverse = false;
+            state.isReading = true;
+
+            document.body.classList.add('reading-mode');
+            document.getElementById('reverseBanner').classList.remove('show');
+            updatePauseButton();
+            updateReverseButton();
+            renderCurrentWord();
+            updateProgress();
+            startTimer();
+            showToast('Reading started — ' + state.words.length + ' words at ' + state.wpm + ' WPM', 'success');
+
+            // Sync live sliders
+            document.getElementById('liveSpeedSlider').value = state.wpm;
+            document.getElementById('liveSpeedValue').textContent = state.wpm + ' WPM';
+            document.getElementById('liveZoomSlider').value = state.fontSize;
+            document.getElementById('liveZoomValue').textContent = state.fontSize + 'px';
+        }
+
+        // ===== TIMER =====
+        function startTimer() {
+            var interval = Math.round(60000 / state.wpm);
+            state.timer = setInterval(function() {
+                if (state.isReverse) {
+                    state.currentIndex--;
+                    if (state.currentIndex < 0) {
+                        state.currentIndex = 0;
+                        togglePause();
+                        showToast('Reached the beginning!', 'warning');
+                        return;
+                    }
+                } else {
+                    state.currentIndex++;
+                    if (state.currentIndex >= state.words.length) {
+                        stopReading();
+                        showToast('🎉 Reading complete!', 'success');
+                        return;
+                    }
+                }
+                renderCurrentWord();
+                updateProgress();
+            }, interval);
+        }
+
+        // ===== RENDER WORD =====
+        function renderCurrentWord() {
+            var display = document.getElementById('wordDisplay');
+            var word = state.words[state.currentIndex] || '';
+            display.innerHTML = bionicHTML(word, state.textColor);
+        }
+
+        // ===== UPDATE PROGRESS =====
+        function updateProgress() {
+            var total = state.words.length;
+            var current = state.currentIndex + 1;
+            var percent = Math.round((current / total) * 100);
+            var remaining = total - current;
+            var secLeft = Math.ceil((remaining / state.wpm) * 60);
+
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = current + ' / ' + total + ' words';
+            document.getElementById('progressPercent').textContent = percent + '%';
+            document.getElementById('timeRemaining').textContent = remaining > 0 ? formatTime(secLeft) + ' left' : 'Done!';
+        }
+
+        // ===== PAUSE / RESUME =====
+        function togglePause() {
+            if (!state.isReading) return;
+            state.isPaused = !state.isPaused;
+            if (state.isPaused) {
+                clearInterval(state.timer);
+                showToast('⏸ Paused', 'warning');
+            } else {
+                startTimer();
+                showToast('▶ Resumed', 'success');
+            }
+            updatePauseButton();
+        }
+
+        function updatePauseButton() {
+            var icon = document.getElementById('pauseIcon');
+            var text = document.getElementById('pauseText');
+            if (state.isPaused) {
+                icon.className = 'fas fa-play';
+                text.textContent = 'Resume';
+            } else {
+                icon.className = 'fas fa-pause';
+                text.textContent = 'Pause';
+            }
+        }
+
+        // ===== REVERSE =====
+        function toggleReverse() {
+            if (!state.isReading) return;
+            state.isReverse = !state.isReverse;
+            updateReverseButton();
+
+            if (state.isReverse) {
+                document.getElementById('reverseBanner').classList.add('show');
+                showToast('⏪ Reverse mode ON — reading backwards', 'error');
+            } else {
+                document.getElementById('reverseBanner').classList.remove('show');
+                showToast('▶ Forward mode — reading normally', 'success');
+            }
+
+            if (!state.isPaused) {
+                clearInterval(state.timer);
+                startTimer();
+            }
+        }
+
+        function updateReverseButton() {
+            var text = document.getElementById('reverseText');
+            text.textContent = state.isReverse ? 'Forward' : 'Reverse';
+        }
+
+        // ===== SKIP =====
+        function skipForward() {
+            if (!state.isReading) return;
+            state.currentIndex = Math.min(state.currentIndex + 10, state.words.length - 1);
+            renderCurrentWord();
+            updateProgress();
+            showToast('⏩ Skipped forward 10 words', 'info');
+        }
+
+        function skipBack() {
+            if (!state.isReading) return;
+            state.currentIndex = Math.max(state.currentIndex - 10, 0);
+            renderCurrentWord();
+            updateProgress();
+            showToast('⏪ Skipped back 10 words', 'info');
+        }
+
+        // ===== ZOOM =====
+        function zoomIn() {
+            state.fontSize = Math.min(state.fontSize + 8, 160);
+            applyZoom();
+            showToast('🔍 Zoom: ' + state.fontSize + 'px', 'info');
+        }
+
+        function zoomOut() {
+            state.fontSize = Math.max(state.fontSize - 8, 24);
+            applyZoom();
+            showToast('🔍 Zoom: ' + state.fontSize + 'px', 'info');
+        }
+
+        function applyZoom() {
+            document.documentElement.style.setProperty('--font-size', state.fontSize + 'px');
+            document.getElementById('zoomSlider').value = state.fontSize;
+            document.getElementById('zoomValue').textContent = state.fontSize + 'px';
+            document.getElementById('liveZoomSlider').value = state.fontSize;
+            document.getElementById('liveZoomValue').textContent = state.fontSize + 'px';
+        }
+
+        // ===== STOP =====
+        function stopReading() {
+            clearInterval(state.timer);
+            state.isReading = false;
+            state.isPaused = false;
+            state.isReverse = false;
+            state.currentIndex = 0;
+            document.body.classList.remove('reading-mode');
+            document.getElementById('reverseBanner').classList.remove('show');
+            document.getElementById('readingScreen').classList.remove('active');
+            showToast('Reading stopped', 'warning');
+        }
+
+        // ===== CLEAR =====
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            updateTextStats();
+            updatePreview();
+            showToast('Text cleared', 'info');
+        }
+
+        // ===== FULLSCREEN =====
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(function() {
+                    showToast('Fullscreen not available', 'error');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // ===== RESET =====
+        function resetEverything() {
+            stopReading();
+            document.getElementById('textInput').value = '';
+            state.wpm = 250;
+            state.fontSize = 64;
+            state.bgColor = '#000000';
+            state.textColor = '#ff8c00';
+
+            document.body.style.background = '#000000';
+            document.body.style.color = '#ff8c00';
+            document.documentElement.style.setProperty('--font-size', '64px');
+
+            document.getElementById('speedSlider').value = 250;
+            document.getElementById('speedValue').textContent = '250 WPM';
+            document.getElementById('zoomSlider').value = 64;
+            document.getElementById('zoomValue').textContent = '64px';
+
+            // Re-render swatches
+            document.getElementById('bgSwatches').innerHTML = '';
+            document.getElementById('textSwatches').innerHTML = '';
+            renderSwatches();
+
+            updateTextStats();
+            updatePreview();
+            showToast('Everything reset to defaults', 'success');
+        }
+
+        // ===== LOAD SAMPLE =====
+        function loadSample(key) {
+            var text = sampleTexts[key] || '';
+            document.getElementById('textInput').value = text;
+            updateTextStats();
+            updatePreview();
+            showToast('Loaded sample: ' + key.charAt(0).toUpperCase() + key.slice(1), 'success');
+        }
+
+        // ===== KEYBOARD =====
+        function handleKeyboard(e) {
+            // Don't capture if typing in textarea
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    if (state.isReading) togglePause();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    if (state.isReading) skipBack();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    if (state.isReading) skipForward();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    state.wpm = Math.min(state.wpm + 25, 1000);
+                    syncSpeedSliders();
+                    if (state.isReading && !state.isPaused) { clearInterval(state.timer); startTimer(); }
+                    showToast('Speed: ' + state.wpm + ' WPM', 'info');
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    state.wpm = Math.max(state.wpm - 25, 50);
+                    syncSpeedSliders();
+                    if (state.isReading && !state.isPaused) { clearInterval(state.timer); startTimer(); }
+                    showToast('Speed: ' + state.wpm + ' WPM', 'info');
+                    break;
+                case 'KeyR':
+                    if (state.isReading) toggleReverse();
+                    break;
+                case 'KeyF':
+                    toggleFullscreen();
+                    break;
+                case 'Equal':
+                case 'NumpadAdd':
+                    e.preventDefault();
+                    zoomIn();
+                    break;
+                case 'Minus':
+                case 'NumpadSubtract':
+                    e.preventDefault();
+                    zoomOut();
+                    break;
+                case 'Escape':
+                    if (state.isReading) stopReading();
+                    break;
+            }
+        }
+
+        function syncSpeedSliders() {
+            document.getElementById('speedSlider').value = state.wpm;
+            document.getElementById('speedValue').textContent = state.wpm + ' WPM';
+            document.getElementById('liveSpeedSlider').value = state.wpm;
+            document.getElementById('liveSpeedValue').textContent = state.wpm + ' WPM';
+        }
+
+        // ===== TOAST NOTIFICATIONS =====
+        function showToast(message, type) {
+            var container = document.getElementById('toastContainer');
+            var toast = document.createElement('div');
+            toast.className = 'toast toast-' + (type || 'info');
+            var icons = { success: 'check-circle', info: 'info-circle', warning: 'exclamation-triangle', error: 'times-circle' };
+            toast.innerHTML = '<i class="fas fa-' + (icons[type] || 'info-circle') + '"></i> ' + message;
+            container.appendChild(toast);
+            setTimeout(function() {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
