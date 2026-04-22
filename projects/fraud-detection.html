@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fraud Detection AWS</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Credit Card Fraud Detection (AWS MLOps)</h1>
+
+<h2>Business Problem</h2>
+<p>Detect fraudulent transactions in highly imbalanced financial dataset.</p>
+
+<h2>Pipeline</h2>
+<div class="pipeline">
+
+<div class="node" onclick="toggle('p1')">
+Data Ingestion
+<div id="p1" class="details">
+AWS S3 → Raw transaction data ingestion
+</div>
+</div>
+
+<div class="node" onclick="toggle('p2')">
+EDA + Preprocessing
+<div id="p2" class="details">
+IQR outlier removal, scaling, feature selection
+</div>
+</div>
+
+<div class="node" onclick="toggle('p3')">
+Model Training
+<div id="p3" class="details">
+Logistic Regression → Decision Tree → Random Forest
+</div>
+</div>
+
+<div class="node" onclick="toggle('p4')">
+Evaluation
+<div id="p4" class="details">
+F1-score optimization due to imbalance
+</div>
+</div>
+
+<div class="node" onclick="toggle('p5')">
+Deployment
+<div id="p5" class="details">
+Docker → EKS → EC2 → API endpoint
+</div>
+</div>
+
+</div>
+
+<h2>Tech Stack</h2>
+<div class="grid">
+
+<div class="card" onclick="toggle('c1')">
+AWS Sagemaker
+<div id="c1" class="details">
+Model training + experiment tracking
+</div>
+</div>
+
+<div class="card" onclick="toggle('c2')">
+MLflow
+<div id="c2" class="details">
+Tracking metrics, model registry
+</div>
+</div>
+
+<div class="card" onclick="toggle('c3')">
+CloudWatch
+<div id="c3" class="details">
+Monitoring latency + drift
+</div>
+</div>
+
+<div class="card" onclick="toggle('c4')">
+SNS
+<div id="c4" class="details">
+Alerting system via email
+</div>
+</div>
+
+</div>
+
+<h2>Metrics</h2>
+<ul>
+<li>F1 Score improved from 0.72 → 0.91</li>
+<li>Handled imbalanced data via SMOTE</li>
+<li>Real-time detection latency < 500ms</li>
+</ul>
+
+<h2>Challenges</h2>
+<ul>
+<li>Severe class imbalance</li>
+<li>Data drift → retraining pipeline</li>
+<li>False positives vs business cost</li>
+</ul>
+
+</div>
+
+</body>
+</html>
