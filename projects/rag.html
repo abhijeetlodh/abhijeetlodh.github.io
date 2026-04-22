@@ -1,8 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+<script defer src="script.js"></script>
+
+<style>
+.pipeline {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+}
+
+.node {
+  min-width: 260px;
+  max-width: 260px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* HOVER PANEL (WHY + HOW) */
+.hover-box {
+  position: absolute;
+  top: -10px;
+  left: 110%;
+  width: 260px;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #0a0a1a;
+  border: 1px solid rgba(0,245,212,0.2);
+  padding: 12px;
+  border-radius: 10px;
+  display: none;
+  z-index: 100;
+  font-size: 13px;
+}
+
+/* SHOW ON HOVER */
+.node:hover .hover-box {
+  display: block;
+}
+
+/* EXPAND PANEL */
+.expand-box {
+  display: none;
+  margin-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+  .hover-box {
+    position: static;
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -13,59 +72,109 @@
 
 <div class="container">
 
-<h1 class="glow-text orbitron">RAG System (FAISS + Azure OpenAI + NeMo)</h1>
+<h1 class="glow-text orbitron">RAG System (Production Architecture)</h1>
 
 <!-- BUSINESS -->
-<div class="neu-card" style="padding:20px; margin:20px;">
-<h2 class="glow-text-pink">Business Problem</h2>
+<div class="neu-card" style="padding:20px;margin:20px;">
+<h2>Business Problem</h2>
 <p>
-Enterprise data scattered → need grounded, safe AI responses at scale.
+Organizations need real-time answers from massive document stores while ensuring safety, accuracy, and scalability.
 </p>
 </div>
 
 <!-- PIPELINE -->
-<div class="neu-card" style="padding:20px; margin:20px;">
-<h2>System Architecture</h2>
+<div class="neu-card" style="margin:20px;padding:20px;">
+<h2>System Design</h2>
 
 <div class="pipeline">
 
-<div class="node neu-card" onclick="toggle('n1')">
-User Query
-<div class="tooltip">Why: Entry layer</div>
-<div id="n1" class="expand">
-FastAPI endpoint → validation + routing
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>API Layer</b>
+
+<div class="hover-box">
+<b>WHY:</b> Entry point for all requests<br><br>
+<b>HOW:</b> FastAPI async endpoints handle validation, auth, and routing<br><br>
+<b>SCALE:</b> Horizontal scaling behind load balancer
+</div>
+
+<div class="expand-box">
+Handles JWT auth, rate limiting, logging, and request normalization. Integrated with API Gateway for throttling.
 </div>
 </div>
 
-<div class="node neu-card" onclick="toggle('n2')">
-Embedding Layer
-<div class="tooltip">Why: Semantic understanding</div>
-<div id="n2" class="expand">
-Azure OpenAI embeddings → vector space
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>Embedding Service</b>
+
+<div class="hover-box">
+<b>WHY:</b> Convert text → vector space<br><br>
+<b>HOW:</b> Azure OpenAI embedding model<br><br>
+<b>SCALE:</b> Batch async processing to reduce cost
+</div>
+
+<div class="expand-box">
+Chunking strategy (recursive splitting), batch embedding, and caching frequently used embeddings in Redis.
 </div>
 </div>
 
-<div class="node neu-card" onclick="toggle('n3')">
-FAISS Index
-<div class="tooltip">Why: ultra-fast retrieval</div>
-<div id="n3" class="expand">
-Top-K similarity search (cosine distance)
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>Vector DB (FAISS)</b>
+
+<div class="hover-box">
+<b>WHY:</b> Fast similarity search<br><br>
+<b>HOW:</b> IndexFlatIP + cosine similarity<br><br>
+<b>SCALE:</b> Sharding + memory optimization
+</div>
+
+<div class="expand-box">
+Top-K retrieval with approximate nearest neighbor optimization. Index stored in memory for ultra-low latency.
 </div>
 </div>
 
-<div class="node neu-card" onclick="toggle('n4')">
-LLM Generation
-<div class="tooltip">Why: answer synthesis</div>
-<div id="n4" class="expand">
-GPT model grounded on retrieved chunks
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>Reranker</b>
+
+<div class="hover-box">
+<b>WHY:</b> Improve relevance<br><br>
+<b>HOW:</b> Cross-encoder model ranks retrieved docs<br><br>
+<b>SCALE:</b> GPU inference
+</div>
+
+<div class="expand-box">
+Uses transformer-based reranker to filter noisy FAISS results before passing to LLM.
 </div>
 </div>
 
-<div class="node neu-card" onclick="toggle('n5')">
-NeMo Guardrails
-<div class="tooltip">Why: safety & hallucination control</div>
-<div id="n5" class="expand">
-Policy enforcement + output validation
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>LLM Layer</b>
+
+<div class="hover-box">
+<b>WHY:</b> Generate final answer<br><br>
+<b>HOW:</b> Azure OpenAI GPT<br><br>
+<b>SCALE:</b> Token optimization + caching
+</div>
+
+<div class="expand-box">
+Prompt engineering, context injection, and token limit optimization to reduce cost.
+</div>
+</div>
+
+<!-- NODE -->
+<div class="node neu-card" onclick="toggleExpand(this)">
+<b>Guardrails</b>
+
+<div class="hover-box">
+<b>WHY:</b> Prevent hallucination<br><br>
+<b>HOW:</b> NVIDIA NeMo policies<br><br>
+<b>SCALE:</b> Rule-based + LLM hybrid
+</div>
+
+<div class="expand-box">
+Validates output, enforces policies, blocks unsafe responses, and ensures compliance.
 </div>
 </div>
 
@@ -73,37 +182,42 @@ Policy enforcement + output validation
 </div>
 
 <!-- DEPLOYMENT -->
-<div class="neu-card" style="padding:20px; margin:20px;">
-<h2>Deployment</h2>
+<div class="neu-card" style="padding:20px;margin:20px;">
+<h2>Deployment & Scaling</h2>
 <ul>
-<li>Docker → containerized services</li>
-<li>Azure Kubernetes Service (AKS)</li>
-<li>Autoscaling pods</li>
-<li>CI/CD via GitHub Actions</li>
+<li>Docker containers → microservices</li>
+<li>AKS → autoscaling pods</li>
+<li>Redis → caching layer</li>
+<li>CI/CD → GitHub Actions</li>
+<li>Load balancer → distributes traffic</li>
 </ul>
 </div>
 
 <!-- METRICS -->
-<div class="neu-card" style="padding:20px; margin:20px;">
+<div class="neu-card" style="padding:20px;margin:20px;">
 <h2>Metrics</h2>
 <ul>
 <li>Latency: 2.5s → 900ms</li>
 <li>Accuracy: +40%</li>
-<li>100K+ daily users</li>
-</ul>
-</div>
-
-<!-- CHALLENGES -->
-<div class="neu-card" style="padding:20px; margin:20px;">
-<h2>Challenges</h2>
-<ul>
-<li>Hallucination → solved via guardrails</li>
-<li>Vector DB scaling → sharding</li>
-<li>Token cost optimization</li>
+<li>100K+ daily queries</li>
+<li>Cost reduced via caching</li>
 </ul>
 </div>
 
 </div>
+
+<script>
+function toggleExpand(el) {
+  const box = el.querySelector('.expand-box');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+
+  // MOBILE: also toggle hover content
+  const hover = el.querySelector('.hover-box');
+  if (window.innerWidth < 768) {
+    hover.style.display = hover.style.display === 'block' ? 'none' : 'block';
+  }
+}
+</script>
 
 </body>
 </html>
