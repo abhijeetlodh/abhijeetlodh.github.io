@@ -1,36 +1,235 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>AI System Designs</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI System Architectures | Visual Recipes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #050510;
+            --bg-card: #0a0a1a;
+            --accent-1: #00f5d4;
+            --accent-2: #7b2cbf;
+            --accent-3: #f72585;
+            --text-light: #f1f5f9;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg-main);
+            color: var(--text-light);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+
+       .dashboard-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 100vh;
+        }
+
+       .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(0, 245, 212, 0.1);
+            padding: 2rem 1rem;
+            height: 100vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+       .project-tab {
+            padding: 1.2rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.02);
+        }
+
+       .project-tab:hover,.project-tab.active {
+            background: rgba(0, 245, 212, 0.08);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+            color: var(--accent-1);
+        }
+
+       .canvas-area {
+            padding: 3rem;
+            position: relative;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+       .project-header {
+            margin-bottom: 4rem;
+            border-bottom: 1px solid rgba(123, 44, 191, 0.3);
+            padding-bottom: 2rem;
+        }
+
+       .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+       .metric-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-2);
+            box-shadow: 5px 5px 15px #030308;
+        }
+
+       .system-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        /* Interactive Node Mechanics */
+       .node-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+       .system-node {
+            background: linear-gradient(145deg, #16162a, #0e0e1c);
+            border: 1px solid rgba(0, 245, 212, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+       .node-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* The hidden content mechanic */
+       .node-details {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 1px solid transparent;
+        }
+
+       .system-node:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-1);
+            box-shadow: 0 15px 40px rgba(0, 245, 212, 0.15);
+        }
+
+       .system-node:hover.node-details {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-color: rgba(0, 245, 212, 0.2);
+        }
+
+       .connection-line {
+            width: 2px;
+            height: 3rem;
+            background: linear-gradient(to bottom, var(--accent-1), var(--accent-2));
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+           .dashboard-layout { grid-template-columns: 1fr; }
+           .sidebar { height: auto; max-height: 300px; }
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
 
-<h1>AI System Design Portfolio</h1>
-
-<div class="grid">
-
-<a href="rag.html"><div class="card">RAG + FAISS + Azure</div></a>
-<a href="fastapi-ml.html"><div class="card">FastAPI NLP ML</div></a>
-<a href="mlops-azure.html"><div class="card">MLOps Azure Scale</div></a>
-<a href="ignis-chatbot.html"><div class="card">IGNIS Agentic Chatbot</div></a>
-<a href="code-remediation.html"><div class="card">Code Remediation Agents</div></a>
-<a href="self-healing-de.html"><div class="card">Self-Healing Data Engineering</div></a>
-<a href="api-agent.html"><div class="card">API Testing Agent</div></a>
-<a href="text-sql-agent.html"><div class="card">Text-SQL Multi-Agent</div></a>
-<a href="deep-research.html"><div class="card">Deep Research Agent</div></a>
-<a href="mcp-encyclopedia.html"><div class="card">MCP Encyclopedia</div></a>
-<a href="sas-commenting.html"><div class="card">SAS Commenting AI</div></a>
-<a href="teradata-inventory.html"><div class="card">Teradata Inventory</div></a>
-<a href="sas-migration.html"><div class="card">SAS → PySpark Migration</div></a>
-<a href="sql-migration.html"><div class="card">SQL → Databricks Migration</div></a>
-<a href="fraud-detection.html"><div class="card">Fraud Detection AWS</div></a>
-<a href="lstm-forecast.html"><div class="card">LSTM Forecasting</div></a>
-
+<div class="dashboard-layout">
+    <div class="sidebar" id="project-list">
+        <h2 style="font-family: 'Orbitron'; color: var(--accent-3); padding-left: 1rem;">System Designs</h2>
+        </div>
+    
+    <div class="canvas-area">
+        <a href="../index.html" style="color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 2rem;">
+            <i class="fas fa-arrow-left"></i> Back to Portfolio
+        </a>
+        <div id="project-details">
+            </div>
+    </div>
 </div>
 
-</div>
+<script>
+    // Project Data Array - Expandable to all 26 projects
+    const projectData =
+        }
+    ];
+
+    function renderProject(projectId) {
+        const project = projectData.find(p => p.id === projectId);
+        const container = document.getElementById('project-details');
+        
+        let nodesHTML = project.nodes.map((node, index) => `
+            <div class="node-container">
+                <div class="system-node">
+                    <div class="node-header">
+                        <i class="fas ${node.icon} fa-2x" style="color: var(--accent-1);"></i>
+                        <h3 style="margin: 0; font-family: 'Orbitron';">${node.title}</h3>
+                    </div>
+                    <div class="node-details">
+                        <h4 style="color: var(--accent-3); margin-top: 0;">Why & How it Works</h4>
+                        <p style="line-height: 1.6; color: var(--text-muted);">${node.why}</p>
+                    </div>
+                </div>
+                ${index < project.nodes.length - 1? '<div class="connection-line"></div>' : ''}
+            </div>
+        `).join('');
+
+        container.innerHTML = `
+            <div class="project-header">
+                <h1 style="color: var(--accent-1); font-family: 'Orbitron'; font-size: 2.5rem; margin-top: 0;">${project.title}</h1>
+                <p style="font-size: 1.1rem; line-height: 1.6;"><strong>Business Statement:</strong> ${project.businessStatement}</p>
+                <div class="metrics-grid">
+                    <div class="metric-card"><strong style="color: var(--accent-1);">Scale & Deployment</strong><br><br>${project.metrics.scalability}</div>
+                    <div class="metric-card"><strong style="color: var(--accent-1);">End-User Metrics</strong><br><br>${project.metrics.accuracy}</div>
+                    <div class="metric-card"><strong style="color: var(--accent-1);">Challenges Faced</strong><br><br>${project.metrics.challenges}</div>
+                </div>
+            </div>
+            <div class="system-diagram">
+                ${nodesHTML}
+            </div>
+        `;
+        
+        document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${projectId}`).classList.add('active');
+    }
+
+    const sidebar = document.getElementById('project-list');
+    projectData.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'project-tab';
+        div.id = `tab-${p.id}`;
+        div.textContent = p.title;
+        div.onclick = () => renderProject(p.id);
+        sidebar.appendChild(div);
+    });
+
+    if(projectData.length > 0) renderProject(projectData.id);
+</script>
 </body>
 </html>
