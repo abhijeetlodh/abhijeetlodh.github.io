@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body>
+
+<div class="gradient-bg"></div>
+<div class="cyber-grid"></div>
+<div id="particles"></div>
+
+<div class="container">
+
+<h1 class="glow-text orbitron">RAG System (FAISS + Azure OpenAI + NeMo)</h1>
+
+<!-- BUSINESS -->
+<div class="neu-card" style="padding:20px; margin:20px;">
+<h2 class="glow-text-pink">Business Problem</h2>
+<p>
+Enterprise data scattered → need grounded, safe AI responses at scale.
+</p>
+</div>
+
+<!-- PIPELINE -->
+<div class="neu-card" style="padding:20px; margin:20px;">
+<h2>System Architecture</h2>
+
+<div class="pipeline">
+
+<div class="node neu-card" onclick="toggle('n1')">
+User Query
+<div class="tooltip">Why: Entry layer</div>
+<div id="n1" class="expand">
+FastAPI endpoint → validation + routing
+</div>
+</div>
+
+<div class="node neu-card" onclick="toggle('n2')">
+Embedding Layer
+<div class="tooltip">Why: Semantic understanding</div>
+<div id="n2" class="expand">
+Azure OpenAI embeddings → vector space
+</div>
+</div>
+
+<div class="node neu-card" onclick="toggle('n3')">
+FAISS Index
+<div class="tooltip">Why: ultra-fast retrieval</div>
+<div id="n3" class="expand">
+Top-K similarity search (cosine distance)
+</div>
+</div>
+
+<div class="node neu-card" onclick="toggle('n4')">
+LLM Generation
+<div class="tooltip">Why: answer synthesis</div>
+<div id="n4" class="expand">
+GPT model grounded on retrieved chunks
+</div>
+</div>
+
+<div class="node neu-card" onclick="toggle('n5')">
+NeMo Guardrails
+<div class="tooltip">Why: safety & hallucination control</div>
+<div id="n5" class="expand">
+Policy enforcement + output validation
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- DEPLOYMENT -->
+<div class="neu-card" style="padding:20px; margin:20px;">
+<h2>Deployment</h2>
+<ul>
+<li>Docker → containerized services</li>
+<li>Azure Kubernetes Service (AKS)</li>
+<li>Autoscaling pods</li>
+<li>CI/CD via GitHub Actions</li>
+</ul>
+</div>
+
+<!-- METRICS -->
+<div class="neu-card" style="padding:20px; margin:20px;">
+<h2>Metrics</h2>
+<ul>
+<li>Latency: 2.5s → 900ms</li>
+<li>Accuracy: +40%</li>
+<li>100K+ daily users</li>
+</ul>
+</div>
+
+<!-- CHALLENGES -->
+<div class="neu-card" style="padding:20px; margin:20px;">
+<h2>Challenges</h2>
+<ul>
+<li>Hallucination → solved via guardrails</li>
+<li>Vector DB scaling → sharding</li>
+<li>Token cost optimization</li>
+</ul>
+</div>
+
+</div>
+
+</body>
+</html>
