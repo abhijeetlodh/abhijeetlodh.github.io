@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #38bdf8;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  flex: 1 1 250px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #334155;
+}
+
+.details {
+  margin-top: 10px;
+  display: none;
+  color: #94a3b8;
+}
+
+.pipeline {
+  display: flex;
+  overflow-x: auto;
+}
+
+.node {
+  min-width: 220px;
+  margin: 10px;
+  padding: 15px;
+  background: #1e293b;
+  border-radius: 10px;
+  cursor: pointer;
+}
