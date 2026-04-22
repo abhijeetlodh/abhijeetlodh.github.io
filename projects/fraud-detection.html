@@ -1,108 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Fraud Detection AWS</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-</head>
+<h1 class="glow-text">Fraud Detection (AWS MLOps)</h1>
 
-<body>
-
-<div class="container">
-
-<h1>Credit Card Fraud Detection (AWS MLOps)</h1>
-
-<h2>Business Problem</h2>
-<p>Detect fraudulent transactions in highly imbalanced financial dataset.</p>
-
-<h2>Pipeline</h2>
 <div class="pipeline">
 
-<div class="node" onclick="toggle('p1')">
+<div class="node" onclick="toggle('f1')">
 Data Ingestion
-<div id="p1" class="details">
-AWS S3 → Raw transaction data ingestion
+<div id="f1" class="expand">
+S3 → transaction dataset
 </div>
 </div>
 
-<div class="node" onclick="toggle('p2')">
-EDA + Preprocessing
-<div id="p2" class="details">
-IQR outlier removal, scaling, feature selection
+<div class="node" onclick="toggle('f2')">
+EDA
+<div id="f2" class="expand">
+IQR, correlation matrix
 </div>
 </div>
 
-<div class="node" onclick="toggle('p3')">
-Model Training
-<div id="p3" class="details">
-Logistic Regression → Decision Tree → Random Forest
+<div class="node" onclick="toggle('f3')">
+Feature Engineering
+<div id="f3" class="expand">
+Scaling, selection
 </div>
 </div>
 
-<div class="node" onclick="toggle('p4')">
-Evaluation
-<div id="p4" class="details">
-F1-score optimization due to imbalance
+<div class="node" onclick="toggle('f4')">
+Models
+<div id="f4" class="expand">
+LR → DT → RF (best F1)
 </div>
 </div>
 
-<div class="node" onclick="toggle('p5')">
+<div class="node" onclick="toggle('f5')">
 Deployment
-<div id="p5" class="details">
-Docker → EKS → EC2 → API endpoint
+<div id="f5" class="expand">
+Docker → EKS → API
+</div>
+</div>
+
+<div class="node" onclick="toggle('f6')">
+Monitoring
+<div id="f6" class="expand">
+MLflow + CloudWatch
 </div>
 </div>
 
 </div>
-
-<h2>Tech Stack</h2>
-<div class="grid">
-
-<div class="card" onclick="toggle('c1')">
-AWS Sagemaker
-<div id="c1" class="details">
-Model training + experiment tracking
-</div>
-</div>
-
-<div class="card" onclick="toggle('c2')">
-MLflow
-<div id="c2" class="details">
-Tracking metrics, model registry
-</div>
-</div>
-
-<div class="card" onclick="toggle('c3')">
-CloudWatch
-<div id="c3" class="details">
-Monitoring latency + drift
-</div>
-</div>
-
-<div class="card" onclick="toggle('c4')">
-SNS
-<div id="c4" class="details">
-Alerting system via email
-</div>
-</div>
-
-</div>
-
-<h2>Metrics</h2>
-<ul>
-<li>F1 Score improved from 0.72 → 0.91</li>
-<li>Handled imbalanced data via SMOTE</li>
-<li>Real-time detection latency < 500ms</li>
-</ul>
-
-<h2>Challenges</h2>
-<ul>
-<li>Severe class imbalance</li>
-<li>Data drift → retraining pipeline</li>
-<li>False positives vs business cost</li>
-</ul>
-
-</div>
-
-</body>
-</html>
