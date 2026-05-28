@@ -1,379 +1,2212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FDE Interview Playbook | Abhijeet Lodh</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  :root{--bg-main:#050510;--bg-card:#0a0a1a;--accent-1:#00f5d4;--accent-2:#7b2cbf;--accent-3:#f72585;--accent-4:#4361ee;--accent-5:#4cc9f0;--text-light:#f1f5f9;--text-muted:#94a3b8}
-  *{font-family:'Space Grotesk',sans-serif}
-  .mono{font-family:'JetBrains Mono',monospace}
-  .orbitron{font-family:'Orbitron',sans-serif}
-  body{background:var(--bg-main);color:var(--text-light);scroll-behavior:smooth}
-  .gradient-bg{position:fixed;inset:0;background:radial-gradient(ellipse at 10% 20%,rgba(0,245,212,.08),transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(123,44,191,.08),transparent 50%);pointer-events:none;z-index:0}
-  .cyber-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,245,212,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,212,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
-  .glow-text{background:linear-gradient(135deg,var(--accent-1),var(--accent-5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(0,245,212,.3))}
-  .glow-pink{background:linear-gradient(135deg,var(--accent-3),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .neu-card{background:linear-gradient(145deg,#0c0c1d,#080816);box-shadow:10px 10px 30px #030308,-10px -10px 30px #0d0d1f,inset 0 0 0 1px rgba(0,245,212,.05);border-radius:24px}
-  .neu-circle{background:linear-gradient(145deg,#0c0c1d,#080816);box-shadow:6px 6px 15px #030308,-6px -6px 15px #0d0d1f;border-radius:50%}
-  /* Tables */
-  .cs-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;overflow:hidden;border-radius:14px}
-  .cs-table th{background:linear-gradient(135deg,rgba(0,245,212,.12),rgba(123,44,191,.12));color:var(--accent-1);text-align:left;padding:12px 14px;font-weight:600;border-bottom:1px solid rgba(0,245,212,.2)}
-  .cs-table td{padding:11px 14px;border-bottom:1px solid rgba(148,163,184,.08);color:var(--text-muted);vertical-align:top}
-  .cs-table tr:hover td{background:rgba(0,245,212,.03)}
-  .cs-table td:first-child{color:#fff;font-weight:500}
-  .table-wrap{overflow-x:auto;border-radius:14px;border:1px solid rgba(0,245,212,.1)}
-  /* badges */
-  .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;margin:3px}
-  .b-vhigh{background:rgba(247,37,133,.15);color:#f72585;border:1px solid rgba(247,37,133,.3)}
-  .b-high{background:rgba(0,245,212,.15);color:#00f5d4;border:1px solid rgba(0,245,212,.3)}
-  .b-med{background:rgba(255,149,0,.15);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
-  /* content headings */
-  .cs-h2{font-size:1.4rem;font-weight:700;margin:28px 0 12px;color:#fff;display:flex;align-items:center;gap:10px}
-  .cs-h3{font-size:1.05rem;font-weight:600;margin:20px 0 8px;color:var(--accent-5)}
-  .cs-p{color:var(--text-muted);line-height:1.7;margin:8px 0;font-size:14.5px}
-  .cs-li{color:var(--text-muted);line-height:1.7;margin:6px 0;padding-left:24px;position:relative;font-size:14px}
-  .cs-li::before{content:'\f054';font-family:'Font Awesome 6 Free';font-weight:900;color:var(--accent-1);position:absolute;left:0;font-size:10px;top:5px}
-  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:16px 0}
-  .meta-box{background:linear-gradient(135deg,rgba(0,245,212,.05),rgba(123,44,191,.05));border:1px solid rgba(0,245,212,.12);border-radius:14px;padding:14px}
-  .meta-box .lbl{font-size:11px;color:var(--accent-1);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-  .meta-box .val{font-size:13.5px;color:#fff}
-  /* sidebar */
-  .toc-link{display:block;padding:9px 14px;border-radius:10px;color:var(--text-muted);font-size:13px;transition:.2s;border-left:2px solid transparent}
-  .toc-link:hover,.toc-link.active{color:var(--accent-1);background:rgba(0,245,212,.06);border-left-color:var(--accent-1)}
-  ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg-main)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--accent-1),var(--accent-2));border-radius:4px}
-  .case-section{scroll-margin-top:90px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDE Case Studies | Abhijeet Lodh - 5 Years in AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-main: #050510;
+            --bg-card: #0a0a1a;
+            --accent-1: #00f5d4;
+            --accent-2: #7b2cbf;
+            --accent-3: #f72585;
+            --accent-4: #4361ee;
+            --accent-5: #4cc9f0;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-main);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 10% 20%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(123, 44, 191, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 20px 40px;
+            background: rgba(5, 5, 16, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .glow-text {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-back {
+            color: var(--accent-1);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back:hover {
+            color: var(--accent-5);
+        }
+
+        /* Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Title Section */
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .hero-title .glow {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            color: var(--accent-5);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 245, 212, 0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 245, 212, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-1);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Cards & Styling */
+        .neu-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            box-shadow: 10px 10px 30px #030308, -10px -10px 30px #0d0d1f;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 245, 212, 0.05);
+            transition: all 0.4s ease;
+            padding: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .neu-card:hover {
+            box-shadow: 15px 15px 40px #030308, -15px -15px 40px #0d0d1f;
+            border-color: rgba(0, 245, 212, 0.15);
+        }
+
+        /* Case Study Container */
+        .case-study {
+            margin-bottom: 30px;
+        }
+
+        .case-study-header {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(123, 44, 191, 0.1));
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border-bottom: 2px solid rgba(0, 245, 212, 0.2);
+        }
+
+        .case-study-header:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.15), rgba(123, 44, 191, 0.15));
+        }
+
+        .case-study-title {
+            text-align: left;
+            flex: 1;
+        }
+
+        .case-study-title h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-1);
+            margin-bottom: 8px;
+        }
+
+        .case-study-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .toggle-icon {
+            font-size: 28px;
+            color: var(--accent-1);
+            transition: transform 0.3s;
+            margin-left: 20px;
+        }
+
+        .case-study-header.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .case-study-content {
+            display: none;
+            padding: 40px;
+            background: var(--bg-card);
+            overflow: hidden;
+        }
+
+        .case-study-content.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 245, 212, 0.2);
+        }
+
+        .section-header h4 {
+            color: var(--accent-1);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .section-header h5 {
+            color: var(--accent-5);
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Mermaid Diagram */
+        .mermaid-container {
+            background: rgba(0, 245, 212, 0.05);
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 100%;
+        }
+
+        .mermaid-toggle {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .mermaid-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        table th {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.15), rgba(123, 44, 191, 0.15));
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(0, 245, 212, 0.2);
+            color: var(--accent-1);
+        }
+
+        table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+        }
+
+        table tr:hover {
+            background: rgba(0, 245, 212, 0.05);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        ul li, ol li {
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        ul li strong, ol li strong {
+            color: var(--accent-5);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(123, 44, 191, 0.1));
+            border-left: 4px solid var(--accent-1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-1);
+        }
+
+        /* Overview Section */
+        .overview-section {
+            padding: 40px;
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            border-radius: 16px;
+            margin: 40px 0;
+            border: 1px solid rgba(0, 245, 212, 0.1);
+        }
+
+        .overview-section h2 {
+            color: var(--accent-1);
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .overview-section h3 {
+            color: var(--accent-5);
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+        }
+
+        /* Use Cases Grid */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .use-case-card {
+            background: linear-gradient(145deg, #0c0c1d, #080816);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 245, 212, 0.1);
+            transition: all 0.3s;
+        }
+
+        .use-case-card:hover {
+            border-color: rgba(0, 245, 212, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .use-case-card strong {
+            color: var(--accent-1);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .use-case-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(0, 245, 212, 0.1);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .case-study-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .toggle-icon {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .case-study-content {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
-<body class="min-h-screen">
-<div class="gradient-bg"></div>
-<div class="cyber-grid"></div>
+<body>
+    <!-- Background Effects -->
+    <div class="gradient-bg"></div>
+    <div class="cyber-grid"></div>
 
-<!-- Nav -->
-<nav class="fixed top-0 inset-x-0 z-50 py-3 px-4">
-  <div class="neu-card max-w-7xl mx-auto px-5 py-3 flex justify-between items-center">
-    <a href="/" class="text-lg font-bold orbitron"><span class="glow-text">&lt;AL/&gt;</span></a>
-    <div class="flex items-center gap-4">
-      <span class="hidden sm:block text-sm text-[#94a3b8]">FDE Interview Playbook</span>
-      <a href="/" class="text-[#00f5d4] text-sm hover:underline"><i class="fas fa-arrow-left mr-1"></i>Portfolio</a>
-      <button id="tocBtn" class="lg:hidden neu-circle w-9 h-9 flex items-center justify-center"><i class="fas fa-list text-[#00f5d4]"></i></button>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo"><span class="glow-text">&lt;AL/&gt;</span></div>
+            <a href="/" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Hero Section with Large Title -->
+        <section class="hero-section">
+            <div>
+                <div class="hero-title">
+                    <span class="glow">Abhijeet Lodh</span>
+                </div>
+                <div class="hero-title">
+                    <span class="glow">Forward Deployed Engineer</span>
+                </div>
+                <div class="hero-title">
+                    <span style="color: var(--text-light);">Case Studies</span>
+                </div>
+
+                <div class="hero-subtitle">📚 5+ Years in AI Customer Deployment</div>
+
+                <div class="hero-description">
+                    <strong>Enterprise AI Case Studies Pack</strong><br>
+                    Detailed implementation blueprints for portfolio, consulting, SaaS ideation, and enterprise AI sales conversations.
+                    Built from real-world production experience across BFSI, Retail, Pharma, and Insurance domains.
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Complete Case Studies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Human-in-Loop Design</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="overview-section">
+            <h2>🎯 What You'll Find Here</h2>
+
+            <h3>🎯 Design Philosophy</h3>
+            <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 15px;">
+                <strong style="color: var(--accent-1);">Human-in-the-loop AI</strong> • 
+                <strong style="color: var(--accent-1);">Strong governance</strong> • 
+                <strong style="color: var(--accent-1);">Measurable ROI</strong> • 
+                <strong style="color: var(--accent-1);">Source-backed answers</strong> • 
+                <strong style="color: var(--accent-1);">Auditability</strong> • 
+                <strong style="color: var(--accent-1);">Safe automation</strong>
+            </p>
+
+            <h3>📊 Use Cases Included</h3>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <strong><i class="fas fa-bank"></i> Secure Bank Document Search</strong>
+                    <p>Compliance-first RAG platform for policies and procedures</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-file-alt"></i> AI CV Matching</strong>
+                    <p>Human-in-loop matching for recruiting teams</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-ticket-alt"></i> Support Ticket Triage</strong>
+                    <p>AI workflow for classification and routing</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-file-invoice"></i> Insurance Claims Intelligence</strong>
+                    <p>Document processing for adjusters</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-chart-line"></i> CRM Enrichment</strong>
+                    <p>Sales workflow automation and data hygiene</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-shield-alt"></i> Fraud Investigation</strong>
+                    <p>Case management with graph intelligence</p>
+                </div>
+                <div class="use-case-card">
+                    <strong><i class="fas fa-mobile-alt"></i> Field Consultant Assistant</strong>
+                    <p>Mobile-ready knowledge for consulting teams</p>
+                </div>
+            </div>
+
+            <h3>💼 Primary Buyer Audience</h3>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+                Banks | Recruiting teams | B2B SaaS support teams | Insurance companies | 
+                Revenue operations teams | Fraud teams | Consulting organizations
+            </p>
+
+            <h3>📚 How to Use These Case Studies</h3>
+            <ul>
+                <li><strong>Portfolio Asset:</strong> Demonstrate enterprise AI architecture</li>
+                <li><strong>Discovery Call Prep:</strong> Sell to clients with confidence</li>
+                <li><strong>SaaS Product Blueprint:</strong> Build your next startup</li>
+                <li><strong>Technical Interview Stories:</strong> Answer system design questions</li>
+                <li><strong>Consulting Proposals:</strong> Back your recommendations</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>⚠️ Important:</strong> These case studies describe <strong>assistive enterprise AI systems</strong>. 
+                For regulated or high-impact decisions, humans remain accountable, evidence is source-backed, 
+                and the model never becomes the final decision-maker.
+            </div>
+        </section>
+
+        <!-- Executive Summary Table -->
+        <section>
+            <h2 style="color: var(--accent-1); font-size: 28px; margin: 40px 0 20px 0; font-weight: 700;">
+                📊 Executive Summary Scorecard
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">
+                Comparison of seven AI use cases from delivery and business perspective.
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Use Case</th>
+                            <th>Business Value</th>
+                            <th>Compliance</th>
+                            <th>Technical Depth</th>
+                            <th>MVP Complexity</th>
+                            <th>Best Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Secure Doc Search</strong></td>
+                            <td style="color: var(--accent-1);">Very High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td>Medium</td>
+                            <td>Regulated RAG, RBAC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CV Matching</strong></td>
+                            <td style="color: var(--accent-1);">High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>Fair Matching</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ticket Triage</strong></td>
+                            <td style="color: var(--accent-1);">High</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td style="color: var(--accent-1);">Low-Med</td>
+                            <td>SLA, Routing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Insurance Claims</strong></td>
+                            <td style="color: var(--accent-1);">Very High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td>OCR, Extraction</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CRM Enrichment</strong></td>
+                            <td style="color: var(--accent-1);">High</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td>Data Hygiene</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fraud Investigation</strong></td>
+                            <td style="color: var(--accent-1);">Very High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td style="color: var(--accent-3);">Very High</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td>Graph, Audit</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Field Consultant</strong></td>
+                            <td style="color: var(--accent-1);">High</td>
+                            <td>Medium</td>
+                            <td style="color: var(--accent-3);">High</td>
+                            <td>Medium</td>
+                            <td>RAG, Mobile</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Case Studies - Expandable Sections -->
+        <section style="margin-top: 60px; margin-bottom: 60px;">
+            <h2 style="color: var(--accent-1); font-size: 28px; margin-bottom: 40px; font-weight: 700;">
+                📋 All Case Studies
+            </h2>
+
+            <!-- Case Study 1 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(1)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-bank" style="color: #f72585;"></i> Case Study 1: Secure Internal Document Search for a Bank</h3>
+                            <p>Compliance-first RAG platform for policies, procedures, product documents, risk memos, and customer-service knowledge</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-1">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-1">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce time spent searching internal procedures and product rules.</p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                            <div class="neu-card" style="padding: 20px;">
+                                <p><strong style="color: var(--accent-1);">Best Buyer</strong><br>Relationship managers, Compliance officers, Operations staff</p>
+                            </div>
+                            <div class="neu-card" style="padding: 20px;">
+                                <p><strong style="color: var(--accent-1);">Recommended First Release</strong><br>KYC onboarding or internal product-policy search</p>
+                            </div>
+                            <div class="neu-card" style="padding: 20px;">
+                                <p><strong style="color: var(--accent-1);">Core Pattern</strong><br>Retrieval, extraction, classification, summarization</p>
+                            </div>
+                        </div>
+
+                        <!-- Mermaid Diagram for Case Study 1 -->
+                        <button class="mermaid-toggle" onclick="toggleMermaid(1)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-1" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["🔐 Source Systems<br/>SharePoint, Confluence<br/>Network Drives"]
+                                    B["📥 Ingestion Pipeline<br/>Text Extraction, OCR<br/>Metadata Classification"]
+                                    C["🏷️ Metadata Layer<br/>Access Control<br/>Sensitivity Tags"]
+                                    D["🔍 Vector & Keyword Index<br/>Embeddings + BM25"]
+                                    E["🎯 Retrieval Orchestrator<br/>Hybrid Search<br/>Permission Filtering"]
+                                    F["🤖 LLM Gateway<br/>Prompt Templates<br/>Safety Filters"]
+                                    G["💬 Application UI<br/>Chat Interface<br/>Citations & Feedback"]
+                                    H["📊 Monitoring & Audit<br/>Query Logs<br/>Access Decisions"]
+                                    
+                                    A --> B
+                                    B --> C
+                                    B --> D
+                                    C --> E
+                                    D --> E
+                                    E --> F
+                                    F --> G
+                                    G --> H
+                                    
+                                    style A fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style B fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style C fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style D fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style E fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style F fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style G fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style H fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>1. Business Context and Problem</h4>
+                            <p>
+                                A mid-sized bank has thousands of internal documents spread across SharePoint, Confluence, 
+                                network drives, policy repositories, product manuals, risk-control notes, and archived email attachments. 
+                                Employees waste time searching, answers differ by department, and sensitive documents cannot be exposed broadly. 
+                                The bank wants an AI assistant that answers questions with citations while respecting each employee's access rights.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>2. Business Goals</h4>
+                            <ul>
+                                <li>Reduce time spent searching internal procedures and product rules</li>
+                                <li>Improve answer consistency across branch, risk, compliance, and customer-support teams</li>
+                                <li>Enforce document-level and chunk-level access control</li>
+                                <li>Provide auditable citations and retrieval traces for compliance review</li>
+                                <li>Detect outdated, conflicting, and unapproved documents before they influence answers</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>3. Target Users and Jobs</h4>
+                            <ul>
+                                <li><strong>Relationship managers:</strong> Quick, cited explanations of product eligibility and KYC steps</li>
+                                <li><strong>Compliance officers:</strong> Traceability, policy version control, evidence of correctness</li>
+                                <li><strong>Operations staff:</strong> Step-by-step process guidance for back-office tasks</li>
+                                <li><strong>IT security:</strong> Logging, encryption, access control, monitoring</li>
+                                <li><strong>Knowledge managers:</strong> Content-quality dashboards for stale/duplicate material</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>4. Scope Boundaries</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                                <div class="highlight-box" style="border-left-color: var(--accent-1);">
+                                    <h5 style="color: var(--accent-1); margin-top: 0;">✅ In Scope</h5>
+                                    <ul style="margin-left: 0;">
+                                        <li style="list-style: none;"><i class="fas fa-check" style="color: var(--accent-1); margin-right: 8px;"></i>Policy & procedure Q&A with citations</li>
+                                        <li style="list-style: none;"><i class="fas fa-check" style="color: var(--accent-1); margin-right: 8px;"></i>Semantic search across approved repositories</li>
+                                        <li style="list-style: none;"><i class="fas fa-check" style="color: var(--accent-1); margin-right: 8px;"></i>Role-aware retrieval & filtering</li>
+                                        <li style="list-style: none;"><i class="fas fa-check" style="color: var(--accent-1); margin-right: 8px;"></i>Document ingestion with OCR & chunking</li>
+                                    </ul>
+                                </div>
+                                <div class="highlight-box" style="border-left-color: var(--accent-3);">
+                                    <h5 style="color: var(--accent-3); margin-top: 0;">❌ Out of Scope</h5>
+                                    <ul style="margin-left: 0;">
+                                        <li style="list-style: none;"><i class="fas fa-times" style="color: var(--accent-3); margin-right: 8px;"></i>Making credit/lending decisions automatically</li>
+                                        <li style="list-style: none;"><i class="fas fa-times" style="color: var(--accent-3); margin-right: 8px;"></i>Answering from non-approved sources</li>
+                                        <li style="list-style: none;"><i class="fas fa-times" style="color: var(--accent-3); margin-right: 8px;"></i>Bypassing compliance workflows</li>
+                                        <li style="list-style: none;"><i class="fas fa-times" style="color: var(--accent-3); margin-right: 8px;"></i>Using customer PII without governance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>5. Reference Architecture Components</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Role in the System</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Source connectors</strong></td>
+                                            <td>SharePoint, Confluence, network drives, policy repositories, PDFs</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ingestion service</strong></td>
+                                            <td>Pulls documents, OCRs, extracts text, stores normalized content</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Metadata layer</strong></td>
+                                            <td>Document owner, approval status, department, confidentiality, ACL tags</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Vector & keyword index</strong></td>
+                                            <td>Embeddings for semantic recall + BM25 for exact matches</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Retrieval orchestrator</strong></td>
+                                            <td>Hybrid search, re-ranking, permission filtering, citations</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>LLM gateway</strong></td>
+                                            <td>Model calls, prompt templates, safety filters, audit logging</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Application UI</strong></td>
+                                            <td>Chat/search with citations, confidence labels, feedback</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Monitoring & audit</strong></td>
+                                            <td>Query logs, retrieved docs, answers, access decisions, latency</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>6. End-to-End Workflow</h4>
+                            <ol>
+                                <li>Employee asks: <em>"What documents are required for opening a current account?"</em></li>
+                                <li>Application validates identity through SSO and pulls user permissions</li>
+                                <li>Retrieval layer searches approved sources using hybrid search</li>
+                                <li>Re-ranker prioritizes current, approved, jurisdiction-matching content</li>
+                                <li>LLM generates answer using only retrieved snippets with citations</li>
+                                <li>UI shows answer, source snippets, policy version, expiry warnings</li>
+                                <li>Feedback captured: useful, wrong, missing source, outdated, requires review</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>7. Data Model & Entities</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Entity</th>
+                                            <th>Important Fields</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Document</strong></td>
+                                            <td>id, title, repository, owner, department, approval_status, effective_date, expiry_date, version</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Chunk</strong></td>
+                                            <td>chunk_id, document_id, text, embedding, section_title, page_number, acl_tags</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>AccessPolicy</strong></td>
+                                            <td>principal_id, role, department, region, allowed_tags, denied_tags</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>AnswerAudit</strong></td>
+                                            <td>query_id, user_id, retrieved_chunk_ids, answer_hash, model, timestamp, feedback</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>8. Security, Privacy & Governance</h4>
+                            <ul>
+                                <li><strong>SSO with short-lived tokens</strong> and multi-factor authentication for privileged users</li>
+                                <li><strong>Permission filtering before LLM sees content;</strong> unauthorized chunks never enter prompt</li>
+                                <li><strong>Encryption in transit and at rest</strong> for documents, text, embeddings, logs</li>
+                                <li><strong>Prompt-injection defense:</strong> ignore instructions in documents</li>
+                                <li><strong>No training on bank data</strong> unless explicitly contracted; inference-only by default</li>
+                                <li><strong>Data-loss prevention rules</strong> for PII, account numbers, credentials</li>
+                                <li><strong>Full audit trail</strong> for queries, retrieved sources, answers, feedback</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>9. KPIs & Success Metrics</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>How to Measure</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Search success rate</strong></td>
+                                            <td>% of sessions where user accepts answer or opens cited source</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Answer groundedness</strong></td>
+                                            <td>% of answer claims supported by retrieved citations during audit</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Permission leakage incidents</strong></td>
+                                            <td>Number of unauthorized content exposures; target is zero</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Average time to answer</strong></td>
+                                            <td>Median time from query to accepted answer vs legacy search</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Stale-source rate</strong></td>
+                                            <td>Share of answers citing expired or unapproved documents</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Escalation reduction</strong></td>
+                                            <td>Reduction in repetitive policy questions to compliance teams</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>10. MVP Delivery Plan</h4>
+                            <ol>
+                                <li>Start with one high-value domain (KYC onboarding or product-policy search)</li>
+                                <li>Connect two repositories, index 500-2,000 approved documents, onboard 30-50 pilot users</li>
+                                <li>Implement SSO, RBAC, hybrid retrieval, citation-only answers, feedback, audit logs</li>
+                                <li>Run weekly review sessions with compliance and document owners</li>
+                                <li>Move to production after leakage testing, groundedness testing, red-team testing</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>11. Implementation Timeline</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Phase</th>
+                                            <th>Activities</th>
+                                            <th>Duration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Discovery</strong></td>
+                                            <td>Data inventory, compliance, access control, metrics</td>
+                                            <td>Weeks 1-2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Pipeline</strong></td>
+                                            <td>Connector, ingestion, metadata, OCR, indexing</td>
+                                            <td>Weeks 3-5</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>RAG Backend</strong></td>
+                                            <td>RAG, permission filtering, UI, citations, audit</td>
+                                            <td>Weeks 6-8</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Security</strong></td>
+                                            <td>Security review, red-team, leakage tests, pilot</td>
+                                            <td>Weeks 9-10</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Readiness</strong></td>
+                                            <td>Analytics, tuning, dashboard, go-live</td>
+                                            <td>Weeks 11-12</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>12. Key Risks & Mitigations</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Risk</th>
+                                            <th>Mitigation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Unauthorized access</strong></td>
+                                            <td>Pre-generation filtering, policy-as-code, automated tests</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Hallucinated advice</strong></td>
+                                            <td>Strict prompts, cite every claim, show uncertainty</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Outdated documents</strong></td>
+                                            <td>Block expired by default, alert owners before expiry</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Conflicting rules</strong></td>
+                                            <td>Detect duplicates/conflicts, display warnings</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Low adoption</strong></td>
+                                            <td>Start with painful workflows, integrate into tools</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>13. Suggested Tech Stack</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Frontend</strong><br>React/Angular dashboard</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Backend</strong><br>Java Spring Boot APIs</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Storage</strong><br>PostgreSQL + Object Storage</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">AI Layer</strong><br>LLM gateway, embeddings</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">DevOps</strong><br>Docker, Kubernetes, CI/CD</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Observability</strong><br>Logs, metrics, dashboards</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 2 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(2)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-file-alt" style="color: #4cc9f0;"></i> Case Study 2: AI CV Matching Platform for Recruiting</h3>
+                            <p>Human-in-the-loop matching assistant that compares CVs, explains fit, improves recruiter productivity</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-2">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-2">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce repetitive CV screening time for recruiters.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(2)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-2" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["📄 CV Ingestion<br/>PDF/DOCX Upload<br/>Text Parsing"]
+                                    B["🔍 CV Parser<br/>Extract Skills<br/>Education, Experience"]
+                                    C["📋 JD Parser<br/>Must-Have Skills<br/>Requirements"]
+                                    D["⚖️ Matching Engine<br/>Semantic Similarity<br/>Evidence Scoring"]
+                                    E["💬 LLM Explanation<br/>Strengths & Gaps<br/>Follow-up Questions"]
+                                    F["👤 Recruiter Review<br/>Notes & Decisions<br/>Shortlist"]
+                                    G["📊 Analytics<br/>Hiring Metrics<br/>Fairness Audit"]
+                                    
+                                    A --> B
+                                    C --> D
+                                    B --> D
+                                    D --> E
+                                    E --> F
+                                    F --> G
+                                    
+                                    style A fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style B fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style C fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style D fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style E fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style F fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style G fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(76, 201, 240, 0.1), rgba(123, 44, 191, 0.1)); border-left: 4px solid #4cc9f0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-5);">Core Insight:</strong> 
+                                Recruiters receive hundreds of CVs for each role but screen manually. 
+                                The system extracts skills, explains fit, highlights gaps, helps prioritize—
+                                while keeping humans accountable for all hiring decisions.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Context</h4>
+                            <p>
+                                A recruiting team receives hundreds of CVs for each role. Recruiters manually screen resumes, 
+                                compare them with job descriptions, and write shortlists. The process is slow, inconsistent, 
+                                and vulnerable to keyword-only matching. The team needs an AI assistant that extracts skills, 
+                                explains role fit, highlights gaps, and helps recruiters prioritize candidates while preserving 
+                                fairness and human accountability.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Reduce repetitive CV screening time for recruiters</li>
+                                <li>Produce structured candidate summaries mapped to job requirements</li>
+                                <li>Improve quality of recruiter notes and hiring-manager handoffs</li>
+                                <li>Avoid automated rejection or ranking based on protected attributes</li>
+                                <li>Create a searchable talent pool for future roles</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Recruiters:</strong> Fast summaries, must-have skill checks, gap analysis, interview suggestions</li>
+                                <li><strong>Hiring managers:</strong> Evidence-based shortlists, tradeoff explanations</li>
+                                <li><strong>Talent operations:</strong> Consistent metrics, audit trails, workflow integration</li>
+                                <li><strong>Legal/HR compliance:</strong> Bias controls, explainability, data retention rules</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>CV Ingestion</strong></td>
+                                            <td>Parse PDFs/DOCX, extract sections (experience, education, skills, certs)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Job Parser</strong></td>
+                                            <td>Extract must-haves, nice-to-haves, responsibilities, seniority signals</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Matching Engine</strong></td>
+                                            <td>Semantic similarity, hard requirements, years-of-experience, evidence scoring</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>LLM Explanation</strong></td>
+                                            <td>Generate recruiter-readable summaries with strengths, gaps, concerns, questions</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Workflow Service</strong></td>
+                                            <td>Review states: new, needs review, shortlisted, rejected, interviewed, offer</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Governance Module</strong></td>
+                                            <td>Log model version, extracted evidence, recruiter overrides, decisions</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Screening Time</strong><br>Minutes saved per CV</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Shortlist Acceptance</strong><br>% of AI-assisted candidates interviewed</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Evidence Coverage</strong><br>% of matches with CV evidence</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-1);">Override Rate</strong><br>How often recruiters correct</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Security & Fairness</h4>
+                            <ul>
+                                <li><strong>Consent-aware ingestion</strong> aligned with recruiting rules</li>
+                                <li><strong>No protected attributes</strong> in scoring, ranking, or summaries</li>
+                                <li><strong>Human-in-the-loop mandatory</strong> for shortlist & rejection decisions</li>
+                                <li><strong>Audit all recommendations</strong> and recruiter overrides</li>
+                                <li><strong>Fairness review signals</strong> across candidate cohorts where permitted</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP Plan</h4>
+                            <ol>
+                                <li>Build role-based CV analyzer for one job family (e.g., FDE roles)</li>
+                                <li>Support PDF/DOCX upload, JD parsing, CV extraction, match explanation</li>
+                                <li>Use transparent rubric: must-haves, domain fit, experience, projects, communication</li>
+                                <li>Keep all decisions human-driven and exportable to ATS</li>
+                                <li>Retrospective after 50-100 candidates to compare recruiter feedback vs system</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>12-Week Timeline</h4>
+                            <ol>
+                                <li><strong>Weeks 1-2:</strong> Workflow discovery, role taxonomy, compliance review, rubric design</li>
+                                <li><strong>Weeks 3-4:</strong> CV parser, JD parser, storage model, extraction validation</li>
+                                <li><strong>Weeks 5-6:</strong> Matching engine, LLM summaries, UI review board</li>
+                                <li><strong>Weeks 7-8:</strong> ATS integration, audit logs, security hardening</li>
+                                <li><strong>Weeks 9-12:</strong> Pilot, calibration, fairness checks, rollout plan</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #00f5d4; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-1);">Why This Case Study Is Strong:</strong> 
+                                Perfect for a solo developer or consulting portfolio. Shows fairness, human oversight, 
+                                recruitment domain expertise, and realistic SaaS MVP scope using React + Spring Boot + PostgreSQL.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 3 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(3)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-ticket-alt" style="color: #7b2cbf;"></i> Case Study 3: Support Ticket Triage Assistant</h3>
+                            <p>AI workflow for classification, routing, draft replies, escalation</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-3">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-3">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce first-response time and manual routing effort.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(3)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-3" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["📧 Input Connectors<br/>Zendesk, Intercom<br/>Email, Chat"]
+                                    B["🔄 Normalization<br/>Common Schema<br/>Metadata Extraction"]
+                                    C["🏷️ Classifier Pipeline<br/>Category, Product<br/>Severity, Urgency"]
+                                    D["🔍 Knowledge Retrieval<br/>Product Docs<br/>Known Issues"]
+                                    E["💡 Recommendation Engine<br/>Queue, Owner<br/>Priority, Draft Reply"]
+                                    F["🔐 Workflow Automation<br/>Update Fields<br/>Trigger Alerts"]
+                                    G["👥 Agent Review<br/>Approve/Edit<br/>Route Decision"]
+                                    H["📊 Analytics<br/>Root Causes<br/>Improvement Loop"]
+                                    
+                                    A --> B
+                                    B --> C
+                                    B --> D
+                                    C --> E
+                                    D --> E
+                                    E --> F
+                                    F --> G
+                                    G --> H
+                                    
+                                    style A fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style B fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style C fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style D fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style E fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style F fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style G fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style H fill:#1a1a2e,stroke:#f72585,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <p>
+                                <strong style="color: var(--accent-1);">Real-World Impact:</strong> 
+                                A B2B software company receives thousands of support tickets. Many are duplicates or low-complexity. 
+                                Manual triage creates delays and missed SLAs. AI assistant routes correctly, summarizes context, 
+                                suggests replies, identifies escalation signals—while agents always approve before sending to customers.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Reduce first-response time and manual routing effort</li>
+                                <li>Improve SLA compliance for high-priority customers and incidents</li>
+                                <li>Detect duplicates, known incidents, knowledge-base matches early</li>
+                                <li>Improve agent productivity with concise summaries and draft responses</li>
+                                <li>Create better analytics on root causes and repeated pain points</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Support agents:</strong> Ticket summaries, priority hints, resolution steps, draft replies</li>
+                                <li><strong>Support managers:</strong> Workload balancing, SLA dashboards, root-cause trends</li>
+                                <li><strong>Engineering teams:</strong> Clean bug reports with reproduction steps</li>
+                                <li><strong>Customer-success teams:</strong> Visibility into high-value account issues</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Workflow Example</h4>
+                            <ol>
+                                <li>New ticket: <em>"API calls failing since update, production blocked"</em></li>
+                                <li>System extracts: product, customer tier, environment, error messages</li>
+                                <li>Classifier labels: API, production-impacting, high urgency, incident cluster</li>
+                                <li>Knowledge retrieval finds similar failures after a recent deployment</li>
+                                <li>System routes to API queue, alerts incident channel, drafts response</li>
+                                <li>Agent reviews summary, edits reply, confirms priority, links to incident</li>
+                                <li>After resolution, feedback fed back into analytics and triage tuning</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <ul>
+                                <li><strong>Input connectors:</strong> Zendesk, Intercom, Freshdesk, email, chat webhooks</li>
+                                <li><strong>Normalization service:</strong> Convert to common schema with metadata</li>
+                                <li><strong>Classifier pipeline:</strong> Category, severity, urgency, sentiment, duplicate probability</li>
+                                <li><strong>Knowledge retrieval:</strong> Search docs, runbooks, release notes, resolved tickets</li>
+                                <li><strong>Recommendation engine:</strong> Suggest queue, owner, priority, draft response</li>
+                                <li><strong>Workflow automation:</strong> Update fields, apply labels, trigger alerts</li>
+                                <li><strong>Feedback loop:</strong> Capture agent edits, accepted suggestions, post-resolution labels</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">First Response</strong><br>Median time to meaningful response</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Routing Accuracy</strong><br>% correct queue assignment</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">SLA Compliance</strong><br>% tickets meeting deadline</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Agent Acceptance</strong><br>% of AI suggestions accepted</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP & Timeline</h4>
+                            <p><strong>Start with:</strong> One helpdesk tool + one or two product queues</p>
+                            <p><strong>Implement:</strong> Webhook ingestion, classification, routing suggestion, internal-only drafts</p>
+                            <p><strong>Add:</strong> Knowledge retrieval, agent review UI inside helpdesk</p>
+                            <p><strong>Measure:</strong> Routing accuracy and response time for 30 days before expanding automation</p>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(247, 37, 133, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #f72585; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-3);">Why This Case Study Is Practical:</strong> 
+                                Clear ROI, measurable metrics, safe path from recommendation-only to controlled automation. 
+                                Fits into existing helpdesk tools. Easy to pilot with real customers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 4 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(4)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-file-invoice" style="color: #4361ee;"></i> Case Study 4: Insurance Claim Document Intelligence</h3>
+                            <p>AI document-processing workflow for extraction, validation, evidence summaries</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-4">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-4">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce manual document review effort for claims adjusters.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(4)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-4" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["📁 Document Intake<br/>Portal, Email<br/>Mobile, Brokers"]
+                                    B["📄 OCR & Parsing<br/>Extract Text<br/>Tables, Handwriting"]
+                                    C["🏷️ Classification<br/>Invoice, Estimate<br/>Police Report, Photo"]
+                                    D["📊 Extraction Pipeline<br/>Entities, Amounts<br/>Dates, Locations"]
+                                    E["🔗 Evidence Store<br/>Link Facts to Source<br/>Confidence Scores"]
+                                    F["✍️ LLM Summary<br/>Timeline, Inconsistencies<br/>Missing Documents"]
+                                    G["👤 Adjuster Review<br/>Validate Facts<br/>Approve/Correct"]
+                                    H["⚙️ Rules Engine<br/>Coverage Checks<br/>Fraud Signals"]
+                                    
+                                    A --> B
+                                    B --> C
+                                    B --> D
+                                    C --> D
+                                    D --> E
+                                    E --> F
+                                    E --> H
+                                    F --> G
+                                    H --> G
+                                    
+                                    style A fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style B fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style C fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style D fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style E fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style F fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style G fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style H fill:#1a1a2e,stroke:#f72585,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <p>
+                                <strong style="color: var(--accent-1);">The Challenge:</strong> 
+                                Insurance claims arrive with PDFs, photos, invoices, medical notes, police reports, forms, 
+                                handwritten docs. Adjusters spend hours sorting, extracting facts, checking completeness, 
+                                comparing coverage. The system turns unstructured packets into structured, reviewable summaries.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Reduce manual document review effort for adjusters</li>
+                                <li>Improve claim intake completeness and reduce back-and-forth</li>
+                                <li>Extract structured facts from documents and attachments</li>
+                                <li>Detect inconsistencies, missing documents, duplicates, fraud signals</li>
+                                <li>Improve auditability with evidence links</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Claims adjusters:</strong> Summaries, missing-doc checks, timelines, evidence snippets</li>
+                                <li><strong>Claim intake teams:</strong> Auto classification, validation, customer follow-up tasks</li>
+                                <li><strong>SIU (Special Investigation Units):</strong> Fraud pattern flags, entity relationships</li>
+                                <li><strong>Supervisors:</strong> Workload, aging claims, exception queues, quality review</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>End-to-End Workflow</h4>
+                            <ol>
+                                <li>Policyholder uploads property-damage claim with photos, invoice, estimate, description</li>
+                                <li>System classifies documents and extracts: claim number, loss date, address, amount, vendor</li>
+                                <li>Missing-document engine checks if police report, proof of ownership, photos required</li>
+                                <li>Evidence store links each fact to source page and bounding area for validation</li>
+                                <li>AI creates summary: timeline, claimed amount, documents, missing info, inconsistencies</li>
+                                <li>Adjuster confirms/corrects fields, sends follow-up, decides next action</li>
+                                <li>Corrections stored for quality monitoring and model improvement</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <ul>
+                                <li><strong>Document intake:</strong> Portals, email, mobile app, brokers, call-center uploads</li>
+                                <li><strong>OCR & parsing:</strong> Extract text, tables, stamps, dates, handwritten notes</li>
+                                <li><strong>Classification model:</strong> Categorize documents, identify required types</li>
+                                <li><strong>Extraction pipeline:</strong> Pull entities (claimant, policy, amount, provider, etc.)</li>
+                                <li><strong>Evidence store:</strong> Link every fact to source, page, bounding box, confidence</li>
+                                <li><strong>LLM summary layer:</strong> Create summaries, flag discrepancies, draft follow-ups</li>
+                                <li><strong>Rules engine:</strong> Claim-type rules, coverage checks, duplicate detection, fraud signals</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Data Model</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Entity</th>
+                                            <th>Fields</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Claim</strong></td>
+                                            <td>claim_id, policy_id, claim_type, date_of_loss, status, total_claimed_amount</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>ClaimDocument</strong></td>
+                                            <td>document_id, type, file_uri, ocr_text_uri, classification_confidence</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>ExtractedFact</strong></td>
+                                            <td>fact_id, field_name, value, confidence, page, bounding_box, reviewer_status</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>ReviewTask</strong></td>
+                                            <td>task_id, task_type, priority, owner, due_date, status, evidence_links</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Intake Completeness</strong><br>% claims with all docs first submission</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Extraction Accuracy</strong><br>Verified accuracy for key fields</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Adjuster Time</strong><br>Time from receipt to first assessment</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Fraud Quality</strong><br>% SIU referrals actually investigated</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Security & Governance</h4>
+                            <ul>
+                                <li><strong>Strong access controls</strong> because claims contain personal, medical, financial data</li>
+                                <li><strong>Field-level redaction</strong> for sensitive medical/identity documents</li>
+                                <li><strong>Evidence links protect explainability:</strong> Adjusters verify facts before relying</li>
+                                <li><strong>Data retention & legal hold workflows</strong> aligned with claim lifecycle</li>
+                                <li><strong>Human approval required</strong> for claim decisions and fraud escalation</li>
+                                <li><strong>Model output labeled:</strong> "Assistant suggestion" not official determination</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP Plan</h4>
+                            <ol>
+                                <li>Start with one claim type (auto glass, travel reimbursement, or small property damage)</li>
+                                <li>Support top 5 document types and 10-15 key extracted fields</li>
+                                <li>Build adjuster review screen with evidence snippets and correction controls</li>
+                                <li>Generate missing-document checklist and customer follow-up draft</li>
+                                <li>Measure extraction accuracy and adjuster time saved before adding fraud signals</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #00f5d4; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-1);">Why This Matters:</strong> 
+                                Shows how AI handles unstructured documents in regulated workflows without pretending 
+                                the model is the decision-maker. Strong for insurance, pharma, and financial services.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 5 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(5)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-chart-line" style="color: #00f5d4;"></i> Case Study 5: CRM Data Enrichment & Sales Automation</h3>
+                            <p>AI-assisted platform for data cleaning, enrichment, next-best-action, automation</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-5">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-5">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Improve CRM data quality and reduce duplicate or incomplete records.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(5)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-5" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["🔗 CRM Connector<br/>Salesforce, HubSpot<br/>Dynamics, Pipedrive"]
+                                    B["🔍 Data Quality Engine<br/>Missing Fields<br/>Duplicates, Stale Data"]
+                                    C["🌐 Enrichment Sources<br/>Company Website<br/>Product Usage, Events"]
+                                    D["🔀 Entity Resolution<br/>Fuzzy Matching<br/>Domain, Email, Phone"]
+                                    E["📋 Account Brief<br/>Context, Recent Activity<br/>Pain Points, Risks"]
+                                    F["⚙️ Workflow Automation<br/>Tasks, Reminders<br/>Follow-ups, Emails"]
+                                    G["👨‍💼 Sales Rep Review<br/>Approve/Edit<br/>Next Steps"]
+                                    H["📊 RevOps Dashboard<br/>Data Provenance<br/>Duplicate Reduction"]
+                                    
+                                    A --> B
+                                    C --> D
+                                    B --> D
+                                    D --> E
+                                    E --> F
+                                    D --> H
+                                    F --> G
+                                    G --> H
+                                    
+                                    style A fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style B fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style C fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style D fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style E fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style F fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style G fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style H fill:#1a1a2e,stroke:#f72585,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <p>
+                                <strong style="color: var(--accent-1);">The Problem:</strong> 
+                                B2B sales teams have CRMs filled with duplicate accounts, missing company data, 
+                                inconsistent industry labels, outdated contacts, and poor deal documentation. 
+                                Sales reps waste time researching. Managers lack pipeline visibility.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Improve CRM data quality and reduce duplicates/incomplete records</li>
+                                <li>Help sales reps prepare for calls faster with account intelligence</li>
+                                <li>Suggest next-best actions based on deal stage, engagement, signals</li>
+                                <li>Automate routine follow-ups, meeting summaries, task creation</li>
+                                <li>Improve pipeline hygiene and management visibility</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Sales reps:</strong> Account briefs, contact context, meeting follow-ups, next steps</li>
+                                <li><strong>Sales managers:</strong> Accurate pipeline, stale-deal alerts, team dashboards</li>
+                                <li><strong>RevOps:</strong> Data-quality rules, enrichment governance, duplicate management</li>
+                                <li><strong>Marketing teams:</strong> Segmentation attributes, campaign readiness</li>
+                                <li><strong>Customer success:</strong> Account history, renewal-risk context</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Workflow Example</h4>
+                            <ol>
+                                <li>Sales rep opens opportunity before customer call</li>
+                                <li>Assistant pulls CRM history, meetings, emails, support tickets, product usage</li>
+                                <li>Flags missing decision-maker, duplicate contacts, stale close date</li>
+                                <li>Generates one-page brief: company context, opportunity, pain points, objections, risks</li>
+                                <li>After call, rep uploads notes or syncs transcript</li>
+                                <li>Assistant drafts follow-up, creates tasks, suggests CRM updates</li>
+                                <li>RepOps dashboard tracks enrichment usage, duplicates solved, deal freshness</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <ul>
+                                <li><strong>CRM connector:</strong> Salesforce, HubSpot, Dynamics APIs</li>
+                                <li><strong>Data-quality engine:</strong> Detect missing fields, duplicates, stale opportunities</li>
+                                <li><strong>Enrichment sources:</strong> Approved vendors, first-party data, product usage, events</li>
+                                <li><strong>Entity resolution:</strong> Match companies/contacts via domain, name, email, phone</li>
+                                <li><strong>AI account brief:</strong> Summarize context, recent activity, pain points, risks</li>
+                                <li><strong>Workflow automation:</strong> Tasks, reminders, follow-up drafts, stage suggestions</li>
+                                <li><strong>Governance layer:</strong> Data provenance, source freshness, approval workflows</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Security & Privacy</h4>
+                            <ul>
+                                <li><strong>Use approved enrichment sources</strong> with documented legal basis</li>
+                                <li><strong>Keep data provenance:</strong> Users know where every enriched field came from</li>
+                                <li><strong>Require approval</strong> for CRM field changes during early rollout</li>
+                                <li><strong>Apply retention rules</strong> and avoid storing unnecessary personal data</li>
+                                <li><strong>Role-based access:</strong> Reps only see accounts they're authorized for</li>
+                                <li><strong>Protect confidential data:</strong> Sales notes, pricing, commercial terms</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">CRM Completeness</strong><br>% accounts with required fields</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Duplicate Reduction</strong><br>Accounts/contacts merged</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Prep Time Saved</strong><br>Minutes before sales calls</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Pipeline Hygiene</strong><br>% with recent next step</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP Plan</h4>
+                            <ol>
+                                <li>Start with one CRM and one sales segment (e.g., mid-market SaaS)</li>
+                                <li>Build duplicate detection, missing-field detection, account brief generation</li>
+                                <li>Generate follow-up drafts and task suggestions (no auto-send yet)</li>
+                                <li>Add approval workflow for CRM updates</li>
+                                <li>Measure rep prep time, CRM completeness, duplicate reduction</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(247, 37, 133, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #f72585; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-3);">Why This Case Study Matters:</strong> 
+                                Strong for B2B automation. Connects AI to revenue operations, measurable CRM hygiene, 
+                                workflows sales teams already understand. Clear ROI and adoption path.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 6 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(6)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-shield-alt" style="color: #f72585;"></i> Case Study 6: Fraud Investigation Case Management</h3>
+                            <p>Human-led workspace linking suspicious events, entities, documents, timelines</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-6">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-6">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce time analysts spend collecting and organizing evidence.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(6)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-6" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["🚨 Alert Sources<br/>Fraud Models<br/>Rules, Claims, Reports"]
+                                    B["🔀 Entity Resolution<br/>Names, Addresses<br/>Accounts, Devices"]
+                                    C["🕸️ Graph Database<br/>Entity Relationships<br/>Transaction Links"]
+                                    D["📄 Evidence Pipeline<br/>Extract Facts<br/>Documents, Logs"]
+                                    E["🤔 AI Analyst Assistant<br/>Timeline, Contradictions<br/>Summary, Citations"]
+                                    F["⚙️ Workflow Engine<br/>Case Status, Tasks<br/>Approvals, Evidence Lock"]
+                                    G["👁️ Investigator Review<br/>Confirm, Reject<br/>Ask Questions"]
+                                    H["📋 Audit & Report<br/>Evidence Trail<br/>Decision Rationale"]
+                                    
+                                    A --> B
+                                    B --> C
+                                    D --> C
+                                    C --> E
+                                    E --> F
+                                    F --> G
+                                    G --> H
+                                    
+                                    style A fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style B fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style C fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style D fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style E fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style F fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style G fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style H fill:#1a1a2e,stroke:#4361ee,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <p>
+                                <strong style="color: var(--accent-1);">The Challenge:</strong> 
+                                Financial and insurance organizations investigate fraud across transactions, claims, accounts, 
+                                documents, devices, addresses, and communications. Analysts work across spreadsheets, emails, legacy tools. 
+                                Links are missed. Evidence is hard to organize. Cases take too long.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Reduce time analysts spend collecting and organizing evidence</li>
+                                <li>Improve link analysis across people, accounts, documents, devices, addresses</li>
+                                <li>Prioritize suspicious cases by risk, impact, evidence strength</li>
+                                <li>Create defensible investigation reports with citations and audit trails</li>
+                                <li>Standardize case workflows while preserving investigator judgment</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Fraud analysts:</strong> Case summaries, entity links, timelines, anomaly explanations</li>
+                                <li><strong>Investigation managers:</strong> Workload, SLA, risk dashboards, case outcomes</li>
+                                <li><strong>Legal & compliance:</strong> Defensible evidence trails, controlled reporting</li>
+                                <li><strong>Data science teams:</strong> Analyst feedback on fraud signals and false positives</li>
+                                <li><strong>Auditors:</strong> Case history, access logs, decision rationale</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Workflow Example</h4>
+                            <ol>
+                                <li>Fraud model flags three claims sharing repair vendor, invoice format, phone numbers</li>
+                                <li>System creates case and links related claims, parties, addresses, documents</li>
+                                <li>Entity resolution identifies: two names with same device ID, address variant matches prior case</li>
+                                <li>Assistant builds timeline: claim dates, document submissions, payments, alerts</li>
+                                <li>Analyst reviews evidence, asks for contradictions, receives cited findings</li>
+                                <li>Analyst assigns follow-up tasks, marks findings confirmed/rejected/inconclusive</li>
+                                <li>Final report drafted from approved evidence before any action taken</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <ul>
+                                <li><strong>Case intake:</strong> Alerts from fraud models, rules, claims systems, manual referrals</li>
+                                <li><strong>Entity resolution:</strong> Normalize names, addresses, accounts, devices, phones, vendors</li>
+                                <li><strong>Graph database:</strong> Store relationships between cases, entities, events, transactions, documents</li>
+                                <li><strong>Evidence pipeline:</strong> Extract facts from documents, notes, transaction logs, invoices, images</li>
+                                <li><strong>AI analyst assistant:</strong> Summarize evidence, highlight contradictions, propose questions</li>
+                                <li><strong>Workflow engine:</strong> Case statuses, tasks, approvals, escalation, evidence lock, checklists</li>
+                                <li><strong>Audit & governance:</strong> Track evidence access, generated summaries, analyst edits, decisions</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Data Model</h4>
+                            <div style="overflow-x: auto;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Entity</th>
+                                            <th>Fields</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Case</strong></td>
+                                            <td>case_id, alert_source, risk_score, status, assigned_analyst, priority, opened_at, outcome</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Entity</strong></td>
+                                            <td>entity_id, type, normalized_value, aliases, confidence, sensitivity, source_refs</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Relationship</strong></td>
+                                            <td>from_entity, to_entity, rel_type, evidence_id, confidence, first_seen_at</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Evidence</strong></td>
+                                            <td>evidence_id, case_id, source_type, source_uri, extracted_facts, reliability, chain_of_custody</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>InvestigationAction</strong></td>
+                                            <td>action_id, case_id, owner, task, due_date, status, decision, rationale</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Security & Governance</h4>
+                            <ul>
+                                <li><strong>Strict need-to-know access:</strong> Fraud cases contain sensitive personal, financial, legal info</li>
+                                <li><strong>Immutable evidence logs:</strong> Chain-of-custody metadata for critical documents</li>
+                                <li><strong>No automated adverse action:</strong> AI only assists investigators</li>
+                                <li><strong>Generated summaries show evidence:</strong> Citations and uncertainty</li>
+                                <li><strong>Segregation of duties:</strong> Investigator, supervisor, legal review, final decision</li>
+                                <li><strong>Monitoring for inappropriate access</strong> to high-profile cases</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Case Prep Time</strong><br>Time to analyst-ready bundle</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Link Discovery</strong><br>Useful entity relationships/case</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">False Positive Handling</strong><br>Time saved closing low-quality alerts</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-4);">Report Quality</strong><br>% with complete evidence citations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP Plan</h4>
+                            <ol>
+                                <li>Choose one fraud domain (insurance repair, payment fraud, account takeover)</li>
+                                <li>Import existing alerts and case data from one source system</li>
+                                <li>Build entity resolution for high-signal identifiers (email, phone, address, vendor, device)</li>
+                                <li>Create case timeline and evidence summary with citations</li>
+                                <li>Provide analyst feedback controls: confirmed, false positive, needs investigation</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #00f5d4; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-1);">Why This Case Study Is Powerful:</strong> 
+                                Combines AI, graph thinking, document intelligence, case workflows, 
+                                compliance-heavy human review. Excellent for senior engineer roles, enterprise consulting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 7 -->
+            <div class="case-study">
+                <div class="neu-card">
+                    <div class="case-study-header" onclick="toggleCase(7)">
+                        <div class="case-study-title">
+                            <h3><i class="fas fa-mobile-alt" style="color: #4cc9f0;"></i> Case Study 7: AI Knowledge Assistant for Field Consultants</h3>
+                            <p>Mobile-ready assistant with approved knowledge, playbooks, templates, expert guidance</p>
+                        </div>
+                        <div class="toggle-icon" id="toggle-7">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="case-study-content" id="content-7">
+                        <div class="section-header">
+                            <h4>Primary Objective</h4>
+                            <p>Reduce repeated expert interruptions and improve consultant self-service.</p>
+                        </div>
+
+                        <button class="mermaid-toggle" onclick="toggleMermaid(7)">
+                            <i class="fas fa-diagram-project"></i> Show Architecture Diagram
+                        </button>
+                        <div id="mermaid-7" class="mermaid-container" style="display: none;">
+                            <div class="mermaid">
+                                graph TD
+                                    A["📚 Knowledge Connectors<br/>SharePoint, Confluence<br/>Google Drive, Teams"]
+                                    B["🏷️ Content Governance<br/>Approved, Draft<br/>Confidentiality"]
+                                    C["🔍 RAG Search Layer<br/>Semantic + Keyword<br/>Freshness Ranking"]
+                                    D["👥 Expert Finder<br/>Topics, Regions<br/>Project History"]
+                                    E["💬 Assistant Experience<br/>Chat, Search<br/>Templates, Recommendations"]
+                                    F["📱 Mobile Optimization<br/>Quick Actions<br/>Offline Support"]
+                                    G["📝 Feedback & Improvement<br/>Unanswered Q<br/>Content Updates"]
+                                    H["📊 Admin Dashboard<br/>Content Health<br/>Adoption, Gaps"]
+                                    
+                                    A --> B
+                                    B --> C
+                                    B --> D
+                                    C --> E
+                                    D --> E
+                                    E --> F
+                                    E --> G
+                                    F --> H
+                                    G --> H
+                                    
+                                    style A fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style B fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style C fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                                    style D fill:#1a1a2e,stroke:#7b2cbf,color:#fff
+                                    style E fill:#1a1a2e,stroke:#4cc9f0,color:#fff
+                                    style F fill:#1a1a2e,stroke:#4361ee,color:#fff
+                                    style G fill:#1a1a2e,stroke:#f72585,color:#fff
+                                    style H fill:#1a1a2e,stroke:#00f5d4,color:#fff
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <p>
+                                <strong style="color: var(--accent-1);">The Problem:</strong> 
+                                Consulting field teams need fast access to playbooks, templates, checklists, lessons learned, 
+                                proposal examples, configuration guidance. Knowledge is scattered across slides, wikis, Teams channels, expert memory.
+                                Consultants reinvent work or ask senior experts repetitive questions. Ramp-up is slow.
+                            </p>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Business Goals</h4>
+                            <ul>
+                                <li>Reduce repeated expert interruptions and improve consultant self-service</li>
+                                <li>Increase reuse of proven playbooks, templates, best practices</li>
+                                <li>Improve delivery consistency across regions and project teams</li>
+                                <li>Help junior consultants ramp up faster</li>
+                                <li>Capture field feedback and convert into reusable knowledge assets</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Target Users</h4>
+                            <ul>
+                                <li><strong>Field consultants:</strong> Practical answers, templates, checklists, client-ready examples</li>
+                                <li><strong>Engagement managers:</strong> Consistent delivery quality, knowledge gap visibility</li>
+                                <li><strong>Practice leads:</strong> Governance over methodology, reusable assets, expert networks</li>
+                                <li><strong>Sales engineers:</strong> Proposal snippets, implementation examples, objection handling</li>
+                                <li><strong>Knowledge managers:</strong> Content lifecycle workflows, feedback analytics</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Workflow Example</h4>
+                            <ol>
+                                <li>Consultant asks: <em>"What discovery questions for data-platform modernization in insurance?"</em></li>
+                                <li>Assistant identifies topic, industry, deliverable, seniority, client confidentiality</li>
+                                <li>Retrieves approved playbooks, anonymized examples, proposal snippets, checklists</li>
+                                <li>Generates structured answer: discovery agenda, questions, risks, stakeholders, templates</li>
+                                <li>Consultant saves checklist to project workspace, flags one template as outdated</li>
+                                <li>Knowledge manager receives feedback and assigns document owner for review</li>
+                                <li>Practice leads review usage analytics to decide which assets need improvement</li>
+                            </ol>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Key Components</h4>
+                            <ul>
+                                <li><strong>Knowledge connectors:</strong> SharePoint, Confluence, Notion, Teams exports, CRM libraries</li>
+                                <li><strong>Content governance:</strong> Classify as approved, draft, deprecated, client-confidential, internal</li>
+                                <li><strong>RAG search layer:</strong> Semantic retrieval, keyword search, metadata filters, client-confidentiality filters</li>
+                                <li><strong>Assistant experience:</strong> Chat, guided search, template recommendations, source preview</li>
+                                <li><strong>Expert routing:</strong> Map topics to internal experts, office hours, practice leads, assets</li>
+                                <li><strong>Feedback & improvement:</strong> Track unanswered questions, outdated sources, consultant-submitted improvements</li>
+                                <li><strong>Admin dashboard:</strong> Content health, adoption, top queries, knowledge gaps, source quality</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>Security & Governance</h4>
+                            <ul>
+                                <li><strong>Client-confidentiality enforcement:</strong> One client's content never leaks to another</li>
+                                <li><strong>Access filtering before generation:</strong> Not after answer creation</li>
+                                <li><strong>Deprecated/draft content warnings:</strong> Clear indicators when retrieving old assets</li>
+                                <li><strong>Anonymization for cross-client examples:</strong> Only if explicitly approved for reuse</li>
+                                <li><strong>Audit source usage</strong> for sensitive projects</li>
+                                <li><strong>Mobile session security:</strong> Device security checks, short-lived tokens, remote logout</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>KPIs</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Self-Service %</strong><br>Q answered without escalation</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Asset Reuse</strong><br>Templates/playbooks in active projects</p>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Expert Interruption</strong><br>Reduction in basic questions</li>
+                                </div>
+                                <div class="neu-card" style="padding: 15px;">
+                                    <p><strong style="color: var(--accent-5);">Content Freshness</strong><br>% cited content approved/not expired</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h4>MVP Plan</h4>
+                            <ol>
+                                <li>Start with one consulting practice (cloud migration, data engineering, etc.)</li>
+                                <li>Index approved playbooks, templates, checklists, anonymized case examples</li>
+                                <li>Implement role-aware RAG with citations, source preview, feedback</li>
+                                <li>Add expert finder and unanswered-question queue</li>
+                                <li>Measure self-service success and content gap closure during one pilot cycle</li>
+                            </ol>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(247, 37, 133, 0.1), rgba(67, 97, 238, 0.1)); border-left: 4px solid #f72585; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <p>
+                                <strong style="color: var(--accent-3);">Why This Case Study Is Valuable:</strong> 
+                                Ideal for selling enterprise AI consulting. Turns scattered knowledge into governed assistant 
+                                with real adoption metrics and clear client value. Works for any knowledge-intensive organization.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
     </div>
-  </div>
-</nav>
 
-<div class="max-w-7xl mx-auto px-4 pt-24 pb-20 relative z-10 flex gap-8">
-
-  <!-- Sidebar TOC -->
-  <aside id="toc" class="hidden lg:block w-64 shrink-0">
-    <div class="neu-card p-4 sticky top-24 max-h-[80vh] overflow-y-auto">
-      <p class="text-xs uppercase tracking-widest text-[#94a3b8] mb-3 px-2">Contents</p>
-      <a href="#intro" class="toc-link">Overview</a>
-      <a href="#scorecard" class="toc-link">Executive Scorecard</a>
-      <a href="#cs1" class="toc-link">1. Bank Doc Search</a>
-      <a href="#cs2" class="toc-link">2. CV Matching</a>
-      <a href="#cs3" class="toc-link">3. Ticket Triage</a>
-      <a href="#cs4" class="toc-link">4. Claim Intelligence</a>
-      <a href="#cs5" class="toc-link">5. CRM Enrichment</a>
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <main class="flex-1 min-w-0">
-
-    <!-- HERO -->
-    <header id="intro" class="case-section text-center mb-10">
-      <span class="badge b-high mono">FDE PLAYBOOK</span>
-      <h1 class="text-3xl md:text-5xl font-bold orbitron my-4"><span class="glow-text">Forward Deployed Engineer</span><br>Interview Playbook</h1>
-      <p class="text-[#94a3b8] max-w-2xl mx-auto">Enterprise AI case studies for portfolio, consulting, SaaS ideation & enterprise AI sales conversations. <span class="text-white">By Abhijeet Lodh.</span></p>
-    </header>
-
-    <div class="neu-card p-6 md:p-8 mb-8">
-      <h2 class="cs-h2"><i class="fas fa-compass text-[#00f5d4]"></i>About This Document</h2>
-      <p class="cs-p">Detailed implementation case studies built on 5 years of hands-on experience. Each is an <span class="text-white">assistive enterprise AI system</span> — humans stay accountable, answers are source-backed, and the model never becomes the final decision-maker for regulated or high-impact actions.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Design Philosophy</div><div class="val">Human-in-the-loop, governance, measurable ROI, auditability</div></div>
-        <div class="meta-box"><div class="lbl">Primary Buyers</div><div class="val">Banks, Recruiting, SaaS Support, Insurance, RevOps, Fraud teams</div></div>
-        <div class="meta-box"><div class="lbl">Use As</div><div class="val">Portfolio asset, discovery-call prep, SaaS blueprint, interview story bank</div></div>
-      </div>
-    </div>
-
-    <!-- SCORECARD -->
-    <section id="scorecard" class="case-section neu-card p-6 md:p-8 mb-8">
-      <h2 class="cs-h2"><i class="fas fa-table-list text-[#f72585]"></i>Executive Summary Scorecard</h2>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Use Case</th><th>Business Value</th><th>Compliance</th><th>Tech Depth</th><th>MVP Complexity</th></tr></thead>
-        <tbody>
-          <tr><td>Secure bank doc search</td><td><span class="badge b-vhigh">Very High</span></td><td><span class="badge b-high">High</span></td><td><span class="badge b-high">High</span></td><td><span class="badge b-med">Medium</span></td></tr>
-          <tr><td>CV matching platform</td><td><span class="badge b-high">High</span></td><td><span class="badge b-high">High</span></td><td><span class="badge b-med">Medium</span></td><td><span class="badge b-med">Medium</span></td></tr>
-          <tr><td>Support ticket triage</td><td><span class="badge b-high">High</span></td><td><span class="badge b-med">Medium</span></td><td><span class="badge b-med">Medium</span></td><td><span class="badge b-med">Low-Med</span></td></tr>
-          <tr><td>Insurance claim intelligence</td><td><span class="badge b-vhigh">Very High</span></td><td><span class="badge b-high">High</span></td><td><span class="badge b-high">High</span></td><td><span class="badge b-med">Med-High</span></td></tr>
-          <tr><td>CRM enrichment</td><td><span class="badge b-high">High</span></td><td><span class="badge b-med">Medium</span></td><td><span class="badge b-med">Medium</span></td><td><span class="badge b-med">Medium</span></td></tr>
-        </tbody>
-      </table></div>
-    </section>
-
-    <!-- ===== CASE STUDY 1 ===== -->
-    <section id="cs1" class="case-section neu-card p-6 md:p-8 mb-8">
-      <span class="badge b-vhigh mono">CASE STUDY 01</span>
-      <h2 class="cs-h2"><i class="fas fa-building-columns text-[#00f5d4]"></i>Secure Internal Document Search for a Bank</h2>
-      <p class="cs-p">A compliance-first RAG platform for policies, procedures, product documents, risk memos, and customer-service knowledge.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Primary Objective</div><div class="val">Reduce time searching internal procedures & product rules</div></div>
-        <div class="meta-box"><div class="lbl">Best Buyer</div><div class="val">Relationship Managers, Compliance Officers, Operations</div></div>
-        <div class="meta-box"><div class="lbl">First Release</div><div class="val">One high-value domain e.g. KYC onboarding</div></div>
-        <div class="meta-box"><div class="lbl">Decision Posture</div><div class="val">Assistive AI — human review mandatory</div></div>
-      </div>
-
-      <h3 class="cs-h3">Business Context</h3>
-      <p class="cs-p">A mid-sized bank has thousands of internal documents across SharePoint, Confluence, network drives, policy repositories and archived attachments. Employees waste time searching, answers differ by department, and sensitive documents can't be exposed broadly. The bank wants an AI assistant that answers with citations while respecting each employee's access rights.</p>
-
-      <h3 class="cs-h3">Business Goals</h3>
-      <p class="cs-li">Reduce time spent searching internal procedures and product rules.</p>
-      <p class="cs-li">Improve answer consistency across branch, risk, compliance & support teams.</p>
-      <p class="cs-li">Enforce document- and chunk-level access control.</p>
-      <p class="cs-li">Provide auditable citations and retrieval traces for compliance.</p>
-      <p class="cs-li">Detect outdated, conflicting and unapproved documents.</p>
-
-      <h3 class="cs-h3">Reference Architecture</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Component</th><th>Role in the System</th></tr></thead><tbody>
-        <tr><td>Source connectors</td><td>SharePoint, Confluence, file shares, policy repos, uploaded PDFs.</td></tr>
-        <tr><td>Ingestion service</td><td>Pulls approved docs, OCRs scans, checksums, classifies sensitivity, stores normalized text.</td></tr>
-        <tr><td>Metadata layer</td><td>Owner, approval status, dept, confidentiality, effective/expiry date, ACL tags.</td></tr>
-        <tr><td>Vector + keyword index</td><td>Embeddings for semantic recall + BM25 for exact form/policy numbers.</td></tr>
-        <tr><td>Retrieval orchestrator</td><td>Keyword + vector search, re-ranking, permission filtering, citations.</td></tr>
-        <tr><td>LLM gateway</td><td>Centralized calls, prompt templates, safety filters, redaction, audit logging.</td></tr>
-        <tr><td>Monitoring & audit</td><td>Logs query, retrieved IDs, answer hash, user ID, access decision, feedback.</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Security & Governance</h3>
-      <p class="cs-li">SSO + short-lived tokens, MFA for privileged users.</p>
-      <p class="cs-li"><span class="text-white">Permission filtering before the LLM sees content</span> — unauthorized chunks never enter the prompt.</p>
-      <p class="cs-li">Encryption in transit & at rest for docs, text, embeddings, logs.</p>
-      <p class="cs-li">Prompt-injection defense: treat retrieved content as untrusted reference.</p>
-      <p class="cs-li">Full audit trail; no training on bank data by default.</p>
-
-      <h3 class="cs-h3">KPIs</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Metric</th><th>How to Measure</th></tr></thead><tbody>
-        <tr><td>Search success rate</td><td>% sessions where user accepts answer or opens cited source.</td></tr>
-        <tr><td>Answer groundedness</td><td>% answer claims supported by citations during audit sampling.</td></tr>
-        <tr><td>Permission leakage</td><td>Unauthorized exposures — target zero.</td></tr>
-        <tr><td>Stale-source rate</td><td>Share of answers citing expired/unapproved docs.</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Key Risks & Mitigations</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead><tbody>
-        <tr><td>Unauthorized access</td><td>Pre-generation permission filtering, policy-as-code, automated access tests.</td></tr>
-        <tr><td>Hallucinated advice</td><td>Strict prompts, cite every claim, show uncertainty, source-open links.</td></tr>
-        <tr><td>Outdated documents</td><td>Block expired docs by default; alert owners before expiry.</td></tr>
-        <tr><td>Conflicting rules</td><td>Detect conflicts & show warnings instead of forcing one answer.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <!-- ===== CASE STUDY 2 ===== -->
-    <section id="cs2" class="case-section neu-card p-6 md:p-8 mb-8">
-      <span class="badge b-high mono">CASE STUDY 02</span>
-      <h2 class="cs-h2"><i class="fas fa-user-check text-[#f72585]"></i>AI CV Matching Platform for Recruiting</h2>
-      <p class="cs-p">A human-in-the-loop matching assistant that compares CVs against job descriptions, explains fit, and improves recruiter productivity — without making final hiring decisions.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Primary Objective</div><div class="val">Reduce repetitive CV screening time</div></div>
-        <div class="meta-box"><div class="lbl">Best Buyer</div><div class="val">Recruiters, Hiring Managers, Talent Ops</div></div>
-        <div class="meta-box"><div class="lbl">First Release</div><div class="val">One job family e.g. Java backend / FDE roles</div></div>
-        <div class="meta-box"><div class="lbl">Decision Posture</div><div class="val">Assistive AI — human review mandatory</div></div>
-      </div>
-
-      <h3 class="cs-h3">Business Goals</h3>
-      <p class="cs-li">Reduce repetitive CV screening time for recruiters.</p>
-      <p class="cs-li">Produce structured candidate summaries mapped to requirements.</p>
-      <p class="cs-li">Avoid automated rejection or ranking on protected attributes.</p>
-      <p class="cs-li">Create a searchable talent pool for future roles.</p>
-
-      <h3 class="cs-h3">Scope Boundaries</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>In Scope</th><th>Out of Scope</th></tr></thead><tbody>
-        <tr><td>CV parsing & structured profile extraction</td><td>Automatic rejection of candidates</td></tr>
-        <tr><td>Job-description requirement extraction</td><td>Inferring protected characteristics</td></tr>
-        <tr><td>Candidate-to-role match explanation</td><td>Scraping candidate data without consent</td></tr>
-        <tr><td>Recruiter review workflow & talent search</td><td>Replacing recruiter / hiring-manager judgment</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Data Model</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Entity</th><th>Important Fields</th></tr></thead><tbody>
-        <tr><td>CandidateProfile</td><td>candidate_id, skills, experience_years, education, certifications, parsed_sections</td></tr>
-        <tr><td>JobRequirement</td><td>job_id, must_have, nice_to_have, seniority, confirmed_by_recruiter</td></tr>
-        <tr><td>MatchResult</td><td>candidate_id, job_id, fit_label, evidence, gaps, suggested_questions</td></tr>
-        <tr><td>RecruiterDecision</td><td>decision_id, decision, reason, reviewer_id, override_notes</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">KPIs & Risks</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Metric / Risk</th><th>Detail</th></tr></thead><tbody>
-        <tr><td>Screening time/candidate</td><td>Recruiter minutes saved per CV.</td></tr>
-        <tr><td>Evidence coverage</td><td>% match explanations with explicit CV evidence.</td></tr>
-        <tr><td>⚠ Bias & unfair screening</td><td>Remove protected attributes, require human review, audit outputs.</td></tr>
-        <tr><td>⚠ Over-reliance on score</td><td>Use fit labels + evidence summaries, not a single ranking.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <!-- ===== CASE STUDY 3 ===== -->
-    <section id="cs3" class="case-section neu-card p-6 md:p-8 mb-8">
-      <span class="badge b-high mono">CASE STUDY 03</span>
-      <h2 class="cs-h2"><i class="fas fa-headset text-[#4cc9f0]"></i>Support Ticket Triage Assistant</h2>
-      <p class="cs-p">An AI workflow that classifies tickets, detects urgency, suggests owners, drafts replies, and escalates risky cases to humans.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Primary Objective</div><div class="val">Reduce first-response time & manual routing</div></div>
-        <div class="meta-box"><div class="lbl">Best Buyer</div><div class="val">Support Agents, Managers, Engineering teams</div></div>
-        <div class="meta-box"><div class="lbl">First Release</div><div class="val">One helpdesk tool + one or two product queues</div></div>
-        <div class="meta-box"><div class="lbl">Decision Posture</div><div class="val">Assistive AI — human review mandatory</div></div>
-      </div>
-
-      <h3 class="cs-h3">Reference Architecture</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Component</th><th>Role</th></tr></thead><tbody>
-        <tr><td>Input connectors</td><td>Zendesk, Intercom, Freshdesk, Jira SM, inboxes, webhooks.</td></tr>
-        <tr><td>Classifier pipeline</td><td>Category, severity, sentiment, urgency, duplicate probability, escalation keywords.</td></tr>
-        <tr><td>Knowledge retrieval</td><td>Product docs, runbooks, release notes, known issues, resolved tickets.</td></tr>
-        <tr><td>Recommendation engine</td><td>Suggests queue, owner, priority, tags, draft response with citations.</td></tr>
-        <tr><td>Feedback loop</td><td>Captures agent edits, misroutes, post-resolution labels.</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Security & Governance</h3>
-      <p class="cs-li">Redact API keys, passwords, tokens & PII before LLM calls.</p>
-      <p class="cs-li">Tenant isolation — one customer's content can't appear in another's answer.</p>
-      <p class="cs-li">Human approval before external replies in legal/billing/security/outage cases.</p>
-      <p class="cs-li">Allowlisted automation actions to prevent unsafe updates.</p>
-
-      <h3 class="cs-h3">KPIs</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Metric</th><th>How to Measure</th></tr></thead><tbody>
-        <tr><td>First response time</td><td>Median time to first meaningful response.</td></tr>
-        <tr><td>Routing accuracy</td><td>% tickets assigned to correct queue on first attempt.</td></tr>
-        <tr><td>SLA breach rate</td><td>% tickets missing SLA deadlines.</td></tr>
-        <tr><td>Agent acceptance</td><td>% AI-suggested fields/drafts accepted.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <!-- ===== CASE STUDY 4 ===== -->
-    <section id="cs4" class="case-section neu-card p-6 md:p-8 mb-8">
-      <span class="badge b-vhigh mono">CASE STUDY 04</span>
-      <h2 class="cs-h2"><i class="fas fa-file-shield text-[#a855f7]"></i>Insurance Claim Document Intelligence</h2>
-      <p class="cs-p">An AI document-processing workflow that extracts claim facts, validates forms, summarizes evidence, and assists adjusters.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Primary Objective</div><div class="val">Reduce manual document review for adjusters</div></div>
-        <div class="meta-box"><div class="lbl">Best Buyer</div><div class="val">Adjusters, Intake teams, SIU</div></div>
-        <div class="meta-box"><div class="lbl">First Release</div><div class="val">One claim type e.g. auto glass / small property</div></div>
-        <div class="meta-box"><div class="lbl">Decision Posture</div><div class="val">Assistive AI — human review mandatory</div></div>
-      </div>
-
-      <h3 class="cs-h3">Reference Architecture</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Component</th><th>Role</th></tr></thead><tbody>
-        <tr><td>Document intake</td><td>Portals, email, mobile app, brokers, call-center, third-party assessors.</td></tr>
-        <tr><td>OCR & parsing</td><td>Text, tables, stamps, dates, signatures, handwriting, key-value pairs.</td></tr>
-        <tr><td>Extraction pipeline</td><td>Claimant, policy #, date of loss, invoice amount, provider, location.</td></tr>
-        <tr><td>Evidence store</td><td>Links every field to source doc, page, bounding area & confidence.</td></tr>
-        <tr><td>Rules & analytics</td><td>Coverage checks, duplicate checks, fraud-signal scoring.</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Data Model</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Entity</th><th>Important Fields</th></tr></thead><tbody>
-        <tr><td>Claim</td><td>claim_id, policy_id, claim_type, date_of_loss, status, total_claimed_amount</td></tr>
-        <tr><td>ClaimDocument</td><td>document_id, type, file_uri, ocr_text_uri, classification_confidence</td></tr>
-        <tr><td>ExtractedFact</td><td>field_name, value, confidence, page, bounding_box, reviewer_status</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">Key Risks & Mitigations</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead><tbody>
-        <tr><td>Incorrect extraction</td><td>Show confidence + evidence, require review for critical fields.</td></tr>
-        <tr><td>Overstated fraud flags</td><td>Use "requires review" language; keep investigators human-led.</td></tr>
-        <tr><td>Poor OCR on scans</td><td>Image-quality checks, fallback manual review, re-upload prompts.</td></tr>
-        <tr><td>Coverage misinterpretation</td><td>Rules engine + policy citations; LLM never makes final coverage call.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <!-- ===== CASE STUDY 5 ===== -->
-    <section id="cs5" class="case-section neu-card p-6 md:p-8 mb-8">
-      <span class="badge b-high mono">CASE STUDY 05</span>
-      <h2 class="cs-h2"><i class="fas fa-chart-line text-[#4361ee]"></i>CRM Enrichment & Sales Workflow Automation</h2>
-      <p class="cs-p">An AI-assisted sales operations platform that cleans CRM records, enriches accounts, recommends next actions, and automates routine follow-ups.</p>
-      <div class="meta-grid">
-        <div class="meta-box"><div class="lbl">Primary Objective</div><div class="val">Improve CRM data quality, reduce duplicates</div></div>
-        <div class="meta-box"><div class="lbl">Best Buyer</div><div class="val">Sales Reps, Sales Managers, RevOps</div></div>
-        <div class="meta-box"><div class="lbl">First Release</div><div class="val">One CRM + one segment e.g. mid-market SaaS</div></div>
-        <div class="meta-box"><div class="lbl">Decision Posture</div><div class="val">Assistive AI — human review mandatory</div></div>
-      </div>
-
-      <h3 class="cs-h3">Reference Architecture</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Component</th><th>Role</th></tr></thead><tbody>
-        <tr><td>CRM connector</td><td>Salesforce, HubSpot, Dynamics, Pipedrive — accounts, contacts, opportunities.</td></tr>
-        <tr><td>Data-quality engine</td><td>Missing fields, duplicates, stale opps, invalid emails, inconsistent taxonomy.</td></tr>
-        <tr><td>Entity resolution</td><td>Matches duplicates via domain, name, email, phone, fuzzy similarity.</td></tr>
-        <tr><td>AI account brief</td><td>Summarizes context, activity, pain points, stakeholders, talking points.</td></tr>
-        <tr><td>Governance layer</td><td>Data provenance, source freshness, user approvals, field update history.</td></tr>
-      </tbody></table></div>
-
-      <h3 class="cs-h3">KPIs & Risks</h3>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Metric / Risk</th><th>Detail</th></tr></thead><tbody>
-        <tr><td>CRM completeness</td><td>% accounts with required fields populated.</td></tr>
-        <tr><td>Duplicate reduction</td><td>Number of duplicate accounts/contacts resolved.</td></tr>
-        <tr><td>⚠ Bad enrichment data</td><td>Track provenance & confidence; let users reject updates.</td></tr>
-        <tr><td>⚠ CRM pollution</td><td>Never auto-write low-confidence data; use staging + approval queues.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <!-- Shared Demo Build -->
-    <section class="neu-card p-6 md:p-8 mb-8">
-      <h2 class="cs-h2"><i class="fas fa-layer-group text-[#00f5d4]"></i>Suggested Demo Build (All Case Studies)</h2>
-      <div class="table-wrap"><table class="cs-table">
-        <thead><tr><th>Layer</th><th>Recommended Implementation</th></tr></thead><tbody>
-        <tr><td>Frontend</td><td>React/Angular dashboard — search, review queue, detail page, feedback & admin views.</td></tr>
-        <tr><td>Backend</td><td>Java Spring Boot APIs — ingestion, workflow, authorization, audit, orchestration.</td></tr>
-        <tr><td>Storage</td><td>PostgreSQL for entities/audit; object storage for files; Redis for queues/cache.</td></tr>
-        <tr><td>AI layer</td><td>LLM gateway, prompt templates, embeddings, evaluation scripts, guardrails.</td></tr>
-        <tr><td>DevOps</td><td>Docker Compose locally; Kubernetes/cloud for production; CI/CD via GitHub Actions.</td></tr>
-        <tr><td>Observability</td><td>Structured logs, metrics, latency dashboards, model-cost tracking, failure queues.</td></tr>
-      </tbody></table></div>
-    </section>
-
-    <footer class="text-center text-[#94a3b8] text-sm mt-12">
-      <p>Handcrafted by <span class="glow-text font-semibold">Abhijeet Lodh</span> • FDE Interview Playbook</p>
-      <a href="/" class="text-[#00f5d4] hover:underline mt-2 inline-block"><i class="fas fa-arrow-left mr-1"></i>Back to Portfolio</a>
+    <!-- Footer -->
+    <footer>
+        <p style="color: var(--text-muted); font-size: 16px;">
+            <i class="fas fa-heart" style="color: var(--accent-3);"></i> 
+            <span class="glow-text" style="font-weight: 700;">Enterprise AI Case Studies</span> 
+            by Abhijeet Lodh
+        </p>
+        <p style="color: var(--text-muted); font-size: 14px;">5+ years of production AI/ML experience distilled into actionable patterns</p>
+        <p style="color: var(--text-muted); margin-top: 20px; font-size: 13px;">
+            For consulting inquiries: <strong style="color: var(--accent-1);">abhijeetlodh@gmail.com</strong>
+        </p>
     </footer>
 
-  </main>
-</div>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            fontFamily: "'Space Grotesk', sans-serif"
+        });
 
-<script>
-  // Mobile TOC toggle
-  document.getElementById('tocBtn').addEventListener('click',()=>{
-    document.getElementById('toc').classList.toggle('hidden');
-  });
-  // Active link highlight on scroll
-  const links=document.querySelectorAll('.toc-link');
-  const sections=[...links].map(l=>document.querySelector(l.getAttribute('href')));
-  window.addEventListener('scroll',()=>{
-    let cur=sections.length-1;
-    for(let i=0;i<sections.length;i++){
-      if(sections[i] && sections[i].getBoundingClientRect().top<150) cur=i;
-    }
-    links.forEach((l,i)=>l.classList.toggle('active',i===cur));
-  });
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      e.preventDefault();
-      document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
-    });
-  });
-</script>
+        // Toggle case studies
+        function toggleCase(caseNum) {
+            const content = document.getElementById(`content-${caseNum}`);
+            const header = document.querySelector(`#toggle-${caseNum}`).parentElement;
+            
+            content.classList.toggle('show');
+            header.classList.toggle('expanded');
+        }
+
+        // Toggle Mermaid diagrams
+        function toggleMermaid(caseNum) {
+            const mermaidDiv = document.getElementById(`mermaid-${caseNum}`);
+            if (mermaidDiv.style.display === 'none') {
+                mermaidDiv.style.display = 'block';
+                mermaid.contentLoaded();
+            } else {
+                mermaidDiv.style.display = 'none';
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideDown 0.6s ease';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.neu-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
