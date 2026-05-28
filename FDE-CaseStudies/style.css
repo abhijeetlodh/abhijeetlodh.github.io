@@ -1,1 +1,13 @@
+/* Additional custom styles if needed */
+@media (max-width: 1024px) {
+    table {
+        font-size: 14px;
+    }
+}
 
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+}
