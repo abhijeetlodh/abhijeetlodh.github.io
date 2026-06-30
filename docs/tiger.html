@@ -1,0 +1,2808 @@
+<hr>
+<h1 id="nexus-next-generation-enterprise-experience-unification-system">NEXUS: Next-Generation Enterprise eXperience Unification System</h1>
+<h2 id="ai-modernization-factory-for-legacy-net-financial-ecosystems">AI Modernization Factory for Legacy .NET Financial Ecosystems</h2>
+<h3 id="principal-engineer-enterprise-design-proposal-v3-0-production-grade">Principal Engineer Enterprise Design Proposal | v3.0 | Production-Grade</h3>
+<hr>
+<blockquote>
+<p><strong>Classification:</strong> Principal Architect Design Proposal
+<strong>Target Audience:</strong> Chief Architects, Engineering Directors, Principal Engineers, Enterprise Modernization Teams
+<strong>Domain:</strong> Global Financial Institution — Legacy .NET Modernization
+<strong>Design Philosophy:</strong> Correctness Before Speed. Evidence Before Opinion. Verification Before Deployment.</p>
+</blockquote>
+<hr>
+<h1 id="section-1-executive-summary">SECTION 1: EXECUTIVE SUMMARY</h1>
+<p>Enterprise organizations allocate an average of 72% of their total IT budgets to maintaining and operating existing systems, leaving a mere 28% for building new capabilities, exploring emerging technologies, or responding to competitive pressures. For a global financial institution operating legacy .NET systems, this is not merely an inefficiency — it is a compounding existential risk.</p>
+<p>The EU&#39;s Digital Operational Resilience Act (DORA), effective January 2025, imposes strict penalties on financial entities for ICT risks stemming from outdated technology architectures. The cost of inaction is no longer theoretical.</p>
+<p>The average technical debt cost is $361,000 per 100,000 lines of code, and traditional modernization approaches carry their own risks.</p>
+<p>NEXUS is a production-ready, AI-driven Modernization Factory designed specifically for large financial institutions operating legacy .NET ecosystems. It is not a wrapper around a commercial LLM. It is a full-stack, multi-paradigm engineering platform that fuses:</p>
+<ul>
+<li><strong>Program analysis</strong> (AST, CPG, CFG, DFG, PDG) as the epistemic foundation</li>
+<li><strong>Multi-agent hierarchical orchestration</strong> for parallelized, specialized transformation</li>
+<li><strong>GraphRAG over a Unified Semantic Knowledge Graph</strong> for context-precise retrieval</li>
+<li><strong>Formal verification and semantic equivalence checking</strong> as the correctness guarantee</li>
+<li><strong>Domain-Driven Design recovery</strong> as the decomposition strategy</li>
+<li><strong>Enterprise governance, auditability, and human authority</strong> as non-negotiable constraints</li>
+</ul>
+<p>The system is designed to reduce modernization time from months to weeks while providing mathematical evidence — not just tests — that generated systems preserve business behavior.</p>
+<p><strong>Bottom line for the board:</strong> NEXUS turns a legacy .NET monolith into a verified, documented, API-first, cloud-native architecture with complete traceability from business requirement through to deployed test. It does so at a fraction of the cost and timeline of traditional approaches, with a correctness posture suitable for regulatory examination.</p>
+<hr>
+<h1 id="section-2-problem-analysis">SECTION 2: PROBLEM ANALYSIS</h1>
+<h2 id="2-1-the-legacy-net-financial-system-problem-space">2.1 The Legacy .NET Financial System Problem Space</h2>
+<p>The typical large financial institution&#39;s .NET estate presents a specific, compounding set of engineering challenges that generic AI tools are wholly unequipped to handle:</p>
+<table>
+<thead>
+<tr>
+<th>Problem Dimension</th>
+<th>Manifestation in .NET Financial Systems</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Monolithic Architecture</strong></td>
+<td>Millions of lines in single deployable units; no natural decomposition boundaries</td>
+</tr>
+<tr>
+<td><strong>Hidden Business Rules</strong></td>
+<td>Logic buried in SQL stored procedures, WebForms code-behind, WCF service implementations</td>
+</tr>
+<tr>
+<td><strong>Technical Debt</strong></td>
+<td>VB.NET, ASP.NET WebForms, .NET Framework 2.0–4.8, WCF, ASMX SOAP services</td>
+</tr>
+<tr>
+<td><strong>Coupling</strong></td>
+<td>God classes, shared database state, direct SQL calls bypassing any abstraction</td>
+</tr>
+<tr>
+<td><strong>Documentation Debt</strong></td>
+<td>No ADRs, no architecture diagrams, XML comments that describe <em>what</em> not <em>why</em></td>
+</tr>
+<tr>
+<td><strong>SQL Complexity</strong></td>
+<td>Thousands of stored procedures with embedded business logic, cursors, dynamic SQL</td>
+</tr>
+<tr>
+<td><strong>Distributed Logic</strong></td>
+<td>Business rules split between application layer, database, SSIS packages, and SSRS reports</td>
+</tr>
+<tr>
+<td><strong>Regulatory Sensitivity</strong></td>
+<td>PCI-DSS, SOX, GDPR, Basel III logic baked into untestable code paths</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-2-why-current-approaches-fail">2.2 Why Current Approaches Fail</h2>
+<p>LLMs face critical challenges when analyzing real-world codebases: token limits prevent loading entire repositories, code embeddings fail to capture inter-procedural data flows, and LLMs struggle to generate complex static analysis queries.</p>
+<p>Security vulnerabilities (and by extension, business logic) rarely exist in isolation; they emerge from interactions across multiple functions, files, and modules. Consider a buffer overflow — or a financial calculation — where a value is determined in one function, passed through several layers of abstraction, and used in a distant module. Detecting such issues requires tracing data flows across the entire call graph, understanding control dependencies, and reasoning about values at each step.</p>
+<p>With over 25,000 new vulnerabilities reported in the CVE database in 2024 alone, deep learning approaches show promise for code analysis, but recent comprehensive evaluations reveal critical limitations: accuracy drops by up to 45% on rigorously verified datasets, and performance degrades significantly under simple code modifications.</p>
+<p>Commercial modernization tools treat the problem as text transformation. NEXUS treats it as <strong>semantic reconstruction with formal verification</strong> — a categorically different approach.</p>
+<h2 id="2-3-the-financial-institution-s-non-negotiable-requirements">2.3 The Financial Institution&#39;s Non-Negotiable Requirements</h2>
+<pre><code><span class="hljs-string">CORRECTNESS:</span>    Every generated system must be provably equivalent to legacy behavior
+<span class="hljs-string">TRACEABILITY:</span>   Every artifact traceable from requirement → code → test → deployment
+<span class="hljs-string">AUDITABILITY:</span>   Every decision logged with evidence <span class="hljs-keyword">for</span> regulatory examination
+<span class="hljs-string">SECURITY:</span>       Generated systems must not introduce vulnerabilities absent <span class="hljs-keyword">in</span> legacy
+<span class="hljs-string">COMPLIANCE:</span>     PCI-DSS, SOX, GDPR, DORA compliance preserved and documented
+<span class="hljs-string">EXPLAINABILITY:</span> Every AI decision explainable <span class="hljs-keyword">in</span> human-readable terms
+HUMAN <span class="hljs-string">AUTHORITY:</span> Critical decisions require human architect sign-off
+</code></pre><hr>
+<h1 id="section-3-research-findings-technology-comparison">SECTION 3: RESEARCH FINDINGS &amp; TECHNOLOGY COMPARISON</h1>
+<h2 id="3-1-comparative-technology-analysis">3.1 Comparative Technology Analysis</h2>
+<h3 id="3-1-1-retrieval-context-engineering">3.1.1 Retrieval &amp; Context Engineering</h3>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Accuracy on Complex Code</th>
+<th>Hallucination Risk</th>
+<th>Multi-Hop Reasoning</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Traditional RAG (Vector)</strong></td>
+<td>Low</td>
+<td>High</td>
+<td>None</td>
+<td>Low</td>
+<td>Insufficient for enterprise code</td>
+</tr>
+<tr>
+<td><strong>GraphRAG</strong></td>
+<td>High</td>
+<td>Low</td>
+<td>Excellent</td>
+<td>Medium</td>
+<td>Core component</td>
+</tr>
+<tr>
+<td><strong>Hybrid RAG</strong></td>
+<td>High</td>
+<td>Medium</td>
+<td>Good</td>
+<td>Medium</td>
+<td>Augmentation layer</td>
+</tr>
+<tr>
+<td><strong>Long-Context LLM</strong></td>
+<td>Medium</td>
+<td>High</td>
+<td>Poor at scale</td>
+<td>Very High</td>
+<td>Fallback only</td>
+</tr>
+<tr>
+<td><strong>CPG + MCP Tools</strong></td>
+<td>Very High</td>
+<td>Very Low</td>
+<td>Excellent</td>
+<td>Medium</td>
+<td>Primary strategy</td>
+</tr>
+</tbody>
+</table>
+<p>By combining the semantic flexibility of LLMs with the structural rigor of Knowledge Graphs, enterprises are achieving breakthrough accuracy in complex decision-support scenarios. Recent benchmarks from 2025 indicate that while vector-only RAG can fail completely (0% accuracy) on schema-bound queries, optimized Graph RAG implementations are achieving 90%+ accuracy.</p>
+<p>FalkorDB achieved a documented 90% hallucination reduction compared to traditional RAG while maintaining sub-50ms query latency.</p>
+<p><strong>Verdict:</strong> GraphRAG over a Code Property Graph, bridged to LLMs via MCP, is the correct retrieval architecture. Vector-only RAG is rejected as the primary mechanism.</p>
+<h3 id="3-1-2-program-analysis-methods">3.1.2 Program Analysis Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Precision</th>
+<th>Scalability</th>
+<th>Semantic Depth</th>
+<th>.NET Support</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AST Only</strong></td>
+<td>Syntactic</td>
+<td>High</td>
+<td>Low</td>
+<td>Excellent (Roslyn)</td>
+<td>Necessary but insufficient</td>
+</tr>
+<tr>
+<td><strong>CFG/DFG</strong></td>
+<td>Structural</td>
+<td>High</td>
+<td>Medium</td>
+<td>Good</td>
+<td>Essential layer</td>
+</tr>
+<tr>
+<td><strong>Code Property Graph</strong></td>
+<td>Full</td>
+<td>Medium</td>
+<td>Very High</td>
+<td>Via Joern</td>
+<td>Core foundation</td>
+</tr>
+<tr>
+<td><strong>Symbolic Execution</strong></td>
+<td>Maximum</td>
+<td>Low</td>
+<td>Maximum</td>
+<td>Selective</td>
+<td>Targeted use only</td>
+</tr>
+<tr>
+<td><strong>Dynamic Analysis</strong></td>
+<td>Behavioral</td>
+<td>Medium</td>
+<td>High</td>
+<td>Excellent</td>
+<td>Required for oracle</td>
+</tr>
+<tr>
+<td><strong>Abstract Interpretation</strong></td>
+<td>Behavioral</td>
+<td>Medium</td>
+<td>High</td>
+<td>Via Roslyn analyzers</td>
+<td>Invariant extraction</td>
+</tr>
+</tbody>
+</table>
+<p>The MCP server approach integrates Joern&#39;s Code Property Graph engine with LLMs, providing high-level tools for program slicing, taint tracking, data flow analysis, and semantic code navigation, enabling targeted exploration of large codebases without exhaustive file reading.</p>
+<h3 id="3-1-3-ai-architecture-patterns">3.1.3 AI Architecture Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Quality</th>
+<th>Speed</th>
+<th>Cost</th>
+<th>Hallucination Risk</th>
+<th>Enterprise Readiness</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single LLM</strong></td>
+<td>Low</td>
+<td>High</td>
+<td>Low</td>
+<td>Very High</td>
+<td>Poor</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td><strong>Single Agent + RAG</strong></td>
+<td>Medium</td>
+<td>High</td>
+<td>Low</td>
+<td>High</td>
+<td>Poor</td>
+<td>Rejected</td>
+</tr>
+<tr>
+<td><strong>Multi-Agent Ensemble</strong></td>
+<td>High</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Good</td>
+<td>Adopted</td>
+</tr>
+<tr>
+<td><strong>Hierarchical + Adversarial</strong></td>
+<td>Very High</td>
+<td>Low</td>
+<td>High</td>
+<td>Low</td>
+<td>Excellent</td>
+<td>Core pattern</td>
+</tr>
+<tr>
+<td><strong>Debate + Consensus</strong></td>
+<td>Very High</td>
+<td>Low</td>
+<td>High</td>
+<td>Very Low</td>
+<td>Excellent</td>
+<td>For critical paths</td>
+</tr>
+</tbody>
+</table>
+<p>Multi-agent orchestration enables complex workflows: Specialized sub-agents coordinated by orchestrator agents handle sophisticated modernization tasks autonomously.</p>
+<p>Specification-driven development reduces ambiguity: Grounding transformations in design specifications prevents semantic drift and technical debt migration.</p>
+<h3 id="3-1-4-verification-strategies">3.1.4 Verification Strategies</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Coverage</th>
+<th>Cost</th>
+<th>Speed</th>
+<th>Completeness</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unit Testing</strong></td>
+<td>Function-level</td>
+<td>Low</td>
+<td>Fast</td>
+<td>Low</td>
+<td>Baseline minimum</td>
+</tr>
+<tr>
+<td><strong>Differential Testing</strong></td>
+<td>Behavioral</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>High</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><strong>Mutation Testing</strong></td>
+<td>Test quality</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><strong>Property-Based Testing</strong></td>
+<td>Invariant</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>High</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><strong>SMT Equivalence</strong></td>
+<td>Mathematical</td>
+<td>Very High</td>
+<td>Slow</td>
+<td>Complete for scope</td>
+<td>Selective critical paths</td>
+</tr>
+<tr>
+<td><strong>Formal Verification</strong></td>
+<td>Provable</td>
+<td>Extreme</td>
+<td>Very Slow</td>
+<td>Complete</td>
+<td>Critical financial calc only</td>
+</tr>
+<tr>
+<td><strong>Behavioral Fingerprinting</strong></td>
+<td>Approximate</td>
+<td>Low</td>
+<td>Fast</td>
+<td>Medium</td>
+<td>Fast first-pass filter</td>
+</tr>
+</tbody>
+</table>
+<p>A more practical approach treats the LLM as a generator of artifacts, such as code and plans, which are then verified by external tools — commonly called black-box testing. This approach uses the full generative powers of LLMs while relying on the rigor of established formal methods for assurance.</p>
+<h3 id="3-1-5-net-specific-analysis-tools">3.1.5 .NET-Specific Analysis Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+<th>Strength</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Roslyn Compiler API</strong></td>
+<td>AST, semantic model</td>
+<td>Native C#/VB.NET support</td>
+<td>Requires compilable code</td>
+</tr>
+<tr>
+<td><strong>Joern</strong></td>
+<td>CPG extraction</td>
+<td>Multi-language, CPG standard</td>
+<td>.NET support via custom front-end</td>
+</tr>
+<tr>
+<td><strong>NDepend</strong></td>
+<td>Dependency analysis</td>
+<td>Deep .NET metrics</td>
+<td>Commercial; no AI integration</td>
+</tr>
+<tr>
+<td><strong>CAST Highlight</strong></td>
+<td>Portfolio analysis</td>
+<td>Auto-maps databases, code layers, and transaction flows into interactive visuals</td>
+<td>Expensive at scale</td>
+</tr>
+<tr>
+<td><strong>Semgrep</strong></td>
+<td>Static analysis / SAST</td>
+<td>Custom rule definition</td>
+<td>No data flow across files</td>
+</tr>
+<tr>
+<td><strong>SonarQube</strong></td>
+<td>Quality / security</td>
+<td>Wide language support</td>
+<td>Limited semantic depth</td>
+</tr>
+<tr>
+<td><strong>dotnet-symbol</strong></td>
+<td>Symbol resolution</td>
+<td>Production debugging</td>
+<td>Narrow scope</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict for .NET:</strong> Roslyn is the primary AST/semantic model provider. A custom Joern front-end for C#/VB.NET is built for CPG extraction. Semgrep for SAST pattern matching. NDepend for dependency metrics.</p>
+<hr>
+<h1 id="section-4-final-recommended-architecture-nexus">SECTION 4: FINAL RECOMMENDED ARCHITECTURE — NEXUS</h1>
+<h2 id="4-1-the-nexus-architecture-philosophy">4.1 The NEXUS Architecture Philosophy</h2>
+<p>NEXUS is built on five irrevocable design axioms:</p>
+<pre><code>AXIOM <span class="hljs-number">1</span>: UNDERSTAND BEFORE TRANSFORM
+         No code <span class="hljs-keyword">is</span> generated <span class="hljs-keyword">until</span> <span class="hljs-keyword">its</span> semantic model <span class="hljs-keyword">is</span> complete <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> Knowledge Graph.
+
+AXIOM <span class="hljs-number">2</span>: VERIFY BEFORE COMMIT
+         Every transformation produces measurable behavioral equivalence evidence.
+
+AXIOM <span class="hljs-number">3</span>: GRAPH IS GROUND TRUTH
+         The Unified Semantic Knowledge Graph (USKG) <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> single source <span class="hljs-keyword">of</span> truth.
+         All agents operate <span class="hljs-keyword">on</span> <span class="hljs-keyword">it</span>. Raw <span class="hljs-built_in">text</span> <span class="hljs-keyword">is</span> input only.
+
+AXIOM <span class="hljs-number">4</span>: ADVERSARIAL BY DESIGN
+         Every agent's output <span class="hljs-keyword">is</span> independently challenged <span class="hljs-keyword">before</span> promotion.
+
+AXIOM <span class="hljs-number">5</span>: HUMAN AUTHORITY IS ABSOLUTE
+         Business semantics, regulatory decisions, <span class="hljs-keyword">and</span> equivalence disputes always
+         escalate <span class="hljs-keyword">to</span> human architects. AI never makes irreversible decisions alone.
+</code></pre><h2 id="4-2-eight-layer-system-architecture">4.2 Eight-Layer System Architecture</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│  LAYER <span class="hljs-number">8</span>: GOVERNANCE, AUDITABILITY &amp; HUMAN AUTHORITY PLANE                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">7</span>: ENTERPRISE DELIVERY &amp; CI/CD PLANE                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">6</span>: SECURITY, COMPLIANCE &amp; POLICY ENFORCEMENT PLANE                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">5</span>: VERIFICATION &amp; FORMAL EQUIVALENCE PLANE                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">4</span>: FORWARD ENGINEERING &amp; SYNTHESIS PLANE (<span class="hljs-keyword">Multi-Agent </span>Factory)      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">3</span>: GRAPHRAG REASONING &amp; CONTEXT ENGINEERING PLANE                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">2</span>: UNIFIED SEMANTIC KNOWLEDGE GRAPH (USKG) — EPISTEMIC CORE        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER <span class="hljs-number">1</span>: <span class="hljs-keyword">REVERSE </span>ENGINEERING &amp; <span class="hljs-keyword">MULTI-DIMENSIONAL </span>ANALYSIS PLANE           │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre><hr>
+<h1 id="section-5-software-modernization-lifecycle">SECTION 5: SOFTWARE MODERNIZATION LIFECYCLE</h1>
+<h2 id="5-1-complete-lifecycle-overview">5.1 Complete Lifecycle Overview</h2>
+<pre><code><span class="hljs-symbol">PHASE</span> <span class="hljs-number">0</span>: INGESTION &amp; DISCOVERY
+   <span class="hljs-keyword">Business </span>Discovery → <span class="hljs-keyword">BRD </span>Understanding → Requirement Mining
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">1</span>: <span class="hljs-keyword">REVERSE </span>ENGINEERING
+   Codebase Ingestion → AST/CPG Extraction → Static Analysis
+   → Dynamic Analysis → Architecture Recovery → <span class="hljs-keyword">Business </span>Rule Recovery
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">2</span>: KNOWLEDGE GRAPH CONSTRUCTION
+   USKG <span class="hljs-keyword">Population </span>→ Semantic Analysis → Risk Assessment
+   → Domain Model Recovery
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">3</span>: FORWARD ENGINEERING
+   Target Architecture Design → DDD Decomposition → API Design
+   → <span class="hljs-meta">Code</span> Generation → Database Migration Design
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">4</span>: VERIFICATION
+   <span class="hljs-keyword">Behavioral </span>Testing → Equivalence Checking → Security Audit
+   → Performance Validation → Compliance Verification
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">5</span>: DELIVERY
+   Human <span class="hljs-keyword">Review </span>→ Deployment Pipeline → Shadow Mode
+   → Canary Release → Full Cutover
+
+<span class="hljs-symbol">PHASE</span> <span class="hljs-number">6</span>: CONTINUOUS LEARNING
+   Feedback Integration → Model Refinement → Knowledge Graph Updates
+</code></pre><h2 id="5-2-detailed-lifecycle-stage-specifications">5.2 Detailed Lifecycle Stage Specifications</h2>
+<h3 id="stage-0-business-discovery">Stage 0: Business Discovery</h3>
+<p><strong>Inputs:</strong> Existing BRDs, meeting recordings, email archives, SharePoint documentation, JIRA tickets, user manuals, regulatory documents</p>
+<p><strong>Process:</strong></p>
+<ul>
+<li>Document ingestion pipeline (PDF, Word, Excel, PowerPoint → structured text)</li>
+<li>LLM-powered requirement extraction with named entity recognition for financial domain</li>
+<li>Regulatory requirement mapping (PCI-DSS, SOX, GDPR, DORA, Basel III)</li>
+<li>Stakeholder interview transcription and semantic analysis</li>
+<li>Gap identification between documented and actual behavior</li>
+</ul>
+<p><strong>Outputs:</strong> Recovered BRD, Initial Domain Vocabulary, Regulatory Obligation Map, Business Priority Ranking</p>
+<h3 id="stage-1-multi-dimensional-reverse-engineering">Stage 1: Multi-Dimensional Reverse Engineering</h3>
+<p>This is the most critical stage. The quality of all downstream work is determined here.</p>
+<p><strong>The Five-Dimensional Extraction Pipeline:</strong></p>
+<pre><code>LEGACY .NET CODEBASE
+        │
+        ├─[DIM <span class="hljs-number">1</span>]─ SYNTACTIC LAYER ──────► Roslyn AST
+        │          (C#, VB.NET, ASPX,       - All symbol definitions
+        │           SQL, SSIS, SSRS)         - Type hierarchy
+        │                                    - Method signatures
+        │
+        ├─[DIM <span class="hljs-number">2</span>]─ STRUCTURAL LAYER ──────► CFG + DFG + PDG
+        │          (Intra &amp; inter-<span class="hljs-keyword">proc</span>)       -<span class="hljs-title"> Control</span> flow<span class="hljs-title"> paths</span>
+        │                                    -<span class="hljs-title"> Data</span> flow<span class="hljs-title"> edges</span>
+        │                                    -<span class="hljs-title"> Program</span> dependencies
+        │
+        ├─[DIM 3]─<span class="hljs-title"> RELATIONAL</span> LAYER ──────►<span class="hljs-title"> Call</span> Graph +<span class="hljs-title"> Dep</span> Graph
+        │          (Solution-wide)            -<span class="hljs-title"> Method</span> call<span class="hljs-title"> chains</span>
+        │                                    -<span class="hljs-title"> Assembly</span> dependencies
+        │                                    -<span class="hljs-title"> SQL</span> <span class="hljs-keyword">proc</span><span class="hljs-title"> call</span> trees
+        │
+        ├─[DIM 4]─<span class="hljs-title"> SEMANTIC</span> LAYER ────────►<span class="hljs-title"> Code</span> Property<span class="hljs-title"> Graph</span> (CPG)
+        │          (AST+CFG+DFG+PDG<span class="hljs-title"> fusion)</span>   -<span class="hljs-title"> Unified</span> graph<span class="hljs-title"> model</span>
+        │                                    -<span class="hljs-title"> Cross-cutting</span> analysis
+        │
+        └─[DIM 5]─<span class="hljs-title"> BEHAVIORAL</span> LAYER ──────►<span class="hljs-title"> Dynamic</span> Traces +<span class="hljs-title"> Oracle</span>
+                   (Runtime<span class="hljs-title"> instrumentation)</span>  -<span class="hljs-title"> Actual</span> execution<span class="hljs-title"> paths</span>
+                                             -<span class="hljs-title"> Input/output</span> contracts
+                                             -<span class="hljs-title"> Golden</span> dataset
+</code></pre><p><strong>SQL Stored Procedure Recovery (Critical for .NET Financial):</strong></p>
+<p>SQL stored procedures in financial systems are not just data access — they are business logic repositories. NEXUS applies:</p>
+<ul>
+<li>Procedural SQL parser → AST for T-SQL/PL-SQL</li>
+<li>Dependency graph of procedure-to-procedure calls</li>
+<li>Data flow analysis through procedure parameters</li>
+<li>Business rule extraction from complex CASE statements, conditional logic</li>
+<li>Schema dependency mapping (which tables, columns, constraints each procedure touches)</li>
+</ul>
+<hr>
+<h1 id="section-6-mermaid-diagrams">SECTION 6: MERMAID DIAGRAMS</h1>
+<h2 id="diagram-1-overall-nexus-system-architecture">Diagram 1: Overall NEXUS System Architecture</h2>
+<pre><code class="lang-mermaid">graph TB
+    subgraph INPUT["INPUT SOURCES"]
+        SRC[Legacy .NET Codebase]
+        DOC[Documentation &amp; BRDs]
+        SQL[SQL Stored Procedures]
+        CFG_SRC[Config &amp; Infrastructure]
+        TRACE[Runtime Traces]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L1[<span class="hljs-string">"LAYER 1: REVERSE ENGINEERING PLANE"</span>]
+        ROSLYN[Roslyn AST <span class="hljs-keyword">Engine</span>]
+        CPG_ENG[CPG <span class="hljs-keyword">Engine</span> - Joern/.NET]
+        <span class="hljs-keyword">STATIC</span>[<span class="hljs-keyword">Static</span> Analyzer]
+        DYNAMIC[Dynamic Analyzer]
+        SQL_PARSE[<span class="hljs-keyword">SQL</span> Parser &amp; Analyzer]
+        SSIS_PARSE[SSIS/SSRS Parser]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L2[<span class="hljs-string">"LAYER 2: UNIFIED SEMANTIC KNOWLEDGE GRAPH"</span>]
+        USKG[(USKG - Neo4j + AGE)]
+        VEC_DB[(Vector DB - Qdrant)]
+        META[(Metadata <span class="hljs-keyword">Store</span> - PostgreSQL)]
+        DOC_STORE[(<span class="hljs-keyword">Document</span> <span class="hljs-keyword">Store</span>)]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L3[<span class="hljs-string">"LAYER 3: GRAPHRAG REASONING PLANE"</span>]
+        GRAPH_RAG[GraphRAG <span class="hljs-keyword">Engine</span>]
+        HYBRID[Hybrid Retrieval]
+        CTX_ENG[<span class="hljs-keyword">Context</span> Engineering]
+        SPEC_MINE[Specification Miner]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L4[<span class="hljs-string">"LAYER 4: FORWARD ENGINEERING PLANE"</span>]
+        MOA[<span class="hljs-keyword">Master</span> Orchestrator <span class="hljs-keyword">Agent</span>]
+        subgraph DOMAIN_SQUAD[<span class="hljs-string">"Domain Decomposition Squad"</span>]
+            DDD_AG[DDD Analyst <span class="hljs-keyword">Agent</span>]
+            EVENT_AG[<span class="hljs-keyword">Event</span> Storming <span class="hljs-keyword">Agent</span>]
+            BOUND_AG[Boundary Extractor <span class="hljs-keyword">Agent</span>]
+        <span class="hljs-keyword">end</span>
+        subgraph TRANSFORM_SQUAD[<span class="hljs-string">"Transformation Squad"</span>]
+            SYNTH_AG[Synthesis <span class="hljs-keyword">Agent</span> x N]
+            API_AG[API Design <span class="hljs-keyword">Agent</span>]
+            DB_AG[<span class="hljs-keyword">Database</span> <span class="hljs-keyword">Migration</span> <span class="hljs-keyword">Agent</span>]
+            TEST_AG[<span class="hljs-keyword">Test</span> Generation <span class="hljs-keyword">Agent</span>]
+        <span class="hljs-keyword">end</span>
+        subgraph REVIEW_SQUAD[<span class="hljs-string">"Adversarial Review Squad"</span>]
+            ADV_AG[Adversarial Reviewer]
+            SEC_AG[<span class="hljs-keyword">Security</span> Reviewer]
+            PERF_AG[<span class="hljs-keyword">Performance</span> Reviewer]
+            COMP_AG[Compliance Reviewer]
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+
+    subgraph L5[<span class="hljs-string">"LAYER 5: VERIFICATION PLANE"</span>]
+        BEHAV[Behavioral <span class="hljs-keyword">Oracle</span> Testing]
+        DIFF[Differential Testing]
+        SMT[SMT Equivalence Checker]
+        MUTATE[Mutation Testing]
+        PROP[Property-Based Testing]
+        CONF[Confidence Scoring <span class="hljs-keyword">Engine</span>]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L6[<span class="hljs-string">"LAYER 6: SECURITY &amp; COMPLIANCE PLANE"</span>]
+        SAST[SAST <span class="hljs-keyword">Engine</span> - Semgrep]
+        DAST[DAST <span class="hljs-keyword">Engine</span>]
+        SCA[SCA - Dependency <span class="hljs-keyword">Audit</span>]
+        OPA[<span class="hljs-keyword">Policy</span> <span class="hljs-keyword">Engine</span> - OPA]
+        SECRET[Secret Detection]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L7[<span class="hljs-string">"LAYER 7: DELIVERY PLANE"</span>]
+        CICD[CI/CD Pipeline]
+        SHADOW[Shadow <span class="hljs-keyword">Mode</span> Deployer]
+        CANARY[Canary Orchestrator]
+        IaC[Infrastructure <span class="hljs-keyword">as</span> Code]
+        ARTIFACT[Artifact Registry]
+    <span class="hljs-keyword">end</span>
+
+    subgraph L8[<span class="hljs-string">"LAYER 8: GOVERNANCE PLANE"</span>]
+        <span class="hljs-keyword">AUDIT</span>[<span class="hljs-keyword">Audit</span> Trail - Immutable]
+        HUMAN[Human Review Orchestrator]
+        <span class="hljs-keyword">EXPLAIN</span>[Explainability <span class="hljs-keyword">Engine</span>]
+        OTEL[OpenTelemetry Collector]
+        <span class="hljs-keyword">COST</span>[<span class="hljs-keyword">Cost</span> Governance <span class="hljs-keyword">Engine</span>]
+    <span class="hljs-keyword">end</span>
+
+    <span class="hljs-keyword">INPUT</span> <span class="hljs-comment">--&gt; L1</span>
+    L1 <span class="hljs-comment">--&gt; L2</span>
+    L2 <span class="hljs-comment">--&gt; L3</span>
+    L3 <span class="hljs-comment">--&gt; L4</span>
+    L4 <span class="hljs-comment">--&gt; L5</span>
+    L5 <span class="hljs-comment">--&gt; L6</span>
+    L6 <span class="hljs-comment">--&gt; L7</span>
+    L7 <span class="hljs-comment">--&gt; L8</span>
+    L8 <span class="hljs-comment">--&gt;|Feedback| L2</span>
+    HUMAN <span class="hljs-comment">--&gt;|Approve/Reject| L4</span>
+    HUMAN <span class="hljs-comment">--&gt;|Override| L5</span>
+
+    <span class="hljs-keyword">style</span> L2 fill:#<span class="hljs-number">1</span>a237e,color:#fff
+    <span class="hljs-keyword">style</span> L4 fill:#<span class="hljs-number">1</span>b5e20,color:#fff
+    <span class="hljs-keyword">style</span> L5 fill:#b71c1c,color:#fff
+    <span class="hljs-keyword">style</span> L8 fill:#<span class="hljs-number">4</span>a148c,color:#fff
+</code></pre>
+<h2 id="diagram-2-reverse-engineering-flow">Diagram 2: Reverse Engineering Flow</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    START<span class="hljs-function"><span class="hljs-params">([Legacy .NET Solution])</span> --&gt;</span> INGEST[Solution Ingestion &amp; Parsing]
+
+    INGEST<span class="hljs-function"> --&gt;</span> ROSLYN[Roslyn Compiler API<span class="hljs-string">\nSyntax</span> + Semantic Model]
+    INGEST<span class="hljs-function"> --&gt;</span> SQL_P[SQL Parser<span class="hljs-string">\nT-SQL</span> Stored Procedures]
+    INGEST<span class="hljs-function"> --&gt;</span> SSIS_P[SSIS/SSRS Parser<span class="hljs-string">\nETL</span> &amp; Report Logic]
+    INGEST<span class="hljs-function"> --&gt;</span> CONFIG[Config Parser<span class="hljs-string">\nApp.config,</span> Web.config]
+
+    ROSLYN<span class="hljs-function"> --&gt;</span> AST[Abstract Syntax Trees<span class="hljs-string">\nAll</span> C<span class="hljs-comment"># / VB.NET files]</span>
+    AST<span class="hljs-function"> --&gt;</span> CFG[Control Flow Graphs<span class="hljs-string">\nPer</span> method/<span class="hljs-keyword">function</span>]
+    AST<span class="hljs-function"> --&gt;</span> SYMTAB[Symbol Table<span class="hljs-string">\nTypes,</span> Methods, Fields]
+
+    CFG<span class="hljs-function"> --&gt;</span> DFG[Data Flow Graphs<span class="hljs-string">\nDef-Use</span> Chains]
+    DFG<span class="hljs-function"> --&gt;</span> PDG[Program Dependence Graphs<span class="hljs-string">\nControl</span> + Data Dependencies]
+
+    AST<span class="hljs-function"> --&gt;</span> CPG_BUILD[CPG Construction<span class="hljs-string">\nAST</span> + CFG + DFG + PDG Fusion]
+    PDG<span class="hljs-function"> --&gt;</span> CPG_BUILD
+    DFG<span class="hljs-function"> --&gt;</span> CPG_BUILD
+
+    CPG_BUILD<span class="hljs-function"> --&gt;</span> CALL_G[Call Graph Extraction<span class="hljs-string">\nInter-procedural]</span>
+    CPG_BUILD<span class="hljs-function"> --&gt;</span> DEP_G[Dependency Graph<span class="hljs-string">\nAssembly</span> + Namespace]
+
+    SQL_P<span class="hljs-function"> --&gt;</span> SQL_AST[SQL AST + Flow Analysis]
+    SQL_AST<span class="hljs-function"> --&gt;</span> SQL_BL[Business Logic Recovery<span class="hljs-string">\nFrom</span> Stored Procedures]
+    SQL_AST<span class="hljs-function"> --&gt;</span> SQL_DEPS[SQL Dependency Graph<span class="hljs-string">\nProc</span> → Table → Column]
+
+    SYMTAB<span class="hljs-function"> --&gt;</span> TYPE_H[Type Hierarchy<span class="hljs-string">\nInheritance</span> + Interfaces]
+    CALL_G<span class="hljs-function"> --&gt;</span> ARCH_REC[Architecture Recovery<span class="hljs-string">\nLayers</span> + Patterns Detection]
+
+    ARCH_REC<span class="hljs-function"> --&gt;</span> DYNA[Dynamic Analysis<span class="hljs-string">\nInstrumented</span> Execution]
+    DYNA<span class="hljs-function"> --&gt;</span> TRACES[Execution Traces<span class="hljs-string">\nProduction</span> Traffic Replay]
+    TRACES<span class="hljs-function"> --&gt;</span> ORACLE[Behavioral Oracle<span class="hljs-string">\nGolden</span> I/O Dataset]
+    TRACES<span class="hljs-function"> --&gt;</span> INVAR[Invariant Mining<span class="hljs-string">\nDaikon-style</span> Detection]
+
+    CPG_BUILD<span class="hljs-function"> --&gt;</span> USKG_POP[USKG Population]
+    SQL_BL<span class="hljs-function"> --&gt;</span> USKG_POP
+    CALL_G<span class="hljs-function"> --&gt;</span> USKG_POP
+    ARCH_REC<span class="hljs-function"> --&gt;</span> USKG_POP
+    ORACLE<span class="hljs-function"> --&gt;</span> USKG_POP
+    INVAR<span class="hljs-function"> --&gt;</span> USKG_POP
+    TYPE_H<span class="hljs-function"> --&gt;</span> USKG_POP
+
+    USKG_POP<span class="hljs-function"> --&gt;</span> USKG[(Unified Semantic<span class="hljs-string">\nKnowledge</span> Graph)]
+
+    style USKG fill:<span class="hljs-comment">#1a237e,color:#fff</span>
+    style CPG_BUILD fill:<span class="hljs-comment">#e65100,color:#fff</span>
+    style ORACLE fill:<span class="hljs-comment">#880e4f,color:#fff</span>
+</code></pre>
+<h2 id="diagram-3-forward-engineering-flow">Diagram 3: Forward Engineering Flow</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    USKG[(USKG - Ground Truth)] <span class="hljs-comment">--&gt; MOA</span>
+
+    MOA[Master Orchestrator Agent\nPlanning + DAG Decomposition] <span class="hljs-comment">--&gt; DDD_PHASE</span>
+
+    subgraph DDD_PHASE["Phase 1: Domain Decomposition"]
+        DDD[DDD Analyst Agent\nUbiquitous Language Recovery]
+        CLUSTER[Graph Clustering\nCommunity Detection]
+        BOUND[Bounded Context Extractor]
+        EVENT[Event Storming Agent\nDomain Event Discovery]
+        DDD <span class="hljs-comment">--&gt; BOUND</span>
+        CLUSTER <span class="hljs-comment">--&gt; BOUND</span>
+        BOUND <span class="hljs-comment">--&gt; EVENT</span>
+    <span class="hljs-keyword">end</span>
+
+    DDD_PHASE <span class="hljs-comment">--&gt; ARCH_GEN</span>
+
+    subgraph ARCH_GEN[<span class="hljs-string">"Phase 2: Architecture Generation"</span>]
+        TARGET[Target Architecture Designer\nClean + Hexagonal]
+        API_FIRST[API Design <span class="hljs-keyword">Agent</span>\nOpenAPI <span class="hljs-number">3.1</span> + AsyncAPI]
+        DB_ARCH[<span class="hljs-keyword">Database</span> <span class="hljs-keyword">Migration</span> <span class="hljs-keyword">Agent</span>\nSchema Modernization]
+        TARGET <span class="hljs-comment">--&gt; API_FIRST</span>
+        API_FIRST <span class="hljs-comment">--&gt; DB_ARCH</span>
+    <span class="hljs-keyword">end</span>
+
+    ARCH_GEN <span class="hljs-comment">--&gt; CODE_GEN</span>
+
+    subgraph CODE_GEN[<span class="hljs-string">"Phase 3: Code Generation"</span>]
+        SYNTH_A[Synthesis <span class="hljs-keyword">Agent</span> A\nGeneral LLM - Claude/GPT]
+        SYNTH_B[Synthesis <span class="hljs-keyword">Agent</span> B\nCode LLM - DeepSeek/Qwen]
+        SYNTH_C[Synthesis <span class="hljs-keyword">Agent</span> C\nDomain Fine-tuned]
+        ENSEMBLE[Ensemble Consensus\nSelf-Consistency Voting]
+        SYNTH_A <span class="hljs-comment">--&gt; ENSEMBLE</span>
+        SYNTH_B <span class="hljs-comment">--&gt; ENSEMBLE</span>
+        SYNTH_C <span class="hljs-comment">--&gt; ENSEMBLE</span>
+    <span class="hljs-keyword">end</span>
+
+    CODE_GEN <span class="hljs-comment">--&gt; REVIEW_PHASE</span>
+
+    subgraph REVIEW_PHASE[<span class="hljs-string">"Phase 4: Adversarial Review"</span>]
+        ADV[Adversarial Reviewer\nIndependent Critique]
+        SEC_R[<span class="hljs-keyword">Security</span> Reviewer <span class="hljs-keyword">Agent</span>]
+        PERF_R[<span class="hljs-keyword">Performance</span> Reviewer <span class="hljs-keyword">Agent</span>]
+        COMP_R[Compliance Reviewer <span class="hljs-keyword">Agent</span>]
+        DEBATE{Debate Protocol\nConsensus?}
+        ADV <span class="hljs-comment">--&gt; DEBATE</span>
+        SEC_R <span class="hljs-comment">--&gt; DEBATE</span>
+        PERF_R <span class="hljs-comment">--&gt; DEBATE</span>
+        COMP_R <span class="hljs-comment">--&gt; DEBATE</span>
+    <span class="hljs-keyword">end</span>
+
+    DEBATE <span class="hljs-comment">--&gt;|Consensus| TEST_GEN</span>
+    DEBATE <span class="hljs-comment">--&gt;|Conflict| HUMAN[Human Architect Review]</span>
+    HUMAN <span class="hljs-comment">--&gt; TEST_GEN</span>
+
+    subgraph TEST_GEN[<span class="hljs-string">"Phase 5: Test Generation"</span>]
+        UNIT[Unit <span class="hljs-keyword">Test</span> Generator]
+        INTEG[Integration <span class="hljs-keyword">Test</span> Generator]
+        CONTRACT[Contract <span class="hljs-keyword">Test</span> Generator\nPact]
+        PROP_T[Property-Based Tests\nInvariant-driven]
+        UNIT <span class="hljs-comment">--&gt; ARTIFACT</span>
+        INTEG <span class="hljs-comment">--&gt; ARTIFACT</span>
+        CONTRACT <span class="hljs-comment">--&gt; ARTIFACT</span>
+        PROP_T <span class="hljs-comment">--&gt; ARTIFACT</span>
+    <span class="hljs-keyword">end</span>
+
+    TEST_GEN <span class="hljs-comment">--&gt; ARTIFACT[Generated Artifacts\nCode + Tests + Docs + Specs]</span>
+
+    <span class="hljs-keyword">style</span> USKG fill:#<span class="hljs-number">1</span>a237e,color:#fff
+    <span class="hljs-keyword">style</span> MOA fill:#<span class="hljs-number">004</span>d40,color:#fff
+    <span class="hljs-keyword">style</span> ENSEMBLE fill:#e65100,color:#fff
+    <span class="hljs-keyword">style</span> DEBATE fill:#b71c1c,color:#fff
+    <span class="hljs-keyword">style</span> HUMAN fill:#<span class="hljs-number">4</span>a148c,color:#fff
+</code></pre>
+<h2 id="diagram-4-unified-semantic-knowledge-graph-structure">Diagram 4: Unified Semantic Knowledge Graph Structure</h2>
+<pre><code class="lang-mermaid">graph LR
+    subgraph PROGRAM[<span class="hljs-string">"PROGRAM LAYER"</span>]
+        CU[CompilationUnit]
+        CLS[<span class="hljs-keyword">Class</span>/<span class="hljs-keyword">Type</span>]
+        MTH[Method/<span class="hljs-keyword">Function</span>]
+        FIELD[<span class="hljs-keyword">Field</span>/Property]
+        STMT[Statement]
+        VAR[<span class="hljs-keyword">Variable</span> - SSA Form]
+    <span class="hljs-keyword">end</span>
+
+    subgraph FLOW[<span class="hljs-string">"FLOW LAYER"</span>]
+        CFG_N[ControlFlowEdge]
+        DFG_N[DataFlowEdge]
+        CALL[CallEdge]
+        DEP[DependenceEdge]
+    <span class="hljs-keyword">end</span>
+
+    subgraph BEHAV[<span class="hljs-string">"BEHAVIORAL LAYER"</span>]
+        TRACE_N[ExecutionTrace]
+        INVAR_N[ObservedInvariant]
+        CONTRACT[IOContract]
+        HOT[HotPath]
+    <span class="hljs-keyword">end</span>
+
+    subgraph DOMAIN[<span class="hljs-string">"DOMAIN LAYER"</span>]
+        BC[BoundedContext]
+        ENTITY[DomainEntity]
+        RULE[BusinessRule]
+        EVENT_N[DomainEvent]
+        AGG[AggregateRoot]
+    <span class="hljs-keyword">end</span>
+
+    subgraph ARCH[<span class="hljs-string">"ARCHITECTURE LAYER"</span>]
+        MOD[<span class="hljs-keyword">Module</span>]
+        SVC[ServiceCandidate]
+        ANTI[AntiPattern]
+        API_N[APIContract]
+    <span class="hljs-keyword">end</span>
+
+    subgraph SQL_LAYER[<span class="hljs-string">"SQL LAYER"</span>]
+        PROC[StoredProcedure]
+        TBL[<span class="hljs-keyword">Table</span>]
+        COL[Column]
+        SCHEMA_N[Schema]
+    <span class="hljs-keyword">end</span>
+
+    subgraph PROV[<span class="hljs-string">"PROVENANCE LAYER"</span>]
+        TRANSFORM[TransformationRecord]
+        VERIF[VerificationRecord]
+        HUMAN_D[HumanDecision]
+        CONF_S[ConfidenceScore]
+    <span class="hljs-keyword">end</span>
+
+    CU --&gt; CLS --&gt; MTH --&gt; STMT
+    MTH --&gt; VAR
+    MTH --&gt;|<span class="hljs-type">calls</span>| <span class="hljs-type">CALL</span> --&gt; MTH
+    STMT --&gt;|<span class="hljs-type">dataflow</span>| <span class="hljs-type">DFG_N</span>
+    STMT --&gt;|<span class="hljs-type">controlflow</span>| <span class="hljs-type">CFG_N</span>
+
+    MTH --&gt; CONTRACT
+    CONTRACT --&gt; INVAR_N
+    CONTRACT --&gt; TRACE_N
+
+    CLS --&gt; ENTITY
+    ENTITY --&gt; BC
+    ENTITY --&gt; AGG
+    MTH --&gt; RULE
+    RULE --&gt; EVENT_N
+
+    MTH --&gt; SVC
+    CLS --&gt; MOD
+    MOD --&gt; BC
+
+    PROC --&gt; TBL
+    PROC --&gt; RULE
+    PROC --&gt; MTH
+
+    TRANSFORM --&gt; CONF_S
+    TRANSFORM --&gt; VERIF
+    MTH --&gt; TRANSFORM
+
+    style DOMAIN fill:#<span class="hljs-number">1</span>a237e,color:#fff
+    style BEHAV fill:#<span class="hljs-number">880e4</span>f,color:#fff
+    style PROV fill:#<span class="hljs-number">4</span>a148c,color:#fff
+</code></pre>
+<h2 id="diagram-5-graphrag-pipeline">Diagram 5: GraphRAG Pipeline</h2>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant AGENT as Transformation Agent
+    participant MCP as MCP Server
+    participant GRAPHRAG as GraphRAG Engine
+    participant USKG as USKG (Neo4j)
+    participant VEC as Vector DB (Qdrant)
+    participant LLM as LLM Router
+
+    AGENT-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MCP:</span> Tool <span class="hljs-symbol">Call:</span> query_semantic_context(task)
+    MCP-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Route query
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Tier <span class="hljs-number">1</span>: Entity extraction from query
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">USKG:</span> <span class="hljs-symbol">Cypher:</span> MATCH nodes by entity
+    USKG--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Anchor nodes found
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">USKG:</span> Traverse k-hop subgraph
+    USKG--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Structural subgraph
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">VEC:</span> Semantic similarity search
+    VEC--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Similar code embeddings
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">USKG:</span> Community detection on subgraph
+    USKG--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Bounded context cluster
+
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Program slice computation
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> Context compression (<span class="hljs-number">67</span>-<span class="hljs-number">90</span>% reduction)
+    GRAPHRAG-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">GRAPHRAG:</span> <span class="hljs-symbol">Serialize:</span> Graph JSON + Cypher context
+
+    GRAPHRAG--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MCP:</span> Structured context package
+    MCP--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">AGENT:</span> Enriched context (graph + semantics + specs)
+
+    AGENT-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">LLM:</span> Generate with structured context
+    LLM--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">AGENT:</span> Generated transformation
+
+    AGENT-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MCP:</span> Tool <span class="hljs-symbol">Call:</span> validate_against_uskg(output)
+    MCP-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">USKG:</span> Validate structural consistency
+    USKG--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MCP:</span> Validation result + confidence
+    MCP--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">AGENT:</span> Validation report
+</code></pre>
+<h2 id="diagram-6-mcp-communication-architecture">Diagram 6: MCP Communication Architecture</h2>
+<pre><code class="lang-mermaid">graph TB
+    subgraph AGENTS["AI AGENTS"]
+        MOA[Master Orchestrator]
+        SYNTH[Synthesis Agents]
+        ADV[Adversarial Agents]
+        VERIF[Verification Agents]
+    <span class="hljs-keyword">end</span>
+
+    subgraph MCP_LAYER[<span class="hljs-string">"MCP SERVER LAYER"</span>]
+        MCP_CPG[MCP: CPG Tools <span class="hljs-keyword">Server</span>\nJoern Integration]
+        MCP_USKG[MCP: USKG <span class="hljs-keyword">Query</span> <span class="hljs-keyword">Server</span>\nGraph Traversal]
+        MCP_STATIC[MCP: <span class="hljs-keyword">Static</span> Analysis <span class="hljs-keyword">Server</span>\nRoslyn + Semgrep]
+        MCP_TEST[MCP: <span class="hljs-keyword">Test</span> Execution <span class="hljs-keyword">Server</span>\nOracle + Differential]
+        MCP_BUILD[MCP: <span class="hljs-keyword">Build</span> <span class="hljs-keyword">Validation</span> <span class="hljs-keyword">Server</span>\n.NET Compiler]
+        MCP_SEC[MCP: <span class="hljs-keyword">Security</span> Scanner <span class="hljs-keyword">Server</span>\nSAST + SCA]
+        MCP_FORMAL[MCP: Formal Verification <span class="hljs-keyword">Server</span>\nZ3 + Rosette]
+        MCP_DOC[MCP: Documentation <span class="hljs-keyword">Server</span>\nSpec Generation]
+    <span class="hljs-keyword">end</span>
+
+    subgraph TOOLS[<span class="hljs-string">"UNDERLYING TOOLS"</span>]
+        JOERN[Joern CPG <span class="hljs-keyword">Engine</span>]
+        NEO4J[Neo4j Graph DB]
+        ROSLYN[Roslyn Compiler]
+        SEMGREP[Semgrep SAST]
+        <span class="hljs-keyword">DOTNET</span>[.NET <span class="hljs-keyword">Build</span> Tools]
+        Z3[Z3 SMT Solver]
+        QDRANT[Qdrant Vector DB]
+    <span class="hljs-keyword">end</span>
+
+    MOA &lt;<span class="hljs-comment">--&gt;|A2A Protocol| SYNTH</span>
+    MOA &lt;<span class="hljs-comment">--&gt;|A2A Protocol| ADV</span>
+    MOA &lt;<span class="hljs-comment">--&gt;|A2A Protocol| VERIF</span>
+    SYNTH &lt;<span class="hljs-comment">--&gt;|A2A Protocol| ADV</span>
+
+    AGENTS &lt;<span class="hljs-comment">--&gt;|MCP JSON-RPC| MCP_LAYER</span>
+
+    MCP_CPG <span class="hljs-comment">--&gt; JOERN</span>
+    MCP_USKG <span class="hljs-comment">--&gt; NEO4J</span>
+    MCP_STATIC <span class="hljs-comment">--&gt; ROSLYN</span>
+    MCP_STATIC <span class="hljs-comment">--&gt; SEMGREP</span>
+    MCP_BUILD <span class="hljs-comment">--&gt; DOTNET</span>
+    MCP_FORMAL <span class="hljs-comment">--&gt; Z3</span>
+    MCP_USKG <span class="hljs-comment">--&gt; QDRANT</span>
+
+    <span class="hljs-keyword">style</span> MCP_LAYER fill:#e65100,color:#fff
+    <span class="hljs-keyword">style</span> AGENTS fill:#<span class="hljs-number">1</span>b5e20,color:#fff
+</code></pre>
+<h2 id="diagram-7-a2a-multi-agent-communication">Diagram 7: A2A Multi-Agent Communication</h2>
+<pre><code class="lang-mermaid">sequenceDiagram
+    participant MOA as Master Orchestrator
+    participant PLAN as Planning Agent
+    participant DDD as DDD Agent
+    participant SYNTH as Synthesis Agent
+    participant ADV as Adversarial Agent
+    participant VERIF as Verification Agent
+    participant HUMAN as Human Architect
+
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">PLAN:</span> <span class="hljs-symbol">Initiate:</span> Decompose bounded context X
+    PLAN-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">PLAN:</span> Tree of Thoughts decomposition
+    PLAN--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> Transformation DAG
+
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">DDD:</span> Extract domain model for context X
+    DDD-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">DDD:</span> Analyze USKG domain layer
+    DDD--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> DomainModel + BoundedContext + Events
+
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">SYNTH:</span> <span class="hljs-symbol">Generate:</span> Transform <span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">Y</span></span>
+    SYNTH-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">SYNTH:</span> Query GraphRAG context
+    SYNTH-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">SYNTH:</span> Self-Consistency x5 generations
+    SYNTH--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> CandidateTransformation[confidence=<span class="hljs-number">0</span>.<span class="hljs-number">87</span>]
+
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">ADV:</span> <span class="hljs-symbol">Review:</span> CandidateTransformation
+    ADV-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">ADV:</span> Independent generation
+    ADV-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">ADV:</span> Chain-of-Verification
+    ADV--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> Critique[divergences=<span class="hljs-number">2</span>, severity=MEDIUM]
+
+    alt Confidence &gt;= <span class="hljs-number">0</span>.<span class="hljs-number">90</span> AND No Critical Divergences
+        MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">VERIF:</span> Verify transformation
+        VERIF-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">VERIF:</span> Behavioral Oracle Test
+        VERIF-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">VERIF:</span> Differential Testing
+        VERIF--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> VerificationResult[PASS]
+    <span class="hljs-keyword">else</span> Confidence &lt; <span class="hljs-number">0</span>.<span class="hljs-number">90</span> OR Critical Divergences
+        MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">HUMAN:</span> <span class="hljs-symbol">Escalate:</span> Requires review
+        HUMAN--<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> Decision + Justification
+        MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">SYNTH:</span> Revise with human guidance
+    <span class="hljs-keyword">end</span>
+
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> Update USKG Provenance Layer
+    MOA-<span class="hljs-meta">&gt;&gt;</span><span class="hljs-symbol">MOA:</span> Mark transformation complete
+</code></pre>
+<h2 id="diagram-8-multi-agent-architecture-hierarchy">Diagram 8: Multi-Agent Architecture Hierarchy</h2>
+<pre><code class="lang-mermaid">graph TD
+    MOA[🎯 Master Orchestrator Agent<span class="hljs-string">\nPlanning</span> • Scheduling • Coordination]
+
+    MOA<span class="hljs-function"> --&gt;</span> DOMAIN_COORD[Domain Decomposition Coordinator]
+    MOA<span class="hljs-function"> --&gt;</span> TRANSFORM_COORD[Transformation Coordinator]
+    MOA<span class="hljs-function"> --&gt;</span> REVIEW_COORD[Review &amp; Verification Coordinator]
+    MOA<span class="hljs-function"> --&gt;</span> DELIVERY_COORD[Delivery Coordinator]
+
+    DOMAIN_COORD<span class="hljs-function"> --&gt;</span> DDD_AG[DDD Analyst Agent<span class="hljs-string">\nUbiquitous</span> Language]
+    DOMAIN_COORD<span class="hljs-function"> --&gt;</span> EVENT_AG[Event Storming Agent<span class="hljs-string">\nDomain</span> Event Discovery]
+    DOMAIN_COORD<span class="hljs-function"> --&gt;</span> BOUND_AG[Bounded Context Extractor<span class="hljs-string">\nGraph</span> Clustering + DDD]
+    DOMAIN_COORD<span class="hljs-function"> --&gt;</span> SVC_AG[Service Boundary Validator<span class="hljs-string">\nData</span> Autonomy Checker]
+    DOMAIN_COORD<span class="hljs-function"> --&gt;</span> REQ_AG[Requirement Recovery Agent<span class="hljs-string">\nBRD</span> + SRS + FRD]
+
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> ARCH_AG[Architecture Generator Agent<span class="hljs-string">\nClean</span> + Hexagonal Design]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> API_AG[API Design Agent<span class="hljs-string">\nOpenAPI</span> + AsyncAPI]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> CODE_AG_A[Synthesis Agent A<span class="hljs-string">\nGeneral</span> Reasoning LLM]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> CODE_AG_B[Synthesis Agent B<span class="hljs-string">\nCode-Specialized</span> LLM]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> DB_AG[Database Migration Agent<span class="hljs-string">\nSchema</span> + Proc Migration]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> TEST_AG[Test Generation Agent<span class="hljs-string">\nOracle</span> + Property Tests]
+    TRANSFORM_COORD<span class="hljs-function"> --&gt;</span> DOC_AG[Documentation Agent<span class="hljs-string">\nADR</span> + API Docs + Guides]
+
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> ADV_AG[Adversarial Reviewer Agent<span class="hljs-string">\nIndependent</span> Critique]
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> SEC_AG[Security Reviewer Agent<span class="hljs-string">\nSAST</span> + DAST + SCA]
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> PERF_AG[Performance Reviewer Agent<span class="hljs-string">\nComplexity</span> + Bottlenecks]
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> COMP_AG[Compliance Reviewer Agent<span class="hljs-string">\nPCI</span> + SOX + GDPR]
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> VERIF_AG[Verification Agent<span class="hljs-string">\nEquivalence</span> Checking]
+    REVIEW_COORD<span class="hljs-function"> --&gt;</span> CONF_AG[Confidence Scoring Engine<span class="hljs-string">\nEvidence</span> Aggregation]
+
+    DELIVERY_COORD<span class="hljs-function"> --&gt;</span> IaC_AG[IaC Generator Agent<span class="hljs-string">\nTerraform</span> + Helm]
+    DELIVERY_COORD<span class="hljs-function"> --&gt;</span> CICD_AG[CI<span class="hljs-regexp">/CD Pipeline Agent\nGitHub Actions /</span> Azure DevOps]
+    DELIVERY_COORD<span class="hljs-function"> --&gt;</span> SHADOW_AG[Shadow Mode Manager<span class="hljs-string">\nCanary</span> Orchestration]
+
+    style MOA fill:<span class="hljs-comment">#1a237e,color:#fff</span>
+    style REVIEW_COORD fill:<span class="hljs-comment">#b71c1c,color:#fff</span>
+    style TRANSFORM_COORD fill:<span class="hljs-comment">#1b5e20,color:#fff</span>
+    style DOMAIN_COORD fill:<span class="hljs-comment">#e65100,color:#fff</span>
+</code></pre>
+<h2 id="diagram-9-business-logic-extraction-pipeline">Diagram 9: Business Logic Extraction Pipeline</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    SRC[Source: C<span class="hljs-comment"># / VB.NET / SQL] --&gt; PARSE[Multi-Language Parser]</span>
+
+    PARSE<span class="hljs-function"> --&gt;</span> CPG_EXT[CPG Extraction<span class="hljs-string">\nAST</span> + CFG + DFG + PDG]
+    PARSE<span class="hljs-function"> --&gt;</span> SQL_EXT[SQL Analyzer<span class="hljs-string">\nStored</span> Procedure Decomposition]
+
+    CPG_EXT<span class="hljs-function"> --&gt;</span> SLICE[Program Slicer<span class="hljs-string">\nBackward</span> + Forward Slicing]
+    SQL_EXT<span class="hljs-function"> --&gt;</span> SQL_SLICE[SQL Dependency Slicer]
+
+    SLICE<span class="hljs-function"> --&gt;</span> TAINT[Taint Analysis<span class="hljs-string">\nData</span> Source Tracking]
+    SLICE<span class="hljs-function"> --&gt;</span> CONDEX[Conditional Logic Extractor<span class="hljs-string">\nIF/SWITCH/CASE</span> Patterns]
+
+    TAINT<span class="hljs-function"> --&gt;</span> BL_CAND[Business Logic Candidates]
+    CONDEX<span class="hljs-function"> --&gt;</span> BL_CAND
+    SQL_SLICE<span class="hljs-function"> --&gt;</span> BL_CAND
+
+    BL_CAND<span class="hljs-function"> --&gt;</span> SPEC_MINE[Specification Mining Agent<span class="hljs-string">\nDaikon</span> + LLM Hybrid]
+    SPEC_MINE<span class="hljs-function"> --&gt;</span> INVAR[Invariant Extraction<span class="hljs-string">\nPre/Post</span> Conditions]
+    SPEC_MINE<span class="hljs-function"> --&gt;</span> CONTRACT[Contract Mining<span class="hljs-string">\nI/O</span> Contracts per Function]
+
+    INVAR<span class="hljs-function"> --&gt;</span> CONF_SCORE[Confidence Scoring<span class="hljs-string">\nTrace</span> Count × Pattern Strength]
+    CONTRACT<span class="hljs-function"> --&gt;</span> CONF_SCORE
+
+    CONF_SCORE<span class="hljs-function"> --&gt;</span> RULE_GRAPH[Business Rule Graph<span class="hljs-string">\nIn</span> USKG Domain Layer]
+    RULE_GRAPH<span class="hljs-function"> --&gt;</span> REG_MAP[Regulatory Mapping<span class="hljs-string">\nPCI/SOX/GDPR</span> Overlay]
+
+    REG_MAP<span class="hljs-function"> --&gt;</span> RULE_CATALOG[Business Rule Catalog<span class="hljs-string">\nWith</span> Evidence + Confidence]
+
+    RULE_CATALOG<span class="hljs-function"> --&gt;</span> LLM_ENRICH[LLM Enrichment<span class="hljs-string">\nNatural</span> Language Articulation]
+    LLM_ENRICH<span class="hljs-function"> --&gt;</span> VALIDATED[Human-Validated<span class="hljs-string">\nBusiness</span> Rules]
+
+    VALIDATED<span class="hljs-function"> --&gt;</span> BRD_GEN[BRD Generation]
+    VALIDATED<span class="hljs-function"> --&gt;</span> FRD_GEN[FRD Generation]
+    VALIDATED<span class="hljs-function"> --&gt;</span> TEST_ORACLE[Test Oracle Construction]
+
+    style BL_CAND fill:<span class="hljs-comment">#e65100,color:#fff</span>
+    style RULE_CATALOG fill:<span class="hljs-comment">#1a237e,color:#fff</span>
+    style VALIDATED fill:<span class="hljs-comment">#1b5e20,color:#fff</span>
+</code></pre>
+<h2 id="diagram-10-verification-pipeline">Diagram 10: Verification Pipeline</h2>
+<pre><code class="lang-mermaid">flowchart TD
+    GEN[Generated .NET Code] --&gt; STAGE1
+
+    subgraph STAGE1[<span class="hljs-string">"Stage 1: Compilation Validation\n(Automated - Fast)"</span>]
+        BUILD[.NET Build Validation\nRoslyn Compiler]
+        BUILD --&gt;|<span class="hljs-type">FAIL</span>| <span class="hljs-type">REGEN</span>[Return to Synthesis\nWith Error <span class="hljs-keyword">Context</span>]
+        BUILD --&gt;|<span class="hljs-type">PASS</span>| <span class="hljs-type">STAGE2</span>
+    <span class="hljs-keyword">end</span>
+
+    subgraph STAGE2[<span class="hljs-string">"Stage 2: Behavioral Oracle Testing\n(Automated - Minutes)"</span>]
+        ORACLE_T[Golden Dataset Execution\nLegacy vs Generated]
+        ORACLE_T --&gt;|<span class="hljs-type">&lt;95</span>% Match| <span class="hljs-type">ANALYZE</span>[Divergence Analysis\nAgent-Assisted]
+        ORACLE_T --&gt;|<span class="hljs-type">≥95</span>% Match| <span class="hljs-type">STAGE3</span>
+        ANALYZE --&gt; REGEN2[Targeted Revision]
+    <span class="hljs-keyword">end</span>
+
+    subgraph STAGE3[<span class="hljs-string">"Stage 3: Property-Based Testing\n(Automated - Hours)"</span>]
+        PROP_T[Invariant-Guided Fuzzing\nQuickCheck Style]
+        MUT_T[Mutation Testing\nMutation Score ≥<span class="hljs-number">85</span>%]
+        DIFF_T[Differential Testing\nParallel Execution]
+        PROP_T --&gt; SCORE
+        MUT_T --&gt; SCORE
+        DIFF_T --&gt; SCORE
+        SCORE{<span class="hljs-keyword">All</span> Pass?}
+        SCORE --&gt;|<span class="hljs-type">NO</span>| <span class="hljs-type">REGEN3</span>[Agent Revision Loop]
+        SCORE --&gt;|<span class="hljs-type">YES</span>| <span class="hljs-type">STAGE4</span>
+    <span class="hljs-keyword">end</span>
+
+    subgraph STAGE4[<span class="hljs-string">"Stage 4: Semantic Equivalence Check\n(Selective - Hours)"</span>]
+        FINGER[Behavioral Fingerprint\nFast Approximate Match]
+        FINGER --&gt;|<span class="hljs-type">Mismatch</span>| <span class="hljs-type">SMT_CHECK</span>[SMT Equivalence\nZ3 Solver - Critical <span class="hljs-keyword">Paths</span>]
+        FINGER --&gt;|<span class="hljs-type">Match</span>| <span class="hljs-type">STAGE5</span>
+        SMT_CHECK --&gt;|<span class="hljs-type">SAT</span> - Counterexample| <span class="hljs-type">HUMAN_REVIEW</span>
+        SMT_CHECK --&gt;|<span class="hljs-type">UNSAT</span> - Proven| <span class="hljs-type">STAGE5</span>
+    <span class="hljs-keyword">end</span>
+
+    subgraph STAGE5[<span class="hljs-string">"Stage 5: Security &amp; Compliance\n(Automated)"</span>]
+        SAST_V[SAST Validation\nSemgrep Rules]
+        SCA_V[SCA Dependency <span class="hljs-keyword">Check</span>]
+        COMP_V[Compliance Policy\nOPA Evaluation]
+        SAST_V --&gt; FINAL
+        SCA_V --&gt; FINAL
+        COMP_V --&gt; FINAL
+        FINAL{<span class="hljs-keyword">All</span> Clear?}
+        FINAL --&gt;|<span class="hljs-type">Issues</span>| <span class="hljs-type">SEC_HUMAN</span>[Security Review]
+        FINAL --&gt;|<span class="hljs-type">Clear</span>| <span class="hljs-type">APPROVED</span>
+    <span class="hljs-keyword">end</span>
+
+    HUMAN_REVIEW[👤 Human Architect Review\nWith Full Evidence Package]
+    HUMAN_REVIEW --&gt; APPROVED
+
+    APPROVED[✅ Approved <span class="hljs-keyword">for</span> Deployment\nWith Confidence Score + Evidence]
+
+    style STAGE1 fill:#e8f5e9
+    style STAGE2 fill:#e3f2fd
+    style STAGE3 fill:#fff3e0
+    style STAGE4 fill:#fce4ec
+    style STAGE5 fill:#f3e5f5
+    style APPROVED fill:#<span class="hljs-number">1</span>b5e20,color:#fff
+    style HUMAN_REVIEW fill:#<span class="hljs-number">4</span>a148c,color:#fff
+</code></pre>
+<h2 id="diagram-11-c4-context-diagram">Diagram 11: C4 Context Diagram</h2>
+<pre><code class="lang-mermaid"><span class="hljs-selector-tag">C4Context</span>
+    <span class="hljs-selector-tag">title</span> <span class="hljs-selector-tag">NEXUS</span> <span class="hljs-selector-tag">AI</span> <span class="hljs-selector-tag">Modernization</span> <span class="hljs-selector-tag">Factory</span> — <span class="hljs-selector-tag">C4</span> <span class="hljs-selector-tag">Context</span>
+
+    <span class="hljs-selector-tag">Person</span>(arch, <span class="hljs-string">"Enterprise Architect"</span>, <span class="hljs-string">"Oversees modernization strategy, approves critical decisions"</span>)
+    <span class="hljs-selector-tag">Person</span>(dev, <span class="hljs-string">"Development Team"</span>, <span class="hljs-string">"Reviews generated code, integrates modernized services"</span>)
+    <span class="hljs-selector-tag">Person</span>(ba, <span class="hljs-string">"Business Analyst"</span>, <span class="hljs-string">"Validates recovered requirements and business rules"</span>)
+    <span class="hljs-selector-tag">Person</span>(sec, <span class="hljs-string">"Security Officer"</span>, <span class="hljs-string">"Reviews security assessments and compliance reports"</span>)
+    <span class="hljs-selector-tag">Person</span>(audit, <span class="hljs-string">"Compliance/Audit"</span>, <span class="hljs-string">"Reviews audit trails and regulatory mappings"</span>)
+
+    <span class="hljs-selector-tag">System</span>(nexus, <span class="hljs-string">"NEXUS Modernization Factory"</span>, <span class="hljs-string">"AI-driven platform transforming legacy .NET systems into modern API-first architectures with formal verification"</span>)
+
+    <span class="hljs-selector-tag">System_Ext</span>(legacy, <span class="hljs-string">"Legacy .NET Systems"</span>, <span class="hljs-string">"Monolithic .NET Framework applications, WCF services, SQL stored procedures"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(target, <span class="hljs-string">"Target Cloud Platform"</span>, <span class="hljs-string">"Azure / AWS — AKS, API Management, Service Bus, Azure SQL"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(vcs, <span class="hljs-string">"Version Control"</span>, <span class="hljs-string">"Azure DevOps / GitHub Enterprise"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(llm_cloud, <span class="hljs-string">"Cloud LLM Services"</span>, <span class="hljs-string">"Azure OpenAI / Anthropic API"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(llm_local, <span class="hljs-string">"On-Premise LLM"</span>, <span class="hljs-string">"Local GPU cluster — sensitive data"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(monitoring, <span class="hljs-string">"Enterprise Monitoring"</span>, <span class="hljs-string">"Datadog / Azure Monitor / Splunk"</span>)
+    <span class="hljs-selector-tag">System_Ext</span>(iam, <span class="hljs-string">"Identity Provider"</span>, <span class="hljs-string">"Azure AD / Okta"</span>)
+
+    <span class="hljs-selector-tag">Rel</span>(legacy, nexus, <span class="hljs-string">"Source code, SQL scripts, configs"</span>, <span class="hljs-string">"Git clone / SFTP"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, target, <span class="hljs-string">"Deploys modernized services"</span>, <span class="hljs-string">"Terraform + Helm + CI/CD"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, vcs, <span class="hljs-string">"Commits generated code + artifacts"</span>, <span class="hljs-string">"Git"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, llm_cloud, <span class="hljs-string">"LLM inference — non-sensitive"</span>, <span class="hljs-string">"HTTPS / API"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, llm_local, <span class="hljs-string">"LLM inference — sensitive data"</span>, <span class="hljs-string">"Internal network"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, monitoring, <span class="hljs-string">"Telemetry + audit logs"</span>, <span class="hljs-string">"OpenTelemetry"</span>)
+    <span class="hljs-selector-tag">Rel</span>(nexus, iam, <span class="hljs-string">"Authentication + authorization"</span>, <span class="hljs-string">"OIDC / SAML"</span>)
+
+    <span class="hljs-selector-tag">Rel</span>(arch, nexus, <span class="hljs-string">"Reviews decisions, approves transformations"</span>)
+    <span class="hljs-selector-tag">Rel</span>(dev, nexus, <span class="hljs-string">"Reviews generated artifacts, provides feedback"</span>)
+    <span class="hljs-selector-tag">Rel</span>(ba, nexus, <span class="hljs-string">"Validates business rules, confirms requirements"</span>)
+    <span class="hljs-selector-tag">Rel</span>(sec, nexus, <span class="hljs-string">"Reviews security reports, approves security posture"</span>)
+    <span class="hljs-selector-tag">Rel</span>(audit, nexus, <span class="hljs-string">"Reviews audit trail, compliance evidence"</span>)
+</code></pre>
+<h2 id="diagram-12-ci-cd-pipeline-with-semantic-gates">Diagram 12: CI/CD Pipeline with Semantic Gates</h2>
+<pre><code class="lang-mermaid">flowchart LR
+    COMMIT[Code Commit\nby NEXUS Agent] --&gt; GATE1
+
+    subgraph GATE1[<span class="hljs-string">"Semantic Gate 1\nUSKG Impact Analysis"</span>]
+        IMPACT[<span class="hljs-keyword">Compute</span> Transformation\nImpact on USKG]
+        IMPACT --&gt;|<span class="hljs-type">Breaks</span> verified <span class="hljs-built_in">proof</span>| <span class="hljs-type">REVERIF</span>[Re-verification Required]
+        IMPACT --&gt;|<span class="hljs-type">Safe</span> <span class="hljs-built_in">change</span>| <span class="hljs-type">GATE2</span>
+    <span class="hljs-keyword">end</span>
+
+    subgraph GATE2[<span class="hljs-string">"Semantic Gate 2\nStatic Analysis"</span>]
+        SAST_G[SAST - Semgrep]
+        SECRET_G[Secret Detection]
+        QUAL_G[Code Quality Gate]
+        SAST_G --&gt; AND1
+        SECRET_G --&gt; AND1
+        QUAL_G --&gt; AND1
+        AND1{<span class="hljs-keyword">All</span> Pass?}
+        AND1 --&gt;|<span class="hljs-type">YES</span>| <span class="hljs-type">GATE3</span>
+        AND1 --&gt;|<span class="hljs-type">NO</span>| <span class="hljs-type">BLOCK1</span>[Block + Alert]
+    <span class="hljs-keyword">end</span>
+
+    subgraph GATE3[<span class="hljs-string">"Semantic Gate 3\nBehavioral Oracle"</span>]
+        ORACLE_G[Run Oracle <span class="hljs-keyword">Test</span> Suite\n100% Pass Required]
+        ORACLE_G --&gt;|<span class="hljs-type">PASS</span>| <span class="hljs-type">GATE4</span>
+        ORACLE_G --&gt;|<span class="hljs-type">FAIL</span>| <span class="hljs-type">BLOCK2</span>[Block + Diagnose]
+    <span class="hljs-keyword">end</span>
+
+    subgraph GATE4[<span class="hljs-string">"Semantic Gate 4\nMutation Validation"</span>]
+        MUT_G[Mutation Score ≥<span class="hljs-number">85</span>%]
+        PROP_G[Property Tests Pass]
+        MUT_G --&gt; AND2
+        PROP_G --&gt; AND2
+        AND2{Pass?}
+        AND2 --&gt;|<span class="hljs-type">YES</span>| <span class="hljs-type">GATE5</span>
+        AND2 --&gt;|<span class="hljs-type">NO</span>| <span class="hljs-type">BLOCK3</span>[Block + Enrich Tests]
+    <span class="hljs-keyword">end</span>
+
+    subgraph GATE5[<span class="hljs-string">"Semantic Gate 5\nContract Validation"</span>]
+        API_G[OpenAPI Contract\nBackward Compatible]
+        EVENT_G[AsyncAPI Schema\nCompatibility <span class="hljs-keyword">Check</span>]
+        API_G --&gt; AND3
+        EVENT_G --&gt; AND3
+        AND3{Pass?}
+        AND3 --&gt;|<span class="hljs-type">YES</span>| <span class="hljs-type">HUMAN_APP</span>
+        AND3 --&gt;|<span class="hljs-type">NO</span>| <span class="hljs-type">BLOCK4</span>[Block + Alert Architect]
+    <span class="hljs-keyword">end</span>
+
+    HUMAN_APP[👤 Human Approval\nFor Verified-<span class="hljs-keyword">Proof</span> Changes] --&gt; DEPLOY
+
+    subgraph DEPLOY[<span class="hljs-string">"Progressive Deployment"</span>]
+        SHADOW_D[Shadow <span class="hljs-keyword">Mode</span>\nNo production traffic]
+        SHADOW_D --&gt;|<span class="hljs-type">2</span> weeks clean| <span class="hljs-type">CANARY5</span>[Canary <span class="hljs-number">5</span>%]
+        CANARY5 --&gt;|<span class="hljs-type">1</span> week clean| <span class="hljs-type">CANARY25</span>[Canary <span class="hljs-number">25</span>%]
+        CANARY25 --&gt;|<span class="hljs-type">1</span> week clean| <span class="hljs-type">FULL</span>[Full Rollout <span class="hljs-number">100</span>%]
+    <span class="hljs-keyword">end</span>
+
+    style GATE1 fill:#e8f5e9
+    style GATE5 fill:#fce4ec
+    style HUMAN_APP fill:#<span class="hljs-number">4</span>a148c,color:#fff
+    style FULL fill:#<span class="hljs-number">1</span>b5e20,color:#fff
+</code></pre>
+<h2 id="diagram-13-security-architecture">Diagram 13: Security Architecture</h2>
+<pre><code class="lang-mermaid">graph TB
+    subgraph PERIMETER[<span class="hljs-string">"Network Perimeter"</span>]
+        WAF[Web Application Firewall]
+        AG[API Gateway<span class="hljs-string">\nAzure</span> API Management]
+        MTLS[mTLS Between Services]
+    end
+
+    subgraph IAM_LAYER[<span class="hljs-string">"Identity &amp; Access"</span>]
+        AAD[Azure AD / Okta<span class="hljs-string">\nSSO</span> + OIDC]
+        RBAC[RBAC Policy Engine<span class="hljs-string">\nOPA]</span>
+        SECRETS[HashiCorp Vault<span class="hljs-string">\nSecrets</span> Management]
+        JWT[JWT Validation<span class="hljs-string">\nAgent</span> Identity]
+    end
+
+    subgraph SSDLC[<span class="hljs-string">"Secure SDLC Pipeline"</span>]
+        SAST_S[SAST<span class="hljs-string">\nSemgrep</span> Custom Rules]
+        DAST_S[DAST<span class="hljs-string">\nOWASP</span> ZAP]
+        SCA_S[SCA<span class="hljs-string">\nDependabot</span> + OWASP]
+        SECRET_S[Secret Detection<span class="hljs-string">\nGitGuardian]</span>
+        THREAT[Threat Modeling<span class="hljs-string">\nAI-Assisted</span> STRIDE]
+    end
+
+    subgraph DATA[<span class="hljs-string">"Data Security"</span>]
+        ENCRYPT[Encryption at Rest<span class="hljs-string">\nAES-256]</span>
+        TLS[TLS <span class="hljs-number">1.3</span> <span class="hljs-keyword">in</span> Transit]
+        MASKING[PII Masking<span class="hljs-string">\nBefore</span> LLM Ingestion]
+        DLP[Data Loss Prevention<span class="hljs-string">\nNo</span> code <span class="hljs-keyword">to</span> cloud LLM without scrub]
+    end
+
+    subgraph GOVERN_SEC[<span class="hljs-string">"Security Governance"</span>]
+        AUDIT_S[Immutable Audit Log<span class="hljs-string">\nAll</span> AI decisions]
+        ALERT[SIEM Integration<span class="hljs-string">\nSplunk</span> / Sentinel]
+        INCIDENT[Incident Response<span class="hljs-string">\nPlaybooks]</span>
+        PENTEST[Penetration Testing<span class="hljs-string">\nQuarterly]</span>
+    end
+
+    WAF<span class="hljs-function"> --&gt;</span> AG<span class="hljs-function"> --&gt;</span> MTLS
+    AAD<span class="hljs-function"> --&gt;</span> RBAC<span class="hljs-function"> --&gt;</span> SECRETS
+    JWT<span class="hljs-function"> --&gt;</span> RBAC
+
+    SAST_S<span class="hljs-function"> --&gt;</span> CICD_S[CI/CD Gate]
+    DAST_S<span class="hljs-function"> --&gt;</span> CICD_S
+    SCA_S<span class="hljs-function"> --&gt;</span> CICD_S
+    SECRET_S<span class="hljs-function"> --&gt;</span> CICD_S
+
+    MASKING<span class="hljs-function"> --&gt;</span> LLM_SAFE[Safe LLM Ingestion]
+    DLP<span class="hljs-function"> --&gt;</span> LLM_SAFE
+
+    AUDIT_S<span class="hljs-function"> --&gt;</span> ALERT<span class="hljs-function"> --&gt;</span> INCIDENT
+
+    style SSDLC fill:<span class="hljs-comment">#b71c1c,color:#fff</span>
+    style DATA fill:<span class="hljs-comment">#880e4f,color:#fff</span>
+    style GOVERN_SEC fill:<span class="hljs-comment">#4a148c,color:#fff</span>
+</code></pre>
+<h2 id="diagram-14-production-deployment-architecture">Diagram 14: Production Deployment Architecture</h2>
+<pre><code class="lang-mermaid">graph TB
+    subgraph CONTROL_PLANE["NEXUS Control Plane - AKS"]
+        MOA_SVC[Master Orchestrator\nService]
+        AGENT_POOL[Agent Worker Pool\nK8s Jobs]
+        MCP_SVCS[MCP Server Cluster\nK8s Deployments]
+        MODEL_ROUTER[LLM Router\nCost-Aware Routing]
+    <span class="hljs-keyword">end</span>
+
+    subgraph DATA_PLANE[<span class="hljs-string">"Data Plane - Stateful Services"</span>]
+        NEO4J_C[Neo4j Cluster\nUSKG Primary <span class="hljs-keyword">Store</span>]
+        QDRANT_C[Qdrant Cluster\nVector Embeddings]
+        POSTGRES[PostgreSQL\nMetadata + ACID]
+        REDIS[Redis Cluster\nSemantic <span class="hljs-keyword">Cache</span> + <span class="hljs-keyword">Session</span>]
+        KAFKA[Apache Kafka\nEvent Bus + <span class="hljs-keyword">Audit</span> Stream]
+        <span class="hljs-built_in">BLOB</span>[Azure <span class="hljs-built_in">Blob</span> <span class="hljs-keyword">Storage</span>\nArtifacts + Traces]
+    <span class="hljs-keyword">end</span>
+
+    subgraph LLM_PLANE[<span class="hljs-string">"LLM Inference Plane"</span>]
+        AZURE_OAI[Azure OpenAI\nGPT<span class="hljs-number">-4</span>o / o3]
+        ANTHROPIC[Anthropic API\nClaude Opus / Sonnet]
+        LOCAL_GPU[<span class="hljs-keyword">On</span>-Premise GPU Cluster\nSensitive <span class="hljs-keyword">Data</span> Models]
+        ROUTER[<span class="hljs-keyword">Model</span> Router\nCapability + <span class="hljs-keyword">Cost</span> + Privacy]
+    <span class="hljs-keyword">end</span>
+
+    subgraph SECURITY_PLANE[<span class="hljs-string">"Security Services"</span>]
+        VAULT[HashiCorp Vault]
+        OPA_SVC[OPA <span class="hljs-keyword">Policy</span> <span class="hljs-keyword">Engine</span>]
+        SEMGREP_SVC[Semgrep <span class="hljs-keyword">Server</span>]
+        Z3_SVC[Z3 SMT Service]
+    <span class="hljs-keyword">end</span>
+
+    subgraph OBSERVABILITY[<span class="hljs-string">"Observability Stack"</span>]
+        OTEL_COL[OpenTelemetry Collector]
+        GRAFANA[Grafana Dashboards]
+        TEMPO[Grafana Tempo\nDistributed Tracing]
+        LOKI[Grafana Loki\nLog Aggregation]
+        ALERT_MGR[AlertManager]
+    <span class="hljs-keyword">end</span>
+
+    subgraph DELIVERY[<span class="hljs-string">"Delivery Infrastructure"</span>]
+        GITHUB[GitHub <span class="hljs-keyword">Enterprise</span>\nVersion Control]
+        ADO[Azure DevOps\nCI/CD Pipelines]
+        ACR[Azure <span class="hljs-keyword">Container</span> Registry]
+        ARGO[ArgoCD\nGitOps Deployment]
+    <span class="hljs-keyword">end</span>
+
+    CONTROL_PLANE &lt;<span class="hljs-comment">--&gt; DATA_PLANE</span>
+    CONTROL_PLANE <span class="hljs-comment">--&gt; LLM_PLANE</span>
+    CONTROL_PLANE <span class="hljs-comment">--&gt; SECURITY_PLANE</span>
+    CONTROL_PLANE <span class="hljs-comment">--&gt; OBSERVABILITY</span>
+    CONTROL_PLANE <span class="hljs-comment">--&gt; DELIVERY</span>
+
+    MODEL_ROUTER <span class="hljs-comment">--&gt; AZURE_OAI</span>
+    MODEL_ROUTER <span class="hljs-comment">--&gt; ANTHROPIC</span>
+    MODEL_ROUTER <span class="hljs-comment">--&gt; LOCAL_GPU</span>
+
+    KAFKA <span class="hljs-comment">--&gt; OTEL_COL</span>
+    OTEL_COL <span class="hljs-comment">--&gt; GRAFANA</span>
+    OTEL_COL <span class="hljs-comment">--&gt; TEMPO</span>
+    OTEL_COL <span class="hljs-comment">--&gt; LOKI</span>
+
+    <span class="hljs-keyword">style</span> CONTROL_PLANE fill:#<span class="hljs-number">1</span>a237e,color:#fff
+    <span class="hljs-keyword">style</span> LLM_PLANE fill:#<span class="hljs-number">1</span>b5e20,color:#fff
+    <span class="hljs-keyword">style</span> SECURITY_PLANE fill:#b71c1c,color:#fff
+    <span class="hljs-keyword">style</span> DATA_PLANE fill:#e65100,color:#fff
+</code></pre>
+<h2 id="diagram-15-data-flow-diagram">Diagram 15: Data Flow Diagram</h2>
+<pre><code class="lang-mermaid">flowchart LR
+    subgraph IN["Data Inputs"]
+        CODE[Source Code\n.NET Solution]
+        DOCS[Documentation\nBRD/Word/PDF]
+        SQL_DATA[SQL Scripts\nStored Procs]
+        RUNTIME[Runtime Traces\nProduction Logs]
+    <span class="hljs-keyword">end</span>
+
+    subgraph PROC[<span class="hljs-string">"Processing"</span>]
+        <span class="hljs-keyword">PARSE</span>[<span class="hljs-keyword">Parse</span> &amp; <span class="hljs-keyword">Extract</span>\nDimensions <span class="hljs-number">1</span><span class="hljs-number">-5</span>]
+        PII_SCRUB[PII Scrubbing\nBefore LLM]
+        EMBED[Embedding Generation\ntext-embedding<span class="hljs-number">-3</span>-<span class="hljs-keyword">large</span>]
+        GRAPH_BUILD[Graph Construction\nUSKG Population]
+    <span class="hljs-keyword">end</span>
+
+    subgraph <span class="hljs-keyword">STORE</span>[<span class="hljs-string">"Persistent Storage"</span>]
+        USKG_STORE[(USKG\nNeo4j)]
+        VEC_STORE[(Vector <span class="hljs-keyword">Index</span>\nQdrant)]
+        META_STORE[(Metadata\nPostgres)]
+        ARTIFACT_STORE[(Artifacts\nAzure <span class="hljs-built_in">Blob</span>)]
+        AUDIT_STORE[(<span class="hljs-keyword">Audit</span> <span class="hljs-keyword">Log</span>\nImmutable - Kafka+S3)]
+    <span class="hljs-keyword">end</span>
+
+    subgraph INFERENCE[<span class="hljs-string">"AI Inference"</span>]
+        CTX_BUILD[<span class="hljs-keyword">Context</span> <span class="hljs-keyword">Assembly</span>\nGraphRAG <span class="hljs-keyword">Tier</span> <span class="hljs-number">1</span><span class="hljs-number">-4</span>]
+        LLM_INF[LLM Inference\nRouted <span class="hljs-keyword">by</span> capability]
+        <span class="hljs-keyword">CACHE</span>[Semantic <span class="hljs-keyword">Cache</span>\nRedis]
+    <span class="hljs-keyword">end</span>
+
+    subgraph <span class="hljs-keyword">OUT</span>[<span class="hljs-string">"Outputs"</span>]
+        CODE_OUT[<span class="hljs-keyword">Generated</span> Code\n.NET <span class="hljs-number">8</span> + C#]
+        API_OUT[API Specs\nOpenAPI + AsyncAPI]
+        DOC_OUT[Documentation\nBRD+SRS+FRD+HLD]
+        TEST_OUT[<span class="hljs-keyword">Test</span> Suites\nUnit+Integration+Contract]
+        IaC_OUT[Infrastructure\nTerraform + Helm]
+    <span class="hljs-keyword">end</span>
+
+    <span class="hljs-keyword">IN</span> <span class="hljs-comment">--&gt; PROC</span>
+    PROC <span class="hljs-comment">--&gt; STORE</span>
+    <span class="hljs-keyword">STORE</span> <span class="hljs-comment">--&gt; INFERENCE</span>
+    INFERENCE <span class="hljs-comment">--&gt; STORE</span>
+    INFERENCE <span class="hljs-comment">--&gt; OUT</span>
+
+    PII_SCRUB <span class="hljs-comment">--&gt;|Scrubbed only| LLM_INF</span>
+    <span class="hljs-keyword">CACHE</span> <span class="hljs-comment">--&gt;|Cache hit| CTX_BUILD</span>
+    LLM_INF <span class="hljs-comment">--&gt;|Store result| CACHE</span>
+
+    <span class="hljs-keyword">style</span> USKG_STORE fill:#<span class="hljs-number">1</span>a237e,color:#fff
+    <span class="hljs-keyword">style</span> AUDIT_STORE fill:#<span class="hljs-number">4</span>a148c,color:#fff
+    <span class="hljs-keyword">style</span> PII_SCRUB fill:#b71c1c,color:#fff
+</code></pre>
+<hr>
+<h1 id="section-7-requirement-engineering-strategy">SECTION 7: REQUIREMENT ENGINEERING STRATEGY</h1>
+<h2 id="7-1-automated-document-generation-pipeline">7.1 Automated Document Generation Pipeline</h2>
+<p>NEXUS generates a complete, bidirectionally traceable requirement documentation suite from the recovered USKG and business rule catalog:</p>
+<h3 id="7-1-1-document-generation-agents">7.1.1 Document Generation Agents</h3>
+<pre><code>REQUIREMENT RECOVERY AGENT
+├── Input: USKG Domain Layer + Business Rule Catalog + Source Documents
+├── <span class="hljs-keyword">Process</span>:
+│   ├── Extract functional behaviors from CPG behavioral layer
+│   ├── Identify non-functional characteristics from <span class="hljs-keyword">architecture</span> layer
+│   ├── <span class="hljs-keyword">Map</span> regulatory obligations <span class="hljs-keyword">to</span> code behaviors
+│   └── <span class="hljs-keyword">Generate</span> <span class="hljs-built_in">natural</span> language articulations <span class="hljs-keyword">with</span> LLM
+└── Output:
+    ├── Business Requirements Document (BRD)
+    ├── System Requirements Specification (SRS)
+    ├── Functional Requirements Document (FRD)
+    ├── Non-Functional Requirements (NFR) Catalog
+    ├── User Stories (<span class="hljs-keyword">with</span> acceptance criteria)
+    ├── <span class="hljs-keyword">Use</span> <span class="hljs-keyword">Case</span> Catalog
+    └── Requirement Traceability Matrix (RTM)
+</code></pre><h3 id="7-1-2-bidirectional-traceability-matrix">7.1.2 Bidirectional Traceability Matrix</h3>
+<pre><code><span class="hljs-selector-tag">TRACEABILITY</span> <span class="hljs-selector-tag">CHAIN</span> (Fully Navigable in Both Directions):
+
+<span class="hljs-selector-tag">Regulatory</span> <span class="hljs-selector-tag">Obligation</span> (DORA Art. <span class="hljs-number">9</span>)
+    ↕
+<span class="hljs-selector-tag">Business</span> <span class="hljs-selector-tag">Requirement</span> (<span class="hljs-attribute">BR-042</span>: System resilience)
+    ↕
+<span class="hljs-selector-tag">Functional</span> <span class="hljs-selector-tag">Requirement</span> (<span class="hljs-attribute">FR-107</span>: Circuit breaker on payment gateway)
+    ↕
+<span class="hljs-selector-tag">Business</span> <span class="hljs-selector-tag">Rule</span> (<span class="hljs-attribute">Rule-R-0391</span>: Payment retry ≤<span class="hljs-number">3</span> times within <span class="hljs-number">60s</span>)
+    ↕
+<span class="hljs-selector-tag">USKG</span> <span class="hljs-selector-tag">Business</span> <span class="hljs-selector-tag">Rule</span> <span class="hljs-selector-tag">Node</span> (USG-BR-<span class="hljs-number">0391</span>)
+    ↕
+<span class="hljs-selector-tag">Legacy</span> <span class="hljs-selector-tag">Code</span> <span class="hljs-selector-tag">Location</span> (PaymentService.<span class="hljs-attribute">cs</span>:ProcessPayment() + SP_ProcessPayment)
+    ↕
+<span class="hljs-selector-tag">Generated</span> <span class="hljs-selector-tag">Code</span> <span class="hljs-selector-tag">Location</span> (PaymentDomainService.<span class="hljs-attribute">cs</span>:ProcessPaymentAsync())
+    ↕
+<span class="hljs-selector-tag">Test</span> <span class="hljs-selector-tag">Case</span> (PaymentCircuitBreakerTests.<span class="hljs-attribute">cs</span>:ShouldRetryMax3Times)
+    ↕
+<span class="hljs-selector-tag">Deployment</span> <span class="hljs-selector-tag">Artifact</span> (<span class="hljs-attribute">payment-service</span>:v2.<span class="hljs-number">4.1</span>)
+    ↕
+<span class="hljs-selector-tag">Production</span> <span class="hljs-selector-tag">Verification</span> (Shadow mode comparison log)
+</code></pre><h3 id="7-1-3-gap-analysis-agent">7.1.3 Gap Analysis Agent</h3>
+<p>Identifies:</p>
+<ul>
+<li>Requirements in BRD with no corresponding code behavior (dead requirements)</li>
+<li>Code behaviors with no corresponding documented requirement (undocumented features)</li>
+<li>Regulatory obligations with no enforcement mechanism</li>
+<li>Test cases with no requirement mapping</li>
+</ul>
+<h3 id="7-1-4-non-functional-requirements-recovery">7.1.4 Non-Functional Requirements Recovery</h3>
+<table>
+<thead>
+<tr>
+<th>NFR Category</th>
+<th>Recovery Method</th>
+<th>Evidence Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Dynamic trace analysis</td>
+<td>P50/P99 latency from production logs</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Load pattern analysis</td>
+<td>Historical request volume data</td>
+</tr>
+<tr>
+<td><strong>Availability</strong></td>
+<td>Error log analysis</td>
+<td>Uptime records, incident history</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>SAST + compliance rules</td>
+<td>CVE history, penetration test reports</td>
+</tr>
+<tr>
+<td><strong>Compliance</strong></td>
+<td>Regulatory mapping graph</td>
+<td>PCI-DSS, SOX, GDPR requirement sets</td>
+</tr>
+<tr>
+<td><strong>Maintainability</strong></td>
+<td>Complexity metrics</td>
+<td>Cyclomatic complexity, coupling scores</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="section-8-reverse-engineering-strategy">SECTION 8: REVERSE ENGINEERING STRATEGY</h1>
+<h2 id="8-1-net-specific-reverse-engineering-playbook">8.1 .NET-Specific Reverse Engineering Playbook</h2>
+<h3 id="8-1-1-roslyn-powered-semantic-analysis">8.1.1 Roslyn-Powered Semantic Analysis</h3>
+<p>Microsoft&#39;s Roslyn compiler API provides unmatched access to .NET semantics that no other tool matches for C#/VB.NET:</p>
+<pre><code class="lang-csharp"><span class="hljs-comment">// NEXUS Roslyn Semantic Extractor (conceptual)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NexusSemanticExtractor</span>
+</span>{
+    <span class="hljs-comment">// Full symbol table access - every type, method, field with semantic bindings</span>
+    <span class="hljs-comment">// Cross-project reference resolution within solution</span>
+    <span class="hljs-comment">// Data flow analysis via control flow graph APIs</span>
+    <span class="hljs-comment">// Diagnostic analysis for anti-pattern detection</span>
+    <span class="hljs-comment">// Incremental compilation for large solutions</span>
+}
+</code></pre>
+<p><strong>Capabilities extracted via Roslyn:</strong></p>
+<ul>
+<li>Complete type hierarchy (inheritance, interface implementations)</li>
+<li>Cross-project call graphs (within solution boundaries)</li>
+<li>Data flow: which variables are read/written in which methods</li>
+<li>LINQ query analysis (common in .NET for complex business logic)</li>
+<li>Async/await chain mapping (critical for distributed .NET systems)</li>
+<li>Attribute annotations (security, routing, serialization attributes)</li>
+</ul>
+<h3 id="8-1-2-sql-stored-procedure-reverse-engineering">8.1.2 SQL Stored Procedure Reverse Engineering</h3>
+<p>Financial .NET systems routinely embed 30–60% of business logic in stored procedures. NEXUS applies:</p>
+<p><strong>T-SQL Parser Pipeline:</strong></p>
+<ol>
+<li><strong>Lexical Analysis:</strong> Tokenize T-SQL using TSqlParser (Microsoft.SqlServer.TransactSql.ScriptDom)</li>
+<li><strong>AST Construction:</strong> Full parse tree for all stored procedures, functions, triggers</li>
+<li><strong>Data Flow Analysis:</strong> Track parameter values through procedure bodies</li>
+<li><strong>Control Flow Analysis:</strong> Map CASE/IF/WHILE/CURSOR control structures</li>
+<li><strong>Cross-Procedure Call Graph:</strong> Resolve EXEC calls and dynamic SQL where possible</li>
+<li><strong>Schema Dependency Graph:</strong> Map procedure → table → column access patterns</li>
+<li><strong>Business Logic Extraction:</strong> Isolate computational logic from infrastructure SQL</li>
+</ol>
+<h3 id="8-1-3-architecture-recovery">8.1.3 Architecture Recovery</h3>
+<p><strong>Pattern Detection on USKG:</strong></p>
+<ul>
+<li><strong>God Class Detection:</strong> Classes with &gt;500 methods or coupling score above threshold</li>
+<li><strong>Anemic Domain Model:</strong> Domain classes with only getters/setters, no behavior</li>
+<li><strong>Repository Pattern Violations:</strong> Data access logic outside repository boundaries</li>
+<li><strong>Service Locator Anti-pattern:</strong> Manual DI resolution in business logic</li>
+<li><strong>Big Ball of Mud Detection:</strong> Cyclomatic coupling analysis across the call graph</li>
+<li><strong>Strangler Fig Opportunity Mapping:</strong> Services with clean external interfaces ready for extraction</li>
+</ul>
+<h3 id="8-1-4-configuration-recovery">8.1.4 Configuration Recovery</h3>
+<p>Legacy .NET systems store critical business configuration in:</p>
+<ul>
+<li><code>web.config</code> / <code>app.config</code> — connection strings, feature flags, business parameters</li>
+<li>Database configuration tables — business rule parameters</li>
+<li>SSIS package parameters — ETL business rules</li>
+<li>Registry entries — installation-time business configuration</li>
+</ul>
+<p>NEXUS extracts all configuration into a typed, versioned configuration catalog with documentation and migration plans to modern configuration management (Azure App Configuration, HashiCorp Consul).</p>
+<hr>
+<h1 id="section-9-forward-engineering-strategy">SECTION 9: FORWARD ENGINEERING STRATEGY</h1>
+<h2 id="9-1-target-architecture-clean-hexagonal-event-driven">9.1 Target Architecture: Clean + Hexagonal + Event-Driven</h2>
+<h3 id="9-1-1-target-net-8-architecture-pattern">9.1.1 Target .NET 8 Architecture Pattern</h3>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                   API LAYER (Adapters)                  │
+│  REST Controllers  │  GraphQL Resolvers  │  gRPC stubs  │
+├─────────────────────────────────────────────────────────┤
+│              APPLICATION LAYER (<span class="hljs-keyword">Use</span> Cases)              │
+│  Command Handlers  │  <span class="hljs-keyword">Query</span> Handlers  │  Saga Managers  │
+├─────────────────────────────────────────────────────────┤
+│                   <span class="hljs-keyword">DOMAIN</span> LAYER (Core)                   │
+│  <span class="hljs-keyword">Domain</span> Entities  │  <span class="hljs-keyword">Value</span> Objects  │  <span class="hljs-keyword">Domain</span> Services  │
+│  <span class="hljs-keyword">Domain</span> <span class="hljs-keyword">Events</span>    │  Aggregates     │  Business <span class="hljs-keyword">Rules</span>   │
+├─────────────────────────────────────────────────────────┤
+│             INFRASTRUCTURE LAYER (Adapters)             │
+│  EF Core Repos  │  Message Brokers  │  <span class="hljs-keyword">External</span> APIs    │
+└─────────────────────────────────────────────────────────┘
+</code></pre><h3 id="9-1-2-generated-artifact-types">9.1.2 Generated Artifact Types</h3>
+<p><strong>REST API Generation:</strong></p>
+<ul>
+<li>OpenAPI 3.1 specification (contract-first, generated before implementation)</li>
+<li>ASP.NET Core Minimal API or Controller-based (context-dependent)</li>
+<li>Problem Details RFC 7807 error responses</li>
+<li>Versioned APIs (URI versioning for financial systems — explicit, auditable)</li>
+<li>OAuth 2.0 + JWT authentication with Azure AD integration</li>
+</ul>
+<p><strong>GraphQL API Generation (when appropriate):</strong></p>
+<ul>
+<li>Applied when: multiple consumers with varying data needs, internal data mesh patterns</li>
+<li>Not applied when: external partner APIs, regulatory reporting interfaces (use REST)</li>
+<li>Schema-first generation from domain model</li>
+<li>DataLoader patterns for N+1 prevention</li>
+</ul>
+<p><strong>Event-Driven Architecture:</strong></p>
+<ul>
+<li>AsyncAPI 3.0 specifications for all domain events</li>
+<li>Apache Kafka topics with schema registry (Avro/Protobuf)</li>
+<li>Outbox pattern for reliable event publication</li>
+<li>Saga orchestration for distributed transactions</li>
+</ul>
+<p><strong>Database Modernization:</strong></p>
+<ul>
+<li>EF Core 8 with Code-First migrations</li>
+<li>Stored procedure logic migrated to domain services (with verification)</li>
+<li>Dapper for performance-critical read queries (CQRS read side)</li>
+<li>Read model projections for CQRS query side</li>
+<li>Data migration scripts with rollback capability</li>
+</ul>
+<h3 id="9-1-3-code-generation-quality-standards">9.1.3 Code Generation Quality Standards</h3>
+<p>Generated code must meet the following non-negotiable standards before the Synthesis Agent&#39;s output is accepted:</p>
+<pre><code>COMPILATION:         Must compile clean <span class="hljs-keyword">with</span> zero warnings (warnings <span class="hljs-keyword">as</span> errors)
+COVERAGE:            Minimum <span class="hljs-number">80</span>% line coverage <span class="hljs-keyword">from</span> generated tests
+MUTATION SCORE:      Minimum <span class="hljs-number">85</span>% mutation score <span class="hljs-keyword">from</span> generated test suite
+COMPLEXITY:          Cyclomatic complexity ≤ <span class="hljs-number">10</span> per <span class="hljs-function"><span class="hljs-keyword">method</span>
+<span class="hljs-title">COUPLING</span>:</span>            Efferent coupling ≤ <span class="hljs-number">5</span> per <span class="hljs-keyword">class</span>
+DUPLICATION:         Zero code duplication (DRY enforcement)
+NAMING:              .NET naming conventions enforced (Roslyn analyzers)
+<span class="hljs-keyword">ASYNC</span> PATTERNS:      All I/O <span class="hljs-keyword">is</span> <span class="hljs-keyword">async</span>/<span class="hljs-keyword">await</span> <span class="hljs-keyword">with</span> cancellation token support
+NULLABILITY:         <span class="hljs-keyword">Nullable</span> <span class="hljs-keyword">reference</span> types enabled; no CS8600-CS8625 warnings
+DOCUMENTATION:       XML docs <span class="hljs-keyword">on</span> all <span class="hljs-keyword">public</span> members <span class="hljs-keyword">with</span> parameter descriptions
+</code></pre><hr>
+<h1 id="section-10-ai-agent-design-detailed-specifications">SECTION 10: AI AGENT DESIGN — DETAILED SPECIFICATIONS</h1>
+<h2 id="10-1-agent-catalog">10.1 Agent Catalog</h2>
+<h3 id="10-1-1-master-orchestrator-agent-moa-">10.1.1 Master Orchestrator Agent (MOA)</h3>
+<p><strong>Role:</strong> Strategic planning, work decomposition, dependency-aware scheduling, conflict resolution</p>
+<p><strong>Core Reasoning:</strong></p>
+<ul>
+<li><strong>Tree of Thoughts (ToT):</strong> Evaluates multiple decomposition strategies before committing</li>
+<li><strong>Planning with DAG construction:</strong> Transformation work modeled as a directed acyclic graph respecting USKG-derived dependencies</li>
+<li><strong>Confidence-based escalation:</strong> Routes to human review when agent confidence &lt; configurable threshold</li>
+<li><strong>Episodic Memory:</strong> Redis-backed working memory of current session decisions</li>
+<li><strong>Semantic Memory:</strong> USKG long-term knowledge base</li>
+</ul>
+<p><strong>MCP Tools Available:</strong></p>
+<pre><code><span class="hljs-function"><span class="hljs-title">uskg_query</span><span class="hljs-params">(cypher)</span></span>              — Query the Knowledge Graph
+<span class="hljs-function"><span class="hljs-title">get_module_dependencies</span><span class="hljs-params">(module)</span></span> — Dependency-aware scheduling
+<span class="hljs-function"><span class="hljs-title">get_transformation_status</span><span class="hljs-params">(id)</span></span>   — Track <span class="hljs-keyword">in</span>-flight work
+<span class="hljs-function"><span class="hljs-title">escalate_to_human</span><span class="hljs-params">(decision)</span></span>     — Human approval workflow
+<span class="hljs-function"><span class="hljs-title">update_provenance</span><span class="hljs-params">(record)</span></span>       — Audit trail maintenance
+</code></pre><h3 id="10-1-2-synthesis-agent-code-generator-">10.1.2 Synthesis Agent (Code Generator)</h3>
+<p><strong>Model Ensemble (Three-Family Design):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Model Role</th>
+<th>Model</th>
+<th>Strength</th>
+<th>When Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>General Reasoning</strong></td>
+<td>Claude Opus 4 / GPT-4o</td>
+<td>Architecture decisions, complex logic</td>
+<td>All transformations</td>
+</tr>
+<tr>
+<td><strong>Code Specialist</strong></td>
+<td>DeepSeek-Coder V3 / Qwen-Coder</td>
+<td>Syntactic correctness, patterns</td>
+<td>Code generation</td>
+</tr>
+<tr>
+<td><strong>Domain Fine-tuned</strong></td>
+<td>Fine-tuned on .NET financial patterns</td>
+<td>Financial domain idioms</td>
+<td>Financial logic</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Self-Consistency Decoding:</strong></p>
+<ul>
+<li>Generate N=5 independent solutions per transformation</li>
+<li>Execute each against behavioral oracle</li>
+<li>Select highest behavioral consistency score</li>
+<li>Estimated 60%+ reduction in hallucinatory transformations vs. single-pass</li>
+</ul>
+<p><strong>Context Protocol:</strong></p>
+<pre><code>Agent receives:
+  <span class="hljs-number">1</span>. USKG subgraph (CPG slice <span class="hljs-keyword">for</span> the <span class="hljs-function"><span class="hljs-keyword">function</span>/<span class="hljs-title">module</span>)
+  2. <span class="hljs-title">Mined</span> <span class="hljs-title">specifications</span> <span class="hljs-params">(<span class="hljs-keyword">invariants</span> + contracts <span class="hljs-keyword">from</span> behavioral layer)</span>
+  3. <span class="hljs-title">Target</span> <span class="hljs-title">architecture</span> <span class="hljs-title">patterns</span> <span class="hljs-params">(<span class="hljs-keyword">from</span> API Design Agent output)</span>
+  4. <span class="hljs-title">Enterprise</span> <span class="hljs-title">coding</span> <span class="hljs-title">standards</span> <span class="hljs-params">(<span class="hljs-keyword">from</span> Policy Engine)</span>
+  5. <span class="hljs-title">Relevant</span> <span class="hljs-title">test</span> <span class="hljs-title">cases</span> <span class="hljs-params">(<span class="hljs-keyword">from</span> oracle)</span>
+
+<span class="hljs-title">Agent</span> <span class="hljs-title">does</span> <span class="hljs-title">NOT</span> <span class="hljs-title">receive</span>:</span>
+  → Raw source code text <span class="hljs-keyword">as</span> primary input
+  → The full repository without graph-guided compression
+  → Unvalidated documentation
+</code></pre><p>Fine-tuned models show 40% performance degradation on cross-domain tasks — they excel in their specialty but shouldn&#39;t be used for general-purpose extraction. This is why the Synthesis Agent uses an ensemble: the domain-fine-tuned model handles financial idioms while the general reasoning model handles architecture decisions.</p>
+<h3 id="10-1-3-adversarial-reviewer-agent">10.1.3 Adversarial Reviewer Agent</h3>
+<p><strong>Design Rationale:</strong> No agent should review its own output. An adversarial agent using a different model family and independent context assembly challenges every generation.</p>
+<p><strong>Protocol:</strong></p>
+<pre><code><span class="hljs-number">1</span>. <span class="hljs-built_in">INDEPENDENT</span> REGENERATION
+   Adversarial <span class="hljs-built_in">agent</span> re-derives solution <span class="hljs-keyword">from</span> same USKG slice
+   (Different model, different temperature, different prompt structure)
+
+<span class="hljs-number">2</span>. DIVERGENCE ANALYSIS
+   Compare Synthesis output vs. Adversarial output
+   Identify divergence points <span class="hljs-keyword">with</span> evidence citations <span class="hljs-keyword">from</span> USKG
+
+<span class="hljs-number">3</span>. CHAIN-OF-VERIFICATION (CoVe)
+   <span class="hljs-keyword">For</span> each divergence:
+     a. Generate verification question: <span class="hljs-string">"Does X hold for this transformation?"</span>
+     b. Query USKG <span class="hljs-keyword">for</span> evidence
+     c. Execute behavioral oracle test <span class="hljs-keyword">for</span> the specific behavior
+     d. Reach verdict <span class="hljs-keyword">with</span> confidence <span class="hljs-built_in">score</span>
+
+<span class="hljs-number">4</span>. DEBATE PROTOCOL (<span class="hljs-keyword">if</span> unresolved after CoVe)
+   <span class="hljs-built_in">Round</span> <span class="hljs-number">1</span>: Synthesis <span class="hljs-built_in">Agent</span> argues <span class="hljs-keyword">for</span> its version (<span class="hljs-keyword">with</span> USKG citations)
+   <span class="hljs-built_in">Round</span> <span class="hljs-number">2</span>: Adversarial <span class="hljs-built_in">Agent</span> argues against (<span class="hljs-keyword">with</span> USKG citations)
+   <span class="hljs-built_in">Round</span> <span class="hljs-number">3</span>: Arbiter LLM (third model family) evaluates
+   Unresolved → Human Architect escalation
+
+<span class="hljs-number">5</span>. STRUCTURED CRITIQUE REPORT
+   Confidence scores per divergence
+   Evidence package <span class="hljs-keyword">with</span> USKG node references
+   Recommendation: APPROVE / REVISE / ESCALATE
+</code></pre><h3 id="10-1-4-business-logic-extraction-agent">10.1.4 Business Logic Extraction Agent</h3>
+<p><strong>Specialized capability:</strong> Identifying implicit business rules that are not documented and not immediately obvious in code structure.</p>
+<p><strong>Techniques:</strong></p>
+<ul>
+<li><strong>Magic Number Detection:</strong> Identifies unexplained numeric literals (interest rates, fee thresholds, regulatory limits)</li>
+<li><strong>Dead Code Analysis:</strong> Identifies code paths never executed in production — potential obsolete rules</li>
+<li><strong>Branching Condition Mining:</strong> Extracts the meaning of complex conditional logic via LLM + CPG context</li>
+<li><strong>SQL Business Logic Recovery:</strong> Extracts rules from T-SQL CASE statements, CHECK constraints, triggers</li>
+</ul>
+<p><strong>Output format:</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"ruleId"</span>: <span class="hljs-string">"BR-0234"</span>,
+  <span class="hljs-attr">"naturalLanguage"</span>: <span class="hljs-string">"Transactions above £10,000 require enhanced due diligence flag"</span>,
+  <span class="hljs-attr">"confidence"</span>: <span class="hljs-number">0.94</span>,
+  <span class="hljs-attr">"evidenceSources"</span>: [
+    {<span class="hljs-attr">"type"</span>: <span class="hljs-string">"code"</span>, <span class="hljs-attr">"location"</span>: <span class="hljs-string">"TransactionService.cs:ValidateAmount()"</span>, <span class="hljs-attr">"evidence"</span>: <span class="hljs-string">"if (amount &gt; 10000)"</span>},
+    {<span class="hljs-attr">"type"</span>: <span class="hljs-string">"sql"</span>, <span class="hljs-attr">"location"</span>: <span class="hljs-string">"SP_ProcessTransaction:Line 47"</span>, <span class="hljs-attr">"evidence"</span>: <span class="hljs-string">"CASE WHEN amount &gt; 10000 THEN 1"</span>},
+    {<span class="hljs-attr">"type"</span>: <span class="hljs-string">"trace"</span>, <span class="hljs-attr">"observation"</span>: <span class="hljs-string">"EDD_FLAG set to true in 99.8% of traces where amount &gt; 10000"</span>}
+  ],
+  <span class="hljs-attr">"regulatoryMapping"</span>: [<span class="hljs-string">"JMLSG_Part1_Chapter7"</span>, <span class="hljs-string">"FATF_Recommendation_10"</span>],
+  <span class="hljs-attr">"traceabilityId"</span>: <span class="hljs-string">"USKG-DOMAIN-BR-0234"</span>
+}
+</code></pre>
+<h3 id="10-1-5-confidence-scoring-engine">10.1.5 Confidence Scoring Engine</h3>
+<p>Every generated artifact receives a multi-dimensional confidence score:</p>
+<pre><code><span class="hljs-built_in">CONFIDENCE</span> SCORE DIMENSIO<span class="hljs-symbol">NS:</span>
+  │
+  ├── SYNTACTIC <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+  │   Compilation success, naming compliance, pattern adherence
+  │
+  ├── SEMANTIC <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+  │   Business rule preservation, invariant satisfaction
+  │
+  ├── BEHAVIORAL <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+  │   Oracle test pass <span class="hljs-built_in">rate</span>, differential test agreement
+  │
+  ├── FORMAL <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+  │   SMT equivalence result (<span class="hljs-number">1.0</span> = proven, <span class="hljs-number">0.7</span> = fingerprint <span class="hljs-built_in">match</span>)
+  │
+  ├── SECURITY <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+  │   SAST <span class="hljs-built_in">clean</span>, SCA <span class="hljs-built_in">clean</span>, no new attack surfaces
+  │
+  └── REGULATORY <span class="hljs-built_in">CONFIDENCE</span> (<span class="hljs-number">0</span>-<span class="hljs-number">1</span>)
+      OPA policy compliance, regulatory mapping preserved
+
+COMPOSITE SCORE = Weighted <span class="hljs-built_in">Average</span> (weights configurable per context)
+ROUTING DECISI<span class="hljs-symbol">ON:</span>
+  ≥ <span class="hljs-number">0.90</span> → Automated pipeline (adversarial review only)
+  <span class="hljs-number">0.75</span>-<span class="hljs-number">0.89</span> → Senior engineer review required
+  <span class="hljs-number">0.60</span>-<span class="hljs-number">0.74</span> → Architect review required
+  &lt; <span class="hljs-number">0.60</span> → Expert team review + mandatory formal verification
+</code></pre><h3 id="10-1-6-human-review-orchestrator">10.1.6 Human Review Orchestrator</h3>
+<p><strong>Purpose:</strong> Manages the human-in-the-loop workflow for decisions exceeding agent confidence thresholds or involving regulatory/business significance.</p>
+<p><strong>Escalation Package (auto-generated for every human review request):</strong></p>
+<pre><code>ESCALATION <span class="hljs-keyword">PACKAGE</span>:
+├── Executive Summary (<span class="hljs-number">1</span> page, non-technical)
+├── Technical Decision Brief (<span class="hljs-number">2</span>-<span class="hljs-number">3</span> pages)
+│   ├── What was attempted
+│   ├── What agents agreed <span class="hljs-keyword">on</span>
+│   ├── What the disagreement <span class="hljs-keyword">is</span>
+│   └── Options <span class="hljs-keyword">with</span> trade-offs
+├── Evidence <span class="hljs-keyword">Package</span>
+│   ├── USKG subgraph visualization
+│   ├── Divergence analysis <span class="hljs-keyword">report</span>
+│   ├── CoVe verification results
+│   ├── Behavioral test results
+│   └── Regulatory mapping impact
+├── Recommended Decision (agent consensus view)
+├── Risk <span class="hljs-keyword">if</span> Wrong (impact assessment)
+└── Decision Timeline Recommendation
+</code></pre><hr>
+<h1 id="section-11-hallucination-reduction-strategy">SECTION 11: HALLUCINATION REDUCTION STRATEGY</h1>
+<h2 id="11-1-the-nexus-anti-hallucination-architecture">11.1 The NEXUS Anti-Hallucination Architecture</h2>
+<p>Hallucination in code generation is not primarily an LLM quality problem — it is an <strong>architecture problem</strong>. The wrong input architecture causes correct models to generate wrong outputs. NEXUS addresses hallucination at the architectural level:</p>
+<h3 id="11-1-1-input-architecture-controls-prevent-hallucination-before-generation-">11.1.1 Input Architecture Controls (Prevent Hallucination Before Generation)</h3>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Mechanism</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Graph-Grounded Context</strong></td>
+<td>GraphRAG ensures all context is derived from USKG, not LLM memory</td>
+<td>Eliminates fabricated API names, method signatures</td>
+</tr>
+<tr>
+<td><strong>CPG-Compressed Context</strong></td>
+<td>Program slicing reduces context to only relevant code</td>
+<td>Eliminates cross-contamination from irrelevant context</td>
+</tr>
+<tr>
+<td><strong>Specification-First</strong></td>
+<td>Agents receive formal specs, not informal descriptions</td>
+<td>Eliminates spec-level misinterpretation</td>
+</tr>
+<tr>
+<td><strong>Semantic Cache</strong></td>
+<td>Previously verified reasoning is reused</td>
+<td>Eliminates re-hallucination on same subgraph</td>
+</tr>
+<tr>
+<td><strong>Model Specialization Routing</strong></td>
+<td>Right model for right task</td>
+<td>Eliminates out-of-distribution generation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11-1-2-generation-controls-detect-hallucination-during-generation-">11.1.2 Generation Controls (Detect Hallucination During Generation)</h3>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Mechanism</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Self-Consistency (N=5)</strong></td>
+<td>Multiple independent generations; consensus selection</td>
+<td>60%+ reduction in single-pass errors</td>
+</tr>
+<tr>
+<td><strong>Program of Thoughts</strong></td>
+<td>Explicit reasoning chain for complex logic</td>
+<td>Forces step-by-step verifiable reasoning</td>
+</tr>
+<tr>
+<td><strong>Adversarial Review</strong></td>
+<td>Independent agent challenges every output</td>
+<td>Catches hallucinations the primary agent cannot self-detect</td>
+</tr>
+<tr>
+<td><strong>Debate Protocol</strong></td>
+<td>Structured debate with USKG evidence citations</td>
+<td>Forces factual grounding in all arguments</td>
+</tr>
+<tr>
+<td><strong>Chain-of-Verification</strong></td>
+<td>Systematic verification of each claimed fact</td>
+<td>Eliminates unverified assertions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11-1-3-output-validation-controls-eliminate-hallucination-before-commitment-">11.1.3 Output Validation Controls (Eliminate Hallucination Before Commitment)</h3>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Mechanism</th>
+<th>Detection Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Roslyn Compilation</strong></td>
+<td>Immediate syntactic/semantic rejection</td>
+<td>100% for compilation errors</td>
+</tr>
+<tr>
+<td><strong>Behavioral Oracle</strong></td>
+<td>I/O matching against production-derived golden dataset</td>
+<td>~95% behavioral deviation detection</td>
+</tr>
+<tr>
+<td><strong>Differential Testing</strong></td>
+<td>Legacy vs. generated parallel execution</td>
+<td>High for deterministic functions</td>
+</tr>
+<tr>
+<td><strong>Property-Based Testing</strong></td>
+<td>Invariant-driven fuzzing</td>
+<td>High for specification violations</td>
+</tr>
+<tr>
+<td><strong>SMT Equivalence</strong></td>
+<td>Mathematical proof of equivalence</td>
+<td>100% for proven-equivalent scope</td>
+</tr>
+<tr>
+<td><strong>Mutation Testing</strong></td>
+<td>Test suite quality validation</td>
+<td>Ensures tests catch regressions</td>
+</tr>
+<tr>
+<td><strong>Knowledge Graph Validation</strong></td>
+<td>Generated code structure checked against USKG</td>
+<td>Structural hallucination detection</td>
+</tr>
+</tbody>
+</table>
+<p>Knowledge Graphs act as a factual constraint. If the graph does not contain a relationship between components, the retrieval layer will not provide that context, significantly reducing the likelihood of the LLM fabricating a feature. Research highlights that this structural grounding is the most effective method for mitigating hallucination in domain-specific applications.</p>
+<hr>
+<h1 id="section-12-security-strategy">SECTION 12: SECURITY STRATEGY</h1>
+<h2 id="12-1-secure-software-development-lifecycle-ssdlc-">12.1 Secure Software Development Lifecycle (SSDLC)</h2>
+<h3 id="12-1-1-security-at-every-layer">12.1.1 Security at Every Layer</h3>
+<p><strong>Layer 1 (Analysis):</strong></p>
+<ul>
+<li>PII detection and masking before any code is sent to cloud LLM APIs</li>
+<li>Customer data, credentials, and regulatory data stay on-premise</li>
+<li>Air-gapped deployment option for maximum-sensitivity codebases</li>
+</ul>
+<p><strong>Layer 4 (Generation):</strong></p>
+<ul>
+<li>Security Reviewer Agent applies SAST rules to every generated artifact</li>
+<li>OWASP Top 10 for .NET enforced as generation constraints (via system prompt + OPA policy)</li>
+<li>No hardcoded secrets policy: Secret Detection scans all generated code</li>
+</ul>
+<p><strong>Layer 5 (Verification):</strong></p>
+<ul>
+<li>DAST testing against generated APIs before deployment</li>
+<li>Dependency scanning (SCA) on all NuGet packages introduced</li>
+<li>Container image scanning before registry push</li>
+</ul>
+<p><strong>Layer 6 (Compliance):</strong></p>
+<ul>
+<li>OPA policies encode: PCI-DSS DSS v4.0 requirements, SOX IT controls, GDPR data handling rules</li>
+<li>All policy evaluations logged immutably</li>
+<li>Policy-as-code version controlled alongside application code</li>
+</ul>
+<h3 id="12-1-2-ai-specific-security-controls">12.1.2 AI-Specific Security Controls</h3>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt Injection via Legacy Code</strong></td>
+<td>Input sanitization before LLM ingestion; code treated as data</td>
+</tr>
+<tr>
+<td><strong>Model Inversion / Data Exfiltration</strong></td>
+<td>On-premise LLM for sensitive codebases; no raw customer data in prompts</td>
+</tr>
+<tr>
+<td><strong>Supply Chain Attack (NuGet)</strong></td>
+<td>SCA on all generated dependencies; approved package list enforced</td>
+</tr>
+<tr>
+<td><strong>Agent Authorization Bypass</strong></td>
+<td>mTLS between agents; OPA validates every inter-agent action</td>
+</tr>
+<tr>
+<td><strong>Audit Trail Manipulation</strong></td>
+<td>Immutable append-only audit log (Kafka + S3 + cryptographic signing)</td>
+</tr>
+<tr>
+<td><strong>Sensitive Secret Exposure</strong></td>
+<td>HashiCorp Vault; zero secrets in LLM context; generated code secret-scanned</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-1-3-financial-institution-specific-compliance">12.1.3 Financial Institution-Specific Compliance</h3>
+<table>
+<thead>
+<tr>
+<th>Regulation</th>
+<th>NEXUS Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PCI-DSS v4.0</strong></td>
+<td>Cardholder data masking; no PAN in logs; generated code audited for PCI scope</td>
+</tr>
+<tr>
+<td><strong>SOX</strong></td>
+<td>IT general controls documented; change management audit trail; separation of duties</td>
+</tr>
+<tr>
+<td><strong>GDPR</strong></td>
+<td>Data minimization in generated code; right to erasure support in generated APIs; DPIAs</td>
+</tr>
+<tr>
+<td><strong>DORA</strong></td>
+<td>ICT risk management documentation; resilience patterns (circuit breakers, retries); incident reporting</td>
+</tr>
+<tr>
+<td><strong>Basel III</strong></td>
+<td>Capital calculation logic formally verified; model risk documentation</td>
+</tr>
+<tr>
+<td><strong>MiFID II</strong></td>
+<td>Trade reporting interfaces verified; audit trail for generated trading logic</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="section-13-governance-strategy">SECTION 13: GOVERNANCE STRATEGY</h1>
+<h2 id="13-1-ai-governance-framework">13.1 AI Governance Framework</h2>
+<h3 id="13-1-1-decision-authority-matrix">13.1.1 Decision Authority Matrix</h3>
+<pre><code>DECISION TYPE                      AI AUTONOMOUS   HUMAN REQUIRED
+─────────────────────────────────────────────────────────────────
+Syntactic transformation                ✅              ─
+Pattern-based refactoring               ✅              ─
+<span class="hljs-keyword">Test </span>generation                         ✅              ─
+Documentation generation                ✅              ─
+API contract design                     ✅*             ─
+Database schema migration               ─               ✅
+Business rule interpretation            ─               ✅
+Regulatory mapping                      ─               ✅
+Bounded context boundary definition     ─               ✅
+Equivalence dispute resolution          ─               ✅
+Security exception approval             ─               ✅
+Production cutover approval             ─               ✅
+Architecture pattern selection          ✅*             ─
+────────────────────────────────────────────────────────────────
+* With confidence ≥ 0.90 and no adversarial challenge
+</code></pre><h3 id="13-1-2-audit-trail-design">13.1.2 Audit Trail Design</h3>
+<p>Every action in NEXUS generates an immutable audit record:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"auditId"</span>: <span class="hljs-string">"NEXUS-2025-11-15T09:23:11.347Z-A7F2D"</span>,
+  <span class="hljs-attr">"timestamp"</span>: <span class="hljs-string">"2025-11-15T09:23:11.347Z"</span>,
+  <span class="hljs-attr">"sessionId"</span>: <span class="hljs-string">"MOD-PAYMENTS-2025-Q4-007"</span>,
+  <span class="hljs-attr">"actor"</span>: {
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"AI_AGENT"</span>,
+    <span class="hljs-attr">"agentId"</span>: <span class="hljs-string">"synthesis-agent-03"</span>,
+    <span class="hljs-attr">"modelVersion"</span>: <span class="hljs-string">"claude-opus-4-20251101"</span>,
+    <span class="hljs-attr">"orchestratedBy"</span>: <span class="hljs-string">"master-orchestrator-01"</span>
+  },
+  <span class="hljs-attr">"action"</span>: <span class="hljs-string">"CODE_GENERATION"</span>,
+  <span class="hljs-attr">"target"</span>: {
+    <span class="hljs-attr">"module"</span>: <span class="hljs-string">"PaymentProcessingService"</span>,
+    <span class="hljs-attr">"function"</span>: <span class="hljs-string">"ProcessPaymentAsync"</span>,
+    <span class="hljs-attr">"usgNodeId"</span>: <span class="hljs-string">"USKG-PROG-MTH-00847"</span>
+  },
+  <span class="hljs-attr">"inputs"</span>: {
+    <span class="hljs-attr">"usgContextNodes"</span>: [<span class="hljs-string">"USKG-PROG-MTH-00847"</span>, <span class="hljs-string">"USKG-DOM-RULE-0234"</span>],
+    <span class="hljs-attr">"specificationIds"</span>: [<span class="hljs-string">"SPEC-INV-00312"</span>, <span class="hljs-string">"SPEC-CONTRACT-00156"</span>],
+    <span class="hljs-attr">"confidenceOnEntry"</span>: <span class="hljs-number">0.82</span>
+  },
+  <span class="hljs-attr">"output"</span>: {
+    <span class="hljs-attr">"artifactHash"</span>: <span class="hljs-string">"sha256:3f4a9c2b..."</span>,
+    <span class="hljs-attr">"compilationStatus"</span>: <span class="hljs-string">"SUCCESS"</span>,
+    <span class="hljs-attr">"oracleTestPassRate"</span>: <span class="hljs-number">0.98</span>,
+    <span class="hljs-attr">"confidenceScore"</span>: <span class="hljs-number">0.89</span>
+  },
+  <span class="hljs-attr">"rationale"</span>: <span class="hljs-string">"Generated PaymentProcessingService.ProcessPaymentAsync based on USG slice showing data flow from payment request through validation (USKG-PROG-MTH-00847) to ledger update (USKG-PROG-MTH-00891). Preserved invariant SPEC-INV-00312: balance &gt;= 0 post-transaction. Applied Polly circuit breaker per NFR-RESIL-007."</span>,
+  <span class="hljs-attr">"evidencePackage"</span>: <span class="hljs-string">"s3://nexus-audit/2025-11-15/A7F2D-evidence.zip"</span>,
+  <span class="hljs-attr">"cryptographicSignature"</span>: <span class="hljs-string">"eyJhbGci..."</span>
+}
+</code></pre>
+<h3 id="13-1-3-explainability-standards">13.1.3 Explainability Standards</h3>
+<p>Every generated artifact includes a human-readable explanation:</p>
+<pre><code class="lang-markdown">## Why This Code Was Generated This Way
+
+**Transformation:** PaymentService.cs → PaymentDomainService.cs (ProcessPaymentAsync)
+
+**Business Logic Preserved:**
+- Transaction amount validation (Rule BR-<span class="hljs-number">0234</span>) preserved — amounts above £<span class="hljs-number">10</span>,<span class="hljs-number">000</span>
+  trigger EDD flag. Evidence: <span class="hljs-number">47</span> USG references + <span class="hljs-number">12</span>,<span class="hljs-number">847</span> <span class="hljs-keyword">matching</span> production traces.
+- Balance invariant (amount must <span class="hljs-keyword">not</span> exceed available balance) preserved.
+  Evidence: Invariant INV-<span class="hljs-number">00312</span> mined <span class="hljs-keyword">from</span> <span class="hljs-number">98</span>,<span class="hljs-number">234</span> traces <span class="hljs-keyword">with</span> <span class="hljs-number">99.7</span>% confidence.
+
+**Architecture Decisions:**
+- <span class="hljs-keyword">Async</span>/<span class="hljs-keyword">await</span>: Required <span class="hljs-keyword">for</span> banking SLA — <span class="hljs-number">99.9</span>% uptime target per NFR-AVAIL-<span class="hljs-number">001</span>
+- Polly retry: <span class="hljs-number">3</span> retries <span class="hljs-keyword">with</span> exponential backoff per NFR-RESIL-<span class="hljs-number">007</span>
+- Domain <span class="hljs-keyword">event</span> <span class="hljs-keyword">published</span>: PaymentProcessed <span class="hljs-keyword">event</span> per <span class="hljs-keyword">Event</span> Storming session
+  (Domain Entity: Payment, Bounded Context: Payments)
+
+**What Changed vs. Legacy:**
+- SQL stored <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">logic</span> <span class="hljs-title">migrated</span> <span class="hljs-title">to</span> <span class="hljs-title">domain</span> <span class="hljs-title">service</span> <span class="hljs-params">(verified equivalent)</span>
+- <span class="hljs-title">Synchronous</span> <span class="hljs-title">SQL</span> <span class="hljs-title">calls</span> <span class="hljs-title">replaced</span> <span class="hljs-title">with</span> <span class="hljs-title">async</span> <span class="hljs-title">EF</span> <span class="hljs-title">Core</span> <span class="hljs-params">(performance + scalability)</span>
+- <span class="hljs-title">Magic</span> <span class="hljs-title">number</span> £10,000 → <span class="hljs-title">named</span> <span class="hljs-title">constant</span> <span class="hljs-title">KnownLimits</span>.<span class="hljs-title">EddThreshold</span> <span class="hljs-params">(maintainability)</span>
+
+**<span class="hljs-title">Confidence</span> <span class="hljs-title">Score</span>:</span>** <span class="hljs-number">0.89</span> (Senior Engineer Review Required)
+**Verification:** Oracle test <span class="hljs-number">98</span>/<span class="hljs-number">100</span> pass, Behavioral fingerprint match, Compilation clean
+</code></pre>
+<h3 id="13-1-4-versioning-and-change-management">13.1.4 Versioning and Change Management</h3>
+<ul>
+<li>All USKG snapshots versioned (git-like semantic versioning)</li>
+<li>Every transformation produces a new USKG version</li>
+<li>Semantic diff computed between versions: what invariants changed, what contracts changed</li>
+<li>Rollback to any prior semantic state in &lt; 5 minutes</li>
+<li><strong>Semantic Regression Detection:</strong> If a transformation changes an invariant without explicit justification, automatic escalation to human review</li>
+</ul>
+<hr>
+<h1 id="section-14-production-deployment">SECTION 14: PRODUCTION DEPLOYMENT</h1>
+<h2 id="14-1-infrastructure-specifications">14.1 Infrastructure Specifications</h2>
+<h3 id="14-1-1-kubernetes-resource-allocation">14.1.1 Kubernetes Resource Allocation</h3>
+<pre><code class="lang-yaml"><span class="hljs-comment"># NEXUS Production Cluster Sizing (AKS)</span>
+Control Plane:
+<span class="hljs-attr">  master-orchestrator:</span>
+<span class="hljs-attr">    replicas:</span> <span class="hljs-number">3</span>  <span class="hljs-comment"># HA</span>
+<span class="hljs-attr">    cpu:</span> <span class="hljs-number">4</span> cores, memory: <span class="hljs-number">16</span>Gi
+<span class="hljs-attr">  agent-worker-pool:</span>
+<span class="hljs-attr">    replicas:</span> <span class="hljs-number">10</span><span class="hljs-bullet">-50</span>  <span class="hljs-comment"># Auto-scaled by HPA</span>
+<span class="hljs-attr">    cpu:</span> <span class="hljs-number">8</span> cores, memory: <span class="hljs-number">32</span>Gi per pod
+<span class="hljs-attr">    gpu:</span> Optional A100 for local model inference
+
+Data Plane:
+<span class="hljs-attr">  neo4j-cluster:</span>
+<span class="hljs-attr">    cores:</span> <span class="hljs-number">3</span> nodes × <span class="hljs-number">16</span> CPU + <span class="hljs-number">128</span>Gi RAM
+<span class="hljs-attr">    storage:</span> <span class="hljs-number">2</span>TB NVMe SSD (USG can grow large)
+<span class="hljs-attr">  qdrant-cluster:</span>
+<span class="hljs-attr">    nodes:</span> <span class="hljs-number">3</span> × <span class="hljs-number">8</span> CPU + <span class="hljs-number">64</span>Gi RAM
+<span class="hljs-attr">    storage:</span> <span class="hljs-number">500</span>GB NVMe per node
+<span class="hljs-attr">  postgresql:</span>
+<span class="hljs-attr">    nodes:</span> Primary + <span class="hljs-number">2</span> replicas
+<span class="hljs-attr">    cpu:</span> <span class="hljs-number">8</span> cores, memory: <span class="hljs-number">64</span>Gi
+<span class="hljs-attr">  redis-cluster:</span>
+<span class="hljs-attr">    nodes:</span> <span class="hljs-number">6</span> (<span class="hljs-number">3</span> primary + <span class="hljs-number">3</span> replica)
+<span class="hljs-attr">    memory:</span> <span class="hljs-number">32</span>Gi per node
+<span class="hljs-attr">  kafka:</span>
+<span class="hljs-attr">    brokers:</span> <span class="hljs-number">3</span> × <span class="hljs-number">8</span> CPU + <span class="hljs-number">32</span>Gi RAM
+<span class="hljs-attr">    storage:</span> <span class="hljs-number">1</span>TB per broker
+</code></pre>
+<h3 id="14-1-2-llm-routing-strategy">14.1.2 LLM Routing Strategy</h3>
+<pre><code>COST-AWARE MODEL ROUTER
+
+Task: Docstring generation → Claude Haiku / GPT-<span class="hljs-number">4</span>o-mini (cheap, fast)
+Task: <span class="hljs-function"><span class="hljs-keyword">Method</span> <span class="hljs-title">naming</span> <span class="hljs-title">suggestions</span> → <span class="hljs-title">Claude</span> <span class="hljs-title">Haiku</span>
+<span class="hljs-title">Task</span>:</span> Business rule interpretation → Claude Opus <span class="hljs-number">4</span> / GPT-<span class="hljs-number">4</span>o (capable)
+Task: Complex architecture design → Claude Opus <span class="hljs-number">4</span> / o3 (most capable)
+Task: Formal equivalence reasoning → o3 / Claude Opus <span class="hljs-number">4</span>
+Task: PII-containing source code → <span class="hljs-keyword">On</span>-premise Qwen-Coder / CodeLlama (local)
+Task: Regulatory logic analysis → <span class="hljs-keyword">On</span>-premise (data sovereignty)
+
+Cost optimization:
+- Semantic cache hit → No inference cost
+- Prompt cache <span class="hljs-keyword">for</span> USG subgraph context → <span class="hljs-number">60</span>-<span class="hljs-number">80</span>% cost reduction <span class="hljs-keyword">on</span> repeated patterns
+- Speculative decoding <span class="hljs-keyword">for</span> ensemble generation → <span class="hljs-number">40</span>% latency reduction
+</code></pre><h3 id="14-1-3-observability-configuration">14.1.3 Observability Configuration</h3>
+<pre><code class="lang-yaml"># <span class="hljs-selector-tag">OpenTelemetry</span> <span class="hljs-selector-tag">Semantic</span> <span class="hljs-selector-tag">Conventions</span> <span class="hljs-selector-tag">for</span> <span class="hljs-selector-tag">NEXUS</span>
+<span class="hljs-selector-tag">Traces</span>:
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.agent</span><span class="hljs-selector-class">.transformation</span>:
+    <span class="hljs-selector-tag">attributes</span>:
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">agent</span><span class="hljs-selector-class">.id</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">agent</span><span class="hljs-selector-class">.model</span><span class="hljs-selector-class">.version</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">transformation</span><span class="hljs-selector-class">.module</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">transformation</span><span class="hljs-selector-class">.confidence</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">uskg</span><span class="hljs-selector-class">.nodes</span><span class="hljs-selector-class">.accessed</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">oracle</span><span class="hljs-selector-class">.test</span><span class="hljs-selector-class">.pass_rate</span>
+      <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">verification</span><span class="hljs-selector-class">.stage</span><span class="hljs-selector-class">.reached</span>
+
+<span class="hljs-selector-tag">Metrics</span>:
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.transformation</span><span class="hljs-selector-class">.confidence</span><span class="hljs-selector-class">.histogram</span>  # <span class="hljs-selector-tag">Distribution</span> <span class="hljs-selector-tag">of</span> <span class="hljs-selector-tag">confidence</span> <span class="hljs-selector-tag">scores</span>
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.agent</span><span class="hljs-selector-class">.escalation</span><span class="hljs-selector-class">.rate</span>               # % <span class="hljs-selector-tag">escalated</span> <span class="hljs-selector-tag">to</span> <span class="hljs-selector-tag">human</span>
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.verification</span><span class="hljs-selector-class">.pass_rate</span>              # <span class="hljs-selector-tag">Stage-by-stage</span> <span class="hljs-selector-tag">pass</span> <span class="hljs-selector-tag">rates</span>
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.oracle</span><span class="hljs-selector-class">.divergence</span><span class="hljs-selector-class">.count</span>             # <span class="hljs-selector-tag">Behavioral</span> <span class="hljs-selector-tag">divergences</span> <span class="hljs-selector-tag">detected</span>
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.llm</span><span class="hljs-selector-class">.cost</span><span class="hljs-selector-class">.total</span>                      # <span class="hljs-selector-tag">Cost</span> <span class="hljs-selector-tag">per</span> <span class="hljs-selector-tag">transformation</span>
+  <span class="hljs-selector-tag">nexus</span><span class="hljs-selector-class">.semantic</span><span class="hljs-selector-class">.cache</span><span class="hljs-selector-class">.hit_rate</span>             # <span class="hljs-selector-tag">Cache</span> <span class="hljs-selector-tag">effectiveness</span>
+
+<span class="hljs-selector-tag">Logs</span>:
+  <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">Structured</span> <span class="hljs-selector-tag">JSON</span>, <span class="hljs-selector-tag">correlation</span> <span class="hljs-selector-tag">IDs</span> <span class="hljs-selector-tag">linking</span> <span class="hljs-selector-tag">all</span> <span class="hljs-selector-tag">events</span> <span class="hljs-selector-tag">for</span> <span class="hljs-selector-tag">one</span> <span class="hljs-selector-tag">transformation</span>
+  <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">Agent</span> <span class="hljs-selector-tag">decision</span> <span class="hljs-selector-tag">logs</span> <span class="hljs-selector-tag">with</span> <span class="hljs-selector-tag">evidence</span> <span class="hljs-selector-tag">references</span>
+  <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">Human</span> <span class="hljs-selector-tag">review</span> <span class="hljs-selector-tag">decisions</span> <span class="hljs-selector-tag">with</span> <span class="hljs-selector-tag">timestamps</span>
+  <span class="hljs-selector-tag">-</span> <span class="hljs-selector-tag">Audit</span> <span class="hljs-selector-tag">events</span> (<span class="hljs-selector-tag">immutable</span>, <span class="hljs-selector-tag">separately</span> <span class="hljs-selector-tag">stored</span>)
+</code></pre>
+<hr>
+<h1 id="section-15-risk-register">SECTION 15: RISK REGISTER</h1>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Risk</th>
+<th>Probability</th>
+<th>Severity</th>
+<th>Mitigation</th>
+<th>Residual Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R-01</strong></td>
+<td>Legacy code with no dynamic trace coverage (dead code paths containing business rules)</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>Extended pre-modernization trace collection; explicit &quot;unknown path&quot; flagging; human review for all uncovered paths</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td><strong>R-02</strong></td>
+<td>SMT solver timeout on complex financial calculations</td>
+<td>MEDIUM</td>
+<td>MEDIUM</td>
+<td>Selective application to critical paths only; function decomposition into provable sub-functions; time-bounded fallback to differential testing</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-03</strong></td>
+<td>USKG construction cost for very large solutions (10M+ LOC)</td>
+<td>HIGH</td>
+<td>MEDIUM</td>
+<td>Distributed incremental construction; prioritized extraction starting with highest-value bounded contexts; horizontal scaling of CPG engine</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-04</strong></td>
+<td>LLM ensemble errors in same direction (coordinated hallucination)</td>
+<td>MEDIUM</td>
+<td>HIGH</td>
+<td>Three-family model diversity (Anthropic + OpenAI + local); adversarial agent uses different model family; human escalation for low-confidence</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td><strong>R-05</strong></td>
+<td>SQL stored procedure logic too complex for automated extraction</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>Manual expert review for procedures with &gt; configurable complexity threshold; hybrid approach with AI-assisted manual extraction</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td><strong>R-06</strong></td>
+<td>Shadow mode not feasible for real-time payment systems</td>
+<td>MEDIUM</td>
+<td>HIGH</td>
+<td>Asynchronous replay harnesses using captured production requests; offline parallel execution environments</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-07</strong></td>
+<td>Regulatory compliance graph incomplete (unknown regulations)</td>
+<td>MEDIUM</td>
+<td>VERY HIGH</td>
+<td>Domain expert + legal team validation before regulatory-tagged transformations begin; conservative flagging of any financial calculation</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td><strong>R-08</strong></td>
+<td>On-premise LLM quality insufficient for complex reasoning</td>
+<td>MEDIUM</td>
+<td>HIGH</td>
+<td>Hybrid routing: on-premise for data sensitivity, cloud for reasoning quality; PII scrubbing enabling cloud use for sanitized code</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-09</strong></td>
+<td>Team resistance and organizational change management</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>Pilot success demonstration; gradual capability expansion; developer co-pilot model before full autonomy; training and enablement program</td>
+<td>MEDIUM</td>
+</tr>
+<tr>
+<td><strong>R-10</strong></td>
+<td>Generated code introduces subtle performance regressions</td>
+<td>MEDIUM</td>
+<td>MEDIUM</td>
+<td>Performance regression test suite with P99 latency benchmarks; load testing before canary promotion; automated rollback triggers</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-11</strong></td>
+<td>USKG becomes stale after initial construction</td>
+<td>LOW</td>
+<td>HIGH</td>
+<td>Real-time event-driven updates on codebase changes; incremental CPG recomputation; semantic regression detection triggers</td>
+<td>LOW</td>
+</tr>
+<tr>
+<td><strong>R-12</strong></td>
+<td>AI governance regulatory requirements (EU AI Act)</td>
+<td>MEDIUM</td>
+<td>HIGH</td>
+<td>Human-in-the-loop for all consequential decisions; full auditability; explainability engine; model version pinning</td>
+<td>LOW</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="section-16-key-performance-indicators-kpis-">SECTION 16: KEY PERFORMANCE INDICATORS (KPIs)</h1>
+<h2 id="16-1-modernization-efficiency-kpis">16.1 Modernization Efficiency KPIs</h2>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Baseline (Manual)</th>
+<th>NEXUS Target</th>
+<th>Measurement Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Time per bounded context</strong></td>
+<td>8–16 weeks</td>
+<td>2–4 weeks</td>
+<td>Milestone tracking</td>
+</tr>
+<tr>
+<td><strong>Business rule recovery rate</strong></td>
+<td>60–70%</td>
+<td>≥90%</td>
+<td>Manual expert audit sample</td>
+</tr>
+<tr>
+<td><strong>Code generation automation rate</strong></td>
+<td>0%</td>
+<td>≥70%</td>
+<td>Lines generated vs. manual</td>
+</tr>
+<tr>
+<td><strong>Requirement recovery completeness</strong></td>
+<td>40–60%</td>
+<td>≥85%</td>
+<td>Traceability matrix coverage</td>
+</tr>
+<tr>
+<td><strong>Documentation completeness</strong></td>
+<td>&lt;30% of legacy</td>
+<td>≥95% of generated</td>
+<td>Automated metric</td>
+</tr>
+</tbody>
+</table>
+<h2 id="16-2-quality-correctness-kpis">16.2 Quality &amp; Correctness KPIs</h2>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Target</th>
+<th>Measurement Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Oracle test pass rate</strong></td>
+<td>≥98% before commit</td>
+<td>Automated CI gate</td>
+</tr>
+<tr>
+<td><strong>Behavioral equivalence confidence</strong></td>
+<td>≥0.90 composite</td>
+<td>Confidence scoring engine</td>
+</tr>
+<tr>
+<td><strong>Mutation score</strong></td>
+<td>≥85%</td>
+<td>Automated mutation testing</td>
+</tr>
+<tr>
+<td><strong>SAST finding rate</strong></td>
+<td>Zero critical/high</td>
+<td>Semgrep CI gate</td>
+</tr>
+<tr>
+<td><strong>Invariant preservation rate</strong></td>
+<td>100%</td>
+<td>Specification miner + oracle</td>
+</tr>
+<tr>
+<td><strong>Human escalation rate</strong></td>
+<td>&lt;15% of transformations</td>
+<td>Tracking dashboard</td>
+</tr>
+</tbody>
+</table>
+<h2 id="16-3-operational-kpis">16.3 Operational KPIs</h2>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Target</th>
+<th>Measurement Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shadow mode divergence rate</strong></td>
+<td>&lt;0.1%</td>
+<td>Shadow mode comparison</td>
+</tr>
+<tr>
+<td><strong>Canary error rate</strong></td>
+<td>&lt;0.01% above baseline</td>
+<td>Monitoring</td>
+</tr>
+<tr>
+<td><strong>Rollback time</strong></td>
+<td>&lt;5 minutes</td>
+<td>Drill testing</td>
+</tr>
+<tr>
+<td><strong>Cost per 1000 LOC transformed</strong></td>
+<td>&lt;$500</td>
+<td>Cost attribution engine</td>
+</tr>
+<tr>
+<td><strong>LLM semantic cache hit rate</strong></td>
+<td>&gt;60%</td>
+<td>Redis metrics</td>
+</tr>
+<tr>
+<td><strong>Agent escalation-to-resolution time</strong></td>
+<td>&lt;4 hours</td>
+<td>Ticketing integration</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="section-17-phased-implementation-roadmap">SECTION 17: PHASED IMPLEMENTATION ROADMAP</h1>
+<h2 id="phase-0-foundation-months-1-2-">Phase 0: Foundation (Months 1–2)</h2>
+<p><strong>Objective:</strong> Deploy infrastructure, establish tooling, validate approach on a non-critical module.</p>
+<pre><code>WEEK 1-2: Infrastructure deployment
+  ✓ AKS cluster provisioning
+  ✓ Neo4j, Qdrant, PostgreSQL, Redis, Kafka deployment
+  ✓ MCP server framework deployment
+  ✓ LLM API integrations (Azure OpenAI + Anthropic)
+  ✓ On-premise GPU cluster setup (if required)
+
+WEEK 3-4: Analysis tooling
+  ✓ Roslyn CPG extractor development and testing
+  ✓ T-SQL parser and analyzer deployment
+  ✓ Joern custom .NET front-<span class="hljs-keyword">end</span> integration
+  ✓ <span class="hljs-keyword">Static</span> analysis tool integration (Semgrep, SonarQube)
+
+<span class="hljs-keyword">WEEK</span> <span class="hljs-number">5</span><span class="hljs-number">-6</span>: USKG <span class="hljs-keyword">schema</span> design
+  ✓ <span class="hljs-keyword">Domain</span> ontology definition (financial services)
+  ✓ Graph <span class="hljs-keyword">schema</span> implementation <span class="hljs-keyword">and</span> <span class="hljs-keyword">validation</span>
+  ✓ ETL pipeline <span class="hljs-keyword">for</span> USKG population
+  ✓ GraphRAG <span class="hljs-keyword">engine</span> deployment
+
+<span class="hljs-keyword">WEEK</span> <span class="hljs-number">7</span><span class="hljs-number">-8</span>: Pilot <span class="hljs-keyword">validation</span>
+  ✓ <span class="hljs-keyword">Select</span> lowest-risk, lowest-coupling <span class="hljs-keyword">module</span> <span class="hljs-keyword">for</span> pilot
+  ✓ <span class="hljs-keyword">End</span>-<span class="hljs-keyword">to</span>-<span class="hljs-keyword">end</span> pipeline run <span class="hljs-keyword">with</span> human oversight <span class="hljs-keyword">at</span> every stage
+  ✓ <span class="hljs-keyword">Validate</span> extraction quality against expert review
+  ✓ Calibrate confidence thresholds
+
+DELIVERABLE: Validated pipeline <span class="hljs-keyword">on</span> pilot <span class="hljs-keyword">module</span> + Infrastructure ready
+GATE: Expert review confirms &gt;<span class="hljs-number">85</span>% business rule <span class="hljs-keyword">recovery</span> accuracy
+</code></pre><h2 id="phase-1-reverse-engineering-months-3-5-">Phase 1: Reverse Engineering (Months 3–5)</h2>
+<p><strong>Objective:</strong> Complete USKG construction for the full legacy estate.</p>
+<pre><code>MONTH <span class="hljs-number">3</span>: Core extraction
+  ✓ Full solution ingestion <span class="hljs-keyword">into</span> Roslyn pipeline
+  ✓ CPG construction <span class="hljs-keyword">for</span> all C# / VB.NET code
+  ✓ SQL stored <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">extraction</span> <span class="hljs-title">and</span> <span class="hljs-title">analysis</span>
+  ✓ <span class="hljs-title">SSIS</span>/<span class="hljs-title">SSRS</span> <span class="hljs-title">parsing</span> <span class="hljs-title">and</span> <span class="hljs-title">logic</span> <span class="hljs-title">extraction</span>
+
+<span class="hljs-title">MONTH</span> 4:</span> Behavioral analysis
+  ✓ <span class="hljs-keyword">Dynamic</span> instrumentation <span class="hljs-keyword">of</span> legacy system (test environment)
+  ✓ Production traffic replay <span class="hljs-keyword">for</span> behavioral oracle construction
+  ✓ Invariant mining across all critical functions
+  ✓ Business rule extraction <span class="hljs-keyword">and</span> confidence scoring
+
+MONTH <span class="hljs-number">5</span>: Domain model recovery
+  ✓ DDD analysis <span class="hljs-keyword">and</span> bounded context identification
+  ✓ Domain <span class="hljs-keyword">event</span> discovery
+  ✓ Service boundary candidate generation
+  ✓ Human architect review <span class="hljs-keyword">and</span> validation <span class="hljs-keyword">of</span> domain model
+
+DELIVERABLE: Complete USKG + Business Rule Catalog + Domain Model
+GATE: Architect sign-off <span class="hljs-keyword">on</span> bounded context boundaries
+</code></pre><h2 id="phase-2-pilot-bounded-context-transformation-months-6-8-">Phase 2: Pilot Bounded Context Transformation (Months 6–8)</h2>
+<p><strong>Objective:</strong> Prove the forward engineering pipeline on one bounded context.</p>
+<pre><code>MONTH <span class="hljs-number">6</span>: Target architecture design
+  ✓ Target architecture design for pilot <span class="hljs-keyword">bounded </span><span class="hljs-built_in">context</span>
+  ✓ OpenAPI specification generation <span class="hljs-keyword">and </span>review
+  ✓ Database migration design <span class="hljs-keyword">and </span>review
+  ✓ Event contract design
+
+MONTH <span class="hljs-number">7</span>: Code generation <span class="hljs-keyword">and </span>review
+  ✓ Synthesis agent execution on pilot <span class="hljs-keyword">bounded </span><span class="hljs-built_in">context</span>
+  ✓ Adversarial review pipeline
+  ✓ Full verification pipeline execution
+  ✓ Human architect review of generated code
+
+MONTH <span class="hljs-number">8</span>: <span class="hljs-keyword">Shadow </span>deployment <span class="hljs-keyword">and </span>validation
+  ✓ <span class="hljs-keyword">Shadow </span>mode deployment of modernized service
+  ✓ <span class="hljs-number">4</span>-week <span class="hljs-keyword">shadow </span>mode validation against production traffic
+  ✓ <span class="hljs-keyword">Divergence </span>analysis <span class="hljs-keyword">and </span>resolution
+  ✓ Security <span class="hljs-keyword">and </span>compliance review
+<span class="hljs-symbol">
+DELIVERABLE:</span> First verified, deployed modernized service in <span class="hljs-keyword">shadow </span>mode
+<span class="hljs-symbol">GATE:</span> &lt;<span class="hljs-number">0</span>.<span class="hljs-number">1</span>% <span class="hljs-keyword">divergence </span>rate over <span class="hljs-number">4</span>-week <span class="hljs-keyword">shadow </span>period
+</code></pre><h2 id="phase-3-scaled-transformation-months-9-24-">Phase 3: Scaled Transformation (Months 9–24)</h2>
+<p><strong>Objective:</strong> Systematically modernize remaining bounded contexts.</p>
+<pre><code>MONTHS <span class="hljs-number">9</span>-<span class="hljs-number">18</span>: Parallel bounded <span class="hljs-built_in">context</span> transformation
+  ✓ <span class="hljs-number">2</span>-<span class="hljs-number">3</span> bounded <span class="hljs-built_in">contexts</span> <span class="hljs-keyword">in</span> parallel (dependency-ordered per USKG DAG)
+  ✓ Progressive strangler-fig rollout of validated services
+  ✓ Cross-<span class="hljs-built_in">context</span> learning improving successive transformations
+  ✓ Monthly executive reporting on progress, KPIs, <span class="hljs-keyword">and</span> risks
+
+MONTHS <span class="hljs-number">19</span>-<span class="hljs-number">24</span>: Complex <span class="hljs-built_in">domain</span> migration
+  ✓ Highest-coupling, most <span class="hljs-built_in">complex</span> bounded <span class="hljs-built_in">contexts</span> (benefiting from pipeline maturity)
+  ✓ Legacy <span class="hljs-built_in">system</span> decommissioning of validated extracted services
+  ✓ Final integration testing across all modernized services
+  ✓ Full production cutover <span class="hljs-keyword">and</span> legacy retirement
+
+DELIVERABLE: Complete modernized .NET <span class="hljs-number">8</span> API-<span class="hljs-built_in">first</span> architecture
+GATE: Full production traffic on modernized <span class="hljs-built_in">system</span> with zero legacy <span class="hljs-built_in">dependencies</span>
+</code></pre><h2 id="phase-4-continuous-learning-month-25-">Phase 4: Continuous Learning (Month 25+)</h2>
+<pre><code>✓ Feedback integration <span class="hljs-built_in">from</span> production operations <span class="hljs-keyword">into</span> USKG
+✓ Model fine-tuning <span class="hljs-keyword">on</span> <span class="hljs-title">organization-specific</span> <span class="hljs-title">patterns</span>
+✓ Extension <span class="hljs-built_in">to</span> other legacy applications <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> estate
+✓ Platform productization <span class="hljs-keyword">for</span> other modernization programs
+</code></pre><hr>
+<h1 id="section-18-estimated-roi">SECTION 18: ESTIMATED ROI</h1>
+<h2 id="18-1-cost-model">18.1 Cost Model</h2>
+<h3 id="18-1-1-nexus-investment">18.1.1 NEXUS Investment</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Year 1</th>
+<th>Year 2</th>
+<th>Year 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure (AKS, data, GPU)</td>
+<td>£800K</td>
+<td>£600K</td>
+<td>£500K</td>
+</tr>
+<tr>
+<td>LLM API costs</td>
+<td>£400K</td>
+<td>£300K</td>
+<td>£250K</td>
+</tr>
+<tr>
+<td>Platform development &amp; customization</td>
+<td>£1.2M</td>
+<td>£400K</td>
+<td>£200K</td>
+</tr>
+<tr>
+<td>Expert team (architects, engineers)</td>
+<td>£800K</td>
+<td>£600K</td>
+<td>£400K</td>
+</tr>
+<tr>
+<td><strong>Total NEXUS Investment</strong></td>
+<td><strong>£3.2M</strong></td>
+<td><strong>£1.9M</strong></td>
+<td><strong>£1.35M</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="18-1-2-value-delivered">18.1.2 Value Delivered</h3>
+<table>
+<thead>
+<tr>
+<th>Value Driver</th>
+<th>Annual Value</th>
+<th>Calculation Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT budget freed from maintenance</strong></td>
+<td>£8M+</td>
+<td>40% reduction in 72% maintenance ratio on £28M IT budget</td>
+</tr>
+<tr>
+<td><strong>Reduced modernization timeline</strong></td>
+<td>£4M+</td>
+<td>12 months earlier delivery vs. traditional approach × business value</td>
+</tr>
+<tr>
+<td><strong>Regulatory risk reduction</strong></td>
+<td>£2M+</td>
+<td>DORA/PCI-DSS penalty risk reduction, actuarially estimated</td>
+</tr>
+<tr>
+<td><strong>Developer productivity</strong></td>
+<td>£3M+</td>
+<td>40-50% productivity gain on £15M annual development spend</td>
+</tr>
+<tr>
+<td><strong>Incident reduction</strong></td>
+<td>£1.5M+</td>
+<td>60% reduction in legacy-caused incidents × average incident cost</td>
+</tr>
+<tr>
+<td><strong>New revenue from API monetization</strong></td>
+<td>£2M+</td>
+<td>New partner integrations enabled by API-first architecture</td>
+</tr>
+<tr>
+<td><strong>Total Annual Value</strong></td>
+<td><strong>£20.5M+</strong></td>
+<td>Year 2 onwards</td>
+</tr>
+</tbody>
+</table>
+<h3 id="18-1-3-roi-summary">18.1.3 ROI Summary</h3>
+<pre><code><span class="hljs-number">3</span>-Year Total <span class="hljs-string">Investment:</span>  £<span class="hljs-number">6.45</span>M
+<span class="hljs-number">3</span>-Year Total <span class="hljs-string">Value:</span>       £<span class="hljs-number">48</span>M+ (Year <span class="hljs-number">1</span> partial + Years <span class="hljs-number">2</span><span class="hljs-number">-3</span> full)
+Net <span class="hljs-number">3</span>-Year <span class="hljs-string">Benefit:</span>       £<span class="hljs-number">41.5</span>M+
+<span class="hljs-string">ROI:</span>                      <span class="hljs-number">643</span>%
+Payback <span class="hljs-string">Period:</span>           &lt; <span class="hljs-number">8</span> months from Phase <span class="hljs-number">2</span> completion
+</code></pre><p>AI can expedite modernization project timelines by 40–50%. Google&#39;s internal DIDACT methodology demonstrated that 80% of code modifications were AI-authored, yielding an estimated 50% reduction in total migration time.</p>
+<hr>
+<h1 id="section-19-document-generation-catalog">SECTION 19: DOCUMENT GENERATION CATALOG</h1>
+<p>NEXUS generates the following documentation artifacts automatically as byproducts of the modernization process:</p>
+<h2 id="19-1-document-registry">19.1 Document Registry</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Generator Agent</th>
+<th>Primary Input</th>
+<th>Traceability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Executive Summary</strong></td>
+<td>Documentation Agent</td>
+<td>USKG + Business Rule Catalog</td>
+<td>To all artifacts</td>
+</tr>
+<tr>
+<td><strong>Business Requirements Document (BRD)</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>Domain Layer + Business Rules</td>
+<td>To FRD, code, tests</td>
+</tr>
+<tr>
+<td><strong>System Requirements Spec (SRS)</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>BRD + NFR + Behavioral Layer</td>
+<td>To architecture, code</td>
+</tr>
+<tr>
+<td><strong>Functional Requirements Doc (FRD)</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>Business Rules + Use Cases</td>
+<td>To code, tests</td>
+</tr>
+<tr>
+<td><strong>Non-Functional Requirements (NFR)</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>Dynamic traces + Architecture layer</td>
+<td>To IaC, config</td>
+</tr>
+<tr>
+<td><strong>User Stories + Acceptance Criteria</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>BRD + Domain Events</td>
+<td>To tests</td>
+</tr>
+<tr>
+<td><strong>Requirement Traceability Matrix (RTM)</strong></td>
+<td>Documentation Agent</td>
+<td>All above</td>
+<td>Bidirectional</td>
+</tr>
+<tr>
+<td><strong>High-Level Design (HLD)</strong></td>
+<td>Architecture Generator</td>
+<td>USKG Architecture Layer</td>
+<td>To LLD, code</td>
+</tr>
+<tr>
+<td><strong>Low-Level Design (LLD)</strong></td>
+<td>Architecture Generator</td>
+<td>CPG + API specs</td>
+<td>To code</td>
+</tr>
+<tr>
+<td><strong>Architecture Decision Records (ADRs)</strong></td>
+<td>Documentation Agent</td>
+<td>Provenance Layer</td>
+<td>To HLD, LLD</td>
+</tr>
+<tr>
+<td><strong>OpenAPI 3.1 Specifications</strong></td>
+<td>API Design Agent</td>
+<td>Domain Model + Contracts</td>
+<td>To code, tests</td>
+</tr>
+<tr>
+<td><strong>AsyncAPI 3.0 Specifications</strong></td>
+<td>API Design Agent</td>
+<td>Domain Events</td>
+<td>To code, tests</td>
+</tr>
+<tr>
+<td><strong>Developer Guide</strong></td>
+<td>Documentation Agent</td>
+<td>Code + API specs</td>
+<td>To code</td>
+</tr>
+<tr>
+<td><strong>Operations Guide</strong></td>
+<td>IaC Agent</td>
+<td>Deployment + Monitoring config</td>
+<td>To deployment</td>
+</tr>
+<tr>
+<td><strong>Deployment Guide</strong></td>
+<td>Delivery Coordinator</td>
+<td>IaC + CI/CD</td>
+<td>To DevOps team</td>
+</tr>
+<tr>
+<td><strong>Testing Strategy</strong></td>
+<td>Test Generation Agent</td>
+<td>Oracle + Verification results</td>
+<td>To CI/CD</td>
+</tr>
+<tr>
+<td><strong>Migration Report</strong></td>
+<td>Documentation Agent</td>
+<td>Phase execution logs</td>
+<td>To executives</td>
+</tr>
+<tr>
+<td><strong>Risk Register</strong></td>
+<td>Confidence Scoring Engine</td>
+<td>All verification results</td>
+<td>To governance</td>
+</tr>
+<tr>
+<td><strong>Compliance Report</strong></td>
+<td>Compliance Reviewer</td>
+<td>OPA evaluations + Reg mapping</td>
+<td>To audit</td>
+</tr>
+<tr>
+<td><strong>Security Assessment</strong></td>
+<td>Security Reviewer</td>
+<td>SAST + DAST + SCA results</td>
+<td>To security team</td>
+</tr>
+<tr>
+<td><strong>Gap Analysis Report</strong></td>
+<td>Requirement Recovery Agent</td>
+<td>RTM + USKG</td>
+<td>To business</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="section-20-future-enhancements">SECTION 20: FUTURE ENHANCEMENTS</h1>
+<h2 id="20-1-next-generation-capabilities-18-36-month-horizon-">20.1 Next-Generation Capabilities (18–36 Month Horizon)</h2>
+<h3 id="20-1-1-semantic-transformation-intermediate-representation-stir-">20.1.1 Semantic Transformation Intermediate Representation (STIR)</h3>
+<p>A language-agnostic intermediate representation encoding <em>semantic intent</em> rather than syntax. Generated once from the USKG, STIR enables code generation targeting any modern language (.NET, Java, Python) from a single semantic specification. This amortizes the extraction investment across multiple target platforms.</p>
+<h3 id="20-1-2-cross-codebase-learning-semantic-alignment-protocol-">20.1.2 Cross-Codebase Learning (Semantic Alignment Protocol)</h3>
+<p>For enterprises with multiple related legacy systems (regional banking platforms sharing the same COBOL/COBOL lineage), behavioral fingerprints and verified transformations from one system accelerate and validate transformations of related systems. Estimated 40–70% effort reduction for estate-wide programs.</p>
+<h3 id="20-1-3-living-architecture-map-lam-">20.1.3 Living Architecture Map (LAM)</h3>
+<p>A continuously updated, conversationally queryable representation of the modernization state, architectural decisions, and remaining work. Enables new team members to ask natural language questions like &quot;Why was the account service extracted before the payment service?&quot; and receive evidence-grounded answers from the Provenance Layer.</p>
+<h3 id="20-1-4-agentic-continuous-modernization">20.1.4 Agentic Continuous Modernization</h3>
+<p>After initial modernization, NEXUS agents continuously monitor the modernized system for: technical debt accumulation, deprecated dependency usage, emerging security vulnerabilities, regulatory changes requiring code updates. The system proposes targeted, verified updates rather than requiring another major modernization program.</p>
+<h3 id="20-1-5-formal-specification-generation-dafny-coq-">20.1.5 Formal Specification Generation (Dafny/Coq)</h3>
+<p>For the most critical financial calculations (interest computations, capital ratio calculations, regulatory reporting formulas), generate Dafny or Coq proofs as a byproduct of modernization. This provides machine-checkable correctness evidence acceptable to regulators and auditors.</p>
+<hr>
+<h1 id="technology-fusion-summary">TECHNOLOGY FUSION SUMMARY</h1>
+<p>The following table captures NEXUS&#39;s highest-value technology combinations and what each fusion uniquely enables:</p>
+<table>
+<thead>
+<tr>
+<th>Fusion</th>
+<th>Technologies</th>
+<th>Emergent Capability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>F1</strong></td>
+<td>Roslyn CPG + MCP Tools + LLM Agents</td>
+<td>Precise program slicing, taint tracking, and semantic navigation over .NET solutions without context overflow</td>
+</tr>
+<tr>
+<td><strong>F2</strong></td>
+<td>USKG (Neo4j) + GraphRAG + Hierarchical RAG</td>
+<td>Multi-hop reasoning across code structure, domain semantics, and behavioral data simultaneously</td>
+</tr>
+<tr>
+<td><strong>F3</strong></td>
+<td>Behavioral Oracle + Differential Testing + SMT (Z3)</td>
+<td>Mathematical evidence of behavioral equivalence for critical financial logic</td>
+</tr>
+<tr>
+<td><strong>F4</strong></td>
+<td>Invariant Mining + Property-Based Testing + Mutation Testing</td>
+<td>Comprehensive behavioral preservation verification without manual test specification</td>
+</tr>
+<tr>
+<td><strong>F5</strong></td>
+<td>DDD Agent + Call Graph Clustering + Event Storming</td>
+<td>Automated bounded context identification grounded in both domain semantics and structural coupling evidence</td>
+</tr>
+<tr>
+<td><strong>F6</strong></td>
+<td>Multi-Model Ensemble + Self-Consistency + Adversarial Review</td>
+<td>Code synthesis quality approaching human expert review with documented reasoning chains</td>
+</tr>
+<tr>
+<td><strong>F7</strong></td>
+<td>T-SQL Parser + CPG + Business Rule Graph</td>
+<td>Business logic extraction from stored procedures — the primary value-unlocking capability for .NET financial systems</td>
+</tr>
+<tr>
+<td><strong>F8</strong></td>
+<td>Shadow Mode + Runtime Verification + Canary + Circuit Breaker</td>
+<td>Zero-risk incremental production cutover with automatic regression detection</td>
+</tr>
+<tr>
+<td><strong>F9</strong></td>
+<td>Regulatory Compliance Graph + OPA + Immutable Audit</td>
+<td>Compliance-by-construction: regulatory requirements enforced structurally with auditable evidence</td>
+</tr>
+<tr>
+<td><strong>F10</strong></td>
+<td>Confidence Scoring + Human Review Orchestrator + Decision Log</td>
+<td>Calibrated human oversight — AI autonomous where safe, human authority where consequential</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="conclusion">CONCLUSION</h1>
+<blockquote>
+<p><strong>&quot;If this were my responsibility as Chief Architect, this is the production architecture I would confidently recommend, along with the rationale, implementation plan, trade-offs, and expected outcomes.&quot;</strong></p>
+</blockquote>
+<p><strong>Why I would recommend NEXUS:</strong></p>
+<p>The financial institution modernizing a large legacy .NET estate faces a problem that is fundamentally different from &quot;rewriting code.&quot; The code is not the asset — the <em>embedded business logic, regulatory knowledge, and battle-hardened behavioral contracts</em> are the asset. Any architecture that treats modernization as text transformation will produce systems that compile, run, and fail in subtle, expensive, and potentially regulatory ways.</p>
+<p>NEXUS starts from a different premise: <strong>understand the system completely before transforming it, and verify the transformation completely before deploying it.</strong> The Unified Semantic Knowledge Graph is not a nice-to-have feature — it is the entire epistemic foundation. GraphRAG retrieves entities, relations, and their neighborhoods, then backs them with text — this is the difference between an agent that knows what it knows and one that guesses. The MCP-bridged Code Property Graph ensures agents navigate the codebase with surgical precision rather than scrolling through files.</p>
+<p>The four-stage verification pipeline is not defensive over-engineering — it is the minimum responsible standard for financial systems. Treating the LLM as a generator of artifacts which are then verified by external tools uses the full generative powers of LLMs while relying on the rigor of established formal methods for assurance. Every stage serves a different failure mode, and together they provide mathematical confidence that no single technique can provide alone.</p>
+<p>The adversarial multi-agent architecture acknowledges a fundamental truth about AI systems: <strong>a model cannot reliably detect its own failures.</strong> Independent agents, debate protocols, and Chain-of-Verification are not redundancy for its own sake — they are the architectural mechanism by which a system built on probabilistic models achieves deterministic correctness guarantees.</p>
+<p>Agentic AI for application modernization isn&#39;t future technology — it&#39;s production-ready today, with real customers achieving real outcomes. What is not yet production-ready is the <em>correctness infrastructure</em> that makes AI-generated code trustworthy for mission-critical financial systems. NEXUS provides exactly that infrastructure.</p>
+<p>The 643% three-year ROI is not the reason to build this. The reason to build this is that the EU&#39;s DORA, effective January 2025, imposes strict penalties on financial entities for ICT risks stemming from outdated technology architectures — and a financial institution that cannot modernize safely is a financial institution that cannot compete, cannot comply, and cannot survive.</p>
+<p>NEXUS is the architecture that makes safe modernization possible at enterprise scale. It is the one I would stake my reputation on.</p>
+<hr>
