@@ -1,142 +1,442 @@
-Here are 100 specific agentic AI solutions tailored for your .NET 8 banking modernization project, categorized by their primary domain. These solutions leverage the VS Code Agents Window, Model Context Protocol (MCP), custom Roslyn analyzers, and autonomous feedback loops.
-
-**Multi-Agent Orchestration & IDE Workflow (VS Code)**
-
-1. A multi-session agent that executes a backend legacy migration in one parallel workspace while a separate agent handles frontend routing in another.
+See this transcript about the video we have generated:
 
 
-2. An Autopilot agent that recursively searches workspace folders to standardize project structures and naming conventions across the enterprise.
+Anand, Yash
 
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
 
-3. A Session Sync Agent utilizing local semantic indexing (Chronicles) to recall how a developer refactored a legacy module yesterday and apply the exact pattern today.
+Anand, Yash
 
+Aligned.
 
-4. A Gutter Feedback Agent that monitors real-time coding and drops inline comments warning of potential .NET 8 async/await violations.
+Lodh, Abhijeet
 
+Yeah, for sure.
 
-5. A cross-repo Refactoring Agent that applies interface signature changes across multiple loaded workspaces simultaneously.
+Ganguly, Amrita
 
+This part I'm talking about give me
 
-6. An Agentic Pull Request Creator that generates comprehensive PR titles and technical descriptions entirely from the local Copilot chat session context.
+Adnijeet, can you take this note, Apnijeet? rean, you in nave το work with the development team to get it more aligned, actually. So can you take these notes?
 
+Anand, Yash
 
-7. A Diagnostics Agent that traces file edits and terminal commands, outputting a flow chart for compliance auditing of AI-generated code.
+Or or someone.
 
+Anand, Yash
 
-8. A Copilot CLI Agent that generates and executes complex `.NET CLI` scaffolding commands directly within the integrated terminal.
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
 
+Anand, Yash
 
-9. An Autopilot Dependency Upgrader that bumps outdated NuGet packages and automatically resolves version conflicts.
+↓
 
+development team to get it more aligned, actually. So can you take these notes?
 
-10. A Cost-Optimization Agent that monitors subagent token usage and suggests smaller context windows for routine tasks to manage API spend.
+Anand, Yash
 
+Or or someone.
 
+Anand, Yash
 
-**MCP-Driven Enterprise Context Agents**
-11. A GitHub PR Review Agent using the GitHub MCP server to autonomously read PR diffs, apply banking guidelines, and post peer-review comments.
-12. An Issue Triaging Agent that connects via MCP to read open GitHub issues, categorize them by domain, and suggest immediate code fixes.
-13. A Corporate Confluence MCP Agent that queries internal architectural wikis to ensure new .NET 8 microservices align with documented enterprise patterns.
-14. An API Documentation Agent that pulls external swagger definitions via MCP to scaffold strongly-typed Refit clients.
-15. A Log Analysis Agent that connects to Datadog via MCP to diagnose production HTTP 500 errors and map them directly to local codebase lines.
-16. A Database Schema MCP Agent that reads live SQL schemas to ensure local Entity Framework (EF) Core migrations do not conflict with production tables.
-17. An MCP Policy Enforcer that restricts agents to only use approved corporate data sources during the generation of sensitive financial logic.
-18. An Incident Response Agent that correlates GitHub issues with live alerts via MCP and prepares a hotfix branch autonomously.
-19. A Knowledge Management Agent that stores successful refactoring patterns as prompt files and serves them to the broader engineering team via MCP.
-20. A Cross-Team Dependency Agent that queries other teams' open PRs via the GitHub MCP server to warn if their incoming changes will break your current microservice.
+A
 
-**Roslyn-Powered Deterministic Rule Generators**
-21. A Custom Analyzer Generation Agent that writes Roslyn `RegisterSyntaxNodeAction` code to globally ban the use of legacy `ArrayList`.
-22. A CodeFixProvider Agent that writes automated refactorings for the IDE lightbulb menu, such as converting `DateTime.Now` to the .NET 8 `TimeProvider`.
-23. A Naming Convention Agent that generates Roslyn analyzers to enforce strict interface naming (`IBankingService`) across distributed offshore teams.
-24. A Thread-Safety Analyzer Agent that builds Roslyn rules to detect non-thread-safe dictionary usage in high-volume payment APIs.
-25. A Test Coverage Enforcer Agent that writes a Roslyn rule requiring every public domain method to have a corresponding `[Fact]` attribute.
-26. An EF Core N+1 Detector Agent that generates semantic analyzers to flag LINQ queries executed inside loop blocks.
-27. A Roslyn Test Scaffolding Agent that uses `Microsoft.CodeAnalysis.Testing` to rapidly write unit tests for the organization's custom governance analyzers.
-28. A Semantic Flow Analyzer Agent that builds rules to ensure financial data assignment strictly uses immutable C# 12 records.
-29. A Performance Analyzer Agent that writes compiler rules to limit struct sizes to 16 bytes, preventing excessive memory copying overhead.
-30. An Analyzer Optimization Agent that reviews existing custom Roslyn rules and injects `EnableConcurrentExecution()` for faster CI build times.
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
 
-**Automated Testing & Quality Assurance Agents**
-31. A Framework-Tuned Test Agent (`@test`) that reads .NET 8 project structures and generates xUnit tests using Moq, avoiding generic boilerplate.
-32. A Boundary Value Agent that analyzes financial algorithms and autonomously writes edge-case tests covering nulls, negative numbers, and zero values.
-33. A Test Data Builder Agent that scaffolds fluent test data builders for complex banking entities to keep test files clean.
-34. A UI Automation Agent that drives the integrated browser to interact with migrated Blazor apps and records Playwright end-to-end test scripts.
-35. A Mutation Testing Agent that introduces deliberate bugs into the codebase to verify if the existing test suite is robust enough to catch them.
-36. A Fuzzing Agent that continuously generates malformed financial payloads and sends them to API endpoints to test validation resilience.
-37. A Test Coverage Restoration Agent that automatically drafts new tests if a pull request drops coverage below the mandatory 85% threshold.
-38. A Flaky Test Quarantine Agent that monitors CI logs, identifies intermittent test failures, and autonomously moves them to a quarantine suite.
-39. A Self-Healing Test Agent that parses test failure logs after minor UI changes and updates the underlying assertions to pass again.
-40. An In-Memory Database Agent that sets up `Testcontainers` to spin up real PostgreSQL Docker instances for accurate integration testing.
+Anand, Yash
 
-**Security & Vulnerability Remediation Agents**
-41. A Veracode Remediation Agent that fetches static analysis flaws via MCP and applies the Veracode AI Fix API suggestions in real-time.
-42. A SQL Injection Patcher that autonomously refactors concatenated SQL strings into Entity Framework Core parameterized queries.
-43. A Cryptographic Modernization Agent that hunts for deprecated `MD5` usage and rewrites methods to use .NET 8 `SHA256` or `AES-GCM`.
-44. A Dependency Scanner Agent that uses `#githubTextSearch` to find vulnerable packages and generates PRs to bump their versions.
-45. A Cross-Site Scripting (XSS) Agent that detects raw HTML rendering in legacy views and applies secure encoding for modern frameworks.
-46. A Secrets Masking Agent that reviews logging configurations and injects .NET 8 redaction features to hide Personally Identifiable Information (PII).
-47. An Authentication Flow Agent that refactors legacy custom token generation to strictly use modern `JwtBearerDefaults`.
-48. A Penetration Testing Agent that reviews public API controllers and scaffolds automated security scripts for OWASP top 10 vulnerabilities.
-49. A Deserialization Fixer that replaces insecure `BinaryFormatter` usage with secure `System.Text.Json` configurations.
-50. An Infrastructure Security Agent that scans generated Terraform scripts to ensure cloud databases are not publicly exposed and utilize encryption at rest.
+Lodh, Abhijeet
 
-**Legacy Modernization & Architecture Agents**
-51. A WCF to gRPC Agent (`@modernize`) that translates `ServiceContract` interfaces into `.proto` files and C# 12 gRPC endpoints.
-52. A WebForms to Blazor Agent that analyzes `.aspx` logic and rewrites it into component-based Blazor Server pages.
-53. An ADO.NET to EF Core Agent that converts legacy `SqlDataReader` loops into optimized LINQ queries against a modern `DbContext`.
-54. A Monolith Splitting Agent that uses semantic search to untangle tightly coupled business logic into isolated bounded contexts.
-55. A Repository Pattern Generator that extracts inline SQL from massive legacy controller files and creates standardized generic repository interfaces.
-56. A Business Rule Extractor that consolidates scattered data validation logic into centralized `FluentValidation` classes.
-57. An AutoMapper Profile Agent that reads complex Data Transfer Objects (DTOs) and automatically generates the mapping profiles required for translation.
-58. A Strangler Fig Agent that automatically configures YARP (Yet Another Reverse Proxy) to safely route legacy and modern .NET 8 traffic simultaneously.
-59. A Windows Service Migrator that converts legacy background tasks into cross-platform .NET 8 `IHostedService` Worker Services.
-60. An API Versioning Agent that injects ASP.NET Core API versioning attributes onto endpoints to maintain backward compatibility during API cutovers.
+Yeah, yeah, I do remember again, and there was one some instructional button as well that I'm not able to call that properly, but I remember.
 
-**Knowledge Graph & Context Mapping Agents**
-61. A Repository Ingestion Agent that parses legacy .NET code and automatically generates nodes in a Neo4j knowledge graph.
-62. A Domain Graph Query Agent that generates Cypher queries to evaluate the impact of changing a core banking entity before touching the code.
-63. An Orphaned Asset Detector that analyzes graph dependencies to identify and propose the deletion of code with zero incoming references.
-64. A Data Flow Tracer Agent that traverses the knowledge graph to ensure PII only routes to secure, encrypted endpoints.
-65. A Blast Radius Calculator that assesses the centrality of legacy classes in the graph to flag high-risk refactoring targets for project managers.
-66. An Automated Diagram Agent that queries the architecture graph to continuously generate updated Mermaid.js or PlantUML diagrams.
-67. A Cross-Context Validation Agent that ensures classes in the `Payments` context have zero direct dependencies on the `Accounts` context mathematically.
-68. A Developer Expertise Agent that maps commit history in the graph to automatically suggest the best human reviewer for a specific PR.
-69. A Database-to-Code Mapping Agent that links SQL table nodes to C# data models to assist in breaking apart shared database monoliths.
-70. A Graph-Driven RAG Agent that uses the knowledge graph to augment Copilot's context window with enterprise-specific domain knowledge.
+Anand, Yash
 
-**Deep Code Review & CI Pipeline Bots**
-71. An Autonomous PR Gatekeeper that evaluates pull requests for cognitive complexity and rejects them if they exceed architectural thresholds.
-72. A Breaking Change Detector that compares the `main` branch public API against a PR and blocks unintentional contract modifications.
-73. A Semantic Versioning Agent that analyzes commit messages and autonomously determines the next SemVer increment for a microservice.
-74. A Compliance Scanner Bot that reviews PRs specifically to ensure no credit card data logging violates PCI-DSS standards.
-75. A Release Notes Agent that aggregates PR descriptions across a sprint to generate executive-friendly summaries and technical changelogs.
-76. A Test Quality Bot that evaluates new unit tests to ensure they contain meaningful assertions rather than just padding code coverage metrics.
-77. An Automated Code Commenter that detects stale XML comments that no longer match the underlying method logic and rewrites them.
-78. A Licensing Compliance Agent that blocks the introduction of any new NuGet package with an open-source license incompatible with banking policies.
-79. A Database Migration Reviewer that analyzes EF Core migrations to warn of destructive data loss (e.g., dropping columns) before they reach production.
-80. A Commit Message Linter Agent that automatically rewrites commit messages in the CI pipeline to strictly adhere to Conventional Commits standards.
+You can take that up later, Abhijeet, that's fine. And one more thing, right? Did you got chance to work with the development team and add the tenor link what developer has to submit? If they are creating
 
-**Performance & Profiling Optimization Agents**
-81. A Profiler Diagnostics Agent (`@profiler`) that connects to VS Code profiling tools to identify thread-pool starvation and suggest async fixes.
-82. A Memory Allocation Agent that identifies heavy `byte[]` usage in data parsing and refactors the code to use `Span<T>` and `Memory<T>`.
-83. A LINQ Optimization Agent that detects multiple enumerations of `IEnumerable` and refactors them using optimized .NET 8 methods like `Chunk` or `MaxBy`.
-84. A Garbage Collection Tuner that scans batch processing jobs and injects object pooling (`ObjectPool<T>`) to reduce GC pressure.
-85. A Caching Implementation Agent that wraps high-frequency database reads in `IDistributedCache` using Redis for immediate latency reduction.
-86. A Concurrent Collection Agent that replaces standard dictionaries with `ConcurrentDictionary` in multithreaded financial transaction scenarios.
-87. A Floating Point Precision Fixer that strictly enforces the conversion of `float` or `double` to `decimal` for all currency mathematics to avoid rounding errors.
-88. An API Throttling Agent that detects unthrottled public endpoints and injects the native .NET 8 rate limiting middleware.
-89. A Struct Pass-By-Reference Agent that updates large struct method arguments to use the `in` or `ref readonly` modifiers.
-90. A Background Thread Optimization Agent that replaces `Thread.Sleep` blocking calls with asynchronous `Task.Delay` patterns.
+a new application, were you able to add that as well?
 
-**Closed-Loop Feedback & Autonomous Troubleshooting Agents**
-91. A CI Failure Diagnosis Agent that fetches failed GitHub Actions logs via MCP, analyzes the stack trace, and applies local file edits to fix the build.
-92. A Self-Healing Build Loop Agent that pushes a commit, triggers a build, reads the error, and recursively patches the code until the pipeline turns green.
-93. A Flaky Cloud Environment Restorer that reads Terraform provisioning errors and autonomously adjusts the `.tf` configuration to fix deployments.
-94. A Continuous Dependency Resolution Bot that detects NuGet conflicts during the build stage, patches the `.csproj`, and reruns the pipeline.
-95. A Bug Diagnosis Agent (`@debugger`) that takes a runtime exception stack trace, walks through the variable state, and systematically applies a solution across the solution.
-96. A Vector Database Sync Agent that automatically extracts successful refactoring patterns from merged PRs and logs them for future RAG queries.
-97. A Schema Drift Auto-Resolver that compares the production SQL schema against the EF Core model and generates alignment scripts autonomously.
-98. An E2E Telemetry Validation Agent that triggers a test, queries Datadog logs via API, and validates that all expected business events were successfully logged.
-99. An Agentic Web UI Validator that navigates web pages using the integrated browser tools to visually inspect DOM bindings and validate applications autonomously.
-100. A SOC Alert Orchestrator that detects a recurring security pattern violation in the codebase and autonomously generates an actionable Jira ticket for the Security Operations Center.
+Lodh, Abhijeet
+
+Today, I only showed them this entire video and got feedback from them. However, I mean, if you allow me, then I will be happy to publish this.
+
+Anand, Yash
+
+No, not published right now, but what I'm saying is like you need to also get the tenant link right? So what developers actually submit for tenant application? Do you have that with you? That's the final step that you have to say that, okay, now the understanding is clear, go ahead and use this link to submit and create your own tenant application.
+
+Anand, Yash
+
+Do you have that tenant link with you?
+
+Lodh, Abhijeet
+
+No, no, I do have a PDF case study, but I don't have that link available with me.
+
+Anand, Yash
+
+Yeah, so there is a link, Abhijeet, so I'l share it to you, right? So that has to be added to this so that once this is clear, they should be able to submit a new application if they have to.
+
+Lodh, Abhijeet
+
+Yeah, sure.
+
+Anand, Yeah, but they have something more than...
+
+Ganguly, Amrita
+
+Yeah, yeah, can I suggest one more thing? Could you please go to your your picture that?
+
+Ganguly, Amrita
+
+where you had adapters and all. So see interface adapters. So I think the clarity, you can add more clarity instead of, I mean, it might be Al generated content instead of that. So we have two kind of
+
+adapters, right? Internal.
+
+And external
+
+And external, so all those things add, add them like when you are using controllers, that is the that that will take the code in flow inside and then the external one, the which will talk to the servers, right? If
+
+you could add them, there is document I have gone through them.
+
+Has a very clear demarcation, so try to see.
+
+Anand, Yash
+
+Abhijeet, can you take this note, Abhijeet? Yeah, you'll have to work with the development team to get it more aligned, actually. So can you take these notes?
+
+Anand, Yash
+
+Or or someone.
+
+Anand, Yash
+
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
+
+Anand, Yash
+
+Aligned.
+
+Lodh, Abhijeet
+
+Yeah, yeah, I do remember again, and there was one some instructional button as well that I'm not able to call that properly, but I remember.
+
+Anand, Yash
+
+You can take that up later, Abhijeet, that's fine. And one more thing, right? Did you got chance to work with the development team and add the tenor link what developer has to submit? If they are creating
+
+a new application, were you able to add that as well?
+
+Lodh, Abhijeet
+
+Today, I only showed them this entire video and got feedback from them. However, I mean, if you allow me, then I will be happy to publish this.
+
+Anand, Yash
+
+No, not published right now, but what I'm saying is like you need to also get the tenant link right? So what developers actually submit for tenant application? Do you have that with you? That's the final step that you have to say that, okay, now the understanding is clear, go ahead and use this link to submit and create your own tenant application.
+
+Anand, Yash
+
+Do you have that tenant link with you?
+
+Lodh, Abhijeet
+
+No, no, I do have a PDF case study, but I don't have that link available with me.
+
+Anand, Yash
+
+Yeah, so there is a link, Abhijeet, so I'l share it to you, right? So that has to be added to this so that once this is clear, they should be able to submit a new application if they have to.
+
+Lodh, Abhijeet
+
+Yeah, sure.
+
+Anand, Yeah, but they have something more than...
+
+Ganguly, Amrita
+
+Yeah, yeah, can I suggest one more thing? Could you please go to your your picture that?
+
+Ganguly, Amrita
+
+where you had adapters and all. So see interface adapters. So I think the clarity, you can add more clarity instead of, I mean, it might be Al generated content instead of that. So we have two kind of
+
+adapters, right? Internal.
+
+And external
+
+And external, so all those things add, add them like when you are using controllers, that is the that that will take the code in flow inside and then the external one, the which will talk to the servers, right? If
+
+you could add them, there is document I have gone through them.
+
+Has a very clear demarcation, so try to see.
+
+Anand, Yash
+
+Abhijeet, can you take this note, Abhijeet? Yeah, you'll have to work with the development team to get it more aligned, actually. So can you take these notes?
+
+Anand, Yash
+
+Or or someone.
+
+Anand, Yash
+
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
+
+Anand, Yash
+
+Aligned.
+
+Lodh, Abhijeet
+
+Yeah, yeah, I do remember again, and there was one some instructional button as well that I'm not able to call that properly, but I remember.
+
+Anand, Yash
+
+You can take that up later, Abhijeet, that's fine. And one more thing, right? Did you got chance to work with the development team and add the tenor link what developer has to submit? If they are creating a new application, were you able to add that as well?
+
+Lodh, Abhijeet
+
+Today, I only showed them this entire video and got feedback from them. However, I mean, if you allow me, then I will be happy to publish this.
+
+Anand Yash
+
+No, not published right now, but what I'm saying is like you need to also get the tenant link right? So what developers actually submit for tenant application? Do you have that with you? That's the final step that you have to say that, okay, now the understanding is clear, go ahead and use this link to submit and create your own tenant application.
+
+Ananit Yash
+
+Do you have that tenant link with you?
+
+Lodh. Abhijeet
+
+No, no, I do have a PDF case study, but I don't have that link available with me.
+
+Anand, Yash
+
+Yeah, so there is a link, Abhijeet, so I'll share it to you, right? So that has to be added to this so that once this is clear, they should be able to submit a new application if they have to.
+
+Lodh, Abhijeet
+
+Yeah, sure.
+
+Anand, Yash
+
+Yeah, but they have something more than...
+
+Ganguly, Amrita
+
+Yeah, yeah, can I suggest one more thing? Could you please go to your your picture that?
+
+Ganguly, Amrita where you had adapters and all. So see interface adapters. So I think the clarity, you can add more clarity instead of, I mean, it might be Al generated content instead of that. So we have two kind of
+
+adapters, right? Internal.
+
+Ganguly, Amrita
+
+And external, so all those things add, add them like when you are using controllers, that is the that that will take the code in flow inside and then the external one, the which will talk to the servers, right? if
+
+you could add them, there is document I have gone through them.
+
+Has a very cle
+
+Has a very clear demarcation, so try to see.
+
+Anand, Yash
+
+Abhijeet, can you take this note, Abhijeet? Yeah, you'l have to work with the development team to get it more aligned, actually. So can you take these notes?
+
+Anand. Yash
+
+Or or someone.
+
+Anand, Yash
+
+Or I can send it afterwards, right, Abhijeet? So you might need some of the developers help within your team to get it.
+
+Anand, Yash
+
+Aligned
+
+Lodh, Abhijeet
+
+Yeah, for sure.
+
+Ganguly. Amrita is this part I am talking about? Give me one second to send you this. This is there is, if you were, if you were referring to Daryl document, this is what the anti-corruption layer. The let me send.
+
+Anand. Yash
+
+Yeah, I think the same layer I have, I've sent it to him, but, but can you show Amrita which which point you are?
+
+Ganguly. Amrita (4) eah the trenchat I have shared and his document link is this one So this is a pretty nonvd one I was nning through it and von will see that he has undated the dianram alen so that a
+Aligned.
+
+Lodh, Abhijeet
+
+Yeah, for sure.
+
+Ganguly. Amrita
+
+Is this part I am talking about? Give me one second to send you this. This is there is, if you were, if you were referring to Daryl document, this is what the anti-corruption layer. The let me send.
+
+Anand, Yash
+
+Yeah, I think the same layer I have, I've sent it to him, but, but can you show Amrita which which point you are?
+
+Ganguly. Amrita
+
+Yeah, the screenshot I have shared and his document link is this one. So this is a pretty good one. I was going through it and you will see that he has updated the diagram also. So I had a couple of, like I was reading it like if someone reads it who does not have any idea, right? So.
+
+We We were were sharing shar some feedback and he has updated the the the diagram based on that, so that blue colour arrow earlier it had only inward, so this was not depicting that the dependency versus source
+
+code flow in the in the circular diagram, so that that is added.
+
+Ganguly. Amrita
+
+See that blue colored from repository to data.
+
+Anand, Yash
+
+Yeah, this is exactly, yeah, I think he has added, Abhijeet, where have you added this one?
+
+Lodh, Abhijeet
+
+This one is in 10th section.
+
+Lodh. Abhijeet
+
+Bank.
+
+Lodh, Abhijeet
+
+Repair Control domain.
+
+Lodh. Abhijeet
+
+And API clean architecture layer responsibility check.
+
+Lodh, Abhijeet
+
+Yeah, this one clean architecture and layer separation, and you do well.
+
+Lodh. Abhijeet
+
+In architecture and DD, OK.
+
+Anand, Yash
+
+Yeah, so combine them. Abhijeet, you need to like maybe have a separate call with our developers, include them so that they can give you a right feedback how to include all of them, okay?
+
+Anand, Yash
+
+Today it's coming separately, but we have to combine them.
+
+Lodh. Abhijeet
+
+Okay, sure, sure.
+
+Ganguly, Amrita
+
+Little bit refinement, but good job.
+
+Lod. Abhijeet
+
+Rajat.
+
+Lodh. Abhijeet
+
+Thank you.
+
+Anand, Yash
+
+OK. Yeah. Thanks, avjeet. Hey, Adam. I see you have joined Anam. So Adam, on on the security one, right. I'm, I'm putting together one Ul Interface so that we can so that the the users can select it like whatever, like security, they have to address like Veracode or code QL or something. So I'll
+
+8:24 PM 9/21/2026
+rean, for sure.
+
+Ganguly, Amrita
+
+Is this part I am talking about? Give me one second to send you this. This is there is, if you were, if you were referring to Daryl document, this is what the anti-corruption layer. The let me send.
+
+Anand. Yash
+
+Yeah, I think the same layer I have, I've sent it to him, but, but can you show Amrita which which point you are?
+
+Ganguly, Amrita
+
+Yeah, the screenshot I have shared and his document link is this one. So this is a pretty good one. I was going through it and you will see that he has updated the diagram also. So I had a couple of like I was
+
+reading it like if someone reads it who does not have any idea, right? So.
+
+Ganguly, Amrita
+
+We were sharing some feedback and he has updated the the the diagram based on that, so that blue colour arrow earller it had only inward, so this was not depicting that the dependency versus source code flow in the in the circular diagram, so that that is added.
+
+Ganguly, Amrita
+
+See that blue colored from repository to data.
+
+Anand, Yash
+
+Yeah, this is exactly, yeah. I think he has added, Abhijeet, where have you added this one?
+
+Lodh, Abhijeet
+
+This one is in 10th section.
+
+Lodh, Abhijeet
+
+Bank
+
+Lodh, Abhijest
+
+Repair Control domain.
+
+Lodh. Abhijeet
+
+And API clean architecture layer responsibility check.
+
+Lodh, Abhijeet
+
+Yeah, this one clean architecture and layer separation, and you do well.
+
+Lodh. Abhijeet
+
+In architecture and DD, OK.
+
+Yeah, so combine them. Abhijeet, you need to like maybe have a separate call with our developers, include them so that they can give you a right feedback how to include all of them, okay?
+
+Anand, Yash
+
+Anand, Yash
+
+Today it's coming separately, but we have to combine them.
+
+Lodh. Abhijeet
+
+Okay, sure, sure.
+
+Ganguly, Amrita
+
+Little bit refinement, but good job.
+
+Lodh, Abhijeet
+
+Rajat.
+
+Lodh. Abhijeet
+
+Thank you.
+
+X
+
+Anand, Yash
+
+Okay, yeah, thanks, Abjit. Hey, Adam, I see you have joined, Adam. So, Adam, on the security one, right, I'm putting together one Ut interface so that we can, so that the users can select it, like whatever, like
+
+security they have to address, like Veracode or CodeQL or something. So I'll be sharing that.
+
+Anand. Yash
+
+with you maybe by end of day.
+
+Anand. Yash
+
+Right. And were you able to like, try the GitHub or do you want me to show you like how to use GitHub actions?
