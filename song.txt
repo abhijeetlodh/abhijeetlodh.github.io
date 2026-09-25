@@ -1,14 +1,1 @@
 
-> Act as an expert technical video producer and scriptwriter. Your task is to generate a complete, detailed 5-minute video script and visual storyboard for a software engineering demonstration. The video will explain an end-to-end API testing and database traceability flow for a financial "Deferral" endpoint.
-> Core Story and Technical Context to Include:
->  * System Architecture & Context: Begin by explaining the microservice flow. The business use case involves the application calling Athena, which in turn calls Athena-Intg services. The integration service routes internally to a "Money-in" service for a GET Deferral, and subsequently to MAS (Managed Account Services) for POST change requests. Ensure the script mentions handling both single and multiple request packets.
->  * API Client Execution (Using Bruno): Instruct the viewer on how to test this locally using the Bruno API tool. The narrator should explain fetching an authorization token, navigating to the Authorization tab in Bruno, and pasting it.
->  * The Inbound Call: Explain that the first step is executing the inbound participant endpoint. Once a valid response is received, the tester must copy the "Transaction ID" from the response.
->  * The Deferral Payload: Visually feature the preparation of a POST request using the deferral payload. Provide visual cues for a specific "Multiple Value" JSON payload. The script must explicitly mention passing the copied traceability_id and an array called contribution_elections. Specify the exact array items being tested: the first with contribution_amount: 6, contribution_format: "PERCENT", and money_type: "PRE_TAX"; and the second with contribution_amount: 2, contribution_format: "PERCENT", and money_type: "ROTH".
->  * Database Traceability Validation: Transition the visuals to SQL Server Management Studio (SSMS) to prove the API worked. The narrator must explain querying the [dbo].[AT_MA_Exceptions] table using the transaction ID. Highlight verifying the correct document types (such as "savings rate") to confirm the endpoint is executing and logging. Finally, explain checking the detail tables to ensure the exact percentages and amounts sent in the payload (6% and 2%) are accurately reflected in the database columns.
-> Output Requirements:
->  * Output a two-column format: "Visual / On-Screen Action" on the left and "Narrator Audio" on the right.
->  * Provide standard video timestamps totaling exactly 5 minutes.
->  * Ensure the tone is instructional, professional, and geared toward QA engineers and backend developers verifying code changes in the deferral V1 branch.
-> 
-
