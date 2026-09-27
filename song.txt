@@ -1,16 +1,1 @@
-@workspace I need your help planning a surgical update to `Impala2PPW.py`. 
 
-**CRITICAL RULE: DO NOT REWRITE OR OUTPUT THE FULL SCRIPT.** Do not write any code blocks that replace my existing code. I only want an analysis and an integration plan.
-
-Please analyze these three files:
-1. `Impala2PPW.py` (The tool we are updating to use PDF/LLM extraction).
-2. `Protocol_data_retriever.py` (Our reference for how to structure efficient retrieval and functions).
-3. `resources.txt` (This contains the target output payload of the old tool that we must perfectly match for the Flex agents).
-
-**Please provide a step-by-step Integration Plan answering the following:**
-
-1. **Location Analysis:** Look deeply at `Impala2PPW.py`. Tell me the EXACT function names or line areas where it is safest to inject the new PDF/LLM extraction logic. How do we bypass the old logic without deleting the foundational print statements, routing, and variable setups?
-2. **Structural Reference:** Look at `Protocol_data_retriever.py`. How does it efficiently structure its retrieval and payload assembly? What specific architectural patterns from this file should we mimic in `Impala2PPW.py` to ensure the downstream agents accept our new output?
-3. **Payload Mapping:** Look at the output payload in `resources.txt`. Which specific variables or dictionary keys need to be constructed by our new LLM extraction to perfectly populate that exact output? 
-
-Give me a detailed, step-by-step blueprint of *where* and *how* we should make these updates manually.
