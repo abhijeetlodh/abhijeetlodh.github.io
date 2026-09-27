@@ -1,1 +1,17 @@
+@workspace I need to update the `Impala2PPW.py` Dataiku Agent Tool so it extracts data from PPW PDFs using an LLM instead of querying Snowflake databases. 
 
+Please analyze the three open files:
+1. `Impala2PPW.py`: The file to be updated.
+2. `Protocol_data_retriever.py`: The legacy tool. Analyze its final output payload to understand the exact structure, format, and magnitude of the data we need to generate.
+3. `resources.txt`: Contains the specific mandatory and conditional fields required by the "Flex with cycles" and "Flex with titration" forecasting agents.
+
+**Your Task:**
+Refactor `Impala2PPW.py` to replace the SQL/database extraction logic with a PDF-to-LLM extraction pipeline. 
+
+**Rules for Implementation:**
+- **You Decide the Functions:** I will not dictate the internal function names. Analyze both Python scripts and decide the most efficient way to implement the PDF ingestion and LLM sanitization logic.
+- **Preserve the Shell:** Preserve the existing code structure in `Impala2PPW.py`, including the class definition, `get_descriptor()`, and basic input handling. Only replace the database/SQL logic with the new document extraction logic.
+- **Enforce the Output Schema:** Your LLM system prompt MUST instruct the AI to output a JSON payload that perfectly matches the structure found in `Protocol_data_retriever.py`. 
+- **Integrate Custom Fields:** You MUST explicitly incorporate the mandatory and conditional fields from `resources.txt` into your extraction logic/LLM prompt so the parser knows exactly what to pull for the Flex agents.
+
+Please output the fully updated code for `Impala2PPW.py`.
