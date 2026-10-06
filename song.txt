@@ -1,1 +1,44 @@
+graph TD
+    %% Define Nodes
+    AgentOutput[Agent Tool JSON Payload<br>Extracted PPW Data]
+    SplitDecision{Split Payload<br>Do NOT create one big table}
+    
+    %% Defined Tables with Prefix
+    Tab1[(AISPPW_Visits)]
+    Tab2[(AISPPW_Cycles)]
+    Tab3[(AISPPW_Cycle_Visits)]
+    Tab4[(AISPPW_Treatment_Groups)]
+    Tab5[(AISPPW_Dispensing_Rules...)]
+    
+    %% Storage and Destination
+    S3Buckets[[DSS S3 Buckets]]
+    Snowflake[(Snowflake Database)]
+    
+    %% Flow
+    AgentOutput --> SplitDecision
+    
+    SplitDecision -->|Component 1| Tab1
+    SplitDecision -->|Component 2| Tab2
+    SplitDecision -->|Component 3| Tab3
+    SplitDecision -->|Component 4| Tab4
+    SplitDecision -->|Component 5| Tab5
+    
+    Tab1 --> S3Buckets
+    Tab2 --> S3Buckets
+    Tab3 --> S3Buckets
+    Tab4 --> S3Buckets
+    Tab5 --> S3Buckets
+    
+    S3Buckets -->|Append Data| Snowflake
+    
+    %% Styling
+    classDef tables fill:#d4edda,stroke:#28a745,stroke-width:2px;
+    classDef process fill:#cce5ff,stroke:#007bff,stroke-width:2px;
+    classDef decision fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
+    classDef database fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    
+    class Tab1,Tab2,Tab3,Tab4,Tab5 tables;
+    class AgentOutput,S3Buckets process;
+    class SplitDecision decision;
+    class Snowflake database;
 
