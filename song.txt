@@ -1,1 +1,1508 @@
+### 1. Document: PPW Parser & Protocol Data Handling Design
 
+**1.1 Business Objective & Extraction Workflow**
+The Flexible Dosing Forecast Tool answers a specific business question for cycle-based studies: "Given a protocol's visit cycles and dosing rules, how much drug (and packaging) will we need, and by when?" It relies on deterministic calculation rather than guessing missing information. The extraction and computation workflow follows 10 defined steps:
+
+* **Step 1 - Receive Study Information:** The tool ingests building blocks including visit schedules, kits, dispensing rules, treatment groups, dosing plans, cycle definitions, and optional business assumptions (e.g., weight/age/BSA distributions, country-specific rules).
+* **Step 2 - Mode Selection:** Operations are routed through three paths: Quick Check (validation), Standard Forecast (calculation), or Full Report (rehydration). If a standard forecast was already run, the system uses a Rehydration Path utilizing a saved `run_id` to instantly generate the report without recomputing.
+
+
+* **Step 3 - Essentials Validation:** The system confirms internal consistency (visits, kits, dispensing sets, treatment groups) and verifies cycle essentials (structure, duration, schedule). If critical data is missing, execution stops.
+* **Step 4 - Treatment Timeline Generation:** A full schedule of dosing events is laid out across the study, mapping each cycle and visit over time based on the forecast horizon.
+* **Step 5 - Dose Determination:** The tool identifies the correct dose and kit for every visit on the timeline based on priority rules (overrides first, then selected options), accounting for cycle-aware dose changes.
+* **Step 6 - Patient Variation Accounting:** If dosing relies on characteristics (weight, age, BSA, titration), planned patients are split across categories. This is skipped if not applicable.
+* **Step 7 - Country-Specific Rules:** The tool checks supply rules, substituting approved kit alternatives where required by specific countries to reflect real-world constraints.
+* **Step 8 - Demand Calculation:** Patient-driven demand (patients × units per dose × cycle repetitions + safety buffer) is calculated alongside operational demand (site/depot seeding).
+* **Step 9 - Results Production:** Output tables are generated, presenting the detailed dispensing matrix and summaries by forecast, visit, treatment group, cycle, and assumption.
+* **Step 10 - Save, Report, and Export:** The forecast is stamped with a unique `run_id`, persisting in `AI_SP_PAYLOAD_HANDOFF` for future rehydration. It can export to a formatted Excel workbook based on environment configurations.
+
+
+
+**1.2 Table Design, Data Mapping, and Sourcing**
+The extracted payload is disaggregated into specific tables. Below is the detailed mapping of what data goes into each table and its source logic (IMPALA2 vs. PPW Document):
+
+* **`AI_SP_PPW_VISITS`**
+* **Data Stored:** `STUDY_NUMBER`, `PHASE`, `VISIT_ID`, `VISIT_SEQUENCE`, `DESCRIPTION`, `CYCLE_LABEL`, `CYCLE_DAY`, `VISIT_WINDOW_START_DAY`, `VISIT_WINDOW_END_DAY`, `NUMBER_OF_DISPENSING_VISITS`.
+* **Extraction Source:** Primarily derived from IMPALA2 (`IMPALA2_NRT_VISIT_SCHEDULE`, `IMPALA2_NRT_STUDY_PHASES`). Visit labels and cycle boundaries are parsed and concatenated using numeric extraction logic.
+
+
+* **`AI_SP_PPW_CYCLES`**
+* **Data Stored:** `study_number`, `cycle_id`, `cycle_label`, `planned_cycle_count`, `cycle_duration_days`, `phase`.
+* **Extraction Source:** Cycle boundaries and numeric sequences are constructed from IMPALA2 phases, but qualitative narratives and custom boundaries are PPW/Protocol Document driven.
+
+
+* **`AI_SP_PPW_CYCLE_VISITS`**
+* **Data Stored:** `study_number`, `cycle_id`, `phase`, `visit_id`, `visit_sequence`, `cycle_day`, `visit_window_start_day`, `visit_window_end_day`.
+* **Extraction Source:** Mapped by joining IMPALA2 phases and visits. Custom normalized IDs (e.g., `TNC_C1_4_D1`) are derived from the PPW document.
+
+
+* **`AI_SP_PPW_TREATMENT_GROUPS`**
+* **Data Stored:** `STUDY_NUMBER`, `TREATMENT_GROUP_CODE`, `TREATMENT_GROUP_DESCRIPTION`, `COHORT_NUMBER`.
+* **Extraction Source:** Base codes (A, B, C, D) are directly mapped from IMPALA2. Composite values (e.g., `A_NAB`) are PPW/Protocol Document driven.
+
+
+* **`AI_SP_PPW_DISPENSING_RULES`**
+* **Data Stored:** `RULE_SEQUENCE`, `CONJUNCTION`, `DEPENDENCY`.
+* **Extraction Source:** Directly mapped from `IMPALA2_NRT_DISPENSING_RULES`.
+
+
+* **`AI_SP_PPW_KITS` & `AI_SP_PPW_DISPENSING_SET**`
+* **Data Stored:** `KIT_ID`, `DESCRIPTION`, `VIAL_STRENGTH`, `VIAL_STRENGTH_UNIT`, `KIT_TYPE`, `DISPENSING_SET_NUMBER`, `QTY_PER_DISPENSE`, `IS_VIAL_BASED`.
+* **Extraction Source:** Kit IDs and basic descriptions come from IMPALA2 (`IMPALA2_NRT_KIT_DEFS`), utilizing regex to extract numeric `mg` quantities. Blind/open type and specific site-group wording are PPW driven. Quantity per dispense is extracted from `IMPALA2_NRT_CUSTDATA_DEFS`.
+
+
+* **`AI_SP_PPW_DISPENSING_PLAN`**
+* **Data Stored:** `dosing_mode`, `dose_value`, `dose_unit`, `dose_basis`, `dosing_basis`, `rounding_rule`, `vial_selection_rule`.
+* **Extraction Source:** Highly dependent on PPW. Clinical dose values, multi-choice flexible/fixed dosing logic, and specific units (mg/kg) are strictly PPW or Protocol Document driven.
+
+
+
+---
+
+### 2. Updated Mermaid Diagram
+
+```mermaid
+graph TD
+    %% Define Styles
+    classDef process fill:#cce5ff,stroke:#007bff,stroke-width:2px;
+    classDef decision fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
+    classDef database fill:#d4edda,stroke:#28a745,stroke-width:2px;
+    classDef external fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    classDef rehydration fill:#e2f0d9,stroke:#548235,stroke-width:2px;
+
+    %% Rehydration & Processing Flow
+    subgraph Execution & Rehydration Logic
+        Input[Input Payload: study, visits, kits, <br>dispense_rules, treatment_groups, <br>dosing_plan, cycles, cycle_visits]:::process
+        Parse[Parse args --> resolve output_mode <br> resolve incoming run_id / payload_token]:::process
+        CheckMode{output_mode == flex_full_report <br> AND run_id provided?}:::decision
+        
+        Rehydrate[Rehydrate run_id.json <br> from AI_SP_PAYLOAD_HANDOFF]:::rehydration
+        CheckBlob{Blob found?}:::decision
+        Rebuild[Rebuild tables from structured_outputs <br> render_full_from_tables <br> NO recomputation]:::rehydration
+        ReturnReport[Return full report <br> payload_handoff reused]:::rehydration
+        
+        Normalize[Normalize forecast_type <br> default: flex_cycles]:::process
+        Validate[Validate Essentials: Checks consistency <br> across visits, kits, and cycles]:::process
+        Compute[Compute Timeline, Dosing, <br> Patient Variation, and Demand]:::process
+    end
+
+    %% Database Targets
+    subgraph Target Snowflake Tables & Data Mapping
+        T1[(AI_SP_PPW_VISITS)]:::database
+        T1_desc["Fields: STUDY_NUMBER, PHASE, VISIT_ID, CYCLE_LABEL, CYCLE_DAY<br>Source: IMPALA2 + PPW"]:::external
+        
+        T2[(AI_SP_PPW_CYCLES)]:::database
+        T2_desc["Fields: cycle_id, cycle_label, planned_cycle_count<br>Source: PPW Driven + IMPALA2 Phases"]:::external
+
+        T3[(AI_SP_PPW_CYCLE_VISITS)]:::database
+        T3_desc["Fields: cycle_day, visit_window_start_day, visit_window_end_day<br>Source: Phase + Visit Mapping"]:::external
+
+        T4[(AI_SP_PPW_TREATMENT_GROUPS)]:::database
+        T4_desc["Fields: TREATMENT_GROUP_CODE, COHORT, SUBJECT_GROUP<br>Source: IMPALA2 + PPW overrides"]:::external
+
+        T5[(AI_SP_PPW_DISPENSING_RULES)]:::database
+        T5_desc["Fields: RULE_SEQUENCE, CONJUNCTION, DEPENDENCY<br>Source: IMPALA2_NRT_DISPENSING_RULES"]:::external
+        
+        T6[(AI_SP_PPW_KITS_AND_SETS)]:::database
+        T6_desc["Fields: KIT_ID, VIAL_STRENGTH, QTY_PER_DISPENSE<br>Source: IMPALA2 Regex + PPW text"]:::external
+        
+        T7[(AI_SP_PPW_DISPENSING_PLAN)]:::database
+        T7_desc["Fields: dosing_mode, dose_value, dose_unit, rounding_rule<br>Source: Strictly PPW Document Driven"]:::external
+
+        T1 -.- T1_desc
+        T2 -.- T2_desc
+        T3 -.- T3_desc
+        T4 -.- T4_desc
+        T5 -.- T5_desc
+        T6 -.- T6_desc
+        T7 -.- T7_desc
+    end
+
+    %% Flow Connections
+    Input --> Parse
+    Parse --> CheckMode
+    
+    CheckMode -- Yes --> Rehydrate
+    Rehydrate --> CheckBlob
+    CheckBlob -- Yes --> Rebuild
+    Rebuild --> ReturnReport
+    
+    CheckMode -- No --> Normalize
+    CheckBlob -- No (recompute) --> Normalize
+    
+    Normalize --> Validate
+    Validate --> Compute
+    
+    %% Output to Tables
+    Compute -->|Extract & Map to Component 1| T1
+    Compute -->|Extract & Map to Component 2| T2
+    Compute -->|Extract & Map to Component 3| T3
+    Compute -->|Extract & Map to Component 4| T4
+    Compute -->|Extract & Map to Component 5| T5
+    Compute -->|Extract & Map to Component 6| T6
+    Compute -->|Extract & Map to Component 7| T7
+
+```
+
+
+
+============
+separate+
+=======
+Yes. With the additional lineage you provided, I would change the design substantially.
+
+ The client sample is not just a **pipeline diagram**; it is a **functional/data-lineage architecture diagram**. Your updated design therefore needs to communicate four things simultaneously:
+
+ 1. **How the PPW is extracted**
+2. **How the extracted payload is validated and normalized**
+3. **Exactly what goes into each `AI_SP_PPW_*` table**
+4. **How those tables support the cycle-based flexible-dosing forecast**
+
+ There is also an important modeling point in your supplied lineage: the legacy IMPALA2 model has additional logical domains such as **kits, dispensing sets, and dispensing rules**, but your mandated physical target is still **five Snowflake tables**. I would document those as source/semantic domains whose attributes are consolidated into `AI_SP_PPW_DOSING_PLAN` rather than silently creating additional physical tables.
+
+ Below is a document you can put into your design document, followed by a Mermaid architecture diagram and the detailed table mapping.
+
+---
+
+ # AI Supply Plan — PPW Extraction and Snowflake Data Model
+
+ ## 1\. Purpose
+
+ The purpose of this solution is to extract protocol information directly from the Protocol Parameter Worksheet (PPW) and make it available to the AI Supply Plan forecasting process without depending on the availability or latency of the legacy IMPALA2 database process.
+
+ The solution supports the following business question:
+
+ > **Given a protocol's visit cycles and dosing rules, how much drug and packaging will be required, and by when?**
+
+ The solution is specifically designed for **cycle-based flexible-dosing studies**, where treatment is repeated across defined cycles and visits, for example:
+
+ - Cycle 1 / Day 1
+- Cycle 1 / Day 15
+- Cycle 2 / Day 1
+- Cycle 2 / Day 15
+- etc.
+
+ The design deliberately avoids inventing missing protocol information. If a required value cannot be established from the PPW/protocol or an approved source mapping, the process flags the missing information instead of generating an assumed value.
+
+---
+
+ # 2\. Architectural Objective
+
+ The existing conversational-agent implementation is not suitable for the required forecasting SLA because PDF extraction through the interactive agent can consume several minutes.
+
+ The new architecture moves PPW extraction into a **Dataiku DSS backend process**.
+
+ The target processing flow is:
+
+```
+PPW PDF
+   ↓
+Dataiku Managed Folder
+   ↓
+Fast PDF Text/Table Extraction
+   ↓
+LLM Structured Extraction
+   ↓
+Validation & Normalization
+   ↓
+Split Structured Payload
+   ↓
+5 AI_SP_PPW_* Logical Tables
+   ↓
+S3 / Dataiku Staging
+   ↓
+Snowflake
+   ↓
+Forecast Engine
+   ↓
+Drug + Packaging Demand
+   ↓
+Report / Excel Export
+```
+
+ The architecture uses the five target tables to avoid creating one large denormalized PPW payload table.
+
+---
+
+ # 3\. PPW Extraction Process
+
+ ## 3.1 Input
+
+ The input is a PPW PDF uploaded into the Dataiku Managed Folder:
+
+```
+PPW_DOCUMENTS
+```
+
+ The document is associated with a `study_code` / `study_number`, for example:
+
+```
+C6461001
+C4771012
+```
+
+ The study code is the primary processing identifier.
+
+---
+
+ ## 3.2 File Detection
+
+ The Dataiku scenario monitors the `PPW_DOCUMENTS` managed folder.
+
+ When a file is detected:
+
+ 1. Identify the study code.
+2. Check whether the file already exists.
+3. Compare file metadata/hash.
+4. If the file is an exact duplicate, skip processing.
+5. If the file is new, process it.
+6. If the same study has a modified PPW, reprocess it.
+7. Compare the newly extracted data with existing Snowflake data.
+8. If material differences are detected, flag the study for manual review rather than silently replacing data.
+
+---
+
+ # 4\. Extraction Architecture
+
+ ## 4.1 Fast PDF Extraction
+
+ The PDF extraction process uses a lightweight PDF parser such as:
+
+ - PyMuPDF
+- pdfplumber
+
+ The extraction process focuses on relevant PPW content, particularly sections containing terms such as:
+
+```
+Visit
+Cycle
+Treatment
+Dispense
+Dosing
+Phase
+Kit
+Cohort
+Arm
+```
+
+ The extraction process should minimize unnecessary PDF processing to meet the performance objective.
+
+ ### Important design principle
+
+ The optimization should not compromise data completeness.
+
+ If required information is located beyond the initial page range, the extraction strategy must be capable of locating the relevant pages rather than assuming that the first 35–40 pages always contain every required field.
+
+---
+
+ # 5\. LLM Extraction
+
+ The extracted PPW text is sent to the Dataiku LLM Mesh.
+
+ The LLM produces a structured JSON payload containing the logical PPW domains.
+
+ Conceptually:
+
+```
+{
+  "study": {},
+  "visits": [],
+  "cycles": [],
+  "cycle_visits": [],
+  "treatment_groups": [],
+  "dosing_plan": []
+}
+```
+
+ The LLM is instructed to:
+
+ - extract only information present in the source;
+- preserve protocol terminology;
+- never invent missing values;
+- distinguish PPW-driven information from IMPALA2-derived information;
+- return null/unknown when the source does not provide a value;
+- preserve study-level lineage;
+- produce data that can be normalized into the five target tables.
+
+---
+
+ # 6\. Data Validation
+
+ Before data is written to Snowflake, the extracted payload is validated.
+
+ The validation layer checks:
+
+ ### Study-level consistency
+
+ - Study number exists.
+- Study number matches the document.
+- Required PPW sections are available.
+
+ ### Visit consistency
+
+ - Visits have valid identifiers.
+- Visit sequence is available.
+- Visit/cycle relationships are valid.
+- Visit windows are internally consistent.
+
+ ### Cycle consistency
+
+ - Cycle definitions exist where required.
+- Cycle start/end boundaries can be established.
+- No arbitrary cycle duration is assumed.
+
+ ### Treatment-group consistency
+
+ - Treatment groups are identified.
+- Treatment-group/visit relationships are valid.
+- Planned subjects are available where required.
+
+ ### Dosing consistency
+
+ - Dose information is traceable to PPW/protocol or approved legacy lineage.
+- Dosing rules are not inferred from kit descriptions alone.
+- Country-specific rules are not fabricated.
+- Missing clinical dosing attributes are explicitly flagged.
+
+---
+
+ # 7\. Five Target Snowflake Tables
+
+ The physical target model consists of the following five tables:
+
+ | # | Table | Business Meaning |
+| --- | --- | --- |
+| 1 | `AI_SP_PPW_VISITS` | **WHEN** — protocol visit schedule |
+| 2 | `AI_SP_PPW_CYCLES` | **REPEATING STRUCTURE** — cycle definition |
+| 3 | `AI_SP_PPW_CYCLE_VISITS` | **WHEN WITHIN A CYCLE** — cycle/visit relationship |
+| 4 | `AI_SP_PPW_TREATMENT_GROUPS` | **WHO** — treatment population |
+| 5 | `AI_SP_PPW_DOSING_PLAN` | **WHAT** — dose, kit and dispensing rules |
+
+This separation is important because the forecasting engine needs to independently reason about:
+
+```
+WHEN
+  ↓
+CYCLE
+  ↓
+WHO
+  ↓
+WHAT
+  ↓
+HOW MUCH
+```
+
+---
+
+ # 8\. Table 1 — `AI_SP_PPW_VISITS`
+
+ ## Significance
+
+ `AI_SP_PPW_VISITS` is the authoritative normalized representation of the **protocol visit schedule**.
+
+ It answers:
+
+ > **What visits exist in the study, and when do they occur?**
+
+ This table is primarily concerned with the temporal definition of protocol visits.
+
+ ### Logical grain
+
+ One row represents a study visit.
+
+ ### Primary business key
+
+```
+STUDY_NUMBER + VISIT_ID
+```
+
+ ### Target attributes
+
+ | Target Column | Source / Lineage | Transformation | Join |
+| --- | --- | --- | --- |
+| `STUDY_NUMBER` | `IMPALA2_NRT_VISIT_SCHEDULE.VIS_STU_STUDY_CODE` | Direct mapping | None |
+| `PHASE` | `IMPALA2_NRT_STUDY_PHASES.STP_PHASE_NAME` | Direct mapping | Study + phase |
+| `VISIT_ID` | Visit schedule / phase | Constructed normalized visit identifier | Phase + visit |
+| `VISIT_SEQUENCE` | `IMPALA2_NRT_VISIT_SCHEDULE.VIS_ORDER` | Direct mapping | None |
+| `DESCRIPTION` | `IMPALA2_NRT_VISIT_SCHEDULE.VIS_VISIT_DESC` | Direct mapping | None |
+| `CYCLE_LABEL` | Phase + cycle fields + duration | Construct cycle label | Study + phase |
+| `CYCLE_DAY` | `VIS_VISIT_LABEL` | Extract numeric visit/day component | None |
+| `VISIT_WINDOW_START_DAY` | `VIS_BEFORE_WINDOW` | Convert to signed start-day value | None |
+| `VISIT_WINDOW_END_DAY` | `VIS_AFTER_WINDOW` | Direct mapping | None |
+| `NUMBER_OF_DISPENSING_VISITS` | `IMPALA2_NRT_VISIT_STEPS.VSP_FUN_FUNCTION_ID` | `COUNT_IF(VSP_FUN_FUNCTION_ID='SUBJ_DISPENSE')` | Study + visit |
+
+### Important transformation
+
+ The cycle label is generated using phase/cycle metadata, conceptually:
+
+```
+Q{VIS_DURATION_VAL}{VIS_DURATION_UNIT_HDWMY}
+Cycle {STP_CYCLE_STARTING_NUM}-{cycle_end}
+```
+
+ where the cycle end is derived from the available phase/cycle boundary information.
+
+ ### Business usage
+
+ The table is consumed by the forecast timeline builder to determine:
+
+ - visit order;
+- visit timing;
+- cycle day;
+- visit windows;
+- dispensing-event counts.
+
+---
+
+ # 9\. Table 2 — `AI_SP_PPW_CYCLES`
+
+ ## Significance
+
+ `AI_SP_PPW_CYCLES` defines the repeating treatment structure of the protocol.
+
+ It answers:
+
+ > **How is the study divided into treatment cycles?**
+
+ ### Logical grain
+
+ One row per study/cycle.
+
+ ### Business key
+
+```
+STUDY_NUMBER + CYCLE_ID
+```
+
+ ### Target attributes
+
+ | Target Column | Source / Lineage | Transformation |
+| --- | --- | --- |
+| `STUDY_NUMBER` | `IMPALA2_NRT_STUDY_PHASES.STP_STU_STUDY_CODE` | Direct mapping |
+| `CYCLE_ID` | Phase/cycle/treatment-group lineage | Construct governed cycle identifier |
+| `CYCLE_LABEL` | Study phases + visit schedule | Construct source-derived cycle label |
+| `PLANNED_CYCLE_COUNT` | `STP_MAX_REPEATING_NUM` | `STP_MAX_REPEATING_NUM + 1` where applicable |
+| `CYCLE_DURATION_DAYS` | Phase + visit duration | Derive from day-based phase/visit information when supported |
+| `PHASE` | `STP_PHASE_NAME` | Direct mapping |
+
+### Important rule
+
+ The system must **not** automatically assume:
+
+```
+28 days = 1 cycle
+```
+
+ or any other fallback cycle duration.
+
+ If cycle duration or cycle count is required but cannot be established from the available data, the study should be flagged.
+
+ ### Business usage
+
+ The forecast engine uses this table to generate:
+
+```
+Cycle 1
+   ↓
+Cycle 2
+   ↓
+Cycle 3
+   ↓
+...
+```
+
+ across the requested forecast horizon.
+
+---
+
+ # 10\. Table 3 — `AI_SP_PPW_CYCLE_VISITS`
+
+ ## Significance
+
+ `AI_SP_PPW_CYCLE_VISITS` resolves the relationship between cycles and visits.
+
+ It answers:
+
+ > **Which visits occur within each treatment cycle, and on what day?**
+
+ This is the bridge between the cycle model and visit model.
+
+ ### Logical grain
+
+ One row per:
+
+```
+STUDY_NUMBER
++
+CYCLE_ID
++
+VISIT_ID
++
+TREATMENT_GROUP
+```
+
+ where treatment-group applicability exists.
+
+ ### Target attributes
+
+ | Target Column | Source / Lineage | Transformation |
+| --- | --- | --- |
+| `STUDY_NUMBER` | Study phases / visit schedule | Direct mapping |
+| `CYCLE_ID` | Phase + cycle boundaries + treatment group where applicable | Construct normalized cycle ID |
+| `CYCLE_LABEL` | Phase + cycle metadata | Construct cycle label |
+| `TREATMENT_GROUP` | `DIR_TGP_TG_CODE` | Native mapping / PPW governed mapping |
+| `PHASE` | `STP_PHASE_NAME` | Direct mapping |
+| `VISIT_ID` | Phase + cycle range + visit label | Construct normalized visit ID |
+| `VISIT_SEQUENCE` | `VIS_ORDER` | Direct mapping |
+| `CYCLE_DAY` | Visit label | Extract numeric component |
+| `VISIT_WINDOW_START_DAY` | `VIS_BEFORE_WINDOW` | Convert to signed start-day |
+| `VISIT_WINDOW_END_DAY` | `VIS_AFTER_WINDOW` | Direct mapping |
+
+### Relationship
+
+ Conceptually:
+
+```
+CYCLE
+   |
+   +--- Visit 1
+   |
+   +--- Visit 2
+   |
+   +--- Visit 3
+   |
+   +--- Visit N
+```
+
+ ### Business usage
+
+ This table is used to build the actual treatment timeline.
+
+ For example:
+
+```
+Cycle 1
+ ├── Day 1
+ ├── Day 15
+ └── Day 29
+
+Cycle 2
+ ├── Day 1
+ ├── Day 15
+ └── Day 29
+```
+
+ The resulting timeline becomes the basis for dosing and dispensing calculations.
+
+---
+
+ # 11\. Table 4 — `AI_SP_PPW_TREATMENT_GROUPS`
+
+ ## Significance
+
+ `AI_SP_PPW_TREATMENT_GROUPS` defines **who receives treatment**.
+
+ It answers:
+
+ > **Which patients belong to which treatment group, arm, cohort or subject group?**
+
+ ### Logical grain
+
+ One row per study/treatment-group combination.
+
+ ### Business key
+
+```
+STUDY_NUMBER + TREATMENT_GROUP_CODE
+```
+
+ ### Target attributes
+
+ | Target Column | Source / Lineage | Transformation |
+| --- | --- | --- |
+| `STUDY_NUMBER` | `IMPALA2_NRT_TREATMENT_GROUPS.TGP_STU_STUDY_CODE` | Direct mapping |
+| `TREATMENT_GROUP_CODE` | `TGP_TG_CODE` / dispensing rules | Direct mapping |
+| `TREATMENT_GROUP_DESCRIPTION` | `TGP_TG_DESC` | Direct mapping |
+| `COHORT_NUMBER` | `DIR_COH_COHORT_NUM` | Direct mapping |
+| `ARM` | PPW / protocol | PPW-driven |
+| `SUBJECT_GROUP` | PPW / protocol | PPW-driven |
+| `PLANNED_SUBJECTS` | Forecast input / protocol | Direct or governed mapping |
+| `POPULATION` | PPW / protocol | PPW-driven |
+| `COUNTRY` | PPW / protocol where applicable | PPW-driven |
+
+### Important rule
+
+ Composite treatment-group values such as:
+
+```
+A_NAB
+A_PAC
+B_NAB
+B_PAC
+```
+
+ must not be fabricated by algorithmic interpretation of an arbitrary treatment-group code.
+
+ If the meaning is not explicitly available in the governed PPW/protocol mapping, it remains unresolved.
+
+ ### Business usage
+
+ This table provides the population dimension for the demand calculation:
+
+```
+Treatment Group
+      ↓
+Planned Patients
+      ↓
+Applicable Cycle
+      ↓
+Applicable Visit
+      ↓
+Applicable Dose
+```
+
+---
+
+ # 12\. Table 5 — `AI_SP_PPW_DOSING_PLAN`
+
+ ## Significance
+
+ This is the most important table for the actual drug and packaging forecast.
+
+ It answers:
+
+ > **What should be administered or dispensed for a particular treatment group, cycle and visit?**
+
+ The table consolidates the dosing/dispensing semantics that historically existed across several IMPALA2 logical domains, including:
+
+ - dispensing rules;
+- dispensing sets;
+- kit definitions;
+- kit descriptions;
+- variable dosing;
+- PPW-driven dosing information.
+
+ ### Logical grain
+
+ The preferred logical grain is:
+
+```
+STUDY_NUMBER
++
+TREATMENT_GROUP
++
+PHASE
++
+CYCLE
++
+VISIT
++
+RULE_GROUP_ID
+```
+
+ ### Target attributes
+
+ | Target Column | Source / Lineage | Transformation |
+| --- | --- | --- |
+| `STUDY_NUMBER` | `DIR_STU_STUDY_CODE` | Direct mapping |
+| `TREATMENT_GROUP` | `DIR_TGP_TG_CODE` | Direct/native mapping |
+| `PHASE` | `STP_PHASE_NAME` | Phase-to-visit mapping |
+| `VISIT_ID` | Visit schedule + phase | Construct normalized visit ID |
+| `CYCLE_ID` | Phase + cycle boundaries + treatment group | Construct cycle identifier |
+| `CYCLE_LABEL` | Phase + cycle boundaries | Construct source-derived label |
+| `RULE_GROUP_ID` | `DRG_GROUP_ID` | Direct mapping where available |
+| `VISIT_NUMBER` | `DIR_VIS_VISIT_NUM` | Direct mapping |
+| `COHORT_NUMBER` | `DIR_COH_COHORT_NUM` | Direct mapping |
+| `DISPENSING_SET_NUMBER` | `DIR_DSE_DISPENSING_SET_NUM` | Direct mapping |
+| `DISPENSING_SET` | `DSE_SET_NAME` | Direct mapping |
+| `RULE_SEQUENCE` | `DIR_LINE_ITEM_SEQ` | Direct mapping |
+| `CONJUNCTION` | `DIR_CONJUNCTION` | Direct mapping |
+| `DEPENDENCY` | `DIR_DSE_DEPENDENCY` | Direct mapping |
+| `KIT_ID` | `KDF_EXTERNAL_KTYPE_ID` | Map through dispensing-set/set-of-kits relationships |
+| `KIT_DESCRIPTION` | `KDF_KIT_DESC` | Direct mapping |
+| `VIAL_STRENGTH` | `KDF_KIT_DESC` | Extract numeric mg strength |
+| `VIAL_STRENGTH_UNIT` | `KDF_KIT_DESC` | Identify strength unit |
+| `KIT_TYPE` | PPW / governed mapping | PPW-driven |
+| `SOURCE_NOTE` | PPW / protocol | Preserve source explanation |
+| `DOSE_DESCRIPTION` | PPW / protocol | Do not infer from kit quantities |
+| `DOSE_VALUE` | PPW / protocol | Clinical dose value |
+| `DOSE_UNIT` | PPW / protocol | e.g. mg, mg/kg |
+| `DOSE_BASIS` | PPW / protocol | e.g. fixed, weight-based |
+| `DOSING_MODE` | PPW / `VDO_DTY_DOSING_TYPE_CODE` where applicable | Governed mapping |
+| `ROUNDING_RULE` | PPW / protocol | Governed document logic |
+| `VIAL_DISPENSING_SET` | Dispensing-set lineage | Direct/native set mapping |
+| `ALLOWED_VIAL_STRENGTHS` | Set + kit definitions | Aggregate distinct strengths |
+| `VIAL_SELECTION_RULE` | PPW / protocol | Governed rule |
+| `DISPENSING_SET_BY_VIAL_STRENGTH` | Dispensing set + kit definitions | Build strength → set mapping |
+| `COUNTRY_VIAL_STRENGTH_RULES` | PPW/protocol | Do not infer from kit ID |
+| `SUBJECT_ATTRIBUTE_SOURCE` | PPW/protocol | e.g. weight/BSA/age |
+| `DOSE_RESOLUTION_MODE` | PPW/protocol | Governed mapping |
+
+---
+
+ # 13\. Kit and Dispensing-Set Lineage
+
+ The source lineage supplied contains logical kit and dispensing-set entities.
+
+ These include:
+
+```
+IMPALA2_NRT_KIT_DEFS
+IMPALA2_NRT_DISPENSING_SET
+IMPALA2_NRT_SETS_OF_KITS
+IMPALA2_NRT_CUSTDATA_DEFS
+IMPALA2_NRT_DISPENSING_RULES
+```
+
+ These do **not necessarily become separate physical Snowflake tables** under the five-table target architecture.
+
+ Instead, their forecasting-relevant attributes are normalized into:
+
+```
+AI_SP_PPW_DOSING_PLAN
+```
+
+ This is important to document because otherwise a reviewer may ask:
+
+ > "Where did the kit information go if there is no AI\_SP\_PPW\_KITS table?"
+
+ The answer is:
+
+ > Kit and dispensing-set attributes are part of the dosing/dispensing business domain and are represented within `AI_SP_PPW_DOSING_PLAN` in the current five-table physical model.
+
+ If the business later requires independent kit-level reporting or inventory management, a separate `AI_SP_PPW_KITS` table can be introduced as a future physical-model extension.
+
+---
+
+ # 14\. Important Source-Lineage Principle
+
+ Not every field should be derived from IMPALA2.
+
+ The mapping should explicitly classify fields into three categories.
+
+ ### Category A — Direct technical lineage
+
+ Example:
+
+```
+STUDY_NUMBER
+VISIT_SEQUENCE
+DESCRIPTION
+PHASE
+```
+
+ These can be directly mapped from known IMPALA2 source fields.
+
+ ### Category B — Deterministic transformation
+
+ Example:
+
+```
+VISIT_ID
+CYCLE_LABEL
+CYCLE_DAY
+NUMBER_OF_DISPENSING_VISITS
+```
+
+ These can be constructed using documented transformation logic.
+
+ ### Category C — PPW / protocol-driven
+
+ Examples:
+
+```
+DOSE_VALUE
+DOSE_UNIT
+DOSE_BASIS
+TREATMENT_GROUP_DESCRIPTION
+COUNTRY_VIAL_STRENGTH_RULES
+KIT_TYPE
+DOSE_DESCRIPTION
+```
+
+ These must come from the PPW/protocol or a governed mapping.
+
+ **The system must not infer these values from unrelated technical fields.**
+
+---
+
+ # 15\. Forecast Processing
+
+ Once the five Snowflake tables are populated, the downstream forecast process uses them in the following sequence.
+
+ ## Step 1 — Validate
+
+ Validate:
+
+```
+VISITS
+CYCLES
+CYCLE_VISITS
+TREATMENT_GROUPS
+DOSING_PLAN
+```
+
+ and verify that cross-references are valid.
+
+---
+
+ ## Step 2 — Build Treatment Timeline
+
+ Combine:
+
+```
+CYCLES
++
+CYCLE_VISITS
++
+TREATMENT_GROUPS
+```
+
+ to create the treatment timeline.
+
+---
+
+ ## Step 3 — Resolve Dose
+
+ For every treatment event:
+
+```
+Treatment Group
+        +
+Cycle
+        +
+Visit
+        ↓
+DOSING_PLAN
+        ↓
+Dose + Kit + Dispensing Rule
+```
+
+ The dose-selection hierarchy must respect explicit overrides and governed PPW rules.
+
+---
+
+ ## Step 4 — Patient Variation
+
+ Where relevant, patient characteristics are applied:
+
+```
+Weight
+Age
+BSA
+Titration
+Population
+```
+
+ If the dosing model requires these assumptions but they are not available, the process flags the missing information.
+
+---
+
+ ## Step 5 — Country Rules
+
+ Country-specific supply constraints are applied.
+
+ For example:
+
+```
+Country
+   ↓
+Allowed presentation
+   ↓
+Allowed vial strength
+   ↓
+Approved kit
+```
+
+ The system must not infer country applicability merely from a kit identifier.
+
+---
+
+ ## Step 6 — Demand Calculation
+
+ The calculation conceptually becomes:
+
+```
+Patients
+×
+Dose / Units per Dose
+×
+Frequency
+×
+Cycle / Visit Repetition
++
+Safety Buffer
++
+Operational Demand
+=
+Forecast Demand
+```
+
+ Operational demand such as site/depot seeding is kept separate from patient-driven demand.
+
+---
+
+ # 16\. Outputs
+
+ The forecasting process produces:
+
+ - detailed dispensing matrix;
+- forecast summary;
+- visit-level summary;
+- treatment-group summary;
+- cycle-level summary;
+- assumption summary;
+- drug demand;
+- packaging demand.
+
+ Each result is associated with a unique:
+
+```
+run_id
+```
+
+ The result can then be:
+
+ - saved;
+- reopened;
+- reported;
+- exported to Excel.
+
+---
+
+ # 17\. Recalculation / Report Reuse
+
+ A useful architectural capability from the existing client pattern should also be documented.
+
+ If a standard forecast has already been calculated and saved, a subsequent full-report request should be able to retrieve the saved result using `run_id` instead of recalculating the forecast.
+
+ Conceptually:
+
+```
+run_id
+  ↓
+Saved Forecast
+  ↓
+Rehydrate
+  ↓
+Generate Report
+```
+
+ This ensures:
+
+ 1. faster report generation;
+2. identical numbers between the original forecast and regenerated report;
+3. no unnecessary recalculation.
+
+---
+
+ # 18\. Recommended Mermaid Architecture
+
+ The following is the version I would use for the **main architecture diagram**. It follows the style of the client sample more closely: input → normalize/validate → decision → structured tables → Snowflake → forecast.
+
+ Mermaid supports flowcharts, subgraphs, database nodes and class-based styling, so the diagram can be kept structured while still showing the data domains.  Mermaid+1
+
+```
+flowchart TD
+
+%% =========================================================
+%% INPUT
+%% =========================================================
+
+PPW["PPW PDF<br/>Protocol Parameter Worksheet<br/>Study Code / Study Number"]
+FOLDER[("Dataiku Managed Folder<br/>PPW_DOCUMENTS")]
+
+PPW --> FOLDER
+
+%% =========================================================
+%% INGESTION / EXTRACTION
+%% =========================================================
+
+EXTRACT["Fast PDF Extraction<br/>PyMuPDF / pdfplumber<br/>Relevant PPW text + tables"]
+
+LLM["LLM Structured Extraction<br/>Dataiku LLM Mesh<br/>default_llm<br/>Raw JSON Payload"]
+
+NORMALIZE["Normalize Payload<br/>Map PPW sections into logical domains<br/>Study / Visits / Cycles / Groups / Dosing"]
+
+VALIDATE["Validate & Completeness Check<br/>Required fields present<br/>Cross-table references valid<br/>No fabricated values"]
+
+FOLDER --> EXTRACT
+EXTRACT --> LLM
+LLM --> NORMALIZE
+NORMALIZE --> VALIDATE
+
+%% =========================================================
+%% FILE / DUPLICATE CONTROL
+%% =========================================================
+
+FILECHECK{"File New or Modified?"}
+
+FOLDER --> FILECHECK
+
+FILECHECK -->|Duplicate| SKIP["Skip Processing"]
+FILECHECK -->|New / Modified| EXTRACT
+
+%% =========================================================
+%% EXISTING STUDY CONTROL
+%% =========================================================
+
+EXISTING{"Existing Study Data<br/>for STUDY_NUMBER?"}
+
+VALIDATE --> EXISTING
+
+DIFF{"Material Difference<br/>from Existing Data?"}
+
+EXISTING -->|No| SPLIT
+EXISTING -->|Yes| DIFF
+
+DIFF -->|No| SPLIT
+DIFF -->|Yes| REVIEW["Manual Review Required<br/>Do not silently overwrite"]
+
+%% =========================================================
+%% PAYLOAD SPLIT
+%% =========================================================
+
+SPLIT["Split Structured Payload<br/>Five normalized PPW data domains"]
+
+%% =========================================================
+%% FIVE TARGET TABLES
+%% =========================================================
+
+subgraph TABLES["AI Supply Plan PPW Relational Data Model"]
+
+    VISITS[("AI_SP_PPW_VISITS<br/><br/>WHEN<br/>Protocol Visit Schedule<br/><br/>Study • Phase • Visit ID<br/>Visit Sequence • Description<br/>Cycle Label • Cycle Day<br/>Visit Windows<br/>Dispensing Visit Count")]
+
+    CYCLES[("AI_SP_PPW_CYCLES<br/><br/>REPEATING STRUCTURE<br/>Cycle Definitions<br/><br/>Study • Cycle ID<br/>Cycle Label • Phase<br/>Cycle Duration<br/>Planned Cycle Count")]
+
+    CV[("AI_SP_PPW_CYCLE_VISITS<br/><br/>WHEN WITHIN A CYCLE<br/><br/>Study • Cycle ID • Visit ID<br/>Treatment Group • Phase<br/>Visit Sequence • Cycle Day<br/>Visit Windows")]
+
+    GROUPS[("AI_SP_PPW_TREATMENT_GROUPS<br/><br/>WHO<br/>Treatment Population<br/><br/>Study • Treatment Group<br/>Description • Arm<br/>Cohort • Subject Group<br/>Planned Subjects • Population")]
+
+    DOSE[("AI_SP_PPW_DOSING_PLAN<br/><br/>WHAT<br/>Dosing + Dispensing Rules<br/><br/>Study • Treatment Group<br/>Phase • Cycle • Visit<br/>Dose • Unit • Basis<br/>Kit • Vial Strength<br/>Dispensing Set • Rules<br/>Country / Patient Rules")]
+
+end
+
+SPLIT --> VISITS
+SPLIT --> CYCLES
+SPLIT --> CV
+SPLIT --> GROUPS
+SPLIT --> DOSE
+
+%% =========================================================
+%% DATA DEPENDENCIES
+%% =========================================================
+
+CYCLES --> CV
+VISITS --> CV
+GROUPS --> CV
+CV --> DOSE
+
+%% =========================================================
+%% STAGING / SNOWFLAKE
+%% =========================================================
+
+STAGE[("Dataiku / S3 Staging<br/>Structured Dataset Output")]
+
+SNOW[("Snowflake<br/>AI Supply Plan PPW Schema")]
+
+VISITS --> STAGE
+CYCLES --> STAGE
+CV --> STAGE
+GROUPS --> STAGE
+DOSE --> STAGE
+
+STAGE -->|"APPEND / governed update"| SNOW
+
+%% =========================================================
+%% FORECAST ENGINE
+%% =========================================================
+
+INPUTCHECK["Forecast Input Validation<br/>Visits + Cycles + Cycle Visits<br/>Treatment Groups + Dosing Plan"]
+
+TIMELINE["Build Treatment Timeline<br/>Cycle → Visit → Dosing Event"]
+
+DOSERULE["Resolve Dose / Kit<br/>Explicit override → governed rule<br/>Cycle + Visit + Treatment Group"]
+
+PATIENT["Apply Patient Variation<br/>Weight / Age / BSA / Titration<br/>Only when required"]
+
+COUNTRY["Apply Country Supply Rules<br/>Approved presentation / vial"]
+
+DEMAND["Calculate Demand<br/>Patients × Units × Frequency<br/>+ Safety Buffer<br/>+ Operational Demand"]
+
+RESULT["Forecast Results<br/>Dispensing Matrix<br/>Forecast / Visit / Group / Cycle"]
+
+SAVE["Save Forecast<br/>Unique run_id"]
+
+REPORT["Report / Excel Export"]
+
+SNOW --> INPUTCHECK
+INPUTCHECK --> TIMELINE
+TIMELINE --> DOSERULE
+DOSERULE --> PATIENT
+PATIENT --> COUNTRY
+COUNTRY --> DEMAND
+DEMAND --> RESULT
+RESULT --> SAVE
+SAVE --> REPORT
+
+%% =========================================================
+%% REPORT REUSE
+%% =========================================================
+
+REUSE{"Full Report Request<br/>with Existing run_id?"}
+
+SAVE --> REUSE
+
+REHYDRATE["Rehydrate Saved Forecast<br/>No Recalculation"]
+
+REUSE -->|Yes| REHYDRATE
+REUSE -->|No| REPORT
+REHYDRATE --> REPORT
+
+%% =========================================================
+%% STYLES
+%% =========================================================
+
+classDef input fill:#eeeeee,stroke:#666666,stroke-width:2px;
+classDef process fill:#e8f1f8,stroke:#4d7ea8,stroke-width:2px;
+classDef table fill:#dff0d8,stroke:#4cae4c,stroke-width:2px;
+classDef storage fill:#fff4cc,stroke:#d6a500,stroke-width:2px;
+classDef decision fill:#e8f4f8,stroke:#55a8b8,stroke-width:2px;
+classDef warning fill:#f8d7da,stroke:#c9302c,stroke-width:2px;
+classDef forecast fill:#d9edf7,stroke:#31708f,stroke-width:2px;
+classDef result fill:#dff0d8,stroke:#3c763d,stroke-width:2px;
+
+class PPW,FOLDER input;
+class EXTRACT,LLM,NORMALIZE,VALIDATE,SPLIT process;
+class VISITS,CYCLES,CV,GROUPS,DOSE table;
+class STAGE,SNOW storage;
+class FILECHECK,EXISTING,DIFF,REUSE decision;
+class SKIP,REVIEW warning;
+class INPUTCHECK,TIMELINE,DOSERULE,PATIENT,COUNTRY,DEMAND forecast;
+class RESULT,SAVE,REPORT,REHYDRATE result;
+```
+
+---
+
+ # 19\. Simplified Executive Version
+
+ For the actual **draw.io presentation to the client/manager**, I would not put all of the columns into the architecture diagram.
+
+ Use this simplified version on the first page:
+
+```
+flowchart TD
+
+A["PPW PDF<br/>Study Code"]
+--> B["Dataiku Managed Folder<br/>PPW_DOCUMENTS"]
+
+B --> C["Fast PDF Extraction"]
+C --> D["LLM Structured Extraction"]
+D --> E["Normalize + Validate"]
+
+E --> F{"New / Modified<br/>Study Data?"}
+
+F -->|No / Duplicate| G["Skip"]
+F -->|Yes| H["Split Structured Payload"]
+
+subgraph T["AI_SP_PPW Snowflake Data Model"]
+
+    I[("AI_SP_PPW_VISITS<br/>WHEN<br/>Visit Schedule")]
+    J[("AI_SP_PPW_CYCLES<br/>REPEATING STRUCTURE<br/>Cycle Definition")]
+    K[("AI_SP_PPW_CYCLE_VISITS<br/>WHEN WITHIN CYCLE")]
+    L[("AI_SP_PPW_TREATMENT_GROUPS<br/>WHO")]
+    M[("AI_SP_PPW_DOSING_PLAN<br/>WHAT<br/>Dose + Kit + Rules")]
+
+end
+
+H --> I
+H --> J
+H --> K
+H --> L
+H --> M
+
+I --> N[("S3 / Dataiku Staging")]
+J --> N
+K --> N
+L --> N
+M --> N
+
+N --> O[("Snowflake")]
+
+O --> P["Forecast Validation"]
+P --> Q["Build Cycle / Visit Timeline"]
+Q --> R["Resolve Dose + Kit"]
+R --> S["Apply Patient / Country Rules"]
+S --> U["Calculate Drug + Packaging Demand"]
+U --> V["Forecast Result + run_id"]
+V --> W["Report / Excel"]
+
+classDef input fill:#eeeeee,stroke:#666,stroke-width:2px;
+classDef process fill:#e8f1f8,stroke:#4d7ea8,stroke-width:2px;
+classDef table fill:#dff0d8,stroke:#4cae4c,stroke-width:2px;
+classDef storage fill:#fff4cc,stroke:#d6a500,stroke-width:2px;
+classDef forecast fill:#d9edf7,stroke:#31708f,stroke-width:2px;
+classDef result fill:#dff0d8,stroke:#3c763d,stroke-width:2px;
+
+class A,B input;
+class C,D,E,H process;
+class I,J,K,L,M table;
+class N,O storage;
+class P,Q,R,S,U forecast;
+class V,W result;
+```
+
+---
+
+ # 20\. Recommended Table-Level Draw.io Layout
+
+ For the actual draw.io document, I recommend representing each table approximately like this:
+
+```
+┌──────────────────────────────────────────┐
+│ AI_SP_PPW_VISITS                         │
+├──────────────────────────────────────────┤
+│ PURPOSE                                  │
+│ WHEN — protocol visit schedule           │
+├──────────────────────────────────────────┤
+│ GRAIN                                    │
+│ Study + Visit                            │
+├──────────────────────────────────────────┤
+│ KEY                                      │
+│ STUDY_NUMBER + VISIT_ID                  │
+├──────────────────────────────────────────┤
+│ MAJOR DATA                               │
+│ • Study Number                            │
+│ • Phase                                   │
+│ • Visit ID                                │
+│ • Visit Sequence                          │
+│ • Description                             │
+│ • Cycle Label                             │
+│ • Cycle Day                               │
+│ • Visit Window Start/End                  │
+│ • Number of Dispensing Visits             │
+├──────────────────────────────────────────┤
+│ PRIMARY SOURCE                            │
+│ IMPALA2_NRT_VISIT_SCHEDULE                │
+│ IMPALA2_NRT_STUDY_PHASES                  │
+│ IMPALA2_NRT_VISIT_STEPS                   │
+└──────────────────────────────────────────┘
+```
+
+ Then use the same pattern for the other four tables.
+
+ That will look much closer to the client's sample because the diagram isn't merely saying **"there is a table here."** It tells the reviewer:
+
+ > **What is the table? What does it represent? What is its grain? What information does it contain? Where does that information originate?**
+
+---
+
+ # 21\. Five Tables — One-Line Business Explanation
+
+ I would put this directly into the design document as a summary:
+
+ | Table | Business Question | Significance |
+| --- | --- | --- |
+| `AI_SP_PPW_VISITS` | **When does something happen?** | Defines protocol visits, timing, sequence and windows |
+| `AI_SP_PPW_CYCLES` | **What is the repeating structure?** | Defines cycle boundaries, duration and cycle count |
+| `AI_SP_PPW_CYCLE_VISITS` | **When does each visit happen within a cycle?** | Connects cycle structure to individual visits |
+| `AI_SP_PPW_TREATMENT_GROUPS` | **Who receives treatment?** | Defines arms, cohorts, treatment groups and planned population |
+| `AI_SP_PPW_DOSING_PLAN` | **What is administered/dispensed?** | Defines dose, dose basis, kits, vial strengths, dispensing sets and rules |
+
+This is probably the **most important part to show your manager**, because it makes the normalization decision immediately understandable.
+
+---
+
+ # 22\. Design Principles
+
+ The final design should explicitly state these principles.
+
+ ### 1\. No single massive PPW table
+
+ The payload is split into five business-oriented relational domains.
+
+ ### 2\. PPW is the source of truth for newly available protocol information
+
+ The system does not wait for late-arriving database records when the PPW already contains the information.
+
+ ### 3\. IMPALA2 is used for governed technical lineage where appropriate
+
+ Existing IMPALA2 mappings are retained where the source fields are deterministic and validated.
+
+ ### 4\. PPW-driven fields remain PPW-driven
+
+ Clinical information such as dosing narrative, dose basis, country-specific applicability and treatment interpretation must not be inferred from technical database identifiers.
+
+ ### 5\. Missing information is not guessed
+
+ If an essential value is unavailable:
+
+```
+Missing → Validation Error / Manual Resolution
+```
+
+ not:
+
+```
+Missing → Arbitrary Default
+```
+
+ ### 6\. Existing study data is protected
+
+ A modified PPW does not silently overwrite an existing study.
+
+ The process detects differences and supports controlled resolution.
+
+ ### 7\. Snowflake accumulation is append/upsert based
+
+ New study data is added to the existing dataset without destructive table replacement.
+
+ ### 8\. Forecast calculations remain traceable
+
+ Every forecast value should be traceable through:
+
+```
+run_id
+ ↓
+Treatment Group
+ ↓
+Cycle
+ ↓
+Visit
+ ↓
+Dosing Rule
+ ↓
+Kit / Presentation
+ ↓
+Demand
+```
+
+---
+
+ ## One thing I would change from your earlier Mermaid
+
+ I would **not** call the final table `AI_SP_PPW_DISPENSING_RULES`.
+
+ Your current architectural contract says the fifth physical target is:
+
+```
+AI_SP_PPW_DOSING_PLAN
+```
+
+ The `DISPENSING_RULES` information is a **source/semantic component of the dosing plan**, along with dispensing sets, kit definitions and PPW dosing information.
+
+ That distinction is important because otherwise someone reviewing the architecture will reasonably ask:
+
+ > "Why does the handoff say five tables but the diagram has a sixth dispensing-rules table?"
+
+ The document above resolves that ambiguity while retaining the full IMPALA2 lineage.
+
+ Also, the detailed mapping above should be treated as a **logical mapping specification**, not yet as final Snowflake DDL: several fields in the supplied lineage are explicitly PPW/protocol-driven or have incomplete transformation definitions. Those should be finalized against `resources.txt` and the legacy implementation before assigning Snowflake data types or declaring every column mandatory.
+
+===
+earlier+
+====
+Here is the updated documentation and Mermaid diagram, strictly aligned with the Friday architectural decisions (DSS Scenarios, Python Recipes, S3 staging, and the 5 Snowflake tables) while incorporating the explicit column details and extraction logic your manager requested.
+
+---
+
+### Document: Dataiku DSS Extraction Architecture & Table Design
+
+**1. Architectural Overview & Workflow**
+To bypass the 3–5 minute latency of the legacy conversational agent, the PPW extraction has been refactored into a fully automated backend pipeline within Dataiku DSS.
+
+* **The Trigger (DSS Scenario):** A Dataiku Scenario continuously monitors the `PPW_DOCUMENTS` folder. When a unique study document is uploaded, the scenario automatically triggers the pipeline.
+* **The Engine (Python Recipe):** The core extraction logic runs inside a Dataiku Python Recipe. It takes the `study_number` as an input and processes the document.
+* **The Output (S3 to Snowflake):** To avoid creating one monolithic dataset, the Python recipe splits the extracted JSON payload into 5 distinct tables. These are temporarily staged in DSS S3 Buckets before being seamlessly appended (Upsert) into the 5 target Snowflake tables using the strict `AI_SP_PPW_<TABLE_NAME>` naming convention.
+
+**2. How the Extraction Works (Logic & Mapping)**
+The Python Recipe uses a hybrid extraction approach, combining legacy database lookups with LLM-driven document parsing:
+
+* **Native Mapping (Impala2):** Standardized fields (like base treatment codes A, B, C, D, and generic visit schedules) are mapped directly from existing `IMPALA2_NRT` tables.
+* **LLM/Document Driven:** Complex, study-specific variables that do not exist in the database (e.g., composite treatment groups like `A_NAB`, specific qualitative cycle boundaries, clinical dosing rules, and country-specific vial logic) are extracted directly from the PPW document using the LLM parser.
+* **Data Merging:** The recipe joins the PPW-derived data with the IMPALA2 native data using `STUDY_NUMBER` and `PHASE` as primary keys, formatting them to match the target Snowflake schema.
+
+**3. Target Snowflake Tables & Data Dictionary**
+Below is the explicit breakdown of what data goes into each of the 5 Snowflake tables:
+
+* **`AI_SP_PPW_VISITS`**
+* **Data Stored:** `STUDY_NUMBER`, `PHASE`, `VISIT_ID`, `VISIT_SEQUENCE`, `DESCRIPTION`, `CYCLE_LABEL`, `CYCLE_DAY`, `VISIT_WINDOW_START_DAY`, `VISIT_WINDOW_END_DAY`, `NUMBER_OF_DISPENSING_VISITS`.
+* **Extraction Details:** Mapped directly from `IMPALA2_NRT_VISIT_SCHEDULE` and `IMPALA2_NRT_STUDY_PHASES`. `VISIT_LABEL` is parsed using regex to extract numeric values. `NUMBER_OF_DISPENSING_VISITS` is calculated using a `COUNT_IF` grouping by study code and visit number.
+
+
+* **`AI_SP_PPW_CYCLES`**
+* **Data Stored:** `STUDY_NUMBER`, `CYCLE_ID`, `CYCLE_LABEL`, `PLANNED_CYCLE_COUNT`, `CYCLE_DURATION_DAYS`, `PHASE`.
+* **Extraction Details:** Numeric boundaries are calculated from Impala2 phase data (`STP_CYCLE_STARTING_NUM + STP_MAX_REPEATING_NUM`). The qualitative cycle descriptions and planned cycle counts are strictly PPW Document-driven.
+
+
+* **`AI_SP_PPW_CYCLE_VISITS`**
+* **Data Stored:** `STUDY_NUMBER`, `CYCLE_ID`, `PHASE`, `VISIT_ID`, `VISIT_SEQUENCE`, `CYCLE_DAY`, `VISIT_WINDOW_START_DAY`, `VISIT_WINDOW_END_DAY`.
+* **Extraction Details:** This acts as a junction table. It constructs the source visit IDs by aggregating configured visit orders, joining Phase data with Visit data. Normalized IDs (e.g., `TNC_C1_4_D1`) are derived from the PPW document.
+
+
+* **`AI_SP_PPW_TREATMENT_GROUPS`**
+* **Data Stored:** `STUDY_NUMBER`, `TREATMENT_GROUP_CODE`, `TREATMENT_GROUP_DESCRIPTION`, `COHORT_NUMBER`.
+* **Extraction Details:** Native values (e.g., A, B, C, D) map directly from `IMPALA2_NRT_TREATMENT_GROUPS`. Composite values (e.g., `A_NAB`, `B_PAC`) and cohort logic are exclusively PPW Document-driven.
+
+
+* **`AI_SP_PPW_DISPENSING_RULES`** (Encompasses Dosing Plan & Rules)
+* **Data Stored:** `RULE_SEQUENCE`, `CONJUNCTION`, `DEPENDENCY`, `DOSING_MODE`, `DOSE_VALUE`, `DOSE_UNIT`, `DOSE_BASIS`.
+* **Extraction Details:** `RULE_SEQUENCE`, `CONJUNCTION`, and `DEPENDENCY` map directly from `IMPALA2_NRT_DISPENSING_RULES`. Clinical dose values, multi-choice dosing modes (flexible vs. fixed), and specific units (mg vs. mg/kg) are strictly extracted from the PPW document.
+
+
+
+---
+
+### Mermaid Diagram
+
+*(Copy and paste this into Draw.io or a Mermaid viewer)*
+
+```mermaid
+graph TD
+    %% Define Styles
+    classDef process fill:#cce5ff,stroke:#007bff,stroke-width:2px;
+    classDef decision fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
+    classDef database fill:#d4edda,stroke:#28a745,stroke-width:2px;
+    classDef staging fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+
+    %% Workflow Steps
+    Trigger[Dataiku Scenario<br>Trigger: Folder Content Change]:::process
+    Recipe[Dataiku Python Recipe<br>Engine: PPW Parser]:::process
+    Extraction[Extraction Logic<br>LLM PPW Parsing + Impala2 Mapping]:::process
+    SplitDecision{Split Payload<br>Do NOT create one big table}:::decision
+
+    Trigger --> Recipe
+    Recipe --> Extraction
+    Extraction --> SplitDecision
+
+    %% Table Definitions with Columns inside Nodes
+    Tab1[[(AI_SP_PPW_VISITS)<br>---<br>STUDY_NUMBER, PHASE, VISIT_ID,<br>VISIT_SEQUENCE, DESCRIPTION, CYCLE_LABEL,<br>CYCLE_DAY, WINDOW_START, WINDOW_END,<br>DISPENSING_VISITS]]:::database
+
+    Tab2[[(AI_SP_PPW_CYCLES)<br>---<br>STUDY_NUMBER, CYCLE_ID, CYCLE_LABEL,<br>PLANNED_CYCLE_COUNT, CYCLE_DURATION_DAYS,<br>PHASE]]:::database
+
+    Tab3[[(AI_SP_PPW_CYCLE_VISITS)<br>---<br>STUDY_NUMBER, CYCLE_ID, PHASE, VISIT_ID,<br>VISIT_SEQUENCE, CYCLE_DAY,<br>WINDOW_START, WINDOW_END]]:::database
+
+    Tab4[[(AI_SP_PPW_TREATMENT_GROUPS)<br>---<br>STUDY_NUMBER, TREATMENT_GROUP_CODE,<br>GROUP_DESCRIPTION, COHORT_NUMBER]]:::database
+
+    Tab5[[(AI_SP_PPW_DISPENSING_RULES)<br>---<br>RULE_SEQUENCE, CONJUNCTION, DEPENDENCY,<br>DOSING_MODE, DOSE_VALUE, DOSE_UNIT]]:::database
+
+    %% Splitting Logic
+    SplitDecision -->|Map Native + PPW Data| Tab1
+    SplitDecision -->|Map Native + PPW Data| Tab2
+    SplitDecision -->|Map Native + PPW Data| Tab3
+    SplitDecision -->|Map Native + PPW Data| Tab4
+    SplitDecision -->|Map Native + PPW Data| Tab5
+
+    %% Staging and Database Output
+    S3Buckets[[DSS S3 Buckets<br>Temporary Staging Area]]:::staging
+    Snowflake[(Snowflake Database<br>Final Target)]:::database
+
+    Tab1 --> S3Buckets
+    Tab2 --> S3Buckets
+    Tab3 --> S3Buckets
+    Tab4 --> S3Buckets
+    Tab5 --> S3Buckets
+
+    S3Buckets -->|Append Data Only| Snowflake
+
+```
