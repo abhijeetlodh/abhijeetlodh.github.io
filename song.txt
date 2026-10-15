@@ -1,55 +1,88 @@
-Based on your conversation transcript, here is an exact breakdown of what Lohith wants, your immediate mandate, and how to build the tool using VS Code, GitHub Copilot, and Jira/Confluence MCP.
-1. What Lohith Wants
-Lohith selected the Logging Review / Automated Log Analysis Agent from your list of ideas.
- * The Core Problem: When transactions fail (especially in production or during performance testing), engineers must manually log into PCF or Splunk, write complex queries, and hunt through massive log volumes to find what broke. Logging was reduced by ~50% due to past performance issues, making manual tracing even harder.
- * The Solution: An automated log analysis agent (similar to existing Veracode or SonarQube agents).
-   * Input: A Correlation ID or Participant ID (with optional filters like DB part, request payload, error trace).
-   * Processing: Pulls the exact log slices associated with that ID from PCF server paths or Splunk.
-   * Output: Pinpoints "What is the issue?" and "What is the root cause?" without a human manually writing Splunk queries.
-   * Use Cases: Production failure triage, local debugging, and performance test reviews.
- * The Caveat (Hard Requirement): Build a Proof of Concept (POC) first to test log connectivity. Lohith explicitly said: if access restrictions prevent you from programmatically pulling logs from PCF or Splunk, flag the blocker immediately and switch to another story.
-2. What You Need to Do Right Now
- * Verify Log Access (The POC Gatekeeper):
-   * Check if you can access logs via Splunk REST API (using an auth token) OR directly from the PCF log path / CF CLI (cf logs <app> --recent or container SSH/log dump).
-   * Test whether you can query logs by Correlation ID programmatically.
- * Post in the Team Group:
-   * Post a brief message confirming that Lohith suggested prioritizing the Log Review Agent, and ask teammates if they have specific log pain points or edge cases.
- * Build the POC in VS Code:
-   * If log access is feasible, build a lightweight prototype. If restricted, notify Lohith right away.
-3. What You Can Build With Copilot, Jira/Confluence MCP & VS Code
-You can implement an AI-Assisted Root Cause & Triage Assistant directly inside VS Code:
-[User Input: Correlation ID] 
-        │
-        ▼
-[Log Fetcher Script / API (Splunk / PCF)] ──► [VS Code Editor]
-                                                    │
-                                                    ▼
-                                         [GitHub Copilot Chat]
-                                         (Parses stack traces, isolates DB/HTTP failures)
-                                                    │
-                                ┌───────────────────┴───────────────────┐
-                                ▼                                       ▼
-                     [Confluence MCP]                            [Jira MCP]
-          (Matches error to runbooks & known issues)     (Checks duplicate bugs / drafts ticket)
-                                │                                       │
-                                └───────────────────┬───────────────────┘
-                                                    ▼
-                                     [Triage Report & Root Cause]
+To generate a separate plan for your Black Duck security orchestration framework using GitHub Copilot in VS Code, you can follow these steps to leverage the context from your meeting:
+ * Start a Fresh Copilot Chat: Open the Copilot Chat panel in VS Code and start a new chat session to ensure it doesn't get confused by prior unrelated prompts.
+ * Feed it the Blueprint: Since your team wants to mimic the architecture of the "Bitbucket to GitHub bulk migrator," open those old project files in VS Code. Use the @workspace command or specifically attach the old migrator files (using #file) in your prompt so Copilot understands the modular "agents, prompts, and skills" folder structure you want to replicate.
+ * Prompt for the Plan: Ask Copilot directly to build the plan. You can use a prompt like:
+   > "Draft a step-by-step end-to-end framework plan for a Black Duck security orchestrator. It must follow the same modular architecture as the referenced bulk migrator. The plan needs to cover: 1) Onboarding applications via an APMID, 2) Scanning and automatically creating Jira issues for vulnerabilities, 3) Auto-resolving issues by cloning the repo, upgrading packages, and submitting a PR (or raising a mitigation request), and 4) Generating status dashboards. Ensure the architecture is designed so that future tools like Code QL can easily be added."
+   > 
+ * Use the Built-in /plan Agent: If your version of Copilot supports it, you can prepend your prompt with /plan (e.g., /plan Draft an end-to-end framework...) to force Copilot to output a highly structured, step-by-step implementation strategy.
+ * Create a Custom Agent File (For Implementation): Once you have the plan and are ready to start coding, you can create a dedicated custom agent to help write the code. Create a file named blackduck-orchestrator.agent.md in your project's .github/agents/ folder. You can paste the specific manual Confluence onboarding steps into this file so Copilot always strictly adheres to your company's actual procedures when generating the code.
 
-How the Components Fit Together:
- * VS Code as the Workspace & Execution Hub:
-   * Write a Python/Node.js script or VS Code task to accept a Correlation ID or Participant ID, call the Splunk/PCF endpoint, and drop the raw log extract into a local working file (e.g., temp_run.log).
- * GitHub Copilot (The Reasoning & Parsing Engine):
-   * Use Copilot Chat in VS Code (with custom workspace prompt files or Copilot Agent mode) to analyze the log slice.
-   * Instruct Copilot: "Analyze #temp_run.log. Identify where the execution broke, filter out noisy heartbeat events, extract the DB query/endpoint failure, and state the root cause."
- * Confluence MCP (Knowledge Base Matching):
-   * When Copilot identifies an error code (e.g., ORA-00001, HTTP 504, or custom service codes), the Confluence MCP queries your team's Confluence documentation and runbooks to fetch troubleshooting guides and standard remediation steps.
- * Jira MCP (Incident & Bug Correlation):
-   * Copilot calls Jira MCP to search if the same exception or root cause has already been reported in existing tickets.
-   * If it's a new production failure, the agent formats a structured Jira bug description with the log excerpt, participant ID, and root cause summary ready to be submitted.
-4. Suggested Quick Update to Send to Lohith
-> "Hi Lohith, understood. I am starting the POC for the Automated Log Review Agent today:
->  * Testing programmatic log access (Splunk API vs. PCF server path) using a sample Correlation ID / Participant ID.
->  * Posting in the team chat to gather any specific log queries or edge cases from the team.
->  * If log access is blocked by network/security restrictions, I will flag it immediately so we can pivot to the next idea; otherwise, I will share the working POC results."*
+Having a Jira Model Context Protocol (MCP) server connected directly to VS Code changes the setup significantly: Copilot can now interact live with Jira rather than just writing boilerplate API scripts.
+Include that capability in the prompt and architecture planning as follows:
+1. Highlight Jira MCP in your Copilot Plan Prompt
+In VS Code Copilot Chat, specify that the orchestrator will leverage Jira MCP tools directly. Use a prompt structured like this:
+> "Generate an end-to-end framework and implementation plan for a Black Duck Security Orchestrator in VS Code, modeled after our previous bulk migrator (.github/agents/, prompts/, skills/).
+> Key integrations and constraints:
+>  * We have an active Jira MCP server connected to Copilot/VS Code. The framework should leverage Jira MCP tools directly to:
+>    * Search and query existing security tickets (to prevent duplicate issues for identical CVEs/packages).
+>    * Auto-create structured Jira tasks/bugs for each vulnerability flagged by the Black Duck scan.
+>    * Update ticket statuses (e.g., transition to 'In Review' once a PR is submitted, or update fields when a mitigation request is raised).
+>  * Modular design: abstract scanning orchestration so tools like CodeQL can plug into the same workflow later.
+>  * Phased rollout: Phase 1 (Onboarding agent via APMID), Phase 2 (Automated remediation & PR generation), Phase 3 (Jira-driven tracking and dashboard generation).
+> Break the output into clear phases, file structure, and specific agent instructions."
 > 
+2. How Jira MCP Fits into Your Agent Structure
+When you create the custom agent and skill files, incorporate the MCP tools into the agent definitions:
+ * blackduck-jira-sync.skill.md (or prompt file):
+   * Instruct the agent to call the Jira MCP search tool with JQL (e.g., project = SEC AND summary ~ "[BlackDuck] <package-name>") before creating a new ticket.
+   * Map scan fields (Component, Current Version, Recommended Secure Version, Severity, APMID) directly to Jira issue fields using MCP's create_issue tool.
+ * blackduck-resolution.agent.md:
+   * Once a branch is created and a PR with the upgraded library is opened, the agent invokes Jira MCP to link the PR URL to the corresponding Jira key and transition the ticket status automatically.
+3. Immediate Next Steps in VS Code
+ * Verify in your Copilot Chat tool panel (or MCP status icon) that the Jira MCP server functions (e.g., create_issue, search_issues, transition_issue) are detected and enabled.
+ * Run the prompt above to generate the structural plan.
+ * Review the proposed agent and skill definitions against your previous migrator folder structure before committing the new .agent.md and .prompt.md files.
+
+
+
+
+
+
+
+
+To generate a separate plan for the Black Duck security orchestration framework using GitHub Copilot in VS Code, while incorporating your Jira MCP capabilities and the team's requirements, follow these steps:
+ * Start a Fresh Copilot Chat: Open the Copilot Chat panel in VS Code and clear previous conversations to ensure the AI focuses solely on the new orchestrator plan.
+ * Provide the Architectural Blueprint: Use the @workspace command or the #file tag to attach the files from your old "Bitbucket to GitHub bulk migrator" project. Specifically, point Copilot to the .github/agents, prompts, and skills folders so it understands the modular architecture it needs to replicate.
+ * Provide the Onboarding Steps: Attach the referenced file "3f5acacb-bff8-4860-b3d0-91355a3be850" (titled "Black Duck Onboarding and Scans") to the chat. This ensures Copilot has the exact manual company procedures it needs to convert into an automated agent.
+ * Craft the Master Prompt: Enter a detailed prompt that combines all these elements. You can use or adapt this template:
+   > "/plan Draft a step-by-step end-to-end framework plan for a Black Duck security orchestrator. It must strictly follow the modular architecture (agents, prompts, skills) of the referenced bulk migrator project. The plan must include:
+   >  * Phase 1 (Onboarding): Build an agent that uses the attached Black Duck Onboarding and Scans Confluence page to automatically onboard applications via an APMID.
+   >  * Phase 2 (Ticketing via Jira MCP): The framework must actively use the connected Jira MCP server. Instruct the agent to use MCP tools to query existing security tickets (to avoid duplicates) and automatically create structured Jira tasks for each vulnerability found in the scan.
+   >  * Phase 3 (Resolution): Build an agent to auto-resolve issues by cloning the repo, upgrading the vulnerable packages, and submitting a pull request (or raising a mitigation request if an upgrade isn't possible). Update the Jira ticket status via MCP once the PR is submitted.
+   >  * Phase 4 (Reporting): Generate status dashboards based on the Jira tickets.
+   >    Ensure the architecture abstracts the scanning process so future tools like CodeQL can be plugged in easily."
+   > 
+ * Generate Agent Implementation Files: Once Copilot provides the overarching plan, ask it to generate the specific Markdown files for each component, starting with blackduck-orchestrator.agent.md and a specific skill file like blackduck-jira-sync.skill.md to define the exact Jira MCP commands.
+
+
+
+
+
+
+Open the "Bitbucket to GitHub bulk migrator" project folder in VS Code so Copilot can index the exact file structure, specifically the .github/agents/, prompts/, and skills/ directories.
+Save the text from the "Black Duck Onboarding and Scans" Confluence page into a local markdown file (e.g., blackduck-onboarding-docs.md) inside your workspace so Copilot can read the manual steps.
+Open the GitHub Copilot Chat panel and use the @workspace command along with the #file variable to force Copilot to analyze these specific contexts. Paste the following master prompt:
+> @workspace Analyze the folder structure of this bulk migrator project and the attached #file:blackduck-onboarding-docs.md. Generate a comprehensive, step-by-step architectural plan to build a new "Security Orchestration" framework.
+> The plan must execute the following:
+>  * Architecture: Replicate the orchestrator agent and submission engine architecture used in this bulk migrator. The output must define the specific .agent.md, .prompt.md, and .skill.md files to be created.
+>  * Extensibility: Design the framework to be modular so that while it currently focuses on Black Duck, it can accommodate future tools like Code QL.
+>  * Phase 1 - Onboarding: Outline an agent that extracts the APMID and automates the onboarding steps detailed in the provided Confluence documentation.
+>  * Phase 2 - Ticketing (Jira MCP): Define a skill/agent that uses our active Jira MCP server to query existing tickets, automatically create new Jira issues for discovered vulnerabilities, and update statuses.
+>  * Phase 3 - Resolution: Outline an agent workflow that clones the repository, checks the packages, attempts to upgrade the vulnerable packages, and submits a pull request. If an upgrade fails, it must automatically raise a mitigation request.
+> 
+Review the generated plan. Once the structure is approved, prompt Copilot to generate the code for each file one by one, starting with: "Based on the plan, generate the complete markdown code for the blackduck-orchestrator.agent.md file."
+
+
+
+
+@workspace /plan Analyze the architecture in the .github/agents/, prompts/, and skills/ folders. Using this modular structure and the attached #file:blackduck-onboarding-docs.md, generate a step-by-step implementation plan for a new Black Duck Security Orchestrator. 
+
+Break the plan down into the following phases:
+1. APMID Onboarding (based strictly on the attached docs).
+2. Vulnerability Ticketing (using Jira MCP to query and create tickets).
+3. Auto-Resolution (cloning repos, upgrading packages, submitting PRs, or raising mitigation requests).
+4. Jira Dashboard Reporting.
+
+Constraint: The architecture must abstract the scanning layer so future tools like Code QL can be easily integrated later.
+
+
