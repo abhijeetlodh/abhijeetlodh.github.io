@@ -1,1 +1,1671 @@
+MASTER COPILOT PROMPT
 
+Enterprise Developer Onboarding Standardization, Automation & AI Enablement
+
+You are acting as a Principal Enterprise Architect, Senior Technical Program Manager, Agile Delivery Lead, Business Analyst, DevOps Architect, and AI Solutions Architect.
+
+I am responsible for planning an enterprise-level developer onboarding standardization and automation initiative across engineering teams.
+
+Your responsibility is to transform the complete project context provided below into a comprehensive, actionable, technically accurate, and professionally structured execution package.
+
+I need documentation that I can use for:
+
+- Jira Epic and Story creation
+- Jira subtasks and sprint planning
+- Technical discovery
+- Stakeholder engagement
+- Requirements gathering
+- Architecture design
+- Technology assessment
+- Implementation planning
+- Security and access management
+- Pilot execution
+- Risk management
+- Progress reporting
+- Engineering standardization
+- AI automation opportunities
+- Management reviews
+- Future implementation and expansion
+
+CRITICAL INSTRUCTIONS
+
+1. Treat this as an independent engineering initiative.
+2. Do not mention ChatGPT, AI-generated conversations, transcripts, screenshots, photographs, recordings, meeting captions, or the origin of these requirements.
+3. Do not attribute requirements, decisions, or commitments to specific individuals.
+4. Use professional, neutral, business-oriented and engineering-oriented language.
+5. Do not invent approved requirements, confirmed deadlines, stakeholder commitments, existing integrations, or implementation decisions.
+6. Clearly distinguish confirmed project context, proposed recommendations, assumptions, open questions, and decisions pending approval.
+7. Preserve every meaningful requirement and technical consideration described below.
+8. Produce detailed, actionable documentation rather than generic project-management content.
+9. Use tables, Markdown checklists, Mermaid diagrams, dependency matrices, and technical examples wherever useful.
+10. Keep explanations understandable to someone who is coordinating the project but may not have detailed knowledge of every enterprise system.
+11. Do not execute scripts, install packages, modify application code, access credentials, or connect to external services.
+12. Do not create or modify actual Jira issues.
+13. Do not publish, commit, push, upload, or synchronize project files anywhere.
+14. Generate documentation locally in the current VS Code workspace only.
+15. If the workspace contains existing project files, inspect their names and structure first, then create a separate "developer-onboarding-planning" directory without overwriting unrelated files.
+16. Do not copy sensitive company information into generated files unnecessarily.
+17. Do not conduct external research or invoke external integrations without explicit permission.
+18. Do not claim that a task is completed merely because documentation has been generated.
+19. Ensure that the output is immediately useful for professional project execution.
+20. Before finalizing, verify that every requirement in this prompt is addressed.
+
+---
+
+PART 1 — BUSINESS CONTEXT
+
+1.1 Initiative Name
+
+Enterprise Developer Onboarding Standardization and Automation Framework
+
+Alternative working name:
+
+Developer Onboarding Hub
+
+1.2 Business Problem
+
+Developer onboarding across enterprise engineering teams is inconsistent, fragmented, manually coordinated, and dependent on tribal knowledge.
+
+When a new developer joins an engineering team, they may encounter challenges involving:
+
+- Understanding team responsibilities
+- Understanding business applications
+- Understanding enterprise architecture
+- Identifying required systems
+- Understanding databases
+- Understanding development and testing environments
+- Identifying appropriate access permissions
+- Raising access requests
+- Finding correct approval owners
+- Understanding internal application dependencies
+- Configuring developer workstations
+- Setting up repositories
+- Understanding CI/CD pipelines
+- Accessing internal documentation
+- Completing mandatory training
+- Understanding code review standards
+- Understanding logging and exception handling
+- Understanding database connectivity
+- Learning team-specific workflows
+- Identifying support contacts
+- Understanding production monitoring
+- Learning deployment procedures
+- Identifying escalation channels
+- Completing initial development assignments
+
+Existing documentation may be distributed across Confluence, Microsoft Teams, SharePoint, repositories, internal portals, and individual team members.
+
+Different engineering teams may follow different onboarding procedures.
+
+A single universal checklist may therefore be insufficient.
+
+The proposed framework must balance standardization with team-specific flexibility.
+
+1.3 Business Objectives
+
+Design a framework that:
+
+1. Standardizes common onboarding activities.
+2. Supports team-specific onboarding requirements.
+3. Reduces unnecessary manual coordination.
+4. Improves developer productivity.
+5. Improves access-request visibility.
+6. Reduces repeated onboarding questions.
+7. Makes internal systems easier to understand.
+8. Improves documentation discoverability.
+9. Defines clear ownership and accountability.
+10. Supports continuous documentation maintenance.
+11. Improves consistency across engineering teams.
+12. Reuses existing enterprise tools.
+13. Supports measurable onboarding progress.
+14. Enables future automation where justified.
+15. Provides a foundation for potential AI-assisted onboarding.
+
+1.4 Initial Delivery Principle
+
+Discovery and planning must precede implementation.
+
+The initial assignment is NOT to build a complete onboarding application.
+
+The first deliverable is a validated plan explaining:
+
+- What exists today
+- What problems exist
+- What should be standardized
+- What should remain team-specific
+- What can be reused
+- What may require development
+- Which stakeholders are involved
+- Which dependencies exist
+- How implementation should be divided
+- What a pilot should contain
+- How success should be measured
+
+---
+
+PART 2 — PROJECT SCOPE
+
+2.1 In Scope — Discovery
+
+Investigate:
+
+- Existing onboarding procedures
+- Existing checklists
+- Team onboarding documents
+- Enterprise access-request processes
+- Role-based access requirements
+- Development environment setup
+- Application architecture documentation
+- Database landscape
+- Training requirements
+- Repository access
+- Development tooling
+- Security requirements
+- Support and escalation processes
+- Documentation ownership
+- Existing onboarding automation
+- New-joiner pain points
+- Current process delays
+- Existing enterprise technology capabilities
+- Reusable automation solutions
+- Potential AI use cases
+
+2.2 In Scope — Solution Design
+
+Design:
+
+- Standardized onboarding framework
+- Common onboarding checklist
+- Team-specific onboarding checklist
+- Role-specific onboarding templates
+- Access-request guidance
+- Documentation navigation
+- Application and environment overview
+- Developer setup guidance
+- Training roadmap
+- Progress tracking
+- Feedback collection
+- Documentation governance
+- Integration architecture
+- Pilot strategy
+- Measurement framework
+- Implementation backlog
+
+2.3 Out of Scope — Initial Discovery Phase
+
+The initial phase must exclude:
+
+- Production application development
+- Enterprise-wide deployment
+- Automatic permission granting
+- Unauthorized access provisioning
+- Modification of enterprise security policies
+- Production database changes
+- Creation of new authentication infrastructure
+- Full AI assistant development
+- Unapproved third-party integrations
+- Replacement of existing access-management platforms
+- Organization-wide process enforcement
+
+These activities may be evaluated later if required.
+
+---
+
+PART 3 — STAKEHOLDER ENGAGEMENT PLAN
+
+Prepare a stakeholder engagement matrix.
+
+Use the following potential contacts and roles as starting points, subject to confirmation.
+
+3.1 Project Sponsor / Engineering Lead
+
+Contact: Yash
+
+Purpose:
+
+- Confirm business objectives
+- Validate project scope
+- Identify stakeholders
+- Clarify expected deliverables
+- Confirm review cadence
+- Review discovery findings
+- Approve or route decisions to the appropriate authority
+- Confirm pilot selection approach
+
+Prepare a concise initial outreach message.
+
+3.2 Existing Onboarding Process Representative
+
+Contact: Navin
+
+Purpose:
+
+- Understand existing onboarding procedures
+- Identify current checklists
+- Understand team-specific practices
+- Review documentation maintenance challenges
+- Identify common onboarding blockers
+- Understand how updates are communicated
+- Identify recent onboarding examples
+
+Prepare a 30-minute interview agenda.
+
+3.3 Existing Access Automation Representatives
+
+Potential contacts:
+
+- Logan
+- Harsh
+- Akshay
+
+Confirm the correct tool owner before contacting everyone.
+
+Purpose:
+
+- Identify existing access-request automation
+- Understand MyAccess-related workflows
+- Review role-based permission templates
+- Understand approval mechanisms
+- Identify supported integrations
+- Evaluate opportunities for reuse
+- Understand maintenance ownership
+- Review audit and compliance requirements
+
+Request an existing tool demonstration if available.
+
+Do not assume the tool has an API or that integration is permitted.
+
+3.4 Security / Identity and Access Management
+
+Purpose:
+
+- Understand enterprise access policies
+- Evaluate role-based access control
+- Identify standard developer permissions
+- Understand approval requirements
+- Review least-privilege principles
+- Investigate inherited or group-based permissions
+- Understand joiner, mover and leaver controls
+- Clarify audit requirements
+- Review automation restrictions
+
+3.5 Engineering Team Leads
+
+Purpose:
+
+- Identify team-specific requirements
+- Understand development environments
+- Identify critical applications
+- Document repository dependencies
+- Review onboarding training
+- Understand developer readiness criteria
+
+3.6 Recently Onboarded Developers
+
+Purpose:
+
+- Understand actual onboarding experiences
+- Identify missing documentation
+- Measure access delays
+- Understand workstation setup issues
+- Identify repetitive questions
+- Collect improvement suggestions
+
+3.7 DevOps / Platform Engineering
+
+Purpose:
+
+- Understand repository access
+- CI/CD tooling
+- Build and deployment workflows
+- Environment configuration
+- Secrets management
+- Logging and monitoring
+- Infrastructure dependencies
+
+3.8 Knowledge Management / Documentation Owners
+
+Purpose:
+
+- Identify existing Confluence or SharePoint spaces
+- Determine document ownership
+- Establish review frequency
+- Define version-control practices
+- Identify outdated information
+- Recommend sustainable maintenance procedures
+
+3.9 Additional Stakeholders
+
+Evaluate whether involvement is required from:
+
+- HR onboarding
+- IT service desk
+- Enterprise architecture
+- Compliance
+- Application owners
+- Database administrators
+- Training coordinators
+- Production support teams
+
+Generate a stakeholder matrix containing:
+
+- Stakeholder role
+- Potential contact
+- Purpose
+- Required information
+- Suggested meeting duration
+- Priority
+- Dependencies
+- Expected deliverable
+- Follow-up action
+
+Also generate separate professional Teams messages for each major stakeholder group.
+
+---
+
+PART 4 — CURRENT-STATE DISCOVERY
+
+Create a structured discovery plan.
+
+Investigate the complete developer onboarding lifecycle.
+
+Stage 1 — Pre-Joining
+
+Questions:
+
+- Who initiates onboarding?
+- Who identifies required access?
+- Are role-based templates available?
+- Can preparation begin before the joining date?
+- Who owns workstation readiness?
+- What security restrictions apply?
+
+Stage 2 — Day-One Onboarding
+
+Questions:
+
+- How does the developer learn about the team?
+- Where is the onboarding checklist?
+- Who introduces the application landscape?
+- How are internal systems explained?
+- Who identifies required training?
+- Who provides technical support?
+
+Stage 3 — Access Provisioning
+
+Investigate:
+
+- MyAccess
+- Role-based access templates
+- Security groups
+- Repository permissions
+- Database access
+- Development environments
+- Testing environments
+- Application-specific access
+- Access approval workflows
+- Access request tracking
+- Escalation procedures
+
+Evaluate whether existing access-request tooling can reduce repeated manual submissions.
+
+Stage 4 — Developer Environment Setup
+
+Investigate:
+
+- IDE installation
+- Git configuration
+- Repository cloning
+- VPN requirements
+- Package management
+- Runtime dependencies
+- Environment variables
+- Secret-management procedures
+- Build instructions
+- Test execution
+- Local application startup
+- Troubleshooting documentation
+
+Stage 5 — Application and Database Understanding
+
+Developers should be able to discover:
+
+- Business purpose of each application
+- Application owners
+- System architecture
+- Application dependencies
+- Available environments
+- Database purposes
+- Database naming conventions
+- Data-flow documentation
+- Environment differences
+- Relevant integration points
+- Appropriate access-request links
+
+Potential systems mentioned in the project context include:
+
+- SRI
+- RPM
+- Schwabplan
+- BDV
+- PCF
+
+Potential environment or database labels include:
+
+- LE5
+- LE3
+- LE2
+- PRE0
+
+Treat these as discovery examples requiring validation.
+
+Do not assume their exact meaning, architecture, ownership, or relationship.
+
+Do not invent definitions.
+
+Stage 6 — Engineering Standards
+
+Investigate whether teams follow consistent approaches for:
+
+- Logging
+- Exception handling
+- Error propagation
+- Database connectivity
+- Mocking
+- Unit testing
+- Integration testing
+- Pull request reviews
+- Static code analysis
+- Security scanning
+- Dependency management
+- Code quality
+- Deployment readiness
+
+Identify whether reusable engineering guidelines could support onboarding.
+
+Stage 7 — First Productive Assignment
+
+Investigate:
+
+- How initial tasks are assigned
+- Whether sample applications exist
+- Whether sandbox environments are available
+- Whether guided exercises exist
+- How developer readiness is evaluated
+- How blockers are escalated
+
+Stage 8 — Onboarding Completion
+
+Determine:
+
+- Who marks onboarding complete?
+- What evidence is required?
+- Which mandatory tasks must be completed?
+- How is completion tracked?
+- How is feedback collected?
+- Who owns unresolved blockers?
+
+Generate:
+
+1. Current-state process map
+2. Stakeholder interview questionnaire
+3. Existing documentation inventory
+4. Access dependency matrix
+5. Application landscape inventory
+6. Developer journey map
+7. Pain-point register
+8. Current-state gap analysis
+
+---
+
+PART 5 — FUTURE-STATE SOLUTION
+
+Design a configurable Developer Onboarding Hub.
+
+5.1 Core Design
+
+The onboarding framework should support three layers.
+
+Layer A — Enterprise-Wide Common Requirements
+
+Examples:
+
+- Mandatory security training
+- Workstation configuration
+- Standard development tools
+- Enterprise access procedures
+- Engineering standards
+- Support channels
+- Basic documentation navigation
+
+Layer B — Team-Specific Requirements
+
+Examples:
+
+- Team applications
+- Team repositories
+- Team databases
+- Development environments
+- Application-specific training
+- Team architecture
+- Team support contacts
+
+Layer C — Role-Specific Requirements
+
+Examples:
+
+- Backend developer
+- Frontend developer
+- Python developer
+- Data engineer
+- AI engineer
+- DevOps engineer
+- QA engineer
+- Production support engineer
+
+A new joiner should receive an appropriate checklist based on validated team and role information.
+
+5.2 Required User Journey
+
+Design this conceptual flow:
+
+New Developer
+→ Identify Team and Role
+→ Load Relevant Checklist
+→ Review Systems and Architecture
+→ Complete Mandatory Training
+→ Request Required Access
+→ Configure Development Environment
+→ Run Sample Application
+→ Complete Guided Engineering Task
+→ Submit Feedback
+→ Complete Onboarding
+
+Provide a Mermaid flowchart.
+
+5.3 Onboarding Task Metadata
+
+Each checklist task should support:
+
+- Task identifier
+- Task name
+- Description
+- Task category
+- Applicable team
+- Applicable role
+- Mandatory or optional status
+- Task owner
+- Approver, if applicable
+- Prerequisites
+- Documentation link
+- Access-request link
+- Estimated effort
+- Target completion time
+- Actual completion status
+- Blocker reason
+- Escalation contact
+- Last review date
+- Documentation owner
+
+5.4 Progress Tracking
+
+Evaluate the feasibility of:
+
+- Pending tasks
+- In-progress tasks
+- Completed tasks
+- Blocked tasks
+- Overdue tasks
+- Manager visibility
+- Automated reminders
+- Feedback capture
+- Onboarding completion reports
+
+Do not assume an application needs to be built for these capabilities.
+
+Evaluate existing Microsoft 365 tools first.
+
+---
+
+PART 6 — TECHNOLOGY EVALUATION
+
+Assess existing enterprise capabilities before recommending custom development.
+
+Evaluate:
+
+1. Microsoft Teams
+2. SharePoint
+3. Microsoft Lists
+4. Power Automate
+5. Confluence
+6. Jira
+7. MyAccess
+8. Existing internal onboarding tools
+9. Enterprise identity-management services
+10. Existing AI platforms, if approved
+
+For each technology, document:
+
+- Intended role
+- Existing availability
+- Relevant capabilities
+- Integration requirements
+- Security implications
+- Maintenance effort
+- Licensing considerations
+- Advantages
+- Limitations
+- Recommendation
+
+Do not assume availability or licensing.
+
+Preferred Initial Architecture
+
+Propose a lightweight, configuration-driven architecture.
+
+Example:
+
+Developer / Manager
+→ Onboarding Interface
+→ Checklist Configuration
+→ Documentation and Training
+→ Existing Access-Request Workflows
+→ Progress Tracking
+→ Feedback and Reporting
+
+The architecture must preserve existing access-approval controls.
+
+Configuration-Driven Design
+
+Explore a common checklist plus team and role overrides.
+
+Example conceptual configuration:
+
+onboarding:
+  common:
+    - security_training
+    - workstation_setup
+    - development_standards
+
+  teams:
+    sample_team:
+      - application_overview
+      - repository_setup
+      - database_orientation
+
+  roles:
+    python_developer:
+      - python_environment
+      - dependency_installation
+      - unit_test_execution
+
+This is illustrative only.
+
+Do not treat it as an approved implementation schema.
+
+Produce architecture diagrams, component responsibilities, data flows, integration assumptions, and security considerations.
+
+---
+
+PART 7 — SECURITY AND GOVERNANCE
+
+Security must be incorporated from the beginning.
+
+Investigate:
+
+- Least-privilege access
+- Role-based access control
+- Group-based permissions
+- Approval workflows
+- Separation of duties
+- Access-request auditing
+- Identity verification
+- Authentication
+- Authorization
+- Data classification
+- Sensitive documentation
+- Secrets handling
+- Access revocation
+- Joiner-mover-leaver lifecycle
+- Integration permissions
+- Compliance requirements
+
+The onboarding framework must not automatically grant access without approved authorization.
+
+Do not copy another developer's permissions blindly.
+
+Role-based templates may be useful, but must be validated by authorized security owners.
+
+Documentation and AI search results must respect existing user permissions.
+
+Include a security review checklist and approval dependency register.
+
+---
+
+PART 8 — AI AUTOMATION OPPORTUNITIES
+
+AI is a potential future enhancement, not an assumed requirement for the initial pilot.
+
+Evaluate opportunities such as:
+
+AI Onboarding Assistant
+
+Potential questions:
+
+- What applications does my team support?
+- What is the purpose of a particular system?
+- Where is the database setup guide?
+- How do I request access?
+- Which training modules are required?
+- What onboarding tasks remain?
+- Who owns a particular application?
+
+Retrieval-Augmented Knowledge Assistant
+
+Possible architecture:
+
+User
+→ Enterprise Authentication
+→ Authorized Knowledge Retrieval
+→ Approved LLM Service
+→ Grounded Answer with Citations
+
+Evaluate:
+
+- Document permissions
+- Search quality
+- Knowledge freshness
+- Citation accuracy
+- Hallucination controls
+- Auditability
+- Data privacy
+- Maintenance effort
+- Operational costs
+
+AI-Assisted Documentation
+
+Potential capabilities:
+
+- Identify outdated links
+- Suggest missing documentation
+- Summarize approved technical guides
+- Identify duplicate onboarding instructions
+- Draft updates for human review
+
+AI-Assisted Engineering Standards
+
+Explore whether shared guidance or approved automated checks could improve:
+
+- Logging consistency
+- Exception handling
+- Pull request reviews
+- Code quality
+- Testing standards
+- Security practices
+
+Evaluate existing tools before proposing new agents.
+
+Do not implement these AI capabilities during discovery.
+
+---
+
+PART 9 — JIRA EPIC
+
+Generate a complete Jira Epic draft.
+
+Proposed title:
+
+Enterprise Developer Onboarding Standardization and Automation
+
+Include:
+
+- Epic summary
+- Business background
+- Problem statement
+- Business objectives
+- Expected value
+- Scope
+- Out-of-scope items
+- Dependencies
+- Stakeholders
+- Deliverables
+- Success metrics
+- Risks
+- Assumptions
+- Acceptance criteria
+- Definition of Done
+
+Clearly mark the Epic as a proposal pending organizational approval.
+
+---
+
+PART 10 — JIRA STORIES AND SUBTASKS
+
+Generate detailed, copy-ready Jira stories.
+
+Use the following proposed work breakdown.
+
+STORY 01 — Current-State Onboarding Discovery
+
+Subtasks:
+
+1. Identify stakeholders.
+2. Schedule discovery interviews.
+3. Collect onboarding documentation.
+4. Review current checklists.
+5. Understand onboarding workflows.
+6. Interview recent joiners.
+7. Document current-state process.
+8. Identify major onboarding blockers.
+9. Review findings with stakeholders.
+
+Deliverables:
+
+- Current-state process map
+- Stakeholder findings
+- Documentation inventory
+- Pain-point register
+
+STORY 02 — Requirements and Gap Analysis
+
+Subtasks:
+
+1. Identify enterprise-wide requirements.
+2. Identify team-specific requirements.
+3. Identify role-specific requirements.
+4. Document application landscape.
+5. Document environment requirements.
+6. Identify documentation gaps.
+7. Prioritize pain points.
+8. Create requirements traceability matrix.
+9. Validate findings.
+
+Deliverables:
+
+- Requirements matrix
+- Gap analysis
+- Prioritized improvement backlog
+
+STORY 03 — Access Management Assessment
+
+Subtasks:
+
+1. Identify existing access-request tools.
+2. Arrange demonstration.
+3. Review MyAccess procedures.
+4. Identify standard developer permissions.
+5. Review role-based access templates.
+6. Identify approval owners.
+7. Review security constraints.
+8. Evaluate integration possibilities.
+9. Document reuse recommendations.
+
+Deliverables:
+
+- Access workflow diagram
+- Access dependency matrix
+- Tool assessment
+- Security considerations
+
+STORY 04 — Future-State Onboarding Design
+
+Subtasks:
+
+1. Design onboarding user journey.
+2. Define common checklist.
+3. Define team-specific configuration.
+4. Define role-specific configuration.
+5. Define task metadata.
+6. Design documentation navigation.
+7. Design progress tracking.
+8. Define escalation workflow.
+9. Define content ownership.
+10. Review proposed design.
+
+Deliverables:
+
+- Future-state architecture
+- Onboarding workflow
+- Sample checklist
+- Design decision register
+
+STORY 05 — Technology and Integration Assessment
+
+Subtasks:
+
+1. Evaluate Microsoft Teams.
+2. Evaluate SharePoint.
+3. Evaluate Microsoft Lists.
+4. Evaluate Power Automate.
+5. Evaluate Confluence.
+6. Evaluate Jira.
+7. Evaluate existing access tools.
+8. Identify integration limitations.
+9. Assess licensing and security.
+10. Recommend implementation approach.
+
+Deliverables:
+
+- Technology comparison
+- Integration assessment
+- Recommended architecture
+
+STORY 06 — Pilot Planning
+
+Subtasks:
+
+1. Define pilot objectives.
+2. Establish pilot selection criteria.
+3. Identify potential pilot teams.
+4. Identify pilot participants.
+5. Define minimum viable capabilities.
+6. Define success metrics.
+7. Establish baseline measurements.
+8. Estimate implementation effort.
+9. Identify risks and dependencies.
+10. Obtain pilot scope approval.
+
+Deliverables:
+
+- Pilot charter
+- Pilot scope
+- Success criteria
+- Delivery estimate
+
+STORY 07 — Onboarding Checklist Implementation
+
+Conditional on approval.
+
+Subtasks:
+
+1. Prepare checklist configuration.
+2. Implement common tasks.
+3. Implement team-specific tasks.
+4. Implement role-specific tasks.
+5. Add documentation references.
+6. Add access-request guidance.
+7. Implement status tracking if needed.
+8. Test checklist behavior.
+9. Review with stakeholders.
+
+STORY 08 — Documentation and Knowledge Integration
+
+Conditional on approval.
+
+Subtasks:
+
+1. Identify approved knowledge sources.
+2. Validate document ownership.
+3. Organize system documentation.
+4. Link application guides.
+5. Link environment guides.
+6. Link development standards.
+7. Define content review cadence.
+8. Validate permissions.
+9. Test document discoverability.
+
+STORY 09 — Pilot Testing and Feedback
+
+Conditional on approval.
+
+Subtasks:
+
+1. Prepare test scenarios.
+2. Recruit pilot participants.
+3. Execute onboarding walkthroughs.
+4. Record completion times.
+5. Measure access delays.
+6. Capture user feedback.
+7. Record defects and gaps.
+8. Prioritize improvements.
+9. Present pilot findings.
+
+STORY 10 — Expansion and AI Feasibility
+
+Future consideration.
+
+Subtasks:
+
+1. Evaluate pilot results.
+2. Identify scalable components.
+3. Assess onboarding AI use cases.
+4. Review knowledge quality.
+5. Assess security and compliance.
+6. Estimate implementation costs.
+7. Prepare expansion roadmap.
+8. Present recommendations.
+
+For every Jira story, generate:
+
+- Summary
+- Description
+- User story
+- Business value
+- Scope
+- Out of scope
+- Dependencies
+- Assumptions
+- Acceptance criteria
+- Definition of Done
+- Deliverables
+- Subtasks
+- Estimated effort
+- Proposed start and finish
+- Risks
+- Required approvals
+
+Do not create actual Jira tickets.
+
+---
+
+PART 11 — SPRINT PLANNING AND DEADLINES
+
+Prepare a realistic project schedule.
+
+Use November 11, 2026 as the planning reference date.
+
+Do not assume the project has officially started.
+
+Create both:
+
+1. Relative working-day estimates
+2. Illustrative calendar dates, assuming kickoff on November 16, 2026
+
+Clearly state that all dates are provisional and subject to confirmation.
+
+Exclude weekends.
+
+Do not assume company holidays or employee availability.
+
+Proposed schedule:
+
+Week 1 — Discovery
+
+- Stakeholder identification
+- Existing documentation collection
+- Initial interviews
+- Access workflow review
+- Current-state mapping
+
+Week 2 — Analysis and Design
+
+- Requirements classification
+- Gap analysis
+- Technology evaluation
+- Future-state workflow
+- Pilot proposal
+- Stakeholder review
+
+Weeks 3–4 — Conditional Pilot Implementation
+
+- Checklist setup
+- Team-specific configuration
+- Documentation integration
+- Access-request navigation
+- Progress tracking
+- Internal testing
+
+Week 5 — Conditional Validation
+
+- Pilot execution
+- Feedback collection
+- Metrics evaluation
+- Improvements
+- Expansion decision
+
+Generate:
+
+- Milestone table
+- Sprint-wise backlog
+- Working-day estimates
+- Dependency-aware schedule
+- Critical path
+- Gantt chart using Mermaid
+- Review checkpoints
+- Decision gates
+- Suggested story-point estimates
+
+Do not present story points as equivalent to fixed calendar days.
+
+Identify which tasks can run in parallel.
+
+Identify which tasks must finish before others begin.
+
+---
+
+PART 12 — FIRST TEN WORKING DAYS
+
+Create a detailed day-by-day action plan.
+
+Each day must contain:
+
+- Objective
+- Exact actions
+- People to contact
+- Information to collect
+- Documentation to update
+- Expected output
+- Completion criteria
+- Dependencies
+- Potential blockers
+
+Day 1:
+Create Jira discovery story, working documentation page, and scope confirmation.
+
+Day 2:
+Collect existing onboarding materials and identify access automation owners.
+
+Day 3:
+Interview onboarding representatives and recent joiners.
+
+Day 4:
+Investigate access requests, applications, environments, and dependencies.
+
+Day 5:
+Document current-state findings and initial gaps.
+
+Day 6:
+Design common, team-specific, and role-specific onboarding requirements.
+
+Day 7:
+Evaluate existing enterprise tools and integration options.
+
+Day 8:
+Prepare pilot scope, success metrics, dependencies, and estimates.
+
+Day 9:
+Review proposed solution with stakeholders.
+
+Day 10:
+Finalize the discovery package and request the appropriate decision.
+
+Make this plan practical enough that I can execute it without having to invent the next step.
+
+---
+
+PART 13 — DISCOVERY QUESTIONNAIRES
+
+Generate separate interview questionnaires for:
+
+1. Engineering lead
+2. Existing onboarding representative
+3. Recent developer joiner
+4. Security / IAM
+5. Access automation owner
+6. DevOps / platform engineer
+7. Application owner
+8. Documentation owner
+
+For every questionnaire, include:
+
+- Interview objective
+- Duration
+- Questions
+- Evidence to request
+- Expected output
+- Follow-up actions
+
+Include questions about:
+
+- Access provisioning
+- Application ownership
+- Databases
+- Development environments
+- Repositories
+- Training
+- Documentation
+- Code reviews
+- Logging
+- Exception handling
+- Testing
+- CI/CD
+- Production monitoring
+- Common onboarding blockers
+- Ownership and escalation
+
+---
+
+PART 14 — MANAGEMENT AND STAKEHOLDER COMMUNICATION
+
+Generate professional, ready-to-send messages for:
+
+1. Initial scope confirmation
+2. Onboarding discovery interview request
+3. Access-tool demonstration request
+4. Security consultation
+5. Developer feedback request
+6. Engineering lead consultation
+7. Discovery findings review
+8. Pilot approval request
+9. Weekly progress update
+10. Risk or blocker escalation
+
+Messages must be:
+
+- Concise
+- Professional
+- Collaborative
+- Technically clear
+- Non-demanding
+- Free of unsupported commitments
+
+Do not imply that any stakeholder has already agreed to a meeting or deliverable.
+
+---
+
+PART 15 — PROJECT GOVERNANCE
+
+Define a lightweight governance model.
+
+Include:
+
+- Project owner
+- Sponsor
+- Technical reviewers
+- Security approvers
+- Documentation owners
+- Pilot representatives
+- Decision owners
+- Escalation contacts
+
+Prepare a proposed RACI matrix.
+
+Distinguish:
+
+- Responsible
+- Accountable
+- Consulted
+- Informed
+
+Do not assign final accountability to named individuals without confirmation.
+
+Create:
+
+- RAID log
+- Decision log
+- Assumptions log
+- Open questions register
+- Dependency tracker
+- Change log
+- Stakeholder action tracker
+
+---
+
+PART 16 — SUCCESS METRICS
+
+Define measurable KPIs.
+
+Include:
+
+1. Time to first productive task
+2. Access provisioning turnaround time
+3. Onboarding completion rate
+4. Number of onboarding blockers
+5. Repeated support requests
+6. Documentation completeness
+7. Documentation freshness
+8. New-joiner satisfaction
+9. Checklist adoption
+10. Manual coordination effort
+
+For every KPI, provide:
+
+- Definition
+- Formula
+- Data source
+- Measurement frequency
+- Baseline collection method
+- Suggested target-setting approach
+- Reporting owner
+- Limitations
+
+Do not invent baseline values or claim improvement without evidence.
+
+---
+
+PART 17 — RISK MANAGEMENT
+
+Prepare a detailed risk register.
+
+Include risks such as:
+
+- Outdated documentation
+- Unclear ownership
+- Delayed access approvals
+- Security restrictions
+- Inconsistent team processes
+- Limited stakeholder availability
+- Tool integration limitations
+- Scope creep
+- Overengineering
+- Unnecessary custom development
+- Lack of pilot participation
+- Insufficient baseline data
+- Documentation maintenance failure
+- Inaccurate AI responses
+- Unauthorized information exposure
+- Duplicate tooling
+- Unclear success criteria
+
+For every risk, define:
+
+- Risk description
+- Probability
+- Impact
+- Mitigation
+- Contingency
+- Proposed owner
+- Trigger condition
+
+---
+
+PART 18 — DOCUMENTATION GOVERNANCE
+
+Design a sustainable maintenance model.
+
+Each onboarding document should have:
+
+- Document title
+- Purpose
+- Owner
+- Relevant team
+- Relevant role
+- Last updated date
+- Last reviewed date
+- Next review date
+- Approval status
+- Source of truth
+- Related applications
+- Escalation contact
+
+Recommend how updates should be handled when:
+
+- New applications are introduced
+- Access procedures change
+- Databases are migrated
+- Teams reorganize
+- New development tools are adopted
+- Security policies change
+- Documentation becomes outdated
+
+Avoid creating another documentation repository that immediately becomes obsolete.
+
+---
+
+PART 19 — PILOT SELECTION
+
+Do not assume that any particular engineering team has already been selected.
+
+Develop a pilot-selection framework based on:
+
+- Business need
+- Stakeholder availability
+- Existing documentation quality
+- Onboarding frequency
+- Process complexity
+- Access dependencies
+- Security requirements
+- Implementation feasibility
+- Measurability
+- Potential reuse across teams
+
+Consider RPS creative planning teams as one potential pilot candidate, subject to validation.
+
+Compare a small pilot against a broader rollout.
+
+Recommend starting with a manageable scope if evidence supports that choice.
+
+---
+
+PART 20 — DELIVERABLE FILE STRUCTURE
+
+Create the following directory in the current workspace:
+
+developer-onboarding-planning/
+
+Generate these Markdown files:
+
+01_PROJECT_OVERVIEW.md
+02_BUSINESS_REQUIREMENTS.md
+03_STAKEHOLDER_MATRIX.md
+04_DISCOVERY_PLAN.md
+05_CURRENT_STATE_ASSESSMENT.md
+06_DISCOVERY_QUESTIONNAIRES.md
+07_ACCESS_MANAGEMENT_ASSESSMENT.md
+08_APPLICATION_ENVIRONMENT_INVENTORY.md
+09_FUTURE_STATE_ARCHITECTURE.md
+10_TECHNOLOGY_EVALUATION.md
+11_JIRA_EPIC.md
+12_JIRA_STORIES_AND_SUBTASKS.md
+13_SPRINT_AND_DEADLINE_PLAN.md
+14_FIRST_10_DAYS_ACTION_PLAN.md
+15_STAKEHOLDER_MESSAGES.md
+16_RACI_AND_GOVERNANCE.md
+17_RISK_AND_DEPENDENCY_REGISTER.md
+18_KPI_AND_SUCCESS_METRICS.md
+19_PILOT_IMPLEMENTATION_PLAN.md
+20_AI_AUTOMATION_OPPORTUNITIES.md
+21_DOCUMENTATION_GOVERNANCE.md
+22_MANAGEMENT_PRESENTATION_OUTLINE.md
+23_DECISION_LOG_AND_OPEN_QUESTIONS.md
+24_REQUIREMENTS_TRACEABILITY_MATRIX.md
+25_PROJECT_EXECUTION_CHECKLIST.md
+26_TECHNICAL_ARCHITECTURE_DIAGRAMS.md
+27_FINAL_DISCOVERY_REPORT_TEMPLATE.md
+28_WEEKLY_STATUS_REPORT_TEMPLATE.md
+29_IMPLEMENTATION_BACKLOG.md
+30_MASTER_INDEX.md
+
+Also generate:
+
+README.md
+
+The README must explain:
+
+- What this project is
+- What has been generated
+- What is proposed versus confirmed
+- What should be done first
+- Which files should be used for Jira
+- Which files should be used for stakeholder interviews
+- Which files should be reviewed with management
+- What requires approval
+- What should not be implemented yet
+
+Create an additional file:
+
+START_HERE.md
+
+This file must contain a simple, beginner-friendly execution sequence.
+
+It should answer:
+
+- What should I do today?
+- Which Jira story should I create first?
+- Whom should I contact first?
+- What should I ask?
+- What should I document?
+- What should I do after the first meeting?
+- When should I review the plan?
+- What should I avoid building prematurely?
+- How do I know discovery is complete?
+
+Make START_HERE.md the easiest file to follow.
+
+---
+
+PART 21 — DOCUMENT QUALITY REQUIREMENTS
+
+Every document must:
+
+1. Have a clear purpose.
+2. Be technically meaningful.
+3. Avoid generic filler.
+4. Use consistent terminology.
+5. Link to related documents using relative Markdown links.
+6. Distinguish assumptions from facts.
+7. Include actionable next steps.
+8. Include acceptance criteria where appropriate.
+9. Avoid fabricated company information.
+10. Use clear headings and tables.
+11. Explain unfamiliar terminology briefly.
+12. Support future updates.
+13. Avoid repeating entire sections unnecessarily.
+14. Preserve the complete requirements across the document set.
+15. Be suitable for internal engineering review.
+
+Use Mermaid for:
+
+- Current-state process
+- Future-state process
+- High-level architecture
+- Access-request workflow
+- Onboarding lifecycle
+- Jira dependency graph
+- Proposed project timeline
+
+---
+
+PART 22 — FINAL VALIDATION
+
+Before completing the task:
+
+1. Verify every requested file exists.
+2. Verify the README links work.
+3. Verify the Jira Epic is complete.
+4. Verify all 10 proposed Jira stories are documented.
+5. Verify each story contains appropriate subtasks.
+6. Verify every story has acceptance criteria.
+7. Verify deadlines are explicitly marked provisional.
+8. Verify the discovery plan precedes implementation.
+9. Verify stakeholder engagement is documented.
+10. Verify security considerations are included.
+11. Verify team-specific onboarding is supported.
+12. Verify existing tool reuse is evaluated.
+13. Verify AI remains an optional future capability.
+14. Verify the pilot is not represented as already approved.
+15. Verify all open questions are captured.
+16. Verify no invented company facts are presented as confirmed.
+17. Verify no sensitive credentials or access details are included.
+18. Verify no external actions have been performed.
+19. Verify the implementation backlog has dependencies.
+20. Verify the documentation can be used without requiring additional context.
+
+Generate a final coverage matrix mapping the requirements in this prompt to the relevant output files.
+
+If any requirement cannot be fully addressed without stakeholder input, create an explicit open question and identify the stakeholder role responsible for answering it.
+
+Do not fabricate an answer.
+
+---
+
+PART 23 — COPILOT EXECUTION STRATEGY
+
+Work in the following order:
+
+Step 1 — Workspace inspection
+
+Inspect the current workspace structure.
+
+Do not read unrelated confidential source files.
+
+Identify a safe location for the documentation directory.
+
+Step 2 — Planning structure
+
+Create the documentation directory and all required Markdown files.
+
+Step 3 — Core project documents
+
+Populate:
+
+- Project overview
+- Business requirements
+- Discovery plan
+- Stakeholder matrix
+- Jira Epic
+- Jira stories
+- First ten days plan
+
+Step 4 — Technical documentation
+
+Populate:
+
+- Current-state assessment template
+- Future-state architecture
+- Technology evaluation
+- Access-management assessment
+- Application inventory
+- Security considerations
+
+Step 5 — Execution and governance
+
+Populate:
+
+- Sprint plan
+- Stakeholder messages
+- RACI
+- Risk register
+- KPI framework
+- Pilot plan
+- Implementation backlog
+
+Step 6 — Supporting documents
+
+Populate:
+
+- AI opportunities
+- Documentation governance
+- Management outline
+- Decision log
+- Requirements traceability
+- Architecture diagrams
+- Reporting templates
+
+Step 7 — Navigation
+
+Generate:
+
+- START_HERE.md
+- README.md
+- MASTER_INDEX.md
+
+Step 8 — Quality review
+
+Review all generated files for completeness, consistency, clarity, and unsupported claims.
+
+Step 9 — Final response
+
+Summarize:
+
+- Files created
+- First Jira story to use
+- First three actions
+- Proposed discovery duration
+- Key stakeholders
+- Major open questions
+- Decisions required before implementation
+
+---
+
+FINAL EXPECTATION
+
+I need a complete enterprise engineering planning package, not a superficial explanation.
+
+The documentation must help me independently coordinate this initiative from initial discovery through solution design, pilot approval, implementation planning, and future expansion.
+
+I should be able to open START_HERE.md and immediately understand my next action.
+
+I should be able to open 12_JIRA_STORIES_AND_SUBTASKS.md and copy professionally written stories into Jira.
+
+I should be able to open 15_STAKEHOLDER_MESSAGES.md and contact the appropriate stakeholders.
+
+I should be able to open 13_SPRINT_AND_DEADLINE_PLAN.md and understand proposed deadlines, dependencies, milestones, and delivery sequence.
+
+I should be able to open 09_FUTURE_STATE_ARCHITECTURE.md and understand the technical solution without needing deep enterprise architecture knowledge.
+
+I should be able to open 22_MANAGEMENT_PRESENTATION_OUTLINE.md and explain the initiative clearly to engineering leadership.
+
+The entire package must be actionable, maintainable, security-conscious, scalable, and suitable for an enterprise engineering environment.
+
+Start generating the local documentation package now. Do not stop after producing an outline. Complete the files in manageable batches, validate each batch, and continue until the requested package is complete.
