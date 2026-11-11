@@ -805,3 +805,351 @@ Do not generate other projects.
 After generating the HTML, test its JavaScript functionality, verify all required sections and exercises, fix errors, and report the saved file path.
 
 
+
+
+interview questions project 12:
+
+
+GITHUB COPILOT AGENT PROMPT — PROJECT 12: ENTERPRISE TERADATA KNOWLEDGE ASSESSMENT
+
+You are a Principal Teradata Architect, Enterprise Data Migration Specialist, Senior Python Engineer, Business Analyst, and Interactive Learning Platform Developer.
+
+OBJECTIVE
+
+Read the existing "TERADATA_ENTERPRISE_MASTER_BLUEPRINT.md" file and generate ONE complete, standalone, highly interactive HTML5 learning application.
+
+Output filename:
+"12_enterprise_knowledge_assessment.html"
+
+STRICT NAMING REQUIREMENT
+
+Never use the word "interview" anywhere in the generated application.
+
+This prohibition applies to:
+
+- HTML filename and page title.
+- Headings, paragraphs, buttons, and labels.
+- JavaScript variables and function names.
+- CSS classes and IDs.
+- HTML comments and metadata.
+- Question categories and explanations.
+- Browser title and exported reports.
+
+Use terminology such as "Enterprise Knowledge Assessment", "Technical Mastery", "Business Scenario Challenge", "Architecture Assessment", and "Practical Competency Evaluation".
+
+The application is intended for mastering enterprise business requirements and technical implementation, not for job recruitment.
+
+---
+
+1. REQUIRED COVERAGE
+
+Create exactly 100 high-quality questions across the 11 existing projects.
+
+Project| Topic| Questions
+1| Teradata Metadata Inventory & Discovery| 10
+2| DBQL Workload & Performance Assessment| 10
+3| Data Volumetric & Capacity Assessment| 8
+4| BTEQ & ETL Framework Discovery| 10
+5| Tivoli Batch Job Dependency Analysis| 8
+6| End-to-End Data Lineage Automation| 10
+7| DBQL & Metadata Correlation Engine| 8
+8| Migration Complexity & Readiness Assessment| 8
+9| Power BI Discovery & Assessment Dashboard| 8
+10| Teradata-to-BigQuery Migration Validation| 10
+11| AI-Powered SQL & BTEQ Discovery| 10
+
+Total: 100 questions.
+
+Use the master blueprint as the primary source of project terminology, business context, data models, pipelines, and expected outputs.
+
+If details are absent, research official technical documentation and clearly distinguish verified information from illustrative examples.
+
+Do not invent project achievements or claim access to real production systems.
+
+---
+
+2. MANDATORY QUESTION STRUCTURE
+
+Every question must include:
+
+1. Question number and unique ID.
+2. Project name and associated topic.
+3. Difficulty: Beginner, Intermediate, or Advanced.
+4. Business context.
+5. Realistic problem statement.
+6. Four answer options when appropriate.
+7. Correct answer.
+8. Detailed technical explanation.
+9. Business interpretation.
+10. Real-world banking example.
+11. Implementation steps.
+12. Relevant SQL, Python, BTEQ, or configuration snippet when applicable.
+13. Expected output.
+14. Common mistakes.
+15. Troubleshooting guidance.
+16. Related technical concepts.
+17. Follow-up challenge.
+18. Key takeaways.
+
+Avoid one-line answers.
+
+Explain concepts in plain English before introducing advanced terminology.
+
+For complex questions, provide a complete walkthrough from business requirement to technical implementation and expected outcome.
+
+---
+
+3. QUESTION TYPES
+
+Distribute the 100 questions across these categories:
+
+- 20 foundational concept questions.
+- 20 technical implementation questions.
+- 20 real-world business scenario questions.
+- 15 SQL/Python/BTEQ code analysis questions.
+- 10 debugging and troubleshooting questions.
+- 10 system architecture and migration questions.
+- 5 cross-project integration questions.
+
+Each question must have one primary category.
+
+Use a mix of multiple-choice, fill-in-the-blank, code completion, output prediction, ordering, and scenario-based questions.
+
+For open-ended responses, display model answers and self-assessment criteria rather than pretending to provide reliable AI grading without a backend.
+
+---
+
+4. COMPLETE INTERACTIVE APPLICATION
+
+Build a polished HTML5/CSS3/JavaScript application with:
+
+- Modern dark and light themes.
+- Collapsible navigation sidebar.
+- Project-wise question navigation.
+- Progress indicators.
+- Difficulty filters.
+- Category filters.
+- Search functionality.
+- Question bookmarking.
+- Interactive answer selection.
+- Immediate feedback.
+- Detailed explanations.
+- Hint buttons.
+- Retry incorrect answers.
+- Score calculation.
+- Progress persistence through localStorage.
+- Final performance dashboard.
+- Weak-topic analysis.
+- Revision mode.
+- Random practice mode.
+- Full 100-question assessment mode.
+
+In practice mode, reveal explanations immediately after submission.
+
+In assessment mode, show answers and explanations after the assessment is completed.
+
+Make the interface responsive for laptops, tablets, and mobile devices.
+
+---
+
+5. VISUAL LEARNING AND ANIMATIONS
+
+Create meaningful technical animations explaining:
+
+- Teradata query processing.
+- Parsing Engine and AMP operations.
+- Metadata extraction from DBC views.
+- DBQL query analysis.
+- Data distribution and skew.
+- BTEQ execution.
+- Tivoli job dependencies.
+- Source-to-target data lineage.
+- Migration readiness scoring.
+- Teradata-to-BigQuery reconciliation.
+- LangGraph agent orchestration.
+
+Use SVG, CSS animations, JavaScript, and Mermaid.js.
+
+Every relevant architecture question should include a visual explanation.
+
+Include Play, Pause, Replay, and Step controls for complex animations.
+
+Avoid unnecessary decorative animations.
+
+Respect reduced-motion accessibility settings.
+
+---
+
+6. REALISTIC BUSINESS CASE STUDIES
+
+Use the shared fictional enterprise Meridian Financial Services.
+
+Build scenarios around:
+
+- Customer account data.
+- Credit card transactions.
+- Loan processing.
+- Fraud detection.
+- Financial reporting.
+- Regulatory reporting.
+- Data warehouse modernization.
+- Batch processing.
+- ETL dependencies.
+- Migration validation.
+
+Connect questions to the same databases, tables, jobs, and business processes defined in the master blueprint.
+
+Explain why each technical decision matters to business operations.
+
+---
+
+7. PRACTICAL CODE CHALLENGES
+
+Include technical exercises involving:
+
+- Teradata SQL.
+- DBC metadata queries.
+- DBQL workload analysis.
+- BTEQ commands.
+- Python and Pandas.
+- SQL joins.
+- Data lineage graph construction.
+- NetworkX.
+- BigQuery SQL.
+- Data reconciliation.
+- LangGraph workflows.
+
+For each code challenge:
+
+1. Explain the business requirement.
+2. Show the input.
+3. Ask the learner to complete or debug code.
+4. Validate the response where deterministic browser-side checking is feasible.
+5. Show the correct solution.
+6. Explain every important line.
+7. Display the expected output.
+8. Explain common mistakes.
+
+Clearly label browser-side code execution as a simulation unless a genuine execution environment exists.
+
+---
+
+8. COMPLETE KNOWLEDGE DICTIONARY
+
+At the bottom of the application, create a searchable technical glossary covering all 11 projects.
+
+Include terms such as:
+
+Teradata, DBC, DBQL, AMP, BYNET, Parsing Engine, BTEQ, TPT, ETL, ELT, Tivoli, SLA, SQL, Metadata, Data Lineage, Data Skew, Stored Procedure, Macro, Power BI, DAX, SSAS, BigQuery, Reconciliation, LangGraph, Agent, LLM, and every other technical term introduced.
+
+For each term provide:
+
+- Full form.
+- Beginner-friendly definition.
+- Technical meaning.
+- Business example.
+- Related project.
+- Related concepts.
+
+Make technical terms clickable within questions to display their definitions.
+
+---
+
+9. BUSINESS RESPONSIBILITY EXPLANATIONS
+
+For scenario-based questions, explain which team or role owns the activity.
+
+Cover:
+
+- Business Analyst.
+- Data Engineer.
+- Teradata DBA.
+- ETL Developer.
+- Migration Architect.
+- QA Engineer.
+- BI Developer.
+- Technical Lead.
+- Product Owner.
+
+Explain who gathers requirements, who develops the solution, who validates results, and who approves delivery.
+
+---
+
+10. CROSS-PROJECT UNDERSTANDING
+
+Create questions connecting multiple projects.
+
+Examples:
+
+- How does metadata discovery support DBQL analysis?
+- How does DBQL help identify migration priorities?
+- How does BTEQ discovery support lineage extraction?
+- How do Tivoli dependencies affect migration sequencing?
+- How does the correlation engine support readiness scoring?
+- How do Power BI dashboards communicate migration risks?
+- How can LangGraph accelerate legacy code discovery?
+- How does reconciliation establish confidence in migrated data?
+
+Explain the complete end-to-end enterprise pipeline.
+
+Include a Mermaid diagram showing how all 11 projects connect.
+
+---
+
+11. TECHNICAL QUALITY AND VALIDATION
+
+Before finishing:
+
+1. Verify exactly 100 unique questions exist.
+2. Verify the project distribution totals 100.
+3. Verify each question contains its required explanation fields.
+4. Verify answer keys and scoring.
+5. Verify filters and navigation.
+6. Verify progress persistence.
+7. Verify interactive components function correctly.
+8. Verify Mermaid diagrams render.
+9. Verify no JavaScript syntax errors.
+10. Verify mobile responsiveness.
+11. Verify the technical glossary is searchable.
+12. Verify the prohibited word does not occur anywhere in the generated HTML file, case-insensitively.
+13. Verify the HTML filename is correct.
+14. Verify no real credentials or sensitive customer information are included.
+
+Use browser-based testing when available. Otherwise perform code-level validation and explicitly report anything not tested.
+
+Do not claim successful execution without actual validation.
+
+---
+
+12. OUTPUT AND DELIVERY
+
+Create only:
+
+"12_enterprise_knowledge_assessment.html"
+
+Do not generate the other 11 project HTML files.
+
+Do not modify the master blueprint unless explicitly necessary and authorized.
+
+Do not push to GitHub.
+
+Do not publish the application.
+
+Save the file locally in the current VS Code workspace.
+
+After generating the file, report:
+
+- File path.
+- Total number of questions.
+- Number of questions per project.
+- Implemented interactive features.
+- Completed validation checks.
+- Any unresolved issues.
+
+FINAL INSTRUCTION
+
+Do not produce a superficial question bank or a static webpage.
+
+Build a comprehensive, visually rich, genuinely interactive enterprise technical mastery application that teaches the learner how to understand business requirements, design solutions, implement technical pipelines, troubleshoot failures, validate results, and explain architectural decisions.
+
+Begin by reading the master blueprint, constructing the 100-question dataset, and then implementing the complete HTML application.
