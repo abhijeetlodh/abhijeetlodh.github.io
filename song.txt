@@ -1,1 +1,807 @@
+MASTER INSTRUCTION: BUILD AN ENTERPRISE TERADATA DISCOVERY & MIGRATION INTERACTIVE LEARNING BLUEPRINT
+
+You are acting simultaneously as:
+
+1. Principal Teradata Database Architect with 15+ years of enterprise data warehousing experience.
+2. Senior Teradata-to-BigQuery Migration Architect.
+3. Enterprise Data Discovery and Assessment Lead.
+4. Senior Python and SQL Automation Engineer.
+5. BTEQ, ETL, Tivoli Scheduling, and Data Lineage Specialist.
+6. Senior Agentic AI Architect specializing in LangGraph and AI-assisted code analysis.
+7. Business Analyst and Technical Product Owner.
+8. Senior Frontend Engineer specializing in HTML5, CSS3, JavaScript, SVG, Mermaid.js, interactive visualization, and animation.
+9. Instructional Designer specializing in highly interactive, beginner-to-advanced technical education.
+10. Technical Researcher responsible for validating technical details against reliable documentation.
+
+PRIMARY OBJECTIVE
+
+Create a comprehensive, permanent Markdown blueprint named:
+
+"TERADATA_ENTERPRISE_MASTER_BLUEPRINT.md"
+
+This Markdown file must contain the complete requirements, learning content specifications, business case studies, technical implementation instructions, interaction requirements, data dictionary requirements, assessment specifications, and generation instructions for 11 separate enterprise Teradata projects and one additional 100-question assessment module.
+
+DO NOT immediately generate all 12 HTML files.
+
+First generate ONLY the master Markdown blueprint.
+
+The blueprint must be self-contained, detailed, and reusable across future GitHub Copilot conversations.
+
+I must be able to attach this Markdown file to a completely new Copilot conversation and say:
+
+"Generate Project 4."
+
+Copilot must then be able to generate the complete interactive HTML learning application for Project 4 without needing the original conversation.
+
+The Markdown file is the permanent source of truth.
+
+The individual HTML files are generated on demand.
+
+CRITICAL CONTEXT
+
+I am learning enterprise Teradata systems from absolutely zero knowledge.
+
+Assume I do not know:
+
+- What a database is.
+- What Teradata is.
+- What a data warehouse is.
+- What DBC means.
+- What DBQL means.
+- What an AMP is.
+- What a Parsing Engine is.
+- What BYNET is.
+- What BTEQ is.
+- What ETL and ELT mean.
+- What a stored procedure is.
+- What Tivoli is.
+- What a batch job is.
+- What metadata means.
+- What data lineage means.
+- What BigQuery is.
+- What SQL parsing means.
+- What data reconciliation means.
+- What migration readiness means.
+- What an AI agent is.
+
+Do not assume prior knowledge of any technical term.
+
+Teach every concept using the following progression:
+
+Simple everyday analogy → Business problem → Technical definition → Visual demonstration → Realistic enterprise example → Implementation → Execution → Output → Business interpretation → Practice → Advanced scenario.
+
+The learning experience should resemble a combination of:
+
+- Educative.io interactive technical courses.
+- SoloLearn's progressive exercises.
+- Animated system design courses.
+- Interactive SQL playgrounds.
+- Enterprise architecture walkthroughs.
+- Visual coding tutorials.
+- Business simulation environments.
+
+The final product should feel like a polished interactive technical academy, not a static article or ordinary documentation website.
+
+Do not mention interview preparation or job applications anywhere in the generated learning content.
+
+The learning objective is understanding real business requirements and implementing enterprise solutions.
+
+---
+
+PART A — REQUIRED PROJECT CATALOG
+
+Create detailed, independent specifications for these 11 projects in the following exact order.
+
+Every project must use the same fictional enterprise ecosystem so that the learner understands how the output of one project becomes the input of another.
+
+Shared fictional business environment
+
+Organization: Meridian Financial Services
+
+Industry: Banking and Financial Services
+
+Existing platform: Enterprise Teradata Data Warehouse
+
+Target platform: Google BigQuery
+
+Supporting technologies:
+
+- Teradata SQL
+- Teradata DBC system views
+- Teradata DBQL
+- Python
+- Pandas
+- Teradata Python driver
+- BTEQ
+- Teradata Parallel Transporter
+- Shell scripting
+- Tivoli Workload Scheduler
+- Power BI
+- SQL parsing
+- NetworkX
+- BigQuery SQL
+- Google Cloud Platform
+- LangGraph
+- LLMs
+- Structured outputs
+- Data quality and reconciliation frameworks
+
+The fictional organization operates:
+
+- Customer accounts
+- Credit card transactions
+- Loan accounts
+- Customer profiles
+- Branch operations
+- Fraud monitoring
+- Daily financial reporting
+- Monthly regulatory reporting
+- Executive Power BI dashboards
+
+Use a consistent sample ecosystem throughout all projects.
+
+Example databases:
+
+"CUSTOMER_DB"
+
+"TRANSACTION_DB"
+
+"FINANCE_DB"
+
+"STAGING_DB"
+
+"REPORTING_DB"
+
+Example tables:
+
+"CUSTOMER_MASTER"
+
+"CARD_TRANSACTIONS"
+
+"LOAN_ACCOUNTS"
+
+"DAILY_TRANSACTION_SUMMARY"
+
+"MONTHLY_FINANCIAL_REPORT"
+
+Example applications:
+
+"CARD_PROCESSING_APP"
+
+"RISK_ANALYTICS_APP"
+
+"FINANCE_REPORTING_APP"
+
+Example batch jobs:
+
+"JOB_EXTRACT_TRANSACTIONS"
+
+"JOB_LOAD_STAGING"
+
+"JOB_TRANSFORM_FINANCE"
+
+"JOB_REFRESH_REPORTING"
+
+These are illustrative names. Maintain consistency across all modules.
+
+Never present fictional metrics, infrastructure, customers, or project outcomes as real production facts.
+
+---
+
+PROJECT 1 — TERADATA METADATA INVENTORY & DISCOVERY
+
+Business statement
+
+Meridian Financial Services operates a large Teradata environment containing tables, views, stored procedures, macros, indexes, and other database objects.
+
+The organization wants to modernize its warehouse but lacks a consolidated understanding of its existing database landscape.
+
+Business stakeholders need to know what objects exist, where they exist, who owns them, how they are structured, and which require further migration assessment.
+
+Required learning content
+
+Explain from zero:
+
+1. What is a database?
+2. What is a data warehouse?
+3. Why do banks use data warehouses?
+4. What is Teradata?
+5. What is Teradata architecture?
+6. What are Parsing Engines, AMPs, and BYNET?
+7. What is metadata?
+8. What is a database object?
+9. What is a table?
+10. What is a view?
+11. What is a stored procedure?
+12. What is a macro?
+13. What is an index?
+14. What is the DBC database?
+15. What are DBC system views?
+16. How do we extract metadata?
+17. How do we store extracted metadata?
+18. How does Python automate discovery?
+
+Implementation pipeline
+
+Business requirements gathering
+→ Access and permissions
+→ Teradata metadata discovery
+→ DBC system view queries
+→ Python metadata extraction
+→ Metadata normalization
+→ Inventory creation
+→ Object classification
+→ Data quality validation
+→ Discovery reporting
+→ Stakeholder review.
+
+Technical requirements
+
+Teach and demonstrate the use of appropriate catalog views, including:
+
+- DBC.TablesV
+- DBC.ColumnsV
+- DBC.DatabasesV
+- DBC.IndicesV
+
+Research other relevant views where necessary.
+
+Show:
+
+- SQL queries.
+- Python extraction code.
+- Sample query results.
+- CSV inventory output.
+- JSON inventory output.
+- Data validation.
+- Logging and exception handling.
+- Read-only database access.
+
+Expected output
+
+Create an example object inventory with:
+
+Database name, object name, object type, owner, column count, and discovery timestamp.
+
+Metrics
+
+- Total objects discovered.
+- Objects by type.
+- Objects by database.
+- Inventory coverage.
+- Metadata extraction failures.
+- Objects requiring ownership review.
+
+Business responsibilities
+
+Requirement gathering, DBA coordination, discovery scope, access approval, metadata validation, object inventory preparation, documentation, and stakeholder reporting.
+
+Interactive requirements
+
+Animate Teradata architecture, allow users to explore database objects, run simulated metadata queries, and watch the inventory populate.
+
+Handoff to Project 2
+
+The inventory provides the master list of objects whose actual workload usage must be assessed.
+
+---
+
+PROJECT 2 — DBQL WORKLOAD & PERFORMANCE ASSESSMENT
+
+Business statement
+
+The enterprise knows what database objects exist but does not understand how frequently they are accessed or which workloads consume the most resources.
+
+The migration team must distinguish critical workloads from less important activity.
+
+Teach from zero
+
+- What is a database query?
+- What happens when SQL executes?
+- What is DBQL?
+- What is query logging?
+- What are DBQLogTbl and DBQLObjTbl?
+- What is CPU usage?
+- What is I/O?
+- What is query runtime?
+- What is concurrency?
+- What is query frequency?
+- What is a performance bottleneck?
+- What is workload classification?
+- What are peak processing hours?
+
+Implementation pipeline
+
+DBQL logging assessment
+→ Historical query log extraction
+→ Query-level analysis
+→ Object-level usage extraction
+→ Python aggregation
+→ Workload classification
+→ Bottleneck identification
+→ Peak workload analysis
+→ Performance dashboard
+→ Migration workload recommendations.
+
+Technical requirements
+
+Provide sample DBQL datasets, realistic SQL analysis, Python aggregation, workload charts, and resource consumption analysis.
+
+Explain the relationship between query identifiers and object references.
+
+Explain logging retention limitations and incomplete workload evidence.
+
+Metrics
+
+- Query execution count.
+- Average runtime.
+- p95 runtime.
+- CPU consumption.
+- I/O consumption.
+- Peak concurrency.
+- Workload distribution.
+- Resource-intensive query count.
+
+Interactive requirements
+
+Create a simulated query execution engine showing multiple queries competing for resources.
+
+Allow users to adjust query frequency, CPU demand, and concurrency.
+
+Animate changing workload graphs.
+
+Handoff to Project 3
+
+The workload assessment identifies resource demand, while the volumetric assessment determines how much data those workloads process.
+
+---
+
+PROJECT 3 — DATA VOLUMETRIC & CAPACITY ASSESSMENT
+
+Business statement
+
+The organization needs to estimate data movement, storage requirements, historical growth, and capacity risks before migrating Teradata workloads to BigQuery.
+
+Teach from zero
+
+- What is a row?
+- What is a column?
+- What is data volume?
+- What is storage utilization?
+- What is table size?
+- What is an AMP?
+- What is data distribution?
+- What is skew?
+- What is compression?
+- What is data growth?
+- What is capacity planning?
+- What is historical trend analysis?
+
+Implementation pipeline
+
+Table inventory
+→ Storage metadata extraction
+→ Row-count assessment
+→ AMP-level distribution analysis
+→ Historical growth analysis
+→ Python volumetric profiling
+→ Skew detection
+→ Capacity estimation
+→ Migration sizing report.
+
+Technical requirements
+
+Demonstrate suitable DBC storage views, including DBC.TableSizeV.
+
+Explain exact versus estimated row counts.
+
+Provide Python code for skew calculations, growth analysis, and capacity summaries.
+
+Explain why Teradata physical storage cannot be directly treated as equivalent BigQuery storage.
+
+Metrics
+
+- Current storage.
+- Table size.
+- Row count.
+- Growth percentage.
+- Skew percentage.
+- Large table count.
+- Estimated migration volume.
+- Storage distribution.
+
+Interactive requirements
+
+Animate rows being distributed across AMPs.
+
+Create a slider that changes data distribution and visualizes skew.
+
+Include a storage growth simulator.
+
+Handoff to Project 4
+
+The organization now understands the database objects, workload usage, and data volumes, but still needs to discover the transformation logic that moves and modifies the data.
+
+---
+
+PROJECT 4 — BTEQ & ETL FRAMEWORK DISCOVERY
+
+Business statement
+
+Critical transformation logic is embedded inside legacy BTEQ scripts, ETL frameworks, and shell scripts.
+
+The organization must discover this logic before migration to prevent business process failures.
+
+Teach from zero
+
+- What is ETL?
+- What is ELT?
+- What is BTEQ?
+- What is a BTEQ script?
+- What is a shell script?
+- What is a loader?
+- What are FastLoad, MultiLoad, FastExport, and TPT?
+- What is SQL parsing?
+- What is transformation logic?
+- What is dynamic SQL?
+- What is source-to-target mapping?
+- What is script dependency analysis?
+
+Implementation pipeline
+
+Script collection
+→ File classification
+→ BTEQ command parsing
+→ SQL statement extraction
+→ Source table detection
+→ Target table detection
+→ Transformation extraction
+→ Dependency mapping
+→ Complexity classification
+→ Migration conversion backlog.
+
+Technical requirements
+
+Provide realistic BTEQ scripts with:
+
+- LOGON.
+- SELECT.
+- INSERT.
+- UPDATE.
+- MERGE.
+- Error handling.
+- LOGOFF.
+
+Explain syntax-aware parsing versus regular expressions.
+
+Show Python parsing utilities, structured extraction results, and error handling.
+
+Metrics
+
+- Total scripts.
+- SQL statements.
+- Source tables.
+- Target tables.
+- Transformation count.
+- Unresolved references.
+- Dynamic SQL occurrences.
+- Conversion complexity.
+
+Interactive requirements
+
+Provide a BTEQ script editor with syntax highlighting.
+
+Allow users to select statements and watch source/target tables become highlighted.
+
+Animate a transaction moving through ETL transformations.
+
+Handoff to Project 5
+
+Discovered scripts are executed by scheduled jobs, so the next step is understanding their execution order and dependencies.
+
+---
+
+PROJECT 5 — TIVOLI BATCH JOB DEPENDENCY ANALYSIS
+
+Business statement
+
+The bank runs scheduled batch processing workflows where one job depends on the successful completion of another.
+
+Migration must preserve these dependencies and business reporting deadlines.
+
+Teach from zero
+
+- What is a batch job?
+- What is a scheduler?
+- What is Tivoli Workload Scheduler?
+- What is IBM Workload Scheduler?
+- What is a job stream?
+- What is a predecessor?
+- What is a successor?
+- What is a job calendar?
+- What is an SLA?
+- What is a critical path?
+- What is a dependency graph?
+- What is a failed batch chain?
+
+Implementation pipeline
+
+Scheduler definition collection
+→ Job inventory
+→ Schedule extraction
+→ Predecessor mapping
+→ Successor mapping
+→ Script correlation
+→ Dependency graph creation
+→ Critical chain identification
+→ Failure impact analysis
+→ Migration sequencing recommendations.
+
+Technical requirements
+
+Create realistic sample Tivoli job definitions.
+
+Use Python and NetworkX for dependency graphs.
+
+Explain topological ordering, cycle detection, missing references, and critical path calculations.
+
+Metrics
+
+- Total jobs.
+- Dependency count.
+- Critical chains.
+- Failed jobs.
+- Average job duration.
+- SLA breaches.
+- Missing dependency references.
+
+Interactive requirements
+
+Create a batch scheduler simulator.
+
+Allow users to start, pause, and fail jobs.
+
+Animate downstream effects when a predecessor fails.
+
+Handoff to Project 6
+
+The scheduler provides execution dependencies, which must now be combined with database and ETL relationships to construct complete data lineage.
+
+---
+
+PROJECT 6 — END-TO-END DATA LINEAGE AUTOMATION
+
+Business statement
+
+Business reports depend on data flowing through multiple databases, ETL scripts, scheduled jobs, semantic models, and BI applications.
+
+The organization needs end-to-end traceability for migration impact analysis.
+
+Teach from zero
+
+- What is data lineage?
+- What is upstream?
+- What is downstream?
+- What is table-level lineage?
+- What is column-level lineage?
+- What is a dependency graph?
+- What is impact analysis?
+- What is a semantic model?
+- What is SSAS?
+- How does Power BI consume data?
+- What are graph nodes and edges?
+
+Implementation pipeline
+
+Metadata inventory
+→ SQL/BTEQ dependencies
+→ Scheduler dependencies
+→ BI metadata extraction
+→ Identifier normalization
+→ Graph construction
+→ Lineage traversal
+→ Dependency gap detection
+→ SME validation
+→ Impact analysis reporting.
+
+Technical requirements
+
+Build a Python NetworkX lineage example.
+
+Show relationships among source tables, ETL jobs, reporting tables, SSAS models, and Power BI reports.
+
+Distinguish data-flow edges from execution-dependency edges.
+
+Metrics
+
+- Total lineage nodes.
+- Total relationships.
+- Lineage coverage.
+- Unresolved references.
+- Downstream impact count.
+- Critical dependency paths.
+
+Interactive requirements
+
+Create an interactive graph.
+
+Allow users to click any table and highlight upstream and downstream dependencies.
+
+Animate data moving through the lineage.
+
+Handoff to Project 7
+
+The lineage graph and earlier discovery outputs become inputs to a unified metadata and workload correlation engine.
+
+---
+
+PROJECT 7 — DBQL & METADATA CORRELATION ENGINE
+
+Business statement
+
+Metadata alone cannot establish actual usage, and DBQL alone cannot reveal all business dependencies.
+
+The enterprise needs a consolidated evidence-based object utilization assessment.
+
+Teach from zero
+
+- What is data correlation?
+- What is an object identifier?
+- What is a composite key?
+- What is a SQL join?
+- What is usage evidence?
+- What is an active object?
+- What is an inactive candidate?
+- What is dependency correlation?
+- What is evidence confidence?
+
+Implementation pipeline
+
+Metadata inventory
+→ DBQL workload extraction
+→ BTEQ reference extraction
+→ Scheduler references
+→ BI references
+→ Identifier normalization
+→ Cross-source correlation
+→ Evidence scoring
+→ Usage classification
+→ SME review
+→ Migration scope recommendations.
+
+Technical requirements
+
+Show realistic Python/Pandas merges and SQL joins.
+
+Explain missing values, inconsistent naming, duplicate references, and incomplete logging.
+
+Do not classify an object as safe to delete merely because DBQL shows no activity.
+
+Metrics
+
+- Objects with observed activity.
+- Potentially inactive objects.
+- Objects with unresolved usage.
+- Dependency coverage.
+- Conflicting evidence count.
+- Validation backlog.
+
+Interactive requirements
+
+Create a visual correlation engine where different evidence sources connect to a single database object.
+
+Allow users to toggle evidence sources and observe classification changes.
+
+Handoff to Project 8
+
+The correlated evidence provides the foundation for migration complexity scoring and readiness assessment.
+
+---
+
+PROJECT 8 — MIGRATION COMPLEXITY & READINESS ASSESSMENT
+
+Business statement
+
+The organization must decide which workloads to migrate first, which require redesign, and which carry significant operational risk.
+
+Teach from zero
+
+- What is migration?
+- What is modernization?
+- What is migration readiness?
+- What is technical debt?
+- What is complexity scoring?
+- What is risk scoring?
+- What is migration wave planning?
+- What is a blocker?
+- What is business criticality?
+- What is a migration candidate?
+
+Implementation pipeline
+
+Consolidated discovery evidence
+→ Feature extraction
+→ Complexity scoring
+→ Business criticality assessment
+→ Dependency risk assessment
+→ Migration candidate classification
+→ Wave planning
+→ SME approval
+→ Readiness reporting.
+
+Technical requirements
+
+Create an illustrative weighted complexity scoring model.
+
+Explain each weight and show how scores change.
+
+Include sample migration candidate records.
+
+Distinguish illustrative scoring from actual enterprise-approved scoring.
+
+Metrics
+
+- Readiness score.
+- Complexity score.
+- High-risk objects.
+- Unresolved blockers.
+- Migration candidate count.
+- Wave-level data volume.
+- Dependency completeness.
+
+Interactive requirements
+
+Create sliders for complexity weights and risk factors.
+
+Allow users to change scoring rules and observe migration wave recommendations.
+
+Handoff to Project 9
+
+The readiness assessment produces management information that must be presented through an interactive dashboard.
+
+---
+
+PROJECT 9 — POWER BI DISCOVERY & ASSESSMENT DASHBOARD
+
+Business statement
+
+Business and technical stakeholders need a consolidated view of migration scope, progress, risks, workloads, and dependencies.
+
+Teach from zero
+
+- What is business intelligence?
+- What is Power BI?
+- What is a dashboard?
+- What is a KPI?
+- What is a measure?
+- What is a dimension?
+- What is DAX?
+- What is a semantic model?
+- What is a heatmap?
+- What is data refresh?
+
+Implementation pipeline
+
+Discovery datasets
+→ Data cleaning
+→ Reporting data
+
+
+==========================°====================================°°°
+Read the attached TERADATA_ENTERPRISE_MASTER_BLUEPRINT.md completely.
+
+Generate the standalone interactive HTML learning application for Project 1.
+
+Follow all 16 mandatory project sections, technical implementation requirements, animations, Mermaid diagrams, sample datasets, implementation matrices, business responsibilities, interactive exercises, recitation prompts, and the complete glossary.
+
+Teach every concept from absolute zero knowledge. Implement real working browser interactions, simulations, answer checking, and local progress tracking.
+
+Research and verify technical details where possible.
+
+Save the HTML file in my local workspace using the exact filename specified in the blueprint.
+
+Do not generate other projects.
+
+After generating the HTML, test its JavaScript functionality, verify all required sections and exercises, fix errors, and report the saved file path.
+
 
