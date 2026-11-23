@@ -5,6 +5,27 @@ Test-Path $path
 Get-ChildItem $path -ErrorAction SilentlyContinue |
 Select-Object -First 10 Name
 
+The .NET Framework 4.7.2 reference assemblies are confirmed installed.
+
+PowerShell Test-Path returned TRUE, and the folder contains reference DLLs.
+
+Do not reinstall the Developer Pack.
+
+Now:
+
+1. Locate the actual Visual Studio 2022 MSBuild.exe using vswhere.
+2. Verify that the project targets .NET Framework 4.7.2.
+3. Verify that MSBuild resolves the installed reference assemblies.
+4. Rerun the original baseline build using the correct MSBuild.exe.
+5. Capture the complete build output and exit code.
+6. If MSB3644 persists, investigate MSBuild properties and targeting-pack discovery.
+7. Separately diagnose NuGet package restoration using the approved internal feed.
+8. Do not change project target frameworks, package versions, or enterprise NuGet configuration just to bypass errors.
+
+Once the baseline succeeds, resume the existing Black Duck remediation workflow according to SKILL.md.
+
+Report the exact remaining errors and their root causes.
+
 
 Continue RPS-671609 from the existing blocked baseline. Do not initialize a new run or overwrite existing work.
 
