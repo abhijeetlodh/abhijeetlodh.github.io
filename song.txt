@@ -1,266 +1,113 @@
-AUTONOMOUS BLACK DUCK REMEDIATION — RPS-671609
+$path = "${env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2"
 
-You are the lead Black Duck Remediation Orchestrator operating in VS Code with GitHub Copilot custom agents and PowerShell.
+Test-Path $path
 
-PRIMARY OBJECTIVE
+Get-ChildItem $path -ErrorAction SilentlyContinue |
+Select-Object -First 10 Name
 
-Complete Jira RPS-671609: BlackDuck Remediation — JobGrid, using the existing repository, installed BlackDuck Remediation Kit, available custom agents, and PowerShell automation.
 
-Follow the demonstrated architecture:
+Continue RPS-671609 from the existing blocked baseline. Do not initialize a new run or overwrite existing work.
 
-Orchestrator → Baseline → Dependency Analysis → Test Writer → Technology Specialist → Package Restoration → Breaking-Change Fixes → Validation → Report → Approval → GitHub PR.
+I previously installed some .NET prerequisites using PowerShell, but MSBuild still reports MSB3644. NuGet restore also fails.
 
-Work autonomously through investigation, local installation of approved prerequisites, remediation, troubleshooting, and verification.
+Your immediate responsibility is to diagnose and repair the LOCAL BUILD ENVIRONMENT before resuming Black Duck remediation.
 
-Do not stop after producing a plan. Execute the safe local steps and continue until the remediation is validated or a genuine blocker is identified.
-
-PHASE 1 — DISCOVER THE ENVIRONMENT
-
-Workspace root: C:\bd
-
-Inspect:
-
-- Jira RPS-671609 and its acceptance criteria
-- ".github/agents/"
-- ".github/skills/blackduck-remediation-kit/SKILL.md"
-- ".github/skills/blackduck-remediation-kit/settings.json"
-- ".github/skills/blackduck-remediation-kit/library-map.md"
-- ".github/skills/blackduck-remediation-kit/rebuild-repair.md"
-- ".github/skills/blackduck-remediation-kit/scripts/"
-- ".blackduck/activity.jsonl"
-- All solution and project files
-- NuGet.Config and packages.config
-- Existing build logs and reports
-- Git status and current branch
-
-Read the entire kit documentation before executing its scripts.
-
-Identify whether the Jira story requires direct source-code remediation, internal dependency-owner notification, or both.
-
-Never assume that the SchwabLogger log4net upgrade shown in the demonstration is directly applicable to JobGrid.
-
-PHASE 2 — VERIFY REQUIRED TOOLS
+STEP 1 — VERIFY .NET FRAMEWORK 4.7.2
 
 Use PowerShell to inspect:
 
-- PowerShell version
-- Git
-- .NET SDK and installed runtimes
-- MSBuild
-- NuGet
-- GitHub CLI, if required
-- Repository restore configuration
-- GitHub Copilot custom agent availability
-- Black Duck configuration and approved package feeds
+- Installed .NET Framework SDKs and runtimes
+- Installed .NET Framework targeting packs
+- Registry entries for .NET Framework 4.7.2
+- Reference assemblies at:
+  C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework.NETFramework\v4.7.2
+- Visual Studio Installer components
+- Actual MSBuild.exe path and version
 
-Detect missing prerequisites.
+Determine whether the Developer Pack was installed successfully, installed incompletely, or installed but not discovered by MSBuild.
 
-Install or restore missing approved tools and dependencies using documented organization-approved sources and package versions.
+Do not reinstall anything until you establish the exact cause.
 
-Use existing internal feeds and approved configuration. Never invent package-feed URLs, request credentials in chat, bypass security restrictions, or silently install unapproved software.
+If the targeting pack is absent, identify the approved installation method and exact missing component. Request approval before installation.
 
-Treat log4net as a NuGet dependency, not a PowerShell utility. Install or upgrade it only in projects where the dependency graph and Jira requirements justify the change.
+STEP 2 — DIAGNOSE NUGET RESTORE
 
-If installation requires administrator privileges, new credentials, a license, or a restricted package source, report the blocker and request approval.
+Inspect:
 
-PHASE 3 — DETERMINE THE EXACT POWERSHELL SEQUENCE
+- Repository nuget.config
+- Run-specific NuGet.Config
+- All packages.config files
+- Existing src/packages directory
+- Configured package sources
+- Credential-provider availability
+- NuGet.exe version
+- MSBuild restore command and errors
 
-Inspect the complete contents and parameters of:
+Check the configured rps_private feed without exposing credentials.
 
-- AgentActivity.ps1
-- Apply-Closure.ps1
-- BlackDuckKit.psm1
-- HtmlReport.ps1
-- Initialize-WorkFolder.ps1
-- Invoke-Build.ps1
-- Invoke-PackageClosure.ps1
-- KitPolicy.ps1
-- New-RemediationReport.ps1
-- Publish-Remediation.ps1
-- Resolve-Closure.ps1
-- Set-RemediationPlan.ps1
-- Start-Remediation.ps1
-- Test-BindingRedirects.ps1
-- Test-Remediation.ps1
-- Test-ToolPolicy.ps1
-- Watch-Remediation.ps1
-- Write-AgentActivity.ps1
+Determine whether the problem is:
 
-Classify each file as:
+- Missing authentication
+- Incorrect feed configuration
+- Missing packages in the feed
+- Disabled approved upstream sources
+- Missing package cache
+- Incorrect restore method
 
-1. Entry-point script
-2. Helper module
-3. Initialization
-4. Dependency analysis
-5. Planning
-6. Remediation
-7. Build/test validation
-8. Reporting
-9. Publication
+Do not enable nuget.org or modify enterprise package feeds without approval.
 
-Determine the correct execution sequence from SKILL.md, script parameters, imports, and call dependencies.
+Do not fabricate or substitute package versions.
 
-Do not run every script merely because it exists.
+STEP 3 — RESTORE AND BUILD
 
-Use the documented entry points and let them invoke internal helpers where appropriate.
+Once prerequisites are available:
 
-Never execute a ".psm1" module as if it were a standalone ".ps1" script.
+1. Restore packages.config dependencies using the repository's documented NuGet/MSBuild process.
+2. Verify missing package errors are resolved.
+3. Re-run the original baseline build.
+4. Capture the exact exit code.
+5. Run baseline tests if the build succeeds.
 
-Before each script execution, verify its parameters, working directory, prerequisites, expected side effects, and failure handling.
+STEP 4 — RESUME REMEDIATION
 
-PHASE 4 — ESTABLISH BASELINE
+Only after a successful baseline, resume the existing RPS-671609 remediation plan.
 
-Before modifying application code:
+Follow the installed SKILL.md and its documented script sequence.
 
-1. Record the current Git branch and working-tree status.
-2. Preserve existing user changes.
-3. Identify the target solution and projects.
-4. Restore existing dependencies using approved sources.
-5. Execute the documented baseline build.
-6. Run existing tests.
-7. Capture errors, warnings, package versions, and dependency findings.
+Delegate the planned package upgrades to the appropriate specialist agents.
 
-Separate pre-existing failures from failures introduced during remediation.
+Keep the log4net SchwabLogger ownership boundary unchanged.
 
-Do not perform a destructive clean, reset, or overwrite of uncommitted changes.
+STEP 5 — REPORT
 
-PHASE 5 — ANALYZE BLACK DUCK FINDINGS
+Provide a concise table containing:
 
-Read the Jira findings and any available Black Duck reports.
+- Missing prerequisite
+- Installed version
+- Required version
+- Detection result
+- Exact error
+- Fix applied
+- Remaining blocker
 
-For each vulnerable package, determine:
+Execute safe read-only diagnostics immediately. Do not stop at a generic explanation. If an approved local repair is possible without privileged or external changes, perform it and verify the result.
 
-- Package name
-- Current version
-- Expected secure version
-- Direct or transitive dependency
-- Owning repository and team
-- Affected project
-- Dependency chain
-- Breaking-change risk
-- Required remediation action
+Do not push or publish anything without my approval.
 
-Resolve the complete dependency graph.
 
-For internal packages owned by other teams, do not directly modify their repositories without authorization.
 
-If a secure internal package release is unavailable, prepare an owner notification and record the dependency blocker.
 
-PHASE 6 — AUTOMATED REMEDIATION
+I already attempted to install Visual Studio 2022 Build Tools with Microsoft.VisualStudio.Workload.ManagedDesktopBuildTools and Microsoft.Net.Component.4.7.2.TargetingPack using winget and installer override arguments.
 
-Use the existing BlackDuck Remediator orchestrator and the appropriate specialist agents.
+Do not reinstall blindly.
 
-Use the Test Writer agent to add focused regression tests before making risky changes.
+Use PowerShell to verify whether the .NET Framework 4.7.2 reference assemblies are installed, inspect Visual Studio Build Tools component installation state using vswhere, and determine why MSBuild reports MSB3644.
 
-For approved, directly remediable findings:
+If the component is installed, identify and repair the MSBuild detection/configuration issue without modifying project target frameworks.
 
-1. Update affected package references.
-2. Restore dependencies.
-3. Fix compilation errors.
-4. Address documented breaking API changes.
-5. Update binding redirects when applicable.
-6. Run targeted tests.
-7. Run full regression tests.
-8. Rebuild the solution.
-9. Repeat until all remediable findings pass validation.
+If the component is missing, identify the correct Visual Studio Installer component and approved installation command. Ask for approval before installing.
 
-For log4net specifically, inspect whether the affected repository uses EventLogAppender.MachineName or other APIs changed in version 3.x.
+After resolving this, verify NuGet restore separately, then retry the original baseline build. Do not begin Black Duck dependency upgrades until the baseline succeeds.
 
-Only apply the SchwabLogger demonstration's code fix if the same issue actually exists in the target code.
 
-Preserve application behavior, logging configuration, and compatibility.
 
-Avoid unrelated refactoring.
-
-PHASE 7 — ERROR RESOLUTION
-
-When a command fails:
-
-1. Capture the exact error.
-2. Identify whether the cause is tooling, dependency restoration, compilation, tests, configuration, or permissions.
-3. Inspect the relevant source and logs.
-4. Apply the smallest safe fix.
-5. Retry the failed validation.
-6. Record the result.
-
-Do not suppress tests, disable security scanning, bypass dependency policies, or mark failed checks as successful.
-
-If a failure requires an external team, unavailable dependency release, or restricted access, stop that portion and report the exact blocker.
-
-PHASE 8 — FINAL VALIDATION
-
-Verify:
-
-- All intended package versions
-- Approved dependency closure
-- Successful package restore
-- Successful build
-- Existing regression tests
-- Newly added tests
-- Binding redirects where applicable
-- No unintended source changes
-- No newly introduced security findings detectable by available tools
-
-Do not claim that vulnerabilities are resolved without supporting evidence.
-
-PHASE 9 — REPORTING
-
-Generate the documented remediation report using the kit's supported scripts.
-
-Include:
-
-- Jira key
-- Repository and branch
-- Original findings
-- Updated dependency versions
-- Findings routed to other owners
-- Files modified
-- Build and test results
-- Remaining blockers
-- Required follow-up actions
-- Git diff summary
-
-Write local reports only to the documented report directory.
-
-PHASE 10 — GIT AND PULL REQUEST
-
-Review the complete Git diff.
-
-Ensure no secrets, credentials, unrelated files, or temporary build artifacts are included.
-
-Prepare a pull-request title and description referencing RPS-671609.
-
-Do not push, publish, open a PR, or merge until I explicitly approve that action.
-
-Once approved, follow the organization's documented publication workflow.
-
-EXECUTION RULES
-
-- Use PowerShell for Windows automation.
-- Reuse the installed BlackDuck Remediation Kit.
-- Follow documented custom-agent handoffs.
-- Do not invent script arguments.
-- Do not run all scripts blindly.
-- Do not reinstall tools that are already functioning.
-- Never overwrite existing work.
-- Do not bypass organization security policies.
-- Ask for approval before privileged installations, destructive changes, external publication, or actions outside the authorized repository.
-- Continue automatically through safe, reversible local steps.
-- Record every executed command and its exit status.
-- If the task is notification-only, do not invent a code-remediation requirement.
-
-Start by inspecting SKILL.md and the actual PowerShell entry points. Then execute the validated local workflow.
-
-At completion, provide:
-
-1. Actions performed
-2. Exact PowerShell execution sequence
-3. Tools installed or restored
-4. Vulnerabilities fixed
-5. Findings assigned to other owners
-6. Build and test results
-7. Remaining errors
-8. Files changed
-9. PR readiness and required approval
-
-BEGIN NOW.
