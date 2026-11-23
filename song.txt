@@ -1,19 +1,1 @@
 
-Continue RPS-671609 from the current branch.
-
-The environment is verified. Do not reinstall .NET, MSBuild, log4net or public NuGet packages.
-
-The baseline is blocked by five missing Schwab-internal NuGet packages.
-
-Perform one final read-only investigation:
-
-1. Inspect repository documentation, NuGet.Config, packages.config, project files and Git history for the original approved package source.
-2. Search existing local caches and approved internal package locations for the exact five packages and versions.
-3. Determine whether these packages were moved, renamed, retired or hosted on another approved internal feed.
-4. Check whether the repository documents an approved alternative source or package restoration process.
-5. Do not change corporate feeds, credentials, dependency versions or security policies.
-6. If an approved accessible source is found, restore the exact versions and rerun the documented baseline.
-7. If the baseline passes, continue the BlackDuck remediation workflow and validation according to SKILL.md.
-8. If packages remain unavailable, stop and produce a concise escalation containing the exact package IDs, versions, feed URL, affected projects and restore errors.
-
-Do not claim remediation is complete unless build and tests pass. Do not push changes without approval.
