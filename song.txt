@@ -1,37 +1,36 @@
-Act as a senior enterprise Node.js, WebdriverIO and MCP integration engineer working within Schwab's approved security environment.
+$env:NODE_USE_SYSTEM_CA = "1"
+npm config get registry
+npm view @wdio/mcp@3.14.0 version
 
-Diagnose and resolve the installation and initialization failure of the approved WebdriverIO MCP server.
+Resolve the WebdriverIO MCP installation issue before making any further changes to the BlackDuck project.
 
-Server details:
+Confirmed diagnostics:
 
-- Server: io.github.webdriverio/mcp
-- Package: @wdio/mcp@3.14.0
-- Transport: stdio
-- Command: npx
-- Environment: Windows 11, VS Code, GitHub Copilot Agent Mode
+- Node.js: v24.22.3
+- npm: 11.19.1
+- Current registry: https://registry.npmjs.org/
+- npm cafile: null
+- strict-ssl: true
+- Error: UNABLE_TO_GET_ISSUER_CERT_LOCALLY
+- Playwright dependencies are also missing.
 
-Observed errors:
+Perform the following actions:
 
-- UNABLE_TO_GET_ISSUER_CERT_LOCALLY
-- npm request to registry.npmjs.org failed
-- Waiting for server to respond to initialize request
-- WDIO MCP tools are not exposed in Copilot Chat
+1. Inspect existing authorized npm configurations and internal documentation to identify the approved Schwab Nexus npm registry.
+2. Inspect existing corporate certificate configuration and test Node.js system CA support using NODE_USE_SYSTEM_CA=1.
+3. Configure the approved registry and trusted certificates using the appropriate configuration scope.
+4. Verify package availability using npm view @wdio/mcp@3.14.0 version.
+5. Install the approved WebdriverIO MCP package.
+6. Preserve stdio transport in mcp.json.
+7. Ensure npx does not hang waiting for interactive confirmation.
+8. Restart the MCP server and verify initialization and tool discovery.
+9. Start a WDIO-managed Chrome session using an approved test URL, retrieve the page title and close the session.
+10. Check whether standalone Playwright is approved and available through the internal registry.
 
-Perform the following:
+Execute diagnostics and permitted remediation rather than merely suggesting commands.
 
-1. Inspect the existing MCP configuration without modifying unrelated servers.
-2. Verify Node.js, npm and npx availability.
-3. Inspect the effective npm registry, corporate CA certificate configuration and applicable proxy settings without exposing credentials.
-4. Identify the approved Schwab internal Nexus npm registry from existing authorized configuration or internal documentation.
-5. If the registry or corporate CA cannot be identified, stop and report the exact missing prerequisite. Do not invent URLs.
-6. Resolve package installation using the approved internal registry and trusted corporate certificates.
-7. Preserve stdio transport. Do not configure HTTP or SSE.
-8. Check whether npx is waiting for an interactive installation confirmation.
-9. Restart the MCP server and verify successful initialization and tool discovery.
-10. Use an actual WDIO MCP tool to check browser session status.
-11. Start a local Chrome session using an approved test URL, retrieve the page title and close the session.
-12. Report installation status, initialization status, discovered tools, browser test results and remaining blockers.
+Do not disable SSL verification, bypass corporate security, invent registry URLs, install Microsoft Playwright MCP, modify BlackDuck business logic or submit onboarding requests.
 
-Do not disable SSL verification, bypass corporate security, install Microsoft Playwright MCP, modify BlackDuck application files or access production customer data.
+If any prerequisite requires administrator permissions or unavailable internal information, report the exact blocker.
 
-Do not declare success merely because the MCP process shows Running. Success requires an actual MCP tool invocation and successful browser interaction.
+Success requires actual WDIO MCP tool execution, not merely a Running process status.
