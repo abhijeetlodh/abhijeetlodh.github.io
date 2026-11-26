@@ -1,0 +1,1525 @@
+MASTER ENGINEERING TASK: Transform the Existing BlackDuck Onboarding AI Agent into a Production-Quality, Deterministic Browser Automation System
+
+1. Your role and primary objective
+
+Act as a principal software engineer, senior browser automation engineer, enterprise solution architect, quality assurance engineer, and GitHub Copilot agentic automation specialist.
+
+You are working inside my existing BlackDuck onboarding project using VS Code on Windows 11.
+
+I have already developed a BlackDuck onboarding AI agent whose instructions, business rules, execution workflow, dependencies, and operational knowledge are defined in the attached Markdown (.md) agent file and associated project files.
+
+The existing agent works through GitHub Copilot intelligence, but its execution is extremely time-consuming because it repeatedly analyzes browser pages, determines the next action, performs UI operations, evaluates responses, and repeats this process across multiple APM IDs and repositories.
+
+Your primary objective is to transform this existing agent into a highly reliable, reusable, customer-friendly, deterministic browser automation solution, preferably using standalone Playwright where approved.
+
+The Schwab-approved WebdriverIO MCP server is now operational. Use it as your browser exploration, investigation, debugging, and validation tool.
+
+Use AI intelligence extensively during development, but minimize or eliminate LLM dependency during actual script execution.
+
+Do not merely generate a proposed architecture or provide recommendations. Analyze, implement, execute, test, debug, refine, and deliver a working solution within the authorized environment.
+
+Target completion within one working day. Prioritize the complete functional workflow over unnecessary architectural complexity.
+
+---
+
+2. Mandatory operating constraints
+
+- Preserve the original BlackDuck onboarding agent and existing working implementation.
+- Do not overwrite or delete the original Markdown agent.
+- Inspect existing Playwright implementations before creating duplicate functionality.
+- Create an isolated implementation directory or branch where appropriate.
+- Reuse existing business logic wherever it is correct.
+- Do not modify unrelated projects, configuration files, or infrastructure.
+- Use only enterprise-approved packages, MCP servers, registries, and tools.
+- Do not install Microsoft Playwright MCP.
+- Use the existing approved WebdriverIO MCP server for browser investigation.
+- Standalone Playwright may be used only if approved and available through the enterprise registry.
+- If standalone Playwright is not approved, implement equivalent deterministic automation using approved WebdriverIO tooling.
+- Never disable TLS or certificate validation.
+- Never bypass authentication, authorization, SSO, MFA, role restrictions, or enterprise security policies.
+- Never expose credentials, cookies, tokens, API keys, or customer data.
+- Use authorized test environments, test accounts, and test repositories for development.
+- Do not perform production onboarding or modify real repositories without explicit authorization and an approved execution plan.
+- Never treat a partially completed onboarding request as successful.
+- Do not repeatedly submit the same onboarding request while investigating failures.
+- Do not fabricate successful test results.
+
+---
+
+3. Phase 1: Deep analysis of the existing Markdown agent
+
+Before writing implementation code, thoroughly inspect the attached BlackDuck onboarding agent Markdown file.
+
+Read the complete file from beginning to end.
+
+Do not limit your analysis to headings or a summarized interpretation.
+
+Identify every instruction, business rule, condition, validation, exception, fallback, input, output, and dependency.
+
+Determine:
+
+1. What triggers the existing agent?
+2. What information does it expect from customers?
+3. Which CSV file does it currently use?
+4. Where is that CSV file located?
+5. What are its actual column names?
+6. How are APM IDs extracted?
+7. How are multiple APM IDs associated with repositories?
+8. How are duplicate repositories handled?
+9. How are archived repositories handled?
+10. How are already-onboarded repositories identified?
+11. How are repositories that require onboarding identified?
+12. What exclusions and eligibility rules exist?
+13. What is the source of truth for onboarding status?
+14. How does the agent connect to GitHub?
+15. Which GitHub organization or enterprise instance does it use?
+16. How does authentication work?
+17. Which GitHub assistant repository or assistant page does it visit?
+18. How does it locate the BlackDuck onboarding button?
+19. What happens after clicking that button?
+20. What form fields are required?
+21. Where does each form field obtain its value?
+22. What values are static, dynamic, or customer-dependent?
+23. What validation rules are applied?
+24. What happens when the form is submitted?
+25. How does the agent identify the resulting GitHub issue or request?
+26. How does it assign the final required label?
+27. What project-admin information is required?
+28. How does the existing agent resolve project administrators?
+29. What happens when administrator information is unavailable?
+30. How does it verify successful onboarding?
+31. What reports does it generate?
+32. What errors does it currently handle?
+33. What errors are currently ignored?
+34. What retry logic already exists?
+35. Which operations depend unnecessarily on LLM reasoning?
+36. Which operations can become deterministic functions?
+37. Which existing scripts, APIs, utilities, and configurations can be reused?
+
+Inspect all files referenced by the Markdown agent.
+
+Search the existing workspace for related implementation files, including:
+
+- Markdown agent definitions.
+- JavaScript and TypeScript scripts.
+- Python utilities.
+- PowerShell scripts.
+- CSV files.
+- Configuration files.
+- Existing browser automation scripts.
+- Existing test suites.
+- GitHub integration utilities.
+- BlackDuck reports.
+- Existing dashboard status logic.
+- Package manifests and lock files.
+- Existing execution logs.
+- Existing issue submission logic.
+- Existing label assignment logic.
+
+Construct a complete requirement traceability matrix.
+
+For every requirement, record:
+
+- Original source file.
+- Original instruction or business rule.
+- Existing implementation location.
+- Proposed deterministic implementation.
+- Validation method.
+- Test case.
+- Implementation status.
+
+Save this analysis in a dedicated Markdown document.
+
+Do not silently discard requirements that appear unnecessary.
+
+Where requirements conflict or are ambiguous, investigate the existing implementation and authorized documentation. Record unresolved ambiguities explicitly.
+
+---
+
+4. Phase 2: Understand and use WebdriverIO MCP
+
+The approved WebdriverIO MCP server is already configured.
+
+First verify that its tools are genuinely available inside this Copilot session.
+
+Discover its actual exposed tools instead of assuming tool names or capabilities.
+
+Determine which tools support:
+
+- Starting a local browser session.
+- Opening URLs.
+- Reading page content.
+- Inspecting DOM elements.
+- Inspecting accessibility information.
+- Clicking elements.
+- Entering text.
+- Selecting dropdown values.
+- Handling tabs and windows.
+- Taking screenshots.
+- Waiting for elements.
+- Inspecting supported network information.
+- Closing browser sessions.
+
+Only use capabilities actually exposed by the installed MCP server.
+
+Use WebdriverIO MCP to understand the existing BlackDuck onboarding workflow visually and technically.
+
+Do not confuse opening a URL in the VS Code shared browser with opening a WDIO-managed browser session.
+
+Use MCP for discovery and validation, then translate the discovered workflow into deterministic browser automation code.
+
+Do not require an LLM or MCP server to decide every click during the final script's normal execution.
+
+---
+
+5. Phase 3: Reconstruct the existing end-to-end workflow
+
+Identify the exact GitHub assistant page used by the original agent.
+
+Determine the correct navigation sequence from the existing Markdown file and associated configuration.
+
+Using an authorized test account and test environment:
+
+1. Start a browser session.
+2. Navigate to the approved GitHub enterprise instance.
+3. Identify whether authentication is required.
+4. Allow the authorized user to complete interactive SSO or MFA if necessary.
+5. Verify that the browser is authenticated.
+6. Navigate to the existing assistant repository or page.
+7. Inspect the README Markdown content.
+8. Locate the BlackDuck onboarding button.
+9. Determine whether the button is a link, issue template, form, application redirect, or another UI component.
+10. Inspect its destination.
+11. Open the onboarding workflow.
+12. Discover every form element.
+13. Determine which fields are mandatory.
+14. Determine which fields are optional.
+15. Identify dependent dropdowns and dynamically loaded fields.
+16. Identify validation messages.
+17. Identify loading indicators.
+18. Identify disabled and enabled states.
+19. Determine what triggers submission availability.
+20. Inspect the post-submission workflow using authorized test data.
+21. Identify how the resulting issue or request is represented.
+22. Discover the final label assignment workflow.
+23. Identify how label persistence can be independently verified.
+
+For every relevant UI element, record:
+
+- Page or workflow stage.
+- Element purpose.
+- Accessible role.
+- Accessible name.
+- Associated label.
+- Stable locator.
+- Alternative locator.
+- Visibility conditions.
+- Enabled conditions.
+- Expected value.
+- Validation behavior.
+- Expected result after interaction.
+
+Prefer semantic locators such as roles, labels, and stable test identifiers.
+
+Avoid fragile XPath expressions, dynamic CSS classes, positional selectors, and unnecessary fixed delays.
+
+Do not invent selectors. Derive them from actual authorized browser inspection.
+
+---
+
+6. Phase 4: Design a customer-friendly interactive experience
+
+The final automation must be usable by customers who do not understand Playwright, MCP, Node.js, GitHub automation, or AI.
+
+The user must not need to manually edit source code to select APM IDs.
+
+Provide a simple interactive interface with clear instructions.
+
+Prefer an interactive terminal wizard as the initial implementation because it minimizes deployment complexity. If the existing project already has a suitable UI, reuse or enhance it instead of creating an unnecessary second interface.
+
+Main menu
+
+Display:
+
+BLACKDUCK ONBOARDING AUTOMATION
+
+1. Use existing CSV file.
+2. Select a different CSV file.
+3. Enter APM IDs manually.
+4. Resume a previous execution.
+5. View previous execution reports.
+6. Exit.
+
+Allow the customer to navigate backward or cancel safely.
+
+Do not terminate the application because of a simple invalid menu selection.
+
+Existing CSV mode
+
+Automatically discover the CSV file currently used by the existing agent.
+
+Do not assume a filename if the Markdown agent or project configuration defines another file.
+
+Display:
+
+- File name.
+- File location.
+- Last modified timestamp.
+- Total records.
+- Unique APM IDs.
+- Unique repositories.
+- Duplicate records.
+- Invalid records.
+- Available onboarding status information.
+
+Ask the customer:
+
+1. Select all APM IDs from the CSV.
+2. Select multiple APM IDs from the CSV.
+3. Select one APM ID from the CSV.
+4. Search available APM IDs.
+5. Display all APM IDs and associated repository counts.
+6. Return to the main menu.
+
+Select all mode
+
+Load every valid, unique APM ID from the CSV.
+
+Display the number of selected APM IDs and repositories.
+
+Do not immediately submit onboarding requests.
+
+Generate an execution preview first.
+
+Multiple APM ID mode
+
+Display all unique APM IDs dynamically.
+
+Provide serial numbers and associated repository counts.
+
+Support:
+
+- Comma-separated serial numbers.
+- Direct APM ID selection.
+- Multiple selections.
+- Duplicate removal.
+- Invalid selection detection.
+- Search and filtering.
+- Clear selection.
+- Return to previous menu.
+
+If the dataset is large, support pagination or searchable selection.
+
+Single APM ID mode
+
+Allow the customer to select exactly one valid APM ID.
+
+Display the repositories associated with that APM ID.
+
+Different CSV file mode
+
+Allow the customer to provide a CSV file path.
+
+Validate:
+
+- File existence.
+- File extension.
+- Readability.
+- Encoding.
+- Required columns.
+- Header structure.
+- Empty rows.
+- Quoted values.
+- Duplicate records.
+- Invalid APM IDs.
+- Missing repository names.
+- Malformed rows.
+
+Use a proper CSV parsing library already approved in the environment.
+
+Do not parse CSV files using naive string splitting.
+
+If validation fails, explain the exact issue and allow the customer to correct it.
+
+Manual APM ID mode
+
+Ask the customer:
+
+1. Enter a single APM ID.
+2. Enter multiple APM IDs.
+3. Paste a multiline list of APM IDs.
+4. Go back.
+
+Support comma-separated, whitespace-separated, and newline-separated values where compatible with the existing APM ID format.
+
+Normalize inputs according to the original agent's rules.
+
+Remove duplicates.
+
+Do not invent APM ID format requirements.
+
+Determine how manually entered APM IDs are mapped to repositories using the original agent's existing data sources and authorized APIs.
+
+If no authorized repository-discovery mechanism exists, explain the missing prerequisite rather than fabricate repositories.
+
+---
+
+7. Phase 5: Repository discovery and eligibility engine
+
+For each selected APM ID, discover its associated repositories using the same source-of-truth logic as the existing agent.
+
+An APM ID may have multiple repositories.
+
+A repository may be associated with multiple APM IDs.
+
+Design the implementation to handle these relationships correctly.
+
+Do not onboard the same repository twice because it appears under multiple APM IDs.
+
+Preserve all existing rules for:
+
+- Archived repositories.
+- Excluded repositories.
+- Repository naming restrictions.
+- Repository ownership.
+- Existing BlackDuck onboarding.
+- Existing pending onboarding requests.
+- Unsupported repositories.
+- Missing information.
+- Invalid APM associations.
+- Other business-specific eligibility criteria.
+
+Distinguish between the following states where supported by actual business logic:
+
+- Already onboarded.
+- Eligible for onboarding.
+- Pending existing request.
+- Archived.
+- Excluded.
+- Invalid data.
+- Unknown status.
+- Authorization required.
+- Repository not found.
+- Manual review required.
+
+Do not classify unknown status as not onboarded.
+
+Do not rely solely on stale CSV status if the original workflow requires live status verification.
+
+Where authorized, compare the CSV status with the actual current source of truth.
+
+Create a normalized execution plan before any write operation.
+
+The plan must include:
+
+- APM ID.
+- Repository name.
+- Repository identifier.
+- Current onboarding status.
+- Eligibility decision.
+- Reason for eligibility or exclusion.
+- Existing issue or request reference.
+- Required onboarding fields.
+- Required label.
+- Planned action.
+
+---
+
+8. Phase 6: Execution preview and customer confirmation
+
+Before creating or modifying any GitHub issue, display a complete execution preview.
+
+Show:
+
+- Input source.
+- Selected APM IDs.
+- Number of repositories discovered.
+- Already-onboarded repositories.
+- Pending onboarding requests.
+- Eligible repositories.
+- Archived repositories.
+- Excluded repositories.
+- Repositories requiring manual review.
+- Planned submissions.
+- Planned label assignments.
+
+Allow the customer to:
+
+1. Execute a dry run.
+2. Export the execution plan.
+3. Review repository details.
+4. Modify selections.
+5. Approve the execution plan.
+6. Cancel.
+
+Dry-run mode must be the default safe execution mode.
+
+Dry-run mode must not create issues, submit forms, assign labels, or perform any other write operation.
+
+Actual execution must require explicit customer authorization for the displayed plan.
+
+Do not interpret a request to analyze or test the script as authorization to perform bulk production onboarding.
+
+---
+
+9. Phase 7: Implement deterministic browser automation
+
+Translate the discovered browser workflow into maintainable automation code.
+
+Prefer TypeScript with standalone Playwright if approved.
+
+If the existing project uses JavaScript and migration to TypeScript adds unnecessary complexity, retain JavaScript.
+
+If Playwright is unavailable or unapproved, use approved deterministic WebdriverIO automation.
+
+Organize the implementation into reusable modules.
+
+Suggested responsibilities:
+
+- Application entry point.
+- Interactive customer input.
+- CSV parser.
+- APM ID validation.
+- Repository discovery.
+- Eligibility engine.
+- Authentication and session handling.
+- GitHub assistant page.
+- BlackDuck onboarding form.
+- Submission workflow.
+- Project-admin resolution.
+- Label assignment workflow.
+- Onboarding verification.
+- Retry policy.
+- Checkpoint manager.
+- Logging.
+- Reporting.
+- Configuration management.
+- Test fixtures and automated tests.
+
+Adapt this structure to the existing project instead of blindly creating duplicate files.
+
+Each automation function must have a clearly defined responsibility.
+
+Do not place the entire workflow into one large unmaintainable script.
+
+Use structured return values and typed interfaces where appropriate.
+
+Separate business rules from browser interaction logic.
+
+Separate configuration from source code.
+
+Do not hardcode:
+
+- Credentials.
+- Internal URLs that already exist in configuration.
+- Repository names.
+- APM IDs.
+- Administrator names.
+- Label names.
+- Customer-specific values.
+- Browser installation paths.
+- Absolute paths belonging to one developer.
+
+Use environment-specific configuration and validated defaults.
+
+---
+
+10. Phase 8: Authentication and GitHub connectivity
+
+Determine how the existing agent authenticates with GitHub.
+
+Reuse the approved authentication mechanism.
+
+If browser-based authentication is required:
+
+- Launch an approved browser.
+- Allow the user to authenticate interactively.
+- Detect successful authentication.
+- Reuse the authorized session during the execution.
+- Detect expired sessions.
+- Detect redirects to authentication pages.
+- Pause safely when reauthentication is required.
+- Resume after the user completes authentication.
+
+Do not automate MFA bypass.
+
+Do not extract credentials from existing browser profiles.
+
+Do not copy authentication cookies or tokens into source files, logs, reports, or Git commits.
+
+If authentication state persistence is approved, protect it appropriately and exclude it from version control.
+
+If the original agent uses an authorized GitHub API for read-only repository discovery or status checks, evaluate whether that existing mechanism is faster and more reliable than browser navigation.
+
+Use the UI for operations that require UI interaction.
+
+Do not introduce unauthorized APIs or direct backend calls to bypass the intended workflow.
+
+---
+
+11. Phase 9: BlackDuck onboarding form automation
+
+For every eligible repository, execute the exact workflow discovered from the original agent and authorized browser inspection.
+
+The automation should:
+
+1. Verify the current repository context.
+2. Verify onboarding eligibility.
+3. Check for an existing onboarding request.
+4. Navigate to the correct assistant page.
+5. Locate the BlackDuck onboarding action.
+6. Open the correct form.
+7. Wait until required elements are available.
+8. Populate fields using validated repository data.
+9. Select appropriate dropdown values.
+10. Handle dependent fields.
+11. Resolve any required administrator information.
+12. Validate the completed form.
+13. Verify that the repository and APM ID are correct.
+14. Verify that required fields are populated.
+15. Verify that submission is enabled.
+16. Submit exactly once after authorization.
+17. Capture the resulting issue or request identifier.
+18. Record the issue URL.
+19. Persist a checkpoint immediately.
+20. Proceed to the final label assignment stage.
+
+Do not use arbitrary fixed sleeps as the primary synchronization mechanism.
+
+Wait for actual UI conditions.
+
+Use explicit assertions before critical actions.
+
+If an element is missing, determine whether the page is still loading, the selector is incorrect, the user lacks permission, or the application has changed.
+
+Do not blindly click alternative elements.
+
+Do not submit a partially populated form.
+
+---
+
+12. Phase 10: Critical investigation — final label assignment failure
+
+This is the highest-priority technical investigation.
+
+The current BlackDuck onboarding agent can reach the final stage, but it fails to assign the required label.
+
+There appears to be a dependency on project-admin information.
+
+However, manual UI interaction can successfully assign the label in circumstances where automated interaction fails.
+
+Do not assume the root cause.
+
+Perform a structured differential investigation comparing the authorized manual workflow against the automated workflow.
+
+Investigation A: Identity and permissions
+
+Determine whether manual and automated sessions use the same authenticated identity.
+
+Check whether the account has the required permissions.
+
+Determine whether label assignment depends on:
+
+- Repository role.
+- Organization role.
+- Project administrator role.
+- Issue permissions.
+- Team membership.
+- Application-specific authorization.
+- Another documented prerequisite.
+
+Determine whether the project-admin field is genuinely mandatory or whether it is unrelated to the actual label assignment failure.
+
+Do not modify permissions or impersonate administrators.
+
+If the required authorization is absent, report the exact missing role or approval.
+
+Investigation B: Browser state and timing
+
+Determine whether the automated workflow attempts label assignment before:
+
+- The issue is fully created.
+- The page has finished navigating.
+- The label control becomes enabled.
+- Administrator information has loaded.
+- A dropdown has populated.
+- The required backend operation has completed.
+- The correct issue context has been established.
+
+Inspect loading indicators and state transitions.
+
+Replace speculative waits with verified readiness conditions.
+
+Investigation C: Element interaction
+
+Inspect the actual label control.
+
+Determine whether it is:
+
+- A dropdown.
+- A button.
+- A searchable list.
+- A modal dialog.
+- An autocomplete component.
+- A custom JavaScript widget.
+- A dynamically rendered menu.
+- Another component.
+
+Investigate whether automation fails because of:
+
+- Incorrect locator.
+- Hidden duplicate elements.
+- Disabled controls.
+- Overlay interference.
+- Incorrect page context.
+- Stale element references.
+- Incorrect search input.
+- Missing keyboard interaction.
+- Incorrect selection.
+- Missing save or apply action.
+- A menu that closes before selection is committed.
+
+Use normal browser interactions that reproduce the authorized manual workflow.
+
+Do not force-click disabled controls or inject JavaScript to circumvent application restrictions.
+
+Investigation D: Project-admin resolution
+
+Inspect the existing Markdown agent's project-admin instructions.
+
+Determine the source of project-admin information.
+
+Investigate whether the administrator field depends on:
+
+- APM ID.
+- Repository.
+- Project.
+- Organization.
+- Team.
+- Existing metadata.
+- An authorized directory lookup.
+- An autocomplete search.
+
+Determine whether administrators fail to appear because of missing input, incorrect search behavior, delayed loading, incorrect mapping, or actual authorization limitations.
+
+Never select an arbitrary administrator merely to complete the workflow.
+
+If multiple valid administrators exist, follow the original business rule or request an explicit authorized selection.
+
+If no valid administrator exists, classify the repository as requiring manual review.
+
+Investigation E: Manual versus automated comparison
+
+Using an authorized test issue, compare:
+
+- Initial page state.
+- Authenticated identity.
+- Repository context.
+- Issue context.
+- Form values.
+- Selected administrator.
+- Element readiness.
+- Label search behavior.
+- Label selection behavior.
+- Save or apply behavior.
+- Final displayed state.
+- Persisted state after page reload.
+
+Where permitted and supported, inspect sanitized network metadata to determine whether the normal UI operation succeeds or fails.
+
+Do not capture or expose authentication headers, cookies, tokens, or sensitive response bodies.
+
+Investigation F: Implement and validate the fix
+
+Based on actual evidence, implement the smallest reliable correction.
+
+Create a dedicated reusable label assignment function.
+
+The function must:
+
+1. Accept the existing issue identifier or URL.
+2. Navigate to the correct issue.
+3. Verify repository and issue context.
+4. Check whether the required label is already present.
+5. Return success without modifying anything if the label is already present.
+6. Locate the correct label control.
+7. Wait for the control to become ready.
+8. Search for the exact required label.
+9. Verify that the label exists.
+10. Select the exact label.
+11. Perform any required normal save or apply operation.
+12. Wait for the operation to complete.
+13. Verify the label appears.
+14. Reload or independently re-read the issue.
+15. Verify that the label remains assigned.
+16. Return a structured result with evidence.
+
+Do not create a new label unless the original business workflow explicitly requires it and the operation is separately authorized.
+
+Do not remove existing unrelated labels.
+
+Do not create duplicate issues while retrying label assignment.
+
+If label assignment fails after successful issue submission, preserve the issue reference and mark the operation as LABEL_PENDING.
+
+On subsequent execution, resume label assignment on the existing issue rather than submitting another onboarding form.
+
+---
+
+13. Phase 11: State machine and checkpoint architecture
+
+Implement an explicit execution state machine.
+
+Suggested internal states:
+
+- INPUT_RECEIVED
+- INPUT_VALIDATED
+- REPOSITORY_DISCOVERED
+- STATUS_CHECKED
+- ALREADY_ONBOARDED
+- EXCLUDED
+- ELIGIBLE
+- PLAN_APPROVED
+- FORM_OPENED
+- FORM_VALIDATED
+- SUBMISSION_IN_PROGRESS
+- SUBMISSION_UNCERTAIN
+- ISSUE_CREATED
+- LABEL_PENDING
+- LABEL_ASSIGNED
+- LABEL_VERIFIED
+- ONBOARDING_REQUEST_COMPLETED
+- ONBOARDING_CONFIRMED
+- FAILED_RETRYABLE
+- FAILED_PERMANENT
+- MANUAL_REVIEW_REQUIRED
+
+Adapt these states to the original business workflow.
+
+Distinguish between a completed onboarding request and actual completed BlackDuck onboarding if the downstream onboarding process is asynchronous.
+
+Persist checkpoints after every critical state transition.
+
+If the script is interrupted, crashes, loses network connectivity, or encounters authentication expiration, allow it to resume safely.
+
+The checkpoint must retain sufficient information to identify the repository, existing request, last successful stage, and next permitted action.
+
+Protect checkpoint files and exclude sensitive authentication information.
+
+If submission succeeds but the response is lost, mark the state as uncertain.
+
+Before retrying, search for the existing request using authorized methods.
+
+Never automatically repeat a potentially successful submission without reconciliation.
+
+---
+
+14. Phase 12: Error handling and bounded retries
+
+Classify failures rather than applying the same retry logic to every error.
+
+Handle:
+
+- Browser startup failure.
+- Browser crash.
+- Network timeout.
+- Temporary server failure.
+- Authentication expiration.
+- Missing repository.
+- Invalid APM ID.
+- Missing CSV.
+- Invalid CSV.
+- Missing mandatory field.
+- Missing project administrator.
+- Unexpected page navigation.
+- Changed UI element.
+- Duplicate onboarding request.
+- Form validation failure.
+- Submission timeout.
+- Missing issue identifier.
+- Label not found.
+- Label assignment failure.
+- Label persistence failure.
+- Authorization failure.
+- Rate limiting.
+- Enterprise policy restriction.
+
+For transient failures, implement bounded retries with exponential backoff and jitter where appropriate.
+
+Use configurable retry limits.
+
+Default to a small number of attempts rather than indefinite loops.
+
+For authorization errors, missing mandatory business data, and enterprise policy restrictions, stop the affected operation and report the blocker.
+
+Do not retry permission failures as if they were network failures.
+
+For UI changes, capture sanitized diagnostic evidence and classify the failure for investigation.
+
+Allow the remaining eligible repositories to continue when safe.
+
+If a systemic failure affects all repositories, stop the batch instead of generating hundreds of identical failures.
+
+---
+
+15. Phase 13: Performance optimization
+
+The original AI agent is too slow.
+
+The new implementation must substantially reduce unnecessary execution overhead.
+
+Measure the current workflow where possible.
+
+Identify time spent in:
+
+- LLM reasoning.
+- Browser initialization.
+- Authentication.
+- CSV parsing.
+- Repository discovery.
+- Status verification.
+- Navigation.
+- Form population.
+- Submission.
+- Label assignment.
+- Verification.
+- Retries.
+
+Optimize using the following principles:
+
+- Parse the CSV once.
+- Normalize APM IDs once.
+- Deduplicate repositories before execution.
+- Reuse authorized browser sessions.
+- Reuse browser contexts where safe.
+- Avoid opening a new browser for every repository.
+- Avoid repeated authentication.
+- Cache appropriate read-only metadata within the execution.
+- Avoid unnecessary navigation.
+- Avoid fixed sleep statements.
+- Use event-driven waiting.
+- Avoid repeated LLM calls.
+- Avoid unnecessary screenshots during successful operations.
+- Generate screenshots only when useful for diagnostics.
+- Skip repositories already onboarded.
+- Resume from checkpoints rather than restart.
+- Separate read-only discovery from write operations.
+
+Start with sequential write operations for reliability.
+
+Consider bounded concurrency only after the sequential workflow is proven and enterprise policies permit it.
+
+Read-only operations may use limited concurrency where appropriate.
+
+Do not aggressively parallelize issue creation or label assignment.
+
+Respect GitHub rate limits, enterprise service capacity, and documented restrictions.
+
+Measure actual performance rather than claiming an unsupported speed improvement.
+
+Report:
+
+- Total execution duration.
+- Average time per repository.
+- Median time per repository.
+- P95 repository processing time.
+- Time spent in each major workflow stage.
+- Number of retries.
+- Number of browser restarts.
+- Number of LLM calls required during runtime.
+
+The desired runtime LLM dependency is zero for ordinary deterministic execution.
+
+---
+
+16. Phase 14: Logging and observability
+
+Implement structured logs that are understandable to both customers and developers.
+
+For every execution, generate a unique execution ID.
+
+For every repository, log:
+
+- Timestamp.
+- Execution ID.
+- APM ID.
+- Repository name.
+- Workflow stage.
+- Operation.
+- Attempt number.
+- Duration.
+- Result.
+- Error category.
+- Sanitized error message.
+- Issue reference when available.
+- Label verification status.
+
+Display customer-friendly progress in the terminal.
+
+Example:
+
+Processing repository 12 of 48
+
+APM ID: selected APM ID
+
+Repository: selected repository
+
+Checking onboarding status... COMPLETE
+
+Opening onboarding form... COMPLETE
+
+Validating fields... COMPLETE
+
+Submitting request... COMPLETE
+
+Assigning required label... COMPLETE
+
+Verifying persisted label... COMPLETE
+
+Final status: ONBOARDING REQUEST COMPLETED
+
+The above is an example only. Use actual runtime values.
+
+Do not expose credentials, cookies, tokens, or sensitive customer information.
+
+Make verbose debugging configurable.
+
+On failure, retain sanitized screenshots, traces, and diagnostic information only when permitted.
+
+Do not include sensitive browser storage or authentication state in debugging artifacts.
+
+---
+
+17. Phase 15: Customer-facing reports
+
+Generate a final execution summary in the terminal.
+
+Include:
+
+- Execution ID.
+- Start time.
+- End time.
+- Total duration.
+- Selected APM IDs.
+- Total repositories discovered.
+- Unique repositories processed.
+- Already-onboarded repositories.
+- Archived repositories.
+- Excluded repositories.
+- Existing pending requests.
+- Newly submitted requests.
+- Successfully assigned labels.
+- Independently verified labels.
+- Pending label assignments.
+- Confirmed completed onboarding where applicable.
+- Failed repositories.
+- Repositories requiring manual review.
+
+Generate a detailed CSV report.
+
+Suggested fields:
+
+- execution_id
+- apm_id
+- repository_name
+- initial_onboarding_status
+- eligibility_status
+- planned_action
+- submission_status
+- issue_number
+- issue_url
+- required_label
+- label_assignment_status
+- label_verification_status
+- final_status
+- attempt_count
+- duration_seconds
+- error_category
+- error_message
+- next_action
+
+Adapt the schema to the existing project and business requirements.
+
+Also generate a machine-readable JSON report for resumability and downstream integration.
+
+If the project already contains an HTML reporting dashboard, evaluate whether it can be reused.
+
+Do not introduce a large reporting framework solely for visual presentation.
+
+---
+
+18. Phase 16: Comprehensive testing strategy
+
+Do not consider the implementation complete merely because the script compiles.
+
+Create automated tests covering business logic, input handling, browser workflow, error handling, and recovery.
+
+Input tests
+
+Test:
+
+- Existing CSV.
+- Alternate CSV.
+- Empty CSV.
+- Missing CSV.
+- Malformed CSV.
+- Missing required columns.
+- Duplicate rows.
+- Quoted CSV fields.
+- Single APM ID.
+- Multiple APM IDs.
+- Select all.
+- Manual single input.
+- Manual multiple input.
+- Invalid APM ID.
+- Duplicate APM ID.
+- Empty selection.
+- Customer cancellation.
+- Invalid menu selection.
+
+Repository discovery tests
+
+Test:
+
+- One APM ID with one repository.
+- One APM ID with multiple repositories.
+- Multiple APM IDs with overlapping repositories.
+- Already-onboarded repositories.
+- Archived repositories.
+- Excluded repositories.
+- Unknown onboarding status.
+- Missing repository.
+- Existing pending request.
+- Missing metadata.
+
+Browser workflow tests
+
+Test:
+
+- Successful browser startup.
+- Authenticated session.
+- Expired session.
+- Correct assistant page.
+- Missing onboarding button.
+- Correct form navigation.
+- Required field validation.
+- Dynamic dropdown behavior.
+- Delayed element loading.
+- Unexpected navigation.
+- Submission failure.
+- Successful authorized test submission.
+- Issue identifier capture.
+
+Label assignment tests
+
+Test:
+
+- Required label already present.
+- Required label available.
+- Required label missing.
+- Delayed label control.
+- Delayed administrator lookup.
+- Valid administrator.
+- Missing administrator.
+- Multiple administrator candidates.
+- Authorization denied.
+- Label selection failure.
+- Label save failure.
+- Label appears but does not persist.
+- Label successfully persists after reload.
+- Resume label assignment without creating another issue.
+
+Recovery tests
+
+Test:
+
+- Browser crash before submission.
+- Browser crash after submission.
+- Network interruption.
+- Submission response lost.
+- Checkpoint recovery.
+- Authentication expiration.
+- Retry limit reached.
+- Partial batch failure.
+- Restart after LABEL_PENDING.
+- Restart after successful completion.
+- Prevention of duplicate submissions.
+
+Safety tests
+
+Test:
+
+- Dry run creates no issues.
+- Dry run assigns no labels.
+- Cancellation creates no issues.
+- Unapproved execution creates no issues.
+- Unknown repository status does not trigger onboarding.
+- Authorization failure does not trigger a bypass.
+- Existing unrelated labels are preserved.
+- Sensitive credentials are absent from logs.
+- Test execution cannot accidentally target production.
+
+Use mocks, fixtures, local test pages, and approved test environments appropriately.
+
+Clearly distinguish mocked tests from actual browser integration tests.
+
+Do not report mocked success as evidence that the real GitHub onboarding workflow works.
+
+---
+
+19. Phase 17: Autonomous iterative improvement
+
+Operate as an engineering agent rather than a code suggestion assistant.
+
+Use the following iterative process:
+
+ANALYZE → IMPLEMENT → EXECUTE TESTS → OBSERVE → DIAGNOSE → FIX → RETEST → VERIFY
+
+After implementing each major component:
+
+1. Run relevant tests.
+2. Inspect actual results.
+3. Identify failures.
+4. Determine the root cause.
+5. Modify the smallest relevant component.
+6. Run regression tests.
+7. Revalidate previously working functionality.
+8. Update the implementation status.
+
+When a browser interaction fails, use WebdriverIO MCP to inspect the current authorized browser state.
+
+Do not guess selectors repeatedly.
+
+When a business rule fails, return to the original Markdown agent and associated source files.
+
+When a dependency fails, inspect approved local configuration.
+
+When label assignment fails, use the dedicated differential investigation procedure.
+
+Continue independently through reasonable, bounded debugging cycles.
+
+Do not ask me to approve every ordinary code edit, read-only inspection, or safe test.
+
+However, stop and request approval when a new action requires production writes, elevated permissions, external access, or another authorization not already granted.
+
+Do not continue indefinitely if an external blocker cannot be resolved.
+
+Do not hide unresolved failures.
+
+Maintain a record of experiments so that you do not repeat the same unsuccessful approach.
+
+---
+
+20. Phase 18: Suggested project structure
+
+Adapt the following structure to the existing repository.
+
+blackduck-onboarding-automation/
+
+- src/
+  - application entry point
+  - cli/
+  - input/
+  - discovery/
+  - eligibility/
+  - authentication/
+  - browser/
+  - workflows/
+  - labels/
+  - checkpoints/
+  - logging/
+  - reporting/
+  - configuration/
+- tests/
+  - unit/
+  - integration/
+  - browser/
+  - fixtures/
+- reports/
+- logs/
+- checkpoints/
+- docs/
+- package.json
+- package lock file
+- environment configuration example
+- README.md
+- requirement traceability document
+- implementation status document
+- troubleshooting guide
+
+Preserve the original project files.
+
+Do not duplicate working utilities merely to match this proposed structure.
+
+---
+
+21. Phase 19: Customer execution commands
+
+Provide a minimal set of understandable execution commands.
+
+The customer should be able to launch the interactive wizard using a single documented command, preferably through an npm script or the existing project launcher.
+
+Suggested commands, subject to the existing implementation:
+
+- npm run onboard
+- npm run onboard:dry-run
+- npm run onboard:resume
+- npm run test
+- npm run test:integration
+- npm run test:browser
+
+Implement the actual commands rather than merely documenting hypothetical commands.
+
+The default onboarding command should start the interactive wizard.
+
+The wizard should guide the customer through input selection, repository discovery, execution preview, and authorization.
+
+Do not require customers to memorize long command-line argument combinations.
+
+Optionally provide noninteractive arguments for approved scheduled or batch execution, but do not allow those arguments to silently bypass required authorization controls.
+
+---
+
+22. Phase 20: Documentation and handover
+
+Create a complete README that explains:
+
+- What the automation does.
+- How it differs from the original AI agent.
+- Supported input modes.
+- Required prerequisites.
+- Installation through approved registries.
+- How to launch the application.
+- How authentication works.
+- How to select all APM IDs.
+- How to select multiple APM IDs.
+- How to select a single APM ID.
+- How to provide manual APM IDs.
+- How dry-run mode works.
+- How to approve an execution plan.
+- How repository status is verified.
+- How onboarding requests are submitted.
+- How labels are assigned.
+- How label persistence is verified.
+- How execution can be resumed.
+- How to interpret reports.
+- How to troubleshoot failures.
+- Known limitations.
+- Security considerations.
+
+Create a separate developer guide explaining:
+
+- Architecture.
+- Module responsibilities.
+- Business rule implementation.
+- Browser locator strategy.
+- State machine.
+- Retry policy.
+- Checkpoint strategy.
+- Testing strategy.
+- Performance optimization.
+- How to update selectors when the GitHub UI changes.
+- How to extend the workflow safely.
+
+Document the actual root cause of the original label assignment failure if established by evidence.
+
+Do not claim a root cause that has not been verified.
+
+---
+
+23. Phase 21: One-working-day implementation priority
+
+Prioritize implementation in the following order:
+
+Priority 0 — Critical workflow:
+
+- Analyze the original Markdown agent.
+- Verify WebdriverIO MCP capabilities.
+- Discover the actual GitHub UI workflow.
+- Establish the approved browser automation runtime.
+- Implement repository discovery and eligibility.
+- Implement form automation.
+- Investigate and fix final label assignment.
+- Verify label persistence on an authorized test issue.
+- Prevent duplicate submissions.
+
+Priority 1 — Customer usability:
+
+- Existing CSV selection.
+- Alternate CSV selection.
+- Select all APM IDs.
+- Select multiple APM IDs.
+- Select single APM ID.
+- Manual single and multiple APM ID input.
+- Execution preview.
+- Dry-run mode.
+- Customer confirmation.
+
+Priority 2 — Reliability:
+
+- Checkpoints.
+- Resume execution.
+- Structured errors.
+- Bounded retries.
+- Authentication recovery.
+- Reporting.
+- Automated regression tests.
+
+Priority 3 — Optimization and documentation:
+
+- Performance measurement.
+- Browser session reuse.
+- Read-only concurrency where permitted.
+- Documentation.
+- Optional reporting enhancements.
+
+Do not spend excessive time designing an elaborate GUI before the actual onboarding and label assignment workflow works.
+
+A reliable, customer-friendly terminal application is preferable to an attractive but incomplete interface.
+
+---
+
+24. Definition of done — mandatory acceptance criteria
+
+The task is not complete unless the following requirements are implemented and verified, or explicitly identified as blocked:
+
+1. The original Markdown agent has been fully analyzed.
+2. All discovered business rules are traceable.
+3. Original project files are preserved.
+4. Approved browser automation dependencies are available.
+5. Existing CSV input works.
+6. Alternate CSV input works.
+7. Select all APM IDs works.
+8. Select multiple APM IDs works.
+9. Select one APM ID works.
+10. Manual single APM ID input works.
+11. Manual multiple APM ID input works.
+12. Repository discovery works.
+13. Duplicate repositories are handled.
+14. Already-onboarded repositories are skipped.
+15. Archived and excluded repositories follow original rules.
+16. Existing pending requests are identified.
+17. Unknown status is handled safely.
+18. Execution preview works.
+19. Dry run performs no write operations.
+20. Explicit execution authorization is enforced.
+21. GitHub authentication works through approved mechanisms.
+22. Assistant page navigation works.
+23. BlackDuck onboarding button discovery works.
+24. Form population works.
+25. Mandatory field validation works.
+26. Authorized test submission works.
+27. Issue identifier is captured.
+28. Project-admin requirements are correctly handled.
+29. Required label assignment works in an authorized test.
+30. Label persistence is independently verified.
+31. Duplicate issue submission is prevented.
+32. Partial failures are recoverable.
+33. Checkpoint and resume functionality works.
+34. Logs are sanitized.
+35. CSV and JSON reports are generated.
+36. Automated tests pass.
+37. Actual browser integration tests are performed where authorized.
+38. Runtime does not require repeated LLM reasoning.
+39. Performance measurements are recorded.
+40. Customer and developer documentation is complete.
+
+The most important acceptance criterion is:
+
+A valid authorized test onboarding request must reach the final required label assignment stage, and the exact required label must be independently verified as persisted on the correct existing issue.
+
+If the label is not assigned, do not mark that workflow as successful.
+
+If the label is assigned but downstream BlackDuck onboarding is still asynchronous, report request completion separately from actual onboarding completion.
+
+If an authorization or environmental restriction prevents final validation, report the workflow as blocked or partially validated rather than complete.
+
+---
+
+25. Final reporting instructions
+
+Do not repeatedly send me intermediate conversational summaries unless an actual decision or authorization is required.
+
+Maintain implementation progress in project documentation.
+
+Continue through implementation, testing, debugging, and refinement independently within the approved scope.
+
+Once the work is complete or a genuine external blocker is encountered, provide one consolidated final report containing:
+
+A. Existing agent analysis
+
+- Files analyzed.
+- Business rules discovered.
+- Existing components reused.
+- Existing components preserved.
+
+B. Architecture delivered
+
+- Automation framework selected.
+- Reason for framework selection.
+- WebdriverIO MCP usage.
+- Runtime LLM dependency.
+- Main modules implemented.
+
+C. Customer experience
+
+- Available input modes.
+- Execution commands.
+- Dry-run behavior.
+- Confirmation behavior.
+- Resume behavior.
+
+D. Label assignment investigation
+
+- Original observed failure.
+- Experiments performed.
+- Verified root cause, if established.
+- Correction implemented.
+- Test issue reference, if permitted.
+- Label assignment result.
+- Independent persistence verification result.
+
+E. Testing results
+
+- Total tests.
+- Passed tests.
+- Failed tests.
+- Skipped tests.
+- Mocked tests.
+- Actual browser integration tests.
+- Remaining unverified scenarios.
+
+F. Performance results
+
+- Baseline duration, if measured.
+- New duration.
+- Average repository processing time.
+- Performance improvement, if measured.
+- Remaining bottlenecks.
+
+G. Deliverables
+
+- New files.
+- Modified files.
+- Preserved files.
+- Reports.
+- Documentation.
+- Exact customer launch command.
+
+H. Final status
+
+Use exactly one of the following statuses:
+
+- COMPLETE — ALL AUTHORIZED ACCEPTANCE CRITERIA VERIFIED
+- PARTIALLY COMPLETE — REMAINING VALIDATION REQUIRED
+- BLOCKED — EXTERNAL AUTHORIZATION OR ENVIRONMENTAL DEPENDENCY
+
+Do not report COMPLETE unless supported by actual test evidence.
+
+Start now by analyzing the attached BlackDuck onboarding Markdown agent and the existing project workspace.
+
+Use the operational WebdriverIO MCP server to discover and validate the browser workflow.
+
+Build the deterministic automation, test it, investigate the final label assignment problem, refine the implementation, and deliver the complete customer-friendly solution.
+
+Do not stop after generating a plan. Proceed with the actual implementation.
