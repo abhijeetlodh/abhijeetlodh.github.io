@@ -1,1 +1,37 @@
+Act as a senior enterprise Node.js, WebdriverIO and MCP integration engineer working within Schwab's approved security environment.
 
+Diagnose and resolve the installation and initialization failure of the approved WebdriverIO MCP server.
+
+Server details:
+
+- Server: io.github.webdriverio/mcp
+- Package: @wdio/mcp@3.14.0
+- Transport: stdio
+- Command: npx
+- Environment: Windows 11, VS Code, GitHub Copilot Agent Mode
+
+Observed errors:
+
+- UNABLE_TO_GET_ISSUER_CERT_LOCALLY
+- npm request to registry.npmjs.org failed
+- Waiting for server to respond to initialize request
+- WDIO MCP tools are not exposed in Copilot Chat
+
+Perform the following:
+
+1. Inspect the existing MCP configuration without modifying unrelated servers.
+2. Verify Node.js, npm and npx availability.
+3. Inspect the effective npm registry, corporate CA certificate configuration and applicable proxy settings without exposing credentials.
+4. Identify the approved Schwab internal Nexus npm registry from existing authorized configuration or internal documentation.
+5. If the registry or corporate CA cannot be identified, stop and report the exact missing prerequisite. Do not invent URLs.
+6. Resolve package installation using the approved internal registry and trusted corporate certificates.
+7. Preserve stdio transport. Do not configure HTTP or SSE.
+8. Check whether npx is waiting for an interactive installation confirmation.
+9. Restart the MCP server and verify successful initialization and tool discovery.
+10. Use an actual WDIO MCP tool to check browser session status.
+11. Start a local Chrome session using an approved test URL, retrieve the page title and close the session.
+12. Report installation status, initialization status, discovered tools, browser test results and remaining blockers.
+
+Do not disable SSL verification, bypass corporate security, install Microsoft Playwright MCP, modify BlackDuck application files or access production customer data.
+
+Do not declare success merely because the MCP process shows Running. Success requires an actual MCP tool invocation and successful browser interaction.
