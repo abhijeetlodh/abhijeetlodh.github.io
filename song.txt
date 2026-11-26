@@ -1,36 +1,118 @@
-$env:NODE_USE_SYSTEM_CA = "1"
+$ErrorActionPreference = "Continue"
+
+Write-Host "`n===== 1. NODE AND NPM =====" -ForegroundColor Cyan
+node -v
+npm -v
+where.exe node
+where.exe npm
+where.exe npx
+
+Write-Host "`n===== 2. NPM CONFIGURATION =====" -ForegroundColor Cyan
 npm config get registry
-npm view @wdio/mcp@3.14.0 version
+npm config get "@wdio:registry"
+npm config get cafile
+npm config get strict-ssl
+npm config get userconfig
+npm config get globalconfig
 
-Resolve the WebdriverIO MCP installation issue before making any further changes to the BlackDuck project.
+Write-Host "`n===== 3. CONFIGURATION FILES =====" -ForegroundColor Cyan
+$files = @(
+    "$HOME\.npmrc",
+    "$PWD\.npmrc",
+    (npm config get globalconfig)
+)
 
-Confirmed diagnostics:
+foreach ($file in $files) {
+    if (Test-Path $file) {
+        Write-Host "Found: $file"
+        Select-String -Path $file `
+          -Pattern '^\s*(registry|@wdio:registry|cafile|strict-ssl)\s*=' |
+          ForEach-Object {
+              $_.Line -replace '://[^/\s]+@','://[REDACTED]@'
+          }
+    }
+}
 
-- Node.js: v24.22.3
-- npm: 11.19.1
-- Current registry: https://registry.npmjs.org/
-- npm cafile: null
-- strict-ssl: true
-- Error: UNABLE_TO_GET_ISSUER_CERT_LOCALLY
-- Playwright dependencies are also missing.
+Write-Host "`n===== 4. CERTIFICATE ENVIRONMENT =====" -ForegroundColor Cyan
+foreach ($name in @(
+    "NODE_EXTRA_CA_CERTS",
+    "NODE_USE_SYSTEM_CA",
+    "SSL_CERT_FILE",
+    "REQUESTS_CA_BUNDLE",
+    "NPM_CONFIG_CAFILE"
+)) {
+    $value = [Environment]::GetEnvironmentVariable($name)
+    Write-Host "$name = $value"
+}
 
-Perform the following actions:
+Write-Host "`n===== 5. PROXY CONFIGURATION =====" -ForegroundColor Cyan
+netsh winhttp show proxy
 
-1. Inspect existing authorized npm configurations and internal documentation to identify the approved Schwab Nexus npm registry.
-2. Inspect existing corporate certificate configuration and test Node.js system CA support using NODE_USE_SYSTEM_CA=1.
-3. Configure the approved registry and trusted certificates using the appropriate configuration scope.
-4. Verify package availability using npm view @wdio/mcp@3.14.0 version.
-5. Install the approved WebdriverIO MCP package.
-6. Preserve stdio transport in mcp.json.
-7. Ensure npx does not hang waiting for interactive confirmation.
-8. Restart the MCP server and verify initialization and tool discovery.
-9. Start a WDIO-managed Chrome session using an approved test URL, retrieve the page title and close the session.
-10. Check whether standalone Playwright is approved and available through the internal registry.
+foreach ($name in @(
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "NO_PROXY",
+    "NPM_CONFIG_PROXY",
+    "NPM_CONFIG_HTTPS_PROXY"
+)) {
+    $value = [Environment]::GetEnvironmentVariable($name)
+    Write-Host "$name configured: $([bool]$value)"
+}
 
-Execute diagnostics and permitted remediation rather than merely suggesting commands.
+Write-Host "`n===== 6. CORPORATE CERTIFICATES =====" -ForegroundColor Cyan
+Get-ChildItem Cert:\LocalMachine\Root,Cert:\CurrentUser\Root |
+    Where-Object {
+        $_.Subject -match "Schwab|Zscaler|Corporate|Proxy|Netskope|Blue Coat"
+    } |
+    Select-Object Subject,Issuer,NotAfter,Thumbprint |
+    Format-List
 
-Do not disable SSL verification, bypass corporate security, invent registry URLs, install Microsoft Playwright MCP, modify BlackDuck business logic or submit onboarding requests.
+Write-Host "`n===== 7. NETWORK CONNECTIVITY =====" -ForegroundColor Cyan
+$registry = (npm config get registry).Trim()
 
-If any prerequisite requires administrator permissions or unavailable internal information, report the exact blocker.
+try {
+    $registryHost = ([uri]$registry).Host
+    Resolve-DnsName $registryHost -ErrorAction Continue
+    Test-NetConnection $registryHost -Port 443
+} catch {
+    Write-Host $_.Exception.Message
+}
 
-Success requires actual WDIO MCP tool execution, not merely a Running process status.
+Write-Host "`n===== 8. NODE SYSTEM CA SUPPORT =====" -ForegroundColor Cyan
+node --help | Select-String "system-ca|openssl-ca"
+
+$env:NODE_USE_SYSTEM_CA = "1"
+
+node -e "const t=require('node:tls'); console.log('System CA count:',t.getCACertificates('system').length); console.log('Default CA count:',t.getCACertificates('default').length)"
+
+Write-Host "`n===== 9. NPM PACKAGE TEST =====" -ForegroundColor Cyan
+
+npm view "@wdio/mcp@3.14.0" version `
+    --fetch-retries=0 `
+    --fetch-timeout=15000
+
+Write-Host "WDIO lookup exit code: $LASTEXITCODE"
+
+Write-Host "`n===== 10. LOCAL DEPENDENCIES =====" -ForegroundColor Cyan
+npm ls playwright @playwright/test @wdio/mcp --depth=0
+
+Write-Host "`n===== 11. PACKAGE CACHE =====" -ForegroundColor Cyan
+npm cache ls "@wdio/mcp"
+npm cache ls "playwright"
+
+Write-Host "`n===== 12. BROWSER AVAILABILITY =====" -ForegroundColor Cyan
+
+$browserPaths = @(
+    "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+    "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+    "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe",
+    "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+)
+
+foreach ($path in $browserPaths) {
+    if (Test-Path $path) {
+        Write-Host "Browser found: $path"
+    }
+}
+
+Write-Host "`n===== DIAGNOSTICS COMPLETE =====" -ForegroundColor Green
