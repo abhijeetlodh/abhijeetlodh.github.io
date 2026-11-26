@@ -116,3 +116,73 @@ foreach ($path in $browserPaths) {
 }
 
 Write-Host "`n===== DIAGNOSTICS COMPLETE =====" -ForegroundColor Green
+
+
+
+
+Act as a senior enterprise infrastructure engineer. Your immediate task is to resolve the Schwab-approved WebdriverIO MCP installation failure autonomously.
+
+Environment:
+
+- Windows 11
+- VS Code
+- GitHub Copilot Agent Mode
+- Node.js v24.22.3
+- npm 11.19.1
+- WebdriverIO MCP @wdio/mcp@3.14.0
+- stdio transport
+
+Confirmed problems:
+
+- npm points to https://registry.npmjs.org/
+- npm cafile is null.
+- strict-ssl is true.
+- UNABLE_TO_GET_ISSUER_CERT_LOCALLY.
+- NODE_USE_SYSTEM_CA=1 did not resolve the error.
+- MCP hangs during initialization.
+- Playwright dependencies are missing.
+
+Execute all relevant terminal diagnostics in a consolidated workflow rather than repeatedly asking me to execute individual commands.
+
+Investigate:
+
+1. Effective npm configuration and configuration precedence.
+2. Existing authorized internal Nexus npm registry configurations.
+3. Corporate root and intermediate certificates.
+4. Windows certificate store and Node.js certificate handling.
+5. Corporate proxy configuration.
+6. Registry connectivity and TLS certificate chain.
+7. Package availability and existing npm cache.
+8. Existing approved Node.js project configurations.
+9. MCP server configuration and npx startup behavior.
+10. Standalone Playwright package approval and availability.
+
+Identify the approved Schwab Nexus npm registry from authorized internal documentation or existing configuration. Never invent the registry URL.
+
+Once identified, configure the approved registry and trusted corporate certificate chain using the minimum necessary configuration scope.
+
+Install and initialize @wdio/mcp@3.14.0. Preserve stdio transport.
+
+Ensure that any required certificate environment variables are available to the MCP server process, not merely the current PowerShell terminal.
+
+Verify actual MCP tool discovery. Use an approved test environment to launch Chrome, retrieve a page title and close the browser.
+
+Do not substitute the VS Code shared browser for an actual WDIO MCP browser session.
+
+If standalone Playwright is approved, verify that its dependencies can be installed through the approved registry.
+
+Constraints:
+
+- Never disable strict SSL.
+- Never disable TLS certificate validation.
+- Never bypass corporate security controls.
+- Never expose credentials, tokens or private keys.
+- Never install Microsoft Playwright MCP.
+- Never modify BlackDuck business logic.
+- Never submit onboarding requests.
+- Never use production data.
+- Do not repeatedly retry an unchanged failing command.
+
+Continue independently through all permitted diagnostics and remediation. Stop only when successful or when an actual external dependency, missing permission or unavailable internal configuration prevents progress.
+
+Provide a final report containing root cause, experiments performed, configuration changes, installation status, MCP initialization status, actual browser test results and remaining blockers.
